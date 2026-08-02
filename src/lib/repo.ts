@@ -21,7 +21,7 @@ import {
   fakeShootingPlan,
   fakeStayPlan,
 } from "@/data/fake/details";
-import { placeLanguageLine, type PlaceLanguageLine } from "./display";
+import { competitionLine, placeLanguageLine, type CompetitionLine, type PlaceLanguageLine } from "./display";
 import { MIN_SUBSCRIBER_COUNT, reachRange, resolveTagScore, soomScore, vsr, type ResolvedTagScore } from "./score";
 import type { Channel, Language, Place, PlaceLanguageStat, Tag, TagScore, Video } from "./types";
 import type { AdminGapRow, AdminImpact, AdminMatchRow, ChannelProfile, PlaceEvidence, ShootingPlan, StayPlan } from "./viewmodels";
@@ -42,6 +42,19 @@ export async function getTag(tagId: string): Promise<Tag | null> {
 /** 폴백·표본부족 판정은 화면이 아니라 score.ts 가 한다. 화면엔 원본 점수판을 넘겨준다. */
 export async function getTagScores(): Promise<TagScore[]> {
   return FAKE_TAG_SCORES;
+}
+
+/**
+ * 장소를 찾을 때 쓸 태그 id 집합.
+ *
+ * 장소에는 세부(level 2) 태그만 붙는다. 그래서 대분류(level 1)로 들어오면
+ * 하위 태그까지 펼쳐야 한다. 안 그러면 "시장·상권"을 골랐을 때 결과가 0건이 된다.
+ * (점수는 대분류 자체 점수를 쓴다 — 펼치는 건 장소 검색용이다.)
+ */
+function tagIdsForPlaceLookup(tagId: string): Set<string> {
+  const tag = FAKE_TAGS.find((t) => t.id === tagId);
+  if (!tag || tag.level === 2) return new Set([tagId]);
+  return new Set([tagId, ...FAKE_TAGS.filter((t) => t.parent_id === tagId).map((t) => t.id)]);
 }
 
 /**
@@ -87,7 +100,23 @@ export async function resolveChannel(input: string): Promise<Channel | null> {
   );
 }
 
+/**
+ * SPEC S1: 채널 URL 없이 들어온 사용자를 위한 대체 경로(태그 직접 선택)용 가상 채널.
+ *
+ * 점수는 밴드별로 갈리므로 뭐라도 정해야 한다. 1만~10만(밴드 2)을 기본값으로 둔다.
+ * 국내 여행 채널이 가장 두꺼운 구간이라서다. 화면에는 "게스트"라고 밝힌다.
+ */
+export const GUEST_CHANNEL: Channel = {
+  id: "guest",
+  youtube_channel_id: "",
+  title: "게스트",
+  subscriber_count: 10_000,
+  sub_band: 2,
+  language: "ko",
+};
+
 export async function getChannel(channelId: string): Promise<Channel | null> {
+  if (channelId === GUEST_CHANNEL.id) return GUEST_CHANNEL;
   return FAKE_CHANNELS.find((c) => c.id === channelId) ?? null;
 }
 
@@ -115,10 +144,12 @@ export async function getChannelProfile(channelId: string): Promise<ChannelProfi
 
 export interface PlaceCard {
   place: Place;
-  /** 국내 채널 줄. video_count 0 이면 "미개척"으로 나온다 */
+  /** 국내 채널 줄 */
   koLine: PlaceLanguageLine;
   /** 해외 채널 줄 */
   enLine: PlaceLanguageLine;
+  /** 카드에서 가장 눈에 띄어야 할 줄. "경쟁 영상 0편" + 비교군 */
+  competition: CompetitionLine;
   travelFromSeoul: string | null;
   soom_score: number;
   score: ResolvedTagScore;
@@ -136,14 +167,30 @@ async function statOf(placeId: string, language: Language): Promise<PlaceLanguag
  * 인구감소지역 가산점은 없다. 희소성 가중치만으로 자연히 위로 올라와야
  * "우리가 편애한 게 아니라 데이터가 그렇게 말했다"는 논리가 선다.
  */
-export async function recommendPlaces(channelId: string, tagId: string, limit = 5): Promise<PlaceCard[]> {
+export async function recommendPlaces(
+  channelId: string,
+  tagId: string,
+  limit = 5,
+  /** ②"이미 찍힌 곳"에 이미 나온 장소. 같은 화면에 두 번 나오지 않게 뺀다 */
+  excludePlaceIds: string[] = [],
+): Promise<PlaceCard[]> {
   const channel = await getChannel(channelId);
   const tag = await getTag(tagId);
   if (!channel || !tag) return [];
 
   const lang = channel.language;
   const other: Language = lang === "ko" ? "en" : "ko";
-  const placeIds = FAKE_PLACE_TAGS.filter((pt) => pt.tag_id === tagId).map((pt) => pt.place_id);
+  const excluded = new Set(excludePlaceIds);
+  const lookup = tagIdsForPlaceLookup(tagId);
+  const placeIds = [
+    ...new Set(FAKE_PLACE_TAGS.filter((pt) => lookup.has(pt.tag_id)).map((pt) => pt.place_id)),
+  ].filter((id) => !excluded.has(id));
+
+  // 카드에 붙일 비교군. "경쟁 0편" 옆에 이미 찍힌 곳을 나란히 둬야 선점 이익으로 읽힌다.
+  const peers = (await occupiedPlaces(tagId, lang, 2)).map((o) => ({
+    name: o.place.name_ko,
+    count: o.count,
+  }));
 
   const cards = await Promise.all(
     placeIds.map(async (placeId) => {
@@ -155,6 +202,7 @@ export async function recommendPlaces(channelId: string, tagId: string, limit = 
         place,
         koLine: placeLanguageLine(await statOf(placeId, "ko"), "ko"),
         enLine: placeLanguageLine(await statOf(placeId, "en"), "en"),
+        competition: competitionLine(stat, peers),
         travelFromSeoul: FAKE_TRAVEL_FROM_SEOUL[placeId] ?? null,
         soom_score: score.score ? soomScore(score.score.median_vsr, count) : 0,
         score,
@@ -263,8 +311,9 @@ export async function getPlaceDetail(
   const lang = channel.language;
 
   // ① 같은 소재의 다른 장소에서 잘 된 영상. 현재 장소는 제외한다(그건 ②의 몫).
+  const lookup = tagIdsForPlaceLookup(tagId);
   const taggedPlaceIds = new Set(
-    FAKE_PLACE_TAGS.filter((pt) => pt.tag_id === tagId && pt.place_id !== placeId).map((pt) => pt.place_id),
+    FAKE_PLACE_TAGS.filter((pt) => lookup.has(pt.tag_id) && pt.place_id !== placeId).map((pt) => pt.place_id),
   );
   const step1Videos = FAKE_VIDEOS.filter((v) => v.language === lang)
     .filter((v) => FAKE_VIDEO_PLACES.some((vp) => vp.video_id === v.id && taggedPlaceIds.has(vp.place_id)))
@@ -297,6 +346,81 @@ export async function getPlaceDetail(
     reach: step1Score.score ? reachRange(channel.subscriber_count, step1Score.score) : null,
     plan: fakeShootingPlan(placeId),
     stay: fakeStayPlan(placeId),
+  };
+}
+
+// ─── 소재 증거 (S3 ①②) ──────────────────────────────────
+
+/**
+ * ② 이미 찍힌 곳. 영상이 많은 순.
+ *
+ * 이걸 화면에서 빼면 안 된다 (CLAUDE.md 8항).
+ * 크리에이터는 아는 곳으로 서비스를 테스트한다. 오일장을 추천했는데 정선이 없으면
+ * 데이터를 의심하고 나간다. 그리고 정선이 있어야 곡성이 좋아 보인다.
+ */
+export async function occupiedPlaces(
+  tagId: string,
+  language: Language,
+  limit = 3,
+): Promise<Array<{ place: Place; count: number; median_vsr: number | null }>> {
+  const lookup = tagIdsForPlaceLookup(tagId);
+  const placeIds = [
+    ...new Set(FAKE_PLACE_TAGS.filter((pt) => lookup.has(pt.tag_id)).map((pt) => pt.place_id)),
+  ];
+  const rows = await Promise.all(
+    placeIds.map(async (id) => {
+      const stat = await statOf(id, language);
+      return {
+        place: FAKE_PLACES.find((p) => p.id === id)!,
+        count: stat?.video_count ?? 0,
+        median_vsr: stat?.median_vsr ?? null,
+      };
+    }),
+  );
+  return rows
+    // 표본이 쌓인 곳만 "이미 찍힌 곳"이다. 1~2편은 경쟁이라 부르기 어렵다.
+    .filter((r) => r.count >= 5)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit);
+}
+
+export interface TagEvidence {
+  tag: Tag;
+  channel: Channel;
+  score: ResolvedTagScore;
+  /** ① 이 소재가 먹힌다는 증거. 잘 된 영상 3편 */
+  provenVideos: EvidenceVideo[];
+  /** ② 이미 찍힌 곳 */
+  occupied: Array<{ place: Place; count: number; median_vsr: number | null }>;
+}
+
+/** S3 상단(①②)에 들어갈 것 전부. 여기가 크리에이터를 움직이는 부분이다. */
+export async function getTagEvidence(channelId: string, tagId: string): Promise<TagEvidence | null> {
+  const channel = await getChannel(channelId);
+  const tag = await getTag(tagId);
+  if (!channel || !tag) return null;
+
+  const lang = channel.language;
+  const lookup = tagIdsForPlaceLookup(tagId);
+  const taggedPlaceIds = new Set(
+    FAKE_PLACE_TAGS.filter((pt) => lookup.has(pt.tag_id)).map((pt) => pt.place_id),
+  );
+
+  const provenVideos = FAKE_VIDEOS.filter((v) => v.language === lang)
+    .filter((v) => FAKE_VIDEO_PLACES.some((vp) => vp.video_id === v.id && taggedPlaceIds.has(vp.place_id)))
+    .map(toEvidenceVideo)
+    .filter((x): x is EvidenceVideo => x !== null)
+    // 구독자 1,000 미만은 배수가 폭발해 순위를 망친다
+    .filter((x) => !x.excluded_from_score)
+    .sort((a, b) => b.vsr - a.vsr)
+    .slice(0, 3);
+
+  return {
+    tag,
+    channel,
+    score: resolveTagScore(tag, lang, channel.sub_band, FAKE_TAG_SCORES, FAKE_TAGS),
+    provenVideos,
+    occupied: await occupiedPlaces(tagId, lang, 3),
   };
 }
 

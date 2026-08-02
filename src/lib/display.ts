@@ -71,6 +71,43 @@ export function placeLanguageLine(
   };
 }
 
+// ─── 경쟁 상황 (S3 카드) ─────────────────────────────────
+
+export interface CompetitionLine {
+  /** "경쟁 영상 0편" */
+  text: string;
+  /** "정선 5일장 14편 · 화개장터 9편" — 비교군이 없으면 null */
+  peers: string | null;
+  tone: Tone;
+  count: number;
+}
+
+/**
+ * SPEC S3 / CLAUDE.md 7항.
+ *
+ * "미개척"이라고 쓰지 않는다. 크리에이터에게 "아무도 안 갔다"는 좋은 소식이 아니라
+ * 잘 될 증거가 없다는 신호로 읽힌다. 실제로 크리에이터는 잘 된 영상을 따라 만든다.
+ * 그래서 같은 사실을 경쟁 영상 수로 말하고, 옆에 이미 찍힌 곳을 붙여 선점 이익으로 읽히게 한다.
+ */
+export function competitionLine(
+  stat: PlaceLanguageStat | undefined,
+  peerPlaces: Array<{ name: string; count: number }>,
+  locale: Locale = "ko",
+): CompetitionLine {
+  const S = getStrings(locale);
+  const count = stat?.video_count ?? 0;
+  const peers = peerPlaces.length > 0
+    ? peerPlaces.map((p) => `${p.name} ${S.videoCount(p.count)}`).join(" · ")
+    : null;
+  return {
+    text: S.competition(count),
+    peers,
+    // 경쟁이 적을수록 강조한다. 이게 카드에서 가장 눈에 띄어야 할 숫자다.
+    tone: count === 0 ? "uncharted" : count < 5 ? "warn" : "muted",
+    count,
+  };
+}
+
 // ─── 계절 태그 ───────────────────────────────────────────
 
 export type SeasonState = "always" | "now" | "off";

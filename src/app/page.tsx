@@ -6,9 +6,14 @@ const S = getStrings("ko");
 /** 0단계 진행 상황판. 화면이 다 붙으면 S1(온보딩)으로 교체된다. */
 const SCREENS = [
   { href: "/check", label: "가짜 데이터 검증표", desc: "30건이 명세의 예외 케이스를 다 밟는지 확인", ready: true },
-  { href: "/start", label: "S1 온보딩", desc: "채널 URL 입력 · 태그 직접 선택", ready: false },
-  { href: "/profile", label: "S2 채널 프로필", desc: "당신 채널의 색깔", ready: false },
-  { href: "/recommend", label: "S3 추천 5곳", desc: "한 태그로 5곳 + 확장 태그", ready: false },
+  { href: "/start", label: "S1 온보딩", desc: "채널 URL 입력 · 태그 직접 선택", ready: true },
+  { href: "/profile?q=Wander Korea", label: "S2 채널 프로필", desc: "당신 채널의 색깔", ready: true },
+  {
+    href: "/recommend?channel=ch_wander&tag=t_oil_market",
+    label: "S3 추천 5곳",
+    desc: "성공 영상 → 이미 찍힌 곳 → 아직 안 찍힌 5곳",
+    ready: true,
+  },
   { href: "/place", label: "S4 장소 상세", desc: "확신을 만드는 6단 구조", ready: false },
   { href: "/admin", label: "S5 어드민 콘솔", desc: "시군구별 미개척 랭킹", ready: false },
 ];

@@ -18,10 +18,14 @@ const ko = {
   appTagline: "여기서 찍으면 잘 된다를, 데이터로",
   demoBanner: "데모 데이터로 동작 중입니다 — 아래 수치는 실제 값이 아닙니다 (0단계)",
 
-  // SPEC 9장 — 표시 원칙. 이 5개는 문구를 임의로 바꾸지 말 것.
-  uncharted: "미개척",
-  unchartedKo: "국내 채널 촬영 기록 없음 — 미개척",
-  unchartedEn: "해외 채널 촬영 기록 없음 — 미개척",
+  // SPEC 9장 — 표시 원칙. 문구를 임의로 바꾸지 말 것.
+  //
+  // ⚠️ "미개척"은 쓰지 않는다. 크리에이터에게는 "아무도 안 갔다"가 좋은 소식이 아니라
+  //    잘 될 증거가 없다는 신호로 읽힌다. 같은 사실을 '경쟁 영상 수'로 말한다.
+  competition: (n: number) => `경쟁 영상 ${n}편`,
+  competitionPeers: (peers: string) => peers,
+  unchartedKo: "국내 채널 영상 0편",
+  unchartedEn: "해외 채널 영상 0편",
   insufficientSample: "표본 부족",
   insufficientSampleHelp: "표본이 5편 미만이라 점수를 내지 않습니다",
   fallbackNote: "상위 소재 기준",
@@ -54,9 +58,19 @@ const ko = {
   s2Basis: (total: number, top: number) => `최근 ${total}편 중 상위 성과 영상 ${top}편에서 공통 추출`,
   s2Next: "이 색깔로 촬영지 찾기",
 
-  // S3 추천 결과
-  s3Title: (tagName: string) => `${tagName} — 당신에게 유리한 5곳`,
+  // S3 추천 결과 — ① 증거 → ② 경쟁 상황 → ③ 추천 5곳 순서를 바꾸지 말 것
+  s3ProvenTitle: (tagName: string) => `${tagName} 소재, 이렇게 됐습니다`,
+  s3ProvenBasis: (n: number, m: number) => `영상 ${n}편 · 구독자 대비 중앙값 ${m.toFixed(1)}배`,
+  s3OccupiedTitle: "이미 찍힌 곳",
+  s3OccupiedHelp: "여기로 가면 그다음 순번이 됩니다",
+  // "아직 안 찍힌"이라고 단정하면 안 된다. 국내 채널 기준으로 시장류를 보면
+  // 상위 5곳도 이미 10편 넘게 찍힌 경우가 있다. 제목이 숫자와 어긋나면 그 순간 신뢰를 잃는다.
+  s3RecommendTitle: "경쟁이 가장 적은 곳",
+  s3RecommendHelp: (n: number) => `숨 스코어 상위 ${n}곳`,
+  s3TagPerformance: (tagName: string, x: number) => `${tagName} 소재 · 평균 ${x.toFixed(1)}배`,
+  s3TagBasis: (n: number) => `영상 ${n}편 기준`,
   s3ExpandTitle: "다른 태그로도 찾아보시겠어요?",
+  s3ExploreLabel: "다른 소재",
   s3TravelTime: (from: string, text: string) => `${from}에서 ${text}`,
 
   // S4 상세 — 6단 구조. 순서와 제목을 바꾸지 말 것.
