@@ -1,0 +1,23 @@
+# 의존성
+/node_modules
+
+# Next.js 빌드 산출물
+/.next
+/out
+next-env.d.ts
+tsconfig.tsbuildinfo
+
+# 환경변수 — 실제 키가 들어가는 파일. 절대 커밋 금지.
+.env
+.env.local
+.env.*.local
+
+# 데이터 (2단계 이후 생성. 용량이 크고 재생성 가능하므로 커밋하지 않는다)
+/data/*.db
+/data/*.db-journal
+/data/raw/
+
+# OS / 편집기
+.DS_Store
+Thumbs.db
+*.log
