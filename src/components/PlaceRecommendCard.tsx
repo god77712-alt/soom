@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TagScoreList } from "@/components/TagScoreList";
 import { reliabilityNote, toneClass } from "@/lib/display";
 import { getStrings } from "@/lib/i18n";
 import type { PlaceCard } from "@/lib/repo";
@@ -72,8 +73,27 @@ export function PlaceRecommendCard({
         )}
       </div>
 
+      {/* 2. 이 장소에 있는 소재 전부. 한 번 가서 여러 개를 찍기 때문이다 */}
+      {card.tagScores.length > 0 && (
+        <div className="mt-3">
+          <TagScoreList items={card.tagScores} compact limit={4} />
+        </div>
+      )}
+
+      {/* 3. 뭘 찍을 수 있는지 — 카드 단계에서는 컷 이름만 */}
+      {card.shots.length > 0 && (
+        <div className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-xs text-neutral-500">
+          {card.shots.slice(0, 3).map((s, i) => (
+            <span key={i}>· {s.caption}</span>
+          ))}
+          {card.shots.length > 3 && (
+            <span className="text-neutral-600">외 {card.shots.length - 3}컷</span>
+          )}
+        </div>
+      )}
+
       {/*
-        2. 경쟁 상황 — 왜 유명한 곳이 아니라 여기인가
+        4. 경쟁 상황 — 왜 유명한 곳이 아니라 여기인가
 
         비교군(정선 14편 …)은 여기 붙이지 않는다. 카드 바로 위 ②"이미 찍힌 곳"에
         이미 나와 있어서, 카드마다 반복하면 5줄이 똑같아지고 숫자가 안 읽힌다.
@@ -85,9 +105,15 @@ export function PlaceRecommendCard({
         </span>
       </div>
 
-      {/* 3. 이동 시간 · 데이터 신뢰도 */}
+      {/* 5. 갈 수 있나 — 장날을 모르고 가면 헛걸음이라 카드에서부터 보여준다 */}
       <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-neutral-500">
+        {card.operation.open_cycle && (
+          <span className="text-neutral-300">장날 {card.operation.open_cycle}</span>
+        )}
         {card.travelFromSeoul && <span>{S.s3TravelTime("서울", card.travelFromSeoul)}</span>}
+        {card.nearbyCount > 0 && (
+          <span className="text-neutral-400">근처 소재 {card.nearbyCount}곳</span>
+        )}
         {note && <span className="text-orange-300/70">⚠ {note}</span>}
       </div>
     </Link>

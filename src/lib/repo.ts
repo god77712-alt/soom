@@ -18,13 +18,36 @@ import {
   FAKE_ADMIN_IMPACT,
   FAKE_ADMIN_MATCHES,
   fakePlaceEvidence,
+  fakePlaceOperation,
+  fakePlaceShots,
   fakeShootingPlan,
   fakeStayPlan,
 } from "@/data/fake/details";
-import { competitionLine, placeLanguageLine, type CompetitionLine, type PlaceLanguageLine } from "./display";
+import {
+  competitionLine,
+  placeLanguageLine,
+  seasonBadge,
+  tagScoreLabel,
+  type CompetitionLine,
+  type PlaceLanguageLine,
+  type SeasonBadge,
+  type TagScoreLabel,
+} from "./display";
+import { distanceKm, estimateDriveMinutes } from "./geo";
 import { MIN_SUBSCRIBER_COUNT, reachRange, resolveTagScore, soomScore, vsr, type ResolvedTagScore } from "./score";
 import type { Channel, Language, Place, PlaceLanguageStat, Tag, TagScore, Video } from "./types";
-import type { AdminGapRow, AdminImpact, AdminMatchRow, ChannelProfile, PlaceEvidence, ShootingPlan, StayPlan } from "./viewmodels";
+import type {
+  AdminGapRow,
+  AdminImpact,
+  AdminMatchRow,
+  ChannelProfile,
+  NearbySpot,
+  PlaceEvidence,
+  PlaceOperation,
+  PlaceShot,
+  ShootingPlan,
+  StayPlan,
+} from "./viewmodels";
 
 /** 0단계는 가짜 데이터로 돈다는 사실을 화면이 알아야 배너를 띄울 수 있다. */
 export const IS_DEMO_DATA = true;
@@ -153,6 +176,14 @@ export interface PlaceCard {
   travelFromSeoul: string | null;
   soom_score: number;
   score: ResolvedTagScore;
+  /** 이 장소에 붙은 태그 전부 + 각각의 성적 */
+  tagScores: PlaceTagScore[];
+  /** 여기서 찍을 수 있는 컷 */
+  shots: PlaceShot[];
+  /** 장날 등. 오일장은 이게 안 맞으면 헛걸음이라 카드에서부터 보여준다 */
+  operation: PlaceOperation;
+  /** 근처에 묶어 찍을 소재 수 */
+  nearbyCount: number;
 }
 
 async function statOf(placeId: string, language: Language): Promise<PlaceLanguageStat | undefined> {
@@ -206,6 +237,10 @@ export async function recommendPlaces(
         travelFromSeoul: FAKE_TRAVEL_FROM_SEOUL[placeId] ?? null,
         soom_score: score.score ? soomScore(score.score.median_vsr, count) : 0,
         score,
+        tagScores: await getPlaceTagScores(placeId, channel.id),
+        shots: await getPlaceShots(placeId),
+        operation: await getPlaceOperation(placeId),
+        nearbyCount: (await getNearbySpots(placeId, lang)).length,
         _tiebreak: (await statOf(placeId, other))?.median_vsr ?? 0,
       };
     }),
@@ -252,6 +287,97 @@ export async function getPlaceTags(placeId: string): Promise<Tag[]> {
     .filter((t): t is Tag => Boolean(t));
 }
 
+export interface PlaceTagScore {
+  tag: Tag;
+  label: TagScoreLabel;
+  season: SeasonBadge;
+  /** LLM 추출 신뢰도. 낮으면 화면에서 흐리게 */
+  confidence: number;
+}
+
+/**
+ * 이 장소에 붙은 태그 전부 + 각 태그의 성적.
+ *
+ * "여기 가면 이 소재들을 찍을 수 있고, 각각 이만큼 먹힌다"가 되어야 한다.
+ * 태그를 하나만 보여주면 크리에이터는 그 소재 하나만 보고 판단하게 되는데,
+ * 실제로는 한 번 가서 여러 소재를 찍는다.
+ */
+export async function getPlaceTagScores(
+  placeId: string,
+  channelId: string,
+): Promise<PlaceTagScore[]> {
+  const channel = await getChannel(channelId);
+  if (!channel) return [];
+
+  const rows = FAKE_PLACE_TAGS.filter((pt) => pt.place_id === placeId);
+  return rows
+    .map((pt) => {
+      const tag = FAKE_TAGS.find((t) => t.id === pt.tag_id);
+      if (!tag) return null;
+      return {
+        tag,
+        label: tagScoreLabel(tag, channel.language, channel.sub_band, FAKE_TAG_SCORES, FAKE_TAGS),
+        season: seasonBadge(tag),
+        confidence: pt.confidence,
+      };
+    })
+    .filter((x): x is PlaceTagScore => x !== null)
+    // 성적이 좋은 태그를 앞에 둔다. 표본 부족은 뒤로.
+    .sort((a, b) => (b.label.resolved.score?.median_vsr ?? -1) - (a.label.resolved.score?.median_vsr ?? -1));
+}
+
+/**
+ * 근처에 묶어 찍을 수 있는 소재.
+ *
+ * 크리에이터는 3시간 운전해서 한 곳만 찍고 오지 않는다. 하루 2~3곳은 찍어야 수지가 맞다.
+ * 그리고 이게 체류로 이어진다 — 명세 1장의 "촬영 때문에 2~3일 체류한다"를 뒷받침하는
+ * 유일한 장치이고, S5 어드민의 예상 체류일수도 여기서 나온다.
+ *
+ * 좌표로 실제 계산한다. 7단계에 4만 건이 들어와도 그대로 동작한다.
+ */
+export async function getNearbySpots(
+  placeId: string,
+  language: Language,
+  withinKm = 40,
+  limit = 4,
+): Promise<NearbySpot[]> {
+  const origin = FAKE_PLACES.find((p) => p.id === placeId);
+  if (!origin) return [];
+
+  const rows = await Promise.all(
+    FAKE_PLACES.filter((p) => p.id !== placeId).map(async (p) => {
+      const km = distanceKm(origin, p);
+      const stat = await statOf(p.id, language);
+      const tags = await getPlaceTags(p.id);
+      return {
+        place_id: p.id,
+        name_ko: p.name_ko,
+        sigungu: `${p.sido} ${p.sigungu}`,
+        distance_km: Number(km.toFixed(1)),
+        drive_minutes: estimateDriveMinutes(km),
+        tag_names: tags.slice(0, 2).map((t) => t.name_ko),
+        video_count: stat?.video_count ?? 0,
+        is_declining_area: p.is_declining_area,
+        _km: km,
+      };
+    }),
+  );
+
+  return rows
+    .filter((r) => r._km <= withinKm)
+    .sort((a, b) => a._km - b._km)
+    .slice(0, limit)
+    .map(({ _km, ...r }) => r);
+}
+
+export async function getPlaceShots(placeId: string): Promise<PlaceShot[]> {
+  return fakePlaceShots(placeId);
+}
+
+export async function getPlaceOperation(placeId: string): Promise<PlaceOperation> {
+  return fakePlaceOperation(placeId);
+}
+
 // ─── 장소 상세 (S4) ──────────────────────────────────────
 
 export interface EvidenceVideo {
@@ -266,6 +392,14 @@ export interface EvidenceVideo {
 export interface PlaceDetail {
   place: Place;
   tags: Tag[];
+  /** 태그 전부 + 각각의 성적 */
+  tagScores: PlaceTagScore[];
+  /** 여기서 찍을 수 있는 컷 */
+  shots: PlaceShot[];
+  /** 장날 · 운영시간 · 촬영 특이사항 */
+  operation: PlaceOperation;
+  /** 근처에 묶어 찍을 소재 */
+  nearby: NearbySpot[];
   language: Language;
   channel: Channel;
   tag: Tag;
@@ -336,6 +470,10 @@ export async function getPlaceDetail(
   return {
     place,
     tags: await getPlaceTags(placeId),
+    tagScores: await getPlaceTagScores(placeId, channel.id),
+    shots: await getPlaceShots(placeId),
+    operation: await getPlaceOperation(placeId),
+    nearby: await getNearbySpots(placeId, lang),
     language: lang,
     channel,
     tag,

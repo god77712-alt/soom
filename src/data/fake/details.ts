@@ -7,9 +7,104 @@
  *   ⑥ 은 TourAPI 숙박/축제 조회
  */
 
-import type { AdminGapRow, AdminImpact, AdminMatchRow, PlaceEvidence, ShootingPlan, StayPlan } from "@/lib/viewmodels";
+import type {
+  AdminGapRow,
+  AdminImpact,
+  AdminMatchRow,
+  PlaceEvidence,
+  PlaceOperation,
+  PlaceShot,
+  ShootingPlan,
+  StayPlan,
+} from "@/lib/viewmodels";
 import { FAKE_PLACE_STATS } from "./stats";
-import { FAKE_PLACES } from "./places";
+import { FAKE_PLACES, FAKE_PLACE_TAGS } from "./places";
+
+// ─── 촬영 컷 (사진 + 설명) ───────────────────────────────
+
+/**
+ * "여기서 뭘 찍을 수 있나"에 대한 답.
+ * 7단계에서 photo_url 에 TourAPI 갤러리 이미지가 들어오면 사진으로 바뀐다.
+ */
+const SHOTS: Record<string, PlaceShot[]> = {
+  p_sunchang_market: [
+    { caption: "장 서기 전 새벽 좌판", photo_url: null, best_time: "05:30~07:00", tag_code: "oil_market" },
+    { caption: "고추장·발효식품 매대", photo_url: null, best_time: "08:00~11:00", tag_code: "oil_market" },
+    { caption: "상인 인터뷰 — 30년 넘은 단골 매대", photo_url: null, best_time: "09:00~11:00", tag_code: "merchant" },
+    { caption: "장터 안쪽 국밥집 골목", photo_url: null, best_time: "11:00~13:00", tag_code: "oil_market" },
+  ],
+  p_gokseong_market: [
+    { caption: "섬진강 기차마을에서 걸어오는 길", photo_url: null, best_time: "07:00~09:00", tag_code: "oil_market" },
+    { caption: "장날 아침 좌판 펴는 장면", photo_url: null, best_time: "06:00~08:00", tag_code: "oil_market" },
+    { caption: "구 곡성역 근대 역사", photo_url: null, best_time: null, tag_code: "oil_market" },
+  ],
+  p_school_uiseong: [
+    { caption: "칠판이 남아 있는 교실", photo_url: null, best_time: "10:00~15:00", tag_code: "abandoned_school" },
+    { caption: "운동장에서 본 교사 정면", photo_url: null, best_time: "16:00~18:00", tag_code: "abandoned_school" },
+    { caption: "급식실과 복도", photo_url: null, best_time: "10:00~15:00", tag_code: "abandoned_school" },
+  ],
+  p_station_simcheon: [
+    { caption: "1934년 역사 외관", photo_url: null, best_time: "07:00~09:00", tag_code: "unmanned_station" },
+    { caption: "무궁화호 진입 — 하루 4회", photo_url: null, best_time: "시간표 확인 필요", tag_code: "unmanned_station" },
+    { caption: "금강 철교와 함께 잡히는 각도", photo_url: null, best_time: "17:00~19:00", tag_code: "modern_building" },
+  ],
+};
+
+/** 명시적으로 안 적은 곳은 태그에서 만들어낸다. 4단계 LLM 태깅 결과를 흉내낸 것. */
+export function fakePlaceShots(placeId: string): PlaceShot[] {
+  const explicit = SHOTS[placeId];
+  if (explicit) return explicit;
+
+  const tagCodes = FAKE_PLACE_TAGS.filter((pt) => pt.place_id === placeId).map((pt) =>
+    pt.tag_id.replace("t_", ""),
+  );
+  const place = FAKE_PLACES.find((p) => p.id === placeId);
+  return tagCodes.slice(0, 3).map((code, i) => ({
+    caption: i === 0 ? `${place?.name_ko ?? ""} 전경` : `${code} 관련 컷`,
+    photo_url: null,
+    best_time: i === 0 ? "일출 직후" : null,
+    tag_code: code,
+  }));
+}
+
+// ─── 운영 정보 ───────────────────────────────────────────
+
+const OPERATIONS: Record<string, Partial<PlaceOperation>> = {
+  p_sunchang_market: { open_cycle: "매월 1일 · 6일", open_hours: "06:00~14:00", parking: "공영주차장 무료", source: "market" },
+  p_gokseong_market: { open_cycle: "매월 3일 · 8일", open_hours: "06:00~14:00", parking: "장터 옆 주차장", source: "market" },
+  p_muju_market: { open_cycle: "매월 1일 · 6일", open_hours: "07:00~15:00", parking: "터미널 주차장 이용", source: "market" },
+  p_bonghwa_market: { open_cycle: "매월 2일 · 7일", open_hours: "05:00~13:00", parking: "장날 혼잡", source: "market" },
+  p_cheongsong_market: { open_cycle: "매월 4일 · 9일", open_hours: "07:00~14:00", parking: "노상 주차", source: "market" },
+  p_jeongseon_market: { open_cycle: "매월 2일 · 7일", open_hours: "08:00~17:00", parking: "전용 주차장", source: "market" },
+  p_yeongju_dawn: { open_cycle: "매일", open_hours: "04:00~08:00", parking: "인근 공영주차장", source: "market" },
+  p_school_uiseong: {
+    open_cycle: null, open_hours: "상시 (외부)", closed_days: null, parking: "교문 앞 공터",
+    filming_note: "사유지 구간 있음 — 군청 재산관리부서 사전 협의 권장",
+    source: "estimate",
+  },
+  p_station_simcheon: {
+    open_cycle: null, open_hours: "역사 개방 06:00~20:00",
+    filming_note: "승강장 진입 시 역무 협의 필요 · 열차 시간표 확인",
+    source: "estimate",
+  },
+  p_taepyeong_salt: { open_hours: "09:00~18:00", entrance_fee: "성인 3,000원", filming_note: "소금 채취는 오후 늦게", source: "tourapi" },
+  p_jusanji: { open_hours: "상시", filming_note: "물안개는 해뜨기 직전에만 · 삼각대 필수", source: "tourapi" },
+  p_mindungsan: { open_hours: "상시", filming_note: "정상까지 도보 1시간 20분", source: "tourapi" },
+};
+
+export function fakePlaceOperation(placeId: string): PlaceOperation {
+  return {
+    place_id: placeId,
+    open_cycle: null,
+    open_hours: null,
+    closed_days: null,
+    parking: null,
+    entrance_fee: null,
+    filming_note: null,
+    source: "estimate",
+    ...OPERATIONS[placeId],
+  };
+}
 
 // ─── S4 ③ "별로라서가 아니다" ────────────────────────────
 
