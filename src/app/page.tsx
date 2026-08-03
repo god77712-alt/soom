@@ -14,8 +14,13 @@ const SCREENS = [
     desc: "성공 영상 → 이미 찍힌 곳 → 아직 안 찍힌 5곳",
     ready: true,
   },
-  { href: "/place", label: "S4 장소 상세", desc: "확신을 만드는 6단 구조", ready: false },
-  { href: "/admin", label: "S5 어드민 콘솔", desc: "시군구별 미개척 랭킹", ready: false },
+  {
+    href: "/place/p_sunchang_market?channel=ch_wander&tag=t_oil_market",
+    label: "S4 장소 상세",
+    desc: "확신을 만드는 6단 구조",
+    ready: true,
+  },
+  { href: "/admin", label: "S5 어드민 콘솔", desc: "시군구별 미개척 랭킹 · 채널 매칭", ready: true },
 ];
 
 export default function Home() {
