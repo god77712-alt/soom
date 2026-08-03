@@ -100,6 +100,43 @@ S4 상세 화면의 6단 구조는 **의심을 순서대로 걷어내는 장치*
 
 ## 기술 메모
 
+### TourAPI — 실측으로 확인된 것 (2026-08-03)
+
+`npm run probe` 로 언제든 재확인 가능. 확인된 오퍼레이션명:
+
+| 서비스 | 오퍼레이션 | 비고 |
+|---|---|---|
+| KorService2 | `areaCode2` | 시도 17건 |
+| KorService2 | `areaBasedList2` | **전체 48,925건** |
+| KorService2 | `searchKeyword2` | |
+| KorService2 | `detailCommon2` | ⚠️ 아래 함정 참조 |
+| KorService2 | `detailIntro2` / `detailInfo2` / `detailImage2` | |
+| KorService2 | `searchFestival2` / `searchStay2` | 축제·숙박은 국문 서비스에 포함 |
+| EngService2 | `areaBasedList2` | 전체 15,095건 (국문의 31%) |
+| PhotoGalleryService1 | `galleryList1` | 6,118건 |
+| PhokoAwrdService | `phokoAwrdList` | 95건 |
+| Durunubi | `courseList` | 152건 |
+
+**⚠️ `detailCommon2` 함정 — 여기서 반나절 날린다**
+`contentId` **하나만** 보낼 것. `defaultYN` · `overviewYN` · `firstImageYN` · `contentTypeId` 를
+같이 보내면 `NO_OPENAPI_SERVICE_ERROR(12)` 로 거부당한다.
+KorService2 에서 그 파라미터들이 사라졌는데 블로그 예제엔 아직 다 들어있다.
+"서비스가 없다"는 오류라 오퍼레이션명 문제로 착각하기 쉽다.
+
+**아직 못 쓰는 서비스 4개** — 오퍼레이션명 미확인. 후보 5~6개씩 시도했으나 전부 거부.
+data.go.kr 각 서비스 상세페이지의 참고문서(기술문서)를 봐야 한다.
+`TarRlteTarService1` / `LocgoHubTarService1` / `AreaTarResDemService` / `AreaTarDivService`
+
+### 소개글 확보율 (1단계 완료 판정)
+
+표본 156건(오일장·전통시장 85 + 등대 71) 기준 **99%**. 평균 292~394자.
+좌표 100%, 대표이미지 89~94%. → **LLM 태깅 계획대로 진행 가능.**
+
+소개글 안에 장날이 텍스트로 들어있다 ("5일(4일, 9일)마다", "끝자리가 3, 8인 날").
+전통시장 표준데이터 없이도 LLM 으로 뽑을 수 있을지 4단계에서 확인할 것.
+
+검색어 설계가 결과를 크게 가른다. `오일장` 4건 vs `전통시장` 71건.
+
 - TourAPI 오퍼레이션명에 숫자 접미사 주의 (`searchKeyword2` 등). 블로그 예제 신뢰 금지.
 - 폐교 데이터는 상태 필터링 필수 (절반 이상 매각/철거됨)
 - 중복 판정: 좌표 300m + 이름 유사도
