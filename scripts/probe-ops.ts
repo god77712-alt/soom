@@ -1,86 +1,108 @@
 /**
- * 실패한 오퍼레이션만 좁혀서 재시도.
+ * 활용매뉴얼(docx)에서 확인한 오퍼레이션명·파라미터로 재검증.
  *
  *   npm run probe:ops
  *
- * 두 가지를 가른다.
- *   (1) 파라미터가 문제인가  → 최소 파라미터로 다시
- *   (2) 오퍼레이션명이 문제인가 → 후보를 넓혀서
+ * 앞선 진단에서 4개 서비스가 NO_OPENAPI_SERVICE_ERROR 로 실패했는데,
+ * 오퍼레이션명뿐 아니라 **필수 파라미터가 빠져도 같은 오류**가 난다.
+ * 여기서는 매뉴얼의 예제 요청을 그대로 재현해 어느 쪽이 원인이었는지 가른다.
  */
 
 import { callTourApi, SERVICES } from "./lib/tourapi";
 
-async function tryOne(
-  label: string,
-  endpoint: string,
-  op: string,
-  params: Record<string, string | number>,
-) {
-  const r = await callTourApi(endpoint, op, params);
-  const mark = r.ok ? "\x1b[32mOK  \x1b[0m" : "\x1b[31m    \x1b[0m";
-  const detail = r.ok
-    ? `전체 ${r.totalCount.toLocaleString("ko-KR")}건`
-    : `[${r.code}] ${r.message || "-"}`;
-  console.log(`  ${mark} ${op.padEnd(26)} ${detail}`);
-  if (r.ok && r.items.length > 0) {
-    console.log(`       필드: ${Object.keys(r.items[0] as object).join(", ").slice(0, 200)}`);
-  }
-  return r.ok;
+interface Case {
+  service: string;
+  endpoint: string;
+  op: string;
+  params: Record<string, string | number>;
+  why: string;
 }
 
+/** 매뉴얼 예제 그대로. baseYm 은 최신 데이터가 있을 만한 값으로 살짝 조정한다. */
+const CASES: Case[] = [
+  {
+    service: "관광지별 연관 관광지",
+    endpoint: SERVICES.related,
+    op: "areaBasedList1",
+    params: { numOfRows: 5, pageNo: 1, baseYm: "202504", areaCd: 51, signguCd: 51130 },
+    why: "S4 ⑥ 근처에 같이 찍을 소재",
+  },
+  {
+    service: "관광지별 연관 관광지 (키워드)",
+    endpoint: SERVICES.related,
+    op: "searchKeyword1",
+    // signguCd 도 필수다. 하나라도 빠지면 NO_OPENAPI_SERVICE_ERROR 가 난다.
+    params: { numOfRows: 5, pageNo: 1, baseYm: "202504", areaCd: 51, signguCd: 51130, keyword: "뮤지엄산" },
+    why: "소재명으로 연관 장소 찾기",
+  },
+  {
+    service: "기초지자체 중심 관광지",
+    endpoint: SERVICES.locgo,
+    op: "areaBasedList1",
+    // baseYm·areaCd·signguCd 가 전부 필수(항목구분 1)다. 하나만 빠져도 거부당한다.
+    params: { numOfRows: 5, pageNo: 1, baseYm: "202404", areaCd: 11, signguCd: 11530 },
+    why: "시군구 대표 관광지",
+  },
+  {
+    service: "지역별 관광 서비스 수요",
+    endpoint: SERVICES.demand,
+    op: "areaTarSvcDemList",
+    params: { numOfRows: 5, pageNo: 1, baseYm: "202509", areaCd: 11, signguCd: 11530, tarSvcDemIxCd: 1112 },
+    why: "S5 어드민 수요",
+  },
+  {
+    service: "지역별 문화 자원 수요",
+    endpoint: SERVICES.demand,
+    op: "areaCulResDemList",
+    params: { numOfRows: 5, pageNo: 1, baseYm: "202404", areaCd: 11, signguCd: 11530, culResDemIxCd: 1205 },
+    why: "S5 어드민 문화 수요",
+  },
+  {
+    service: "지역별 관광 다양성",
+    endpoint: SERVICES.diversity,
+    op: "areaTouDivList",
+    params: { numOfRows: 5, pageNo: 1, baseYm: "202509", areaCd: 11, signguCd: 11530, touDivIxCd: 3101 },
+    why: "S5 어드민 다양성",
+  },
+  {
+    service: "지역별 경험 다양성",
+    endpoint: SERVICES.diversity,
+    op: "areaExpDivList",
+    params: { numOfRows: 5, pageNo: 1, baseYm: "202504", areaCd: 51, signguCd: 51130, expDivIxCd: 3204 },
+    why: "S5 어드민 경험 다양성",
+  },
+  {
+    service: "지역별 국제 다양성",
+    endpoint: SERVICES.diversity,
+    op: "areaIntlDivList",
+    params: { numOfRows: 5, pageNo: 1, baseYm: "202504", areaCd: 11, signguCd: 11530, intlDivIxCd: 3303 },
+    why: "해외 방문 다양성",
+  },
+];
+
+const OK = "\x1b[32m OK \x1b[0m";
+const NG = "\x1b[31mFAIL\x1b[0m";
+
 async function main() {
-  // ── 1. detailCommon — 파라미터 때문인지 확인 ──
-  // KorService2 에서는 defaultYN / overviewYN / firstImageYN 이 사라졌을 가능성이 있다.
-  console.log("\n[1] 국문 상세(소개글) — 파라미터를 줄여가며");
-  await tryOne("detailCommon 최소", SERVICES.kor, "detailCommon2", { contentId: 126508 });
-  await tryOne("detailCommon +타입", SERVICES.kor, "detailCommon2", { contentId: 126508, contentTypeId: 12 });
-  await tryOne("detailCommon 구파라미터", SERVICES.kor, "detailCommon2", {
-    contentId: 126508, defaultYN: "Y", overviewYN: "Y",
-  });
-  // 같은 엔드포인트에서 되는 것과 비교
-  await tryOne("detailInfo2 (대조군)", SERVICES.kor, "detailInfo2", { contentId: 126508, contentTypeId: 12 });
+  console.log("\n매뉴얼 기준 재검증\n");
 
-  // ── 2. 나머지 서비스 — 오퍼레이션명 후보 확대 ──
-  const wide: Array<[string, string, string[], Record<string, string | number>]> = [
-    [
-      "관광지별 연관 관광지",
-      SERVICES.related,
-      ["areaBasedList1", "areaBasedList", "tarRlteTarList", "getTarRlteTarList", "rlteTarList", "tarRlteTarList1"],
-      { numOfRows: 3, pageNo: 1, baseYm: "202506" },
-    ],
-    [
-      "기초지자체 중심 관광지",
-      SERVICES.locgo,
-      ["areaBasedList1", "locgoHubTarList", "getLocgoHubTarList", "hubTarList", "locgoHubTarList1"],
-      { numOfRows: 3, pageNo: 1, baseYm: "202506" },
-    ],
-    [
-      "지역별 관광 자원 수요",
-      SERVICES.demand,
-      ["areaTarResDemList", "getAreaTarResDemList", "tarResDemList", "resDemList", "areaTarResDem"],
-      { numOfRows: 3, pageNo: 1, baseYm: "202506" },
-    ],
-    [
-      "지역별 관광 다양성",
-      SERVICES.diversity,
-      ["areaTarDivList", "getAreaTarDivList", "tarDivList", "divList", "areaTarDiv"],
-      { numOfRows: 3, pageNo: 1, baseYm: "202506" },
-    ],
-  ];
-
-  for (const [label, endpoint, ops, params] of wide) {
-    console.log(`\n[2] ${label}`);
-    let hit = false;
-    for (const op of ops) {
-      if (await tryOne(label, endpoint, op, params)) {
-        hit = true;
-        break;
+  for (const c of CASES) {
+    const r = await callTourApi(c.endpoint, c.op, c.params);
+    if (r.ok) {
+      console.log(`${OK} ${c.service}`);
+      console.log(`     ${c.op}  ·  전체 ${r.totalCount.toLocaleString("ko-KR")}건  ·  표본 ${r.items.length}건`);
+      if (r.items[0]) {
+        console.log(`     필드: ${Object.keys(r.items[0] as object).join(", ")}`);
+        const first = r.items[0] as Record<string, unknown>;
+        const preview = Object.entries(first).slice(0, 6).map(([k, v]) => `${k}=${v}`).join("  ");
+        console.log(`     예시: ${preview}`);
       }
+    } else {
+      console.log(`${NG} ${c.service}`);
+      console.log(`     ${c.op}  ·  [${r.code}] ${r.message || "-"}`);
     }
-    if (!hit) console.log(`       → 후보 전부 실패. 개발자 문서 확인 필요`);
+    console.log("");
   }
-
-  console.log("");
 }
 
 main();

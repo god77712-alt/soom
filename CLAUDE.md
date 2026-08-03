@@ -117,15 +117,24 @@ S4 상세 화면의 6단 구조는 **의심을 순서대로 걷어내는 장치*
 | PhokoAwrdService | `phokoAwrdList` | 95건 |
 | Durunubi | `courseList` | 152건 |
 
-**⚠️ `detailCommon2` 함정 — 여기서 반나절 날린다**
-`contentId` **하나만** 보낼 것. `defaultYN` · `overviewYN` · `firstImageYN` · `contentTypeId` 를
-같이 보내면 `NO_OPENAPI_SERVICE_ERROR(12)` 로 거부당한다.
-KorService2 에서 그 파라미터들이 사라졌는데 블로그 예제엔 아직 다 들어있다.
-"서비스가 없다"는 오류라 오퍼레이션명 문제로 착각하기 쉽다.
+| TarRlteTarService1 | `areaBasedList1` / `searchKeyword1` | 필수: baseYm, areaCd, signguCd |
+| LocgoHubTarService1 | `areaBasedList1` | 필수: baseYm, areaCd, signguCd |
+| AreaTarResDemService | `areaTarSvcDemList` / `areaCulResDemList` | 필수: baseYm, areaCd, signguCd, 지표코드 |
+| AreaTarDivService | `areaTouDivList` / `areaExpDivList` / `areaIntlDivList` | 필수: baseYm, areaCd, signguCd, 지표코드 |
 
-**아직 못 쓰는 서비스 4개** — 오퍼레이션명 미확인. 후보 5~6개씩 시도했으나 전부 거부.
-data.go.kr 각 서비스 상세페이지의 참고문서(기술문서)를 봐야 한다.
-`TarRlteTarService1` / `LocgoHubTarService1` / `AreaTarResDemService` / `AreaTarDivService`
+**⚠️ 최대 함정 — `NO_OPENAPI_SERVICE_ERROR(12)` 의 진짜 원인**
+
+"해당 오픈API 서비스가 없거나 폐기됨" 이라고 나오지만 **오퍼레이션명 문제가 아닌 경우가 대부분이다.**
+이 게이트웨이는 파라미터가 어긋나면 같은 오류를 뱉는다. 두 방향 다 걸린다.
+
+1. **필수 파라미터가 빠졌을 때** — 매뉴얼의 `항목구분` 열이 `1` 이면 필수, `0` 이면 선택.
+   `LocgoHubTarService1` 은 baseYm·areaCd·signguCd 셋 다 필수라 하나만 빠져도 거부당한다.
+2. **없는 파라미터를 보냈을 때** — `detailCommon2` 에 `defaultYN`·`overviewYN`·`firstImageYN`·
+   `contentTypeId` 를 붙이면 거부당한다. KorService2 에서 사라진 파라미터인데 블로그 예제엔 아직 있다.
+   **`contentId` 하나만 보낼 것.**
+
+→ 이 오류가 나면 오퍼레이션명을 의심하기 전에 **매뉴얼의 요청 파라미터 표부터 대조할 것.**
+   활용매뉴얼(docx)은 각 서비스 data.go.kr 상세페이지의 참고문서에서 받는다.
 
 ### 소개글 확보율 (1단계 완료 판정)
 

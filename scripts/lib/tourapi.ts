@@ -105,7 +105,13 @@ export async function callTourApi<T = unknown>(
   return { ok: true, code, message, totalCount: Number(body.totalCount ?? items.length), items };
 }
 
-/** 발급받은 서비스 목록 */
+/**
+ * 발급받은 서비스 목록.
+ *
+ * ⚠️ NO_OPENAPI_SERVICE_ERROR(12) 가 나면 오퍼레이션명보다 **파라미터를 먼저 의심할 것.**
+ *    이 게이트웨이는 필수 파라미터가 빠져도, 없는 파라미터를 보내도 같은 오류를 뱉는다.
+ *    활용매뉴얼의 요청 파라미터 표에서 `항목구분` 이 1 이면 필수, 0 이면 선택이다.
+ */
 export const SERVICES = {
   kor: "https://apis.data.go.kr/B551011/KorService2",
   eng: "https://apis.data.go.kr/B551011/EngService2",
