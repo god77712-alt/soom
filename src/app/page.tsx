@@ -149,9 +149,6 @@ export default async function Home() {
                     </div>
                   ))}
                 </div>
-                <p className="mt-4 text-xs leading-relaxed text-ink3">
-                  이미 많이 찍힌 곳도 함께 보여드립니다. 비교해보고 고르시라고요.
-                </p>
               </div>
             </Reveal>
 
@@ -172,9 +169,6 @@ export default async function Home() {
                     </div>
                   ))}
                 </div>
-                <p className="mt-4 text-xs leading-relaxed text-ink3">
-                  잘 된 영상들의 공통 구성에서 뽑았습니다. 지어낸 게 아닙니다.
-                </p>
               </div>
             </Reveal>
 
@@ -199,9 +193,6 @@ export default async function Home() {
                     </div>
                   </div>
                 )}
-                <p className="mt-4 text-xs leading-relaxed text-ink3">
-                  오일장은 5일에 한 번만 섭니다. 모르고 가면 그날 촬영은 끝입니다.
-                </p>
               </div>
             </Reveal>
 
@@ -224,58 +215,14 @@ export default async function Home() {
                       </span>
                     </div>
                   ))}
-                  {(!sample || sample.nearby.length === 0) && (
-                    <p className="text-sm text-ink3">반경 40km 안의 다른 소재를 함께 묶어드립니다.</p>
-                  )}
                 </div>
-                <p className="mt-4 text-xs leading-relaxed text-ink3">
-                  세 시간 운전해서 한 곳만 찍고 오면 손해니까요.
-                </p>
               </div>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ══ 왜 믿을 만한지 — 짧게 ══ */}
-      <section className="border-t border-hair px-6 py-20 sm:px-10">
-        <div className="mx-auto max-w-4xl">
-          <Reveal>
-            <h2 className="font-serif text-3xl leading-snug font-normal tracking-tight text-balance">
-              감이 아니라 숫자입니다
-            </h2>
-            <p className="mt-4 max-w-[50ch] leading-relaxed text-ink2">
-              추천한 곳마다 <span className="text-ink">왜 여기인지</span> 근거를 함께 보여드립니다.
-              비슷한 소재 영상이 실제로 몇 배가 났는지, 여긴 왜 아직 비어 있는지까지요.
-            </p>
-          </Reveal>
-
-          <div className="mt-10 grid gap-px bg-hair sm:grid-cols-3">
-            {[
-              ["48,925", "한국관광공사 등록 장소", "국문 관광정보 전수"],
-              ["3년", "이내 영상만 사용", "오래된 성과는 지금과 다릅니다"],
-              ["국내 / 해외", "따로 계산", "먹히는 소재가 정반대입니다"],
-            ].map(([big, mid, small], i) => (
-              <Reveal key={mid} delay={i * 80}>
-                <div className="h-full bg-ground p-6">
-                  <div className="font-mono text-2xl font-bold text-signal tnum">{big}</div>
-                  <div className="mt-1.5 text-sm text-ink">{mid}</div>
-                  <div className="mt-1 text-xs text-ink3">{small}</div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-
-          <Reveal delay={200}>
-            <p className="mt-6 text-xs leading-relaxed text-ink3">
-              예상 조회수는 범위로만 알려드립니다. 단일 숫자로 장담하지 않습니다 — 결과는 콘텐츠
-              완성도에 따라 달라지니까요.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ══ 마지막 입력 ══ */}
+            {/* ══ 마지막 입력 ══ */}
       <section className="border-t border-hair px-6 py-20 sm:px-10">
         <div className="mx-auto max-w-4xl">
           <Reveal>

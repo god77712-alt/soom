@@ -107,19 +107,12 @@ export default async function PlaceDetailPage({
       </section>
 
       {/*
-        무드 태그.
-        소개글이 아니라 영상·댓글에서 나온 것이라 성과 점수가 없다. 대신 근거 수를 보여준다.
-        "정 3건(댓글)" 이 "정 ★★★" 보다 정직하고 크리에이터가 스스로 판단할 수 있다.
-        영상이 없는 곳은 이 영역이 비는데, 그건 결함이 아니라 아직 아무도 안 찍었다는 뜻이다.
+        무드 키워드. 영상·댓글에서 나온 것이라 성과 점수 대신 근거 수를 갖는다.
+        ⚠️ 없으면 섹션 자체를 그리지 않는다. 빈 자리를 문장으로 채우지 말 것.
       */}
-      <section className="mt-6 border border-hair bg-panel/30 p-5">
-        <h2 className="text-sm font-medium text-ink2">
-          여기서 나온 공기
-          <span className="ml-2 text-xs font-normal text-ink3">
-            소개글이 아니라 실제 영상과 댓글에서 뽑았습니다
-          </span>
-        </h2>
-        {moodTags.length > 0 ? (
+      {moodTags.length > 0 && (
+        <section className="mt-6">
+          <h2 className="text-sm font-medium text-ink2">키워드</h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {moodTags.map((m) => (
               <span
@@ -135,12 +128,8 @@ export default async function PlaceDetailPage({
               </span>
             ))}
           </div>
-        ) : (
-          <p className="mt-3 text-sm text-ink3">
-            아직 영상이 없어 이곳의 공기는 알 수 없습니다. 당신 영상이 첫 근거가 됩니다.
-          </p>
-        )}
-      </section>
+        </section>
+      )}
 
       {/* ── 찍을 수 있는 컷 ── */}
       {shots.length > 0 && (
@@ -205,9 +194,6 @@ export default async function PlaceDetailPage({
               <span className="font-semibold text-open">{evidence.own_video_count}편</span>
             </li>
           </ul>
-          <p className="mt-3 text-xs text-ink3">
-            영상이 없는 이유는 품질이 아니라 노출입니다. 등록 정보와 접근성은 이미 갖춰져 있습니다.
-          </p>
         </Step>
 
         {/* ── ④ 당신이면 이 정도 (범위 + 고지 필수) ── */}
