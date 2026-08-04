@@ -68,7 +68,18 @@ export default async function RecommendPage({
         <div className="absolute inset-0">
           <MapHero origin={{ name: "서울", lat: 37.5665, lng: 126.978 }} open={mapOpen} held={mapHeld} />
         </div>
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,#000_0%,rgba(0,0,0,.88)_34%,rgba(0,0,0,.35)_56%,transparent_74%)] max-md:bg-[linear-gradient(180deg,rgba(0,0,0,.92)_32%,rgba(0,0,0,.5)_72%,transparent)]" />
+        {/* 지도를 다 덮지 않는다. 글자 뒤만 어둡게 하고 나머지는 지도가 보이게 둔다 */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(110% 85% at 8% 45%, #000 0%, rgba(0,0,0,.86) 24%, rgba(0,0,0,.4) 52%, rgba(0,0,0,.06) 78%, transparent 100%)",
+          }}
+        />
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ background: "linear-gradient(to bottom, transparent 60%, #000 100%)" }}
+        />
 
         <div className="relative max-w-xl px-6 py-12">
           <Link
