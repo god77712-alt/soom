@@ -16,7 +16,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EvidenceVideoCard } from "@/components/EvidenceVideoCard";
-import { MapHero } from "@/components/MapHero";
 import { PlaceRecommendCard } from "@/components/PlaceRecommendCard";
 import { TagChip } from "@/components/TagChip";
 import { toneClass } from "@/lib/display";
@@ -49,39 +48,12 @@ export default async function RecommendPage({
 
   const langLabel = channel.language === "en" ? "해외 채널" : "국내 채널";
 
-  // 지도에 찍을 좌표. 추천된 곳은 금색으로 맥동하고, 이미 찍힌 곳은 가라앉는다.
-  const mapOpen = cards.map((c) => ({
-    name: c.place.name_ko,
-    lat: c.place.lat,
-    lng: c.place.lng,
-  }));
-  const mapHeld = occupied.map((o) => ({
-    name: o.place.name_ko,
-    lat: o.place.lat,
-    lng: o.place.lng,
-  }));
-
   return (
     <main>
-      {/* ── 지도 히어로: 공식이 지도 위에 뜬다 ── */}
-      <section className="relative min-h-[26rem] overflow-hidden border-b border-hair">
-        <div className="absolute inset-0">
-          <MapHero origin={{ name: "서울", lat: 37.5665, lng: 126.978 }} open={mapOpen} held={mapHeld} />
-        </div>
-        {/* 지도를 다 덮지 않는다. 글자 뒤만 어둡게 하고 나머지는 지도가 보이게 둔다 */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(90deg, #000 0%, rgba(0,0,0,.94) 32%, rgba(0,0,0,.55) 48%, rgba(0,0,0,.12) 62%, transparent 74%)",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "linear-gradient(to bottom, transparent 60%, #000 100%)" }}
-        />
+      {/* 도트맵은 홈 히어로 전용이라 여기엔 없다 */}
+      <section className="border-b border-hair">
 
-        <div className="relative max-w-xl px-6 py-12">
+        <div className="mx-auto max-w-3xl px-6 py-12">
           <Link
             href={channel.id === "guest" ? "/start" : `/profile?q=${encodeURIComponent(channel.title)}`}
             className="font-mono text-xs text-ink3 hover:text-ink2"
@@ -122,20 +94,6 @@ export default async function RecommendPage({
           )}
         </div>
 
-        <div className="pointer-events-none absolute bottom-4 left-6 flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10px] text-ink3">
-          <span>
-            <i className="mr-1.5 inline-block size-1.5 rounded-full bg-signal-d align-[0.1em]" />
-            등록 관광지
-          </span>
-          <span>
-            <i className="mr-1.5 inline-block size-1.5 rounded-full bg-open align-[0.1em]" />
-            추천 구역
-          </span>
-          <span>
-            <i className="mr-1.5 inline-block size-1.5 rounded-full bg-held align-[0.1em]" />
-            이미 관광지
-          </span>
-        </div>
       </section>
 
       <div className="mx-auto max-w-2xl px-6 py-10">

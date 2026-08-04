@@ -1,59 +1,113 @@
 /**
- * 홈 — 크리에이터가 들어오는 화면.
+ * 홈 — 입력부터 추천까지 한 페이지에서 끝난다.
  *
- * ⚠️ 이 페이지는 심사위원에게 프로젝트를 설명하는 곳이 아니다.
- *    크리에이터는 "병목이 어쩌고" 에 관심이 없다. 바로 쓸 수 있어야 한다.
+ *   ?q 없음   히어로: 도트맵 + 입력창
+ *   ?q 있음   히어로: 도트맵 + 채널 분석 결과 (같은 자리)
+ *             아래:   그 분석을 바탕으로 한 추천 플로우
+ *   ?tag      소재를 바꿔 다시 계산 (페이지 이동 없이)
  *
- *   · 입력창이 첫 화면에 있다. 버튼 눌러서 다른 페이지로 가는 구조가 아니다.
- *   · 기능 설명은 실제 결과 조각으로 보여준다. 문장으로 설명하지 않는다.
- *   · 공식·방법론은 여기 안 쓴다. 궁금한 사람만 상세에서 본다.
+ * ⚠️ 도트맵은 이 히어로 배경에만 쓴다. 다른 화면에 넣지 말 것.
+ * ⚠️ 빈 자리를 설명 문장으로 채우지 말 것.
  */
 
 import Link from "next/link";
+import { EvidenceVideoCard } from "@/components/EvidenceVideoCard";
 import { MapHero } from "@/components/MapHero";
+import { PlaceRecommendCard } from "@/components/PlaceRecommendCard";
 import { Reveal } from "@/components/Reveal";
+import { ShareButton } from "@/components/ShareButton";
+import { TagChip } from "@/components/TagChip";
 import { getStrings } from "@/lib/i18n";
 import {
+  getChannelProfile,
   getDemoChannels,
-  getPlaceDetail,
+  getExpansionTags,
+  getTagEvidence,
+  getTags,
   occupiedPlaces,
   recommendPlaces,
+  resolveChannel,
 } from "@/lib/repo";
+import type { Tag, TagAxis } from "@/lib/types";
 
 const S = getStrings("ko");
 
-/**
- * 글자가 앉는 왼쪽만 가린다. 지도가 있는 오른쪽은 건드리지 않는다.
- * 예전엔 원형으로 덮어서 지도 한가운데가 제일 어두웠다.
- */
 const VEIL =
   "linear-gradient(90deg, #000 0%, rgba(0,0,0,.94) 30%, rgba(0,0,0,.55) 46%, rgba(0,0,0,.12) 60%, transparent 72%)";
 const VEIL_BOTTOM = "linear-gradient(to bottom, transparent 62%, #000 100%)";
 
-export default async function Home() {
-  const [demoChannels, occupied] = await Promise.all([
-    getDemoChannels(),
-    occupiedPlaces("t_oil_market", "en", 3),
-  ]);
-  const cards = await recommendPlaces(
-    "ch_wander",
-    "t_oil_market",
-    5,
-    occupied.map((o) => o.place.id),
-  );
-  const sample = await getPlaceDetail("p_sunchang_market", "ch_wander", "t_oil_market");
+const AXES: Array<{ key: Exclude<TagAxis, "time">; label: string }> = [
+  { key: "subject", label: "소재" },
+  { key: "mood", label: "무드" },
+  { key: "format", label: "형식" },
+  { key: "persona", label: "화법" },
+  { key: "audience", label: "시청자" },
+];
 
-  const mapOpen = cards.map((c) => ({ name: c.place.name_ko, lat: c.place.lat, lng: c.place.lng }));
-  const mapHeld = occupied.map((o) => ({
-    name: o.place.name_ko,
-    lat: o.place.lat,
-    lng: o.place.lng,
-  }));
+/** 채널을 아직 안 넣었을 때 지도에 뿌릴 좌표 */
+const IDLE_OPEN = [
+  { name: "곡성", lat: 35.282, lng: 127.292 },
+  { name: "청송", lat: 36.432, lng: 129.057 },
+  { name: "무주", lat: 36.007, lng: 127.661 },
+  { name: "봉화", lat: 36.893, lng: 128.732 },
+  { name: "순창", lat: 35.3744, lng: 127.1376 },
+];
+const IDLE_HELD = [
+  { name: "정선", lat: 37.3805, lng: 128.6606 },
+  { name: "화개", lat: 35.1707, lng: 127.647 },
+];
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; tag?: string }>;
+}) {
+  const { q = "", tag: tagParam } = await searchParams;
+
+  const channel = q ? await resolveChannel(q) : null;
+  const view = channel ? await getChannelProfile(channel.id) : null;
+  const notFound = Boolean(q) && !view;
+
+  const tagId = tagParam ?? view?.profile.tag_ids[0];
+  const evidence = view && tagId ? await getTagEvidence(view.channel.id, tagId) : null;
+  const occupied = evidence?.occupied ?? [];
+  const cards =
+    view && tagId
+      ? await recommendPlaces(
+          view.channel.id,
+          tagId,
+          5,
+          occupied.map((o) => o.place.id),
+        )
+      : [];
+  const expansion = tagId ? await getExpansionTags(tagId) : { siblings: [], explore: [] };
+
+  const allTags = await getTags();
+  const byId = (id: string): Tag | undefined => allTags.find((t) => t.id === id);
+
+  const fallbackHeld = view ? [] : await occupiedPlaces("t_oil_market", "en", 3);
+  const mapOpen = cards.length
+    ? cards.map((c) => ({ name: c.place.name_ko, lat: c.place.lat, lng: c.place.lng }))
+    : IDLE_OPEN;
+  const mapHeld = occupied.length
+    ? occupied.map((o) => ({ name: o.place.name_ko, lat: o.place.lat, lng: o.place.lng }))
+    : fallbackHeld.length
+      ? fallbackHeld.map((o) => ({ name: o.place.name_ko, lat: o.place.lat, lng: o.place.lng }))
+      : IDLE_HELD;
+
+  const demoChannels = await getDemoChannels();
+  const shareTitle = view ? `${view.channel.title} 채널 분석` : "";
+  const shareDesc = view
+    ? `${view.tags.map((t) => t.name_ko).join(" · ")} — 경쟁이 적은 촬영지 ${cards.length}곳`
+    : "";
 
   return (
     <main>
-      {/* ══ 히어로 — 여기서 바로 시작한다 ══ */}
-      <section className="relative flex min-h-[36rem] items-center overflow-hidden lg:min-h-[42rem]">
+      {/* ══ 히어로 — 도트맵은 여기 배경으로만 ══ */}
+      <section
+        id="top"
+        className="relative flex min-h-[34rem] items-center overflow-hidden lg:min-h-[40rem]"
+      >
         <div className="absolute inset-0">
           <MapHero
             origin={{ name: "서울", lat: 37.5665, lng: 126.978 }}
@@ -64,194 +118,232 @@ export default async function Home() {
         <div className="pointer-events-none absolute inset-0" style={{ background: VEIL }} />
         <div className="pointer-events-none absolute inset-0" style={{ background: VEIL_BOTTOM }} />
 
-        <div className="relative w-full px-6 py-20 sm:px-10">
-          <div className="max-w-2xl">
-            <h1 className="font-serif text-[2.5rem] leading-[1.15] font-normal tracking-tight text-balance sm:text-[3.5rem]">
-              다음 영상, 어디서 찍을지
-              <br />
-              <span className="text-open">데이터가 골라드립니다</span>
-            </h1>
-            <p className="mt-6 max-w-[44ch] text-lg leading-relaxed text-ink2">
-              채널 주소만 넣으면 당신이 잘 찍는 소재를 찾고, 그 소재로 아직 아무도 안 찍은 곳을
-              알려드립니다.
-            </p>
-
-            {/* 입력창. 자바스크립트 없이도 동작한다 */}
-            <form action="/profile" method="get" className="mt-8 max-w-lg">
-              <div className="flex gap-2">
-                <input
-                  name="q"
-                  type="text"
-                  placeholder={S.s1UrlPlaceholder}
-                  aria-label={S.s1UrlLabel}
-                  className="min-w-0 flex-1 border border-hair2 bg-panel/80 px-4 py-3.5 text-sm outline-none backdrop-blur placeholder:text-ink3 focus:border-open"
-                />
-                <button
-                  type="submit"
-                  className="shrink-0 bg-open px-6 py-3.5 text-sm font-semibold text-ground transition-opacity hover:opacity-90"
-                >
-                  분석
-                </button>
+        <div className="relative w-full px-6 py-16 sm:px-10">
+          {view ? (
+            /* ── 분석 결과가 히어로 자리에 뜬다 ── */
+            <div className="max-w-2xl">
+              <div className="font-mono text-xs text-ink3">
+                {view.channel.title} · {S.subscribers(view.channel.subscriber_count)} ·{" "}
+                {view.channel.language === "en" ? "English" : "한국어"}
               </div>
-            </form>
+              <h1 className="mt-3 font-serif text-4xl leading-tight font-normal tracking-tight text-balance sm:text-5xl">
+                {S.s2Title}
+              </h1>
+              <p className="mt-2 font-mono text-xs text-ink3">
+                최근 {view.profile.analyzed_count}편 중 상위 성과{" "}
+                {view.profile.top_performer_count}편에서 추출
+              </p>
 
-            <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
-              <span className="font-mono text-[11px] text-ink3">예시로 바로 보기</span>
-              {demoChannels.map((c) => (
+              <div className="mt-7 space-y-3">
+                {AXES.map((axis) => {
+                  const ids = view.profile.axes[axis.key] ?? [];
+                  if (ids.length === 0) return null;
+                  return (
+                    <div key={axis.key} className="flex flex-wrap items-baseline gap-x-3 gap-y-2">
+                      <span className="w-10 shrink-0 font-mono text-[11px] text-ink3">
+                        {axis.label}
+                      </span>
+                      {ids.map((id) => {
+                        const t = byId(id);
+                        if (!t) return null;
+                        return (
+                          <span
+                            key={id}
+                            className={`border px-2.5 py-1 text-sm backdrop-blur ${
+                              axis.key === "subject"
+                                ? "border-open/50 bg-open/10 text-open"
+                                : "border-hair2 bg-ground/50 text-ink2"
+                            }`}
+                          >
+                            {t.name_ko}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="mt-8 flex flex-wrap items-center gap-2">
+                <a
+                  href="#result"
+                  className="bg-open px-5 py-2.5 text-sm font-semibold text-ground transition-opacity hover:opacity-90"
+                >
+                  촬영지 보기
+                </a>
+                <ShareButton title={shareTitle} description={shareDesc} />
                 <Link
-                  key={c.id}
-                  href={`/profile?q=${encodeURIComponent(c.title)}`}
-                  className="border border-hair2 px-3 py-1.5 text-xs text-ink2 transition-colors hover:border-open hover:text-open"
+                  href="/"
+                  className="px-3 py-2.5 font-mono text-xs text-ink3 transition-colors hover:text-ink2"
                 >
-                  {c.title}
+                  다른 채널
                 </Link>
-              ))}
+              </div>
             </div>
+          ) : (
+            /* ── 입력 전 ── */
+            <div className="max-w-2xl">
+              <h1 className="font-serif text-[2.5rem] leading-[1.15] font-normal tracking-tight text-balance sm:text-[3.5rem]">
+                다음 영상, 어디서 찍을지
+                <br />
+                <span className="text-open">데이터가 골라드립니다</span>
+              </h1>
+              <p className="mt-6 max-w-[44ch] text-lg leading-relaxed text-ink2">
+                채널 주소만 넣으면 당신이 잘 찍는 소재를 찾고, 그 소재로 아직 아무도 안 찍은 곳을
+                알려드립니다.
+              </p>
 
-            <p className="mt-5 font-mono text-[11px] text-ink3">
-              채널이 없어도 됩니다 —{" "}
-              <Link href="/start" className="text-signal hover:underline">
-                소재만 골라서 찾기
-              </Link>
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ══ 뭘 받는지 — 실제 결과 조각으로 ══ */}
-      <section className="border-t border-hair px-6 py-20 sm:px-10">
-        <div className="mx-auto max-w-4xl">
-          <Reveal>
-            <h2 className="font-serif text-3xl leading-snug font-normal tracking-tight text-balance">
-              이런 걸 받습니다
-            </h2>
-          </Reveal>
-
-          <div className="mt-10 grid gap-px bg-hair md:grid-cols-2">
-            {/* 촬영지 목록 */}
-            <Reveal>
-              <div className="h-full bg-ground p-6">
-                <div className="font-mono text-[11px] tracking-wider text-signal uppercase">
-                  촬영지
+              <form action="/" method="get" className="mt-8 max-w-lg">
+                <div className="flex gap-2">
+                  <input
+                    name="q"
+                    type="text"
+                    placeholder={S.s1UrlPlaceholder}
+                    aria-label={S.s1UrlLabel}
+                    className="min-w-0 flex-1 border border-hair2 bg-panel/80 px-4 py-3.5 text-sm outline-none backdrop-blur placeholder:text-ink3 focus:border-open"
+                  />
+                  <button
+                    type="submit"
+                    className="shrink-0 bg-open px-6 py-3.5 text-sm font-semibold text-ground transition-opacity hover:opacity-90"
+                  >
+                    분석
+                  </button>
                 </div>
-                <h3 className="mt-2 font-semibold">경쟁이 적은 순서로 5곳</h3>
-                <div className="mt-4 space-y-2">
-                  {cards.slice(0, 3).map((c) => (
-                    <div key={c.place.id} className="flex items-baseline justify-between gap-3">
-                      <span className="truncate text-sm text-ink2">{c.place.name_ko}</span>
-                      <span
-                        className={`shrink-0 font-mono text-xs tnum ${
-                          c.competition.count === 0 ? "font-semibold text-open" : "text-ink3"
-                        }`}
-                      >
-                        {c.competition.text}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-
-            {/* 촬영 컷 */}
-            <Reveal delay={80}>
-              <div className="h-full bg-ground p-6">
-                <div className="font-mono text-[11px] tracking-wider text-signal uppercase">
-                  촬영 구성
-                </div>
-                <h3 className="mt-2 font-semibold">뭘 찍을지, 몇 시에 찍을지</h3>
-                <div className="mt-4 space-y-2">
-                  {sample?.shots.slice(0, 4).map((s, i) => (
-                    <div key={i} className="flex items-baseline gap-3">
-                      <span className="shrink-0 font-mono text-[11px] text-open tnum">
-                        {s.best_time ?? "상시"}
-                      </span>
-                      <span className="truncate text-sm text-ink2">{s.caption}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Reveal>
-
-            {/* 헛걸음 방지 */}
-            <Reveal delay={160}>
-              <div className="h-full bg-ground p-6">
-                <div className="font-mono text-[11px] tracking-wider text-signal uppercase">
-                  헛걸음 방지
-                </div>
-                <h3 className="mt-2 font-semibold">장날 · 운영시간 · 일출</h3>
-                {sample && (
-                  <div className="mt-4 space-y-1.5 font-mono text-sm text-ink2 tnum">
-                    <div>
-                      장날 <span className="text-ink">{sample.operation.open_cycle ?? "상시"}</span>
-                    </div>
-                    <div>
-                      운영 <span className="text-ink">{sample.operation.open_hours ?? "확인 필요"}</span>
-                    </div>
-                    <div>
-                      일출 <span className="text-ink">{sample.plan.sunrise}</span> · 일몰{" "}
-                      <span className="text-ink">{sample.plan.sunset}</span>
-                    </div>
-                  </div>
+                {notFound && (
+                  <p className="mt-2 font-mono text-xs text-open-d">
+                    채널을 찾지 못했습니다. 아래 예시로 확인해보세요.
+                  </p>
                 )}
+              </form>
+
+              <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+                <span className="font-mono text-[11px] text-ink3">예시</span>
+                {demoChannels.map((c) => (
+                  <Link
+                    key={c.id}
+                    href={`/?q=${encodeURIComponent(c.title)}`}
+                    className="border border-hair2 bg-ground/40 px-3 py-1.5 text-xs text-ink2 backdrop-blur transition-colors hover:border-open hover:text-open"
+                  >
+                    {c.title}
+                  </Link>
+                ))}
+                <Link href="/start" className="font-mono text-[11px] text-signal hover:underline">
+                  소재만 골라서 찾기
+                </Link>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ══ 분석 기반 플로우 ══ */}
+      {view && evidence && (
+        <div id="result" className="mx-auto max-w-3xl px-6 py-14 sm:px-10">
+          <Reveal>
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
+              <h2 className="font-serif text-2xl font-normal tracking-tight">
+                {evidence.tag.name_ko} 소재, 이렇게 됐습니다
+              </h2>
+              {evidence.score.score && (
+                <span className="font-mono text-xs text-ink3 tnum">
+                  영상 {evidence.score.score.video_count}편 · 중앙값{" "}
+                  {evidence.score.score.median_vsr.toFixed(1)}배
+                </span>
+              )}
+            </div>
+          </Reveal>
+
+          {evidence.provenVideos.length > 0 && (
+            <Reveal delay={80}>
+              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                {evidence.provenVideos.map((v) => (
+                  <EvidenceVideoCard key={v.video.id} item={v} />
+                ))}
               </div>
             </Reveal>
+          )}
 
-            {/* 묶어 찍기 */}
-            <Reveal delay={240}>
-              <div className="h-full bg-ground p-6">
-                <div className="font-mono text-[11px] tracking-wider text-signal uppercase">
-                  하루 동선
+          {occupied.length > 0 && (
+            <Reveal delay={140}>
+              <div className="mt-10 border border-hair bg-panel p-4">
+                <div className="flex items-baseline gap-2">
+                  <h3 className="text-sm font-medium text-ink2">{S.s3OccupiedTitle}</h3>
+                  <span className="text-xs text-ink3">{S.s3OccupiedHelp}</span>
                 </div>
-                <h3 className="mt-2 font-semibold">근처에 같이 찍을 곳</h3>
-                <div className="mt-4 space-y-2">
-                  {sample?.nearby.slice(0, 3).map((n) => (
-                    <div key={n.place_id} className="flex items-baseline justify-between gap-3">
-                      <span className="truncate text-sm text-ink2">
-                        {n.name_ko}
-                        <span className="ml-2 text-xs text-ink3">{n.tag_names.join(" · ")}</span>
-                      </span>
-                      <span className="shrink-0 font-mono text-xs text-ink3 tnum">
-                        차로 {n.drive_minutes}분
-                      </span>
-                    </div>
+                <div className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-ink3">
+                  {occupied.map((o) => (
+                    <span key={o.place.id}>
+                      {o.place.name_ko}
+                      <span className="ml-1.5 font-mono tnum">{S.videoCount(o.count)}</span>
+                    </span>
                   ))}
                 </div>
               </div>
             </Reveal>
-          </div>
-        </div>
-      </section>
+          )}
 
-            {/* ══ 마지막 입력 ══ */}
-      <section className="border-t border-hair px-6 py-20 sm:px-10">
-        <div className="mx-auto max-w-4xl">
+          <Reveal delay={180}>
+            <div className="mt-10 flex items-baseline justify-between">
+              <h2 className="text-xl font-bold tracking-tight">{S.s3RecommendTitle}</h2>
+              <span className="font-mono text-[11px] text-ink3">
+                {S.s3RecommendHelp(cards.length)}
+              </span>
+            </div>
+          </Reveal>
+
+          <div className="mt-4">
+            {cards.map((card, i) => (
+              <PlaceRecommendCard
+                key={card.place.id}
+                card={card}
+                tag={evidence.tag}
+                channelId={view.channel.id}
+                rank={i + 1}
+              />
+            ))}
+          </div>
+
+          {/* 소재 바꾸기 — 같은 페이지에서 다시 계산 */}
           <Reveal>
-            <h2 className="font-serif text-3xl leading-snug font-normal tracking-tight text-balance">
-              채널 주소 하나면 됩니다
-            </h2>
-            <form action="/profile" method="get" className="mt-6 max-w-lg">
-              <div className="flex gap-2">
-                <input
-                  name="q"
-                  type="text"
-                  placeholder={S.s1UrlPlaceholder}
-                  aria-label={S.s1UrlLabel}
-                  className="min-w-0 flex-1 border border-hair2 bg-panel px-4 py-3.5 text-sm outline-none placeholder:text-ink3 focus:border-open"
-                />
-                <button
-                  type="submit"
-                  className="shrink-0 bg-open px-6 py-3.5 text-sm font-semibold text-ground transition-opacity hover:opacity-90"
-                >
-                  분석
-                </button>
+            <div className="mt-12 border-t border-hair pt-8">
+              <h2 className="text-sm font-medium text-ink2">{S.s3ExpandTitle}</h2>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {expansion.siblings.map((t) => (
+                  <TagChip
+                    key={t.id}
+                    tag={t}
+                    href={`/?q=${encodeURIComponent(q)}&tag=${t.id}#result`}
+                  />
+                ))}
               </div>
-            </form>
+              {expansion.explore.length > 0 && (
+                <>
+                  <div className="mt-5 font-mono text-[11px] text-ink3">{S.s3ExploreLabel}</div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {expansion.explore.map((t) => (
+                      <TagChip
+                        key={t.id}
+                        tag={t}
+                        href={`/?q=${encodeURIComponent(q)}&tag=${t.id}#result`}
+                        variant="explore"
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </Reveal>
+
+          <Reveal>
+            <div className="mt-12 border-t border-hair pt-8">
+              <ShareButton title={shareTitle} description={shareDesc} />
+            </div>
           </Reveal>
         </div>
-      </section>
+      )}
 
       <footer className="border-t border-hair px-6 py-8 sm:px-10">
-        <div className="mx-auto flex max-w-4xl flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[11px] text-ink3">
+        <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[11px] text-ink3">
           <span>{S.appName}</span>
           <span>2026 관광데이터 활용 공모전</span>
           <Link href="/admin" className="transition-colors hover:text-ink2">
