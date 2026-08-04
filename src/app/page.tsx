@@ -1,47 +1,43 @@
 /**
- * 홈. 스크롤하면서 논지가 이어지는 랜딩 화면.
+ * 홈 — 크리에이터가 들어오는 화면.
  *
- * 순서를 바꾸지 말 것 — 설득의 순서다.
- *   1. 문제      콘텐츠가 없는 곳엔 아무도 안 간다
- *   2. 계산      우리가 어떻게 고르는가 (공식을 숨기지 않는다)
- *   3. 결과      실제로 이렇게 나온다 (진짜 계산 결과를 그대로 보여준다)
- *   4. 대상      크리에이터 / 기관
+ * ⚠️ 이 페이지는 심사위원에게 프로젝트를 설명하는 곳이 아니다.
+ *    크리에이터는 "병목이 어쩌고" 에 관심이 없다. 바로 쓸 수 있어야 한다.
  *
- * 화면 목록(S1~S5)은 개발용이라 맨 아래로 내렸다.
+ *   · 입력창이 첫 화면에 있다. 버튼 눌러서 다른 페이지로 가는 구조가 아니다.
+ *   · 기능 설명은 실제 결과 조각으로 보여준다. 문장으로 설명하지 않는다.
+ *   · 공식·방법론은 여기 안 쓴다. 궁금한 사람만 상세에서 본다.
  */
 
 import Link from "next/link";
 import { MapHero } from "@/components/MapHero";
 import { Reveal } from "@/components/Reveal";
 import { getStrings } from "@/lib/i18n";
-import { occupiedPlaces, recommendPlaces } from "@/lib/repo";
+import {
+  getDemoChannels,
+  getPlaceDetail,
+  occupiedPlaces,
+  recommendPlaces,
+} from "@/lib/repo";
 
 const S = getStrings("ko");
 
-const SCREENS = [
-  { href: "/start", label: "S1 온보딩" },
-  { href: "/profile?q=Wander Korea", label: "S2 채널 분석" },
-  { href: "/recommend?channel=ch_wander&tag=t_oil_market", label: "S3 추천" },
-  { href: "/place/p_sunchang_market?channel=ch_wander&tag=t_oil_market", label: "S4 상세" },
-  { href: "/admin", label: "S5 어드민" },
-  { href: "/check", label: "검증표" },
-];
-
-/** 히어로 위 텍스트를 읽히게 하는 장막. 지도를 다 덮지 않는다 */
 const VEIL =
-  "radial-gradient(115% 90% at 10% 45%, #000 0%, rgba(0,0,0,.88) 26%, rgba(0,0,0,.42) 54%, rgba(0,0,0,.08) 78%, transparent 100%)";
-const VEIL_BOTTOM = "linear-gradient(to bottom, transparent 55%, #000 100%)";
+  "radial-gradient(115% 92% at 12% 48%, #000 0%, rgba(0,0,0,.9) 26%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.08) 80%, transparent 100%)";
+const VEIL_BOTTOM = "linear-gradient(to bottom, transparent 58%, #000 100%)";
 
 export default async function Home() {
-  // 랜딩에 박아둔 숫자가 아니라 실제 계산 결과를 그대로 보여준다.
-  const occupied = await occupiedPlaces("t_oil_market", "en", 3);
+  const [demoChannels, occupied] = await Promise.all([
+    getDemoChannels(),
+    occupiedPlaces("t_oil_market", "en", 3),
+  ]);
   const cards = await recommendPlaces(
     "ch_wander",
     "t_oil_market",
     5,
     occupied.map((o) => o.place.id),
   );
-  const maxScore = Math.max(...cards.map((c) => c.soom_score), 1);
+  const sample = await getPlaceDetail("p_sunchang_market", "ch_wander", "t_oil_market");
 
   const mapOpen = cards.map((c) => ({ name: c.place.name_ko, lat: c.place.lat, lng: c.place.lng }));
   const mapHeld = occupied.map((o) => ({
@@ -52,8 +48,8 @@ export default async function Home() {
 
   return (
     <main>
-      {/* ── 히어로 ── */}
-      <section className="relative flex min-h-[38rem] items-center overflow-hidden lg:min-h-[44rem]">
+      {/* ══ 히어로 — 여기서 바로 시작한다 ══ */}
+      <section className="relative flex min-h-[36rem] items-center overflow-hidden lg:min-h-[42rem]">
         <div className="absolute inset-0">
           <MapHero
             origin={{ name: "서울", lat: 37.5665, lng: 126.978 }}
@@ -66,279 +62,253 @@ export default async function Home() {
 
         <div className="relative w-full px-6 py-20 sm:px-10">
           <div className="max-w-2xl">
-            <div className="font-mono text-[11px] tracking-[0.16em] text-signal uppercase">
-              2026 관광데이터 활용 공모전
-            </div>
-            <h1 className="mt-5 font-serif text-[2.5rem] leading-[1.15] font-normal tracking-tight text-balance sm:text-6xl">
-              통계가 다음 좌표를 계산한다
+            <h1 className="font-serif text-[2.5rem] leading-[1.15] font-normal tracking-tight text-balance sm:text-[3.5rem]">
+              다음 영상, 어디서 찍을지
+              <br />
+              <span className="text-open">데이터가 골라드립니다</span>
             </h1>
-            <p className="mt-6 max-w-[46ch] text-lg leading-relaxed text-ink2">
-              당신 채널에서 <span className="text-ink">잘 된 영상의 소재</span>를 뽑고, 그 소재가
-              아직 촬영되지 않은 지역을 찾아냅니다.
+            <p className="mt-6 max-w-[44ch] text-lg leading-relaxed text-ink2">
+              채널 주소만 넣으면 당신이 잘 찍는 소재를 찾고, 그 소재로 아직 아무도 안 찍은 곳을
+              알려드립니다.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                href="/start"
-                className="border border-open px-6 py-3 text-sm font-medium text-open transition-colors hover:bg-open hover:text-ground"
-              >
-                내 채널로 시작하기
-              </Link>
-              <Link
-                href="/recommend?channel=ch_wander&tag=t_oil_market"
-                className="px-2 py-3 font-mono text-xs text-ink3 transition-colors hover:text-ink2"
-              >
-                결과 먼저 보기 →
-              </Link>
-            </div>
-          </div>
-        </div>
 
-        <div className="pointer-events-none absolute right-6 bottom-6 hidden text-right font-mono text-[10px] leading-relaxed text-ink3 lg:block">
-          <b className="block text-xl font-bold text-signal tnum">48,925</b>
-          국문 관광정보 전수
-          <br />
-          TourAPI 실측 · 2026-08
+            {/* 입력창. 자바스크립트 없이도 동작한다 */}
+            <form action="/profile" method="get" className="mt-8 max-w-lg">
+              <div className="flex gap-2">
+                <input
+                  name="q"
+                  type="text"
+                  placeholder={S.s1UrlPlaceholder}
+                  aria-label={S.s1UrlLabel}
+                  className="min-w-0 flex-1 border border-hair2 bg-panel/80 px-4 py-3.5 text-sm outline-none backdrop-blur placeholder:text-ink3 focus:border-open"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 bg-open px-6 py-3.5 text-sm font-semibold text-ground transition-opacity hover:opacity-90"
+                >
+                  분석
+                </button>
+              </div>
+            </form>
+
+            <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span className="font-mono text-[11px] text-ink3">예시로 바로 보기</span>
+              {demoChannels.map((c) => (
+                <Link
+                  key={c.id}
+                  href={`/profile?q=${encodeURIComponent(c.title)}`}
+                  className="border border-hair2 px-3 py-1.5 text-xs text-ink2 transition-colors hover:border-open hover:text-open"
+                >
+                  {c.title}
+                </Link>
+              ))}
+            </div>
+
+            <p className="mt-5 font-mono text-[11px] text-ink3">
+              채널이 없어도 됩니다 —{" "}
+              <Link href="/start" className="text-signal hover:underline">
+                소재만 골라서 찾기
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* ── 1. 문제 ── */}
-      <section className="border-t border-hair px-6 py-24 sm:px-10">
-        <div className="mx-auto max-w-3xl">
+      {/* ══ 뭘 받는지 — 실제 결과 조각으로 ══ */}
+      <section className="border-t border-hair px-6 py-20 sm:px-10">
+        <div className="mx-auto max-w-4xl">
           <Reveal>
-            <div className="font-mono text-[11px] tracking-[0.16em] text-ink3 uppercase">
-              01 &nbsp;문제
-            </div>
-            <h2 className="mt-4 font-serif text-3xl leading-snug font-normal tracking-tight text-balance sm:text-4xl">
-              병목은 관광객이 아니라 콘텐츠다
+            <h2 className="font-serif text-3xl leading-snug font-normal tracking-tight text-balance">
+              이런 걸 받습니다
             </h2>
+          </Reveal>
+
+          <div className="mt-10 grid gap-px bg-hair md:grid-cols-2">
+            {/* 촬영지 목록 */}
+            <Reveal>
+              <div className="h-full bg-ground p-6">
+                <div className="font-mono text-[11px] tracking-wider text-signal uppercase">
+                  촬영지
+                </div>
+                <h3 className="mt-2 font-semibold">경쟁이 적은 순서로 5곳</h3>
+                <div className="mt-4 space-y-2">
+                  {cards.slice(0, 3).map((c) => (
+                    <div key={c.place.id} className="flex items-baseline justify-between gap-3">
+                      <span className="truncate text-sm text-ink2">{c.place.name_ko}</span>
+                      <span
+                        className={`shrink-0 font-mono text-xs tnum ${
+                          c.competition.count === 0 ? "font-semibold text-open" : "text-ink3"
+                        }`}
+                      >
+                        {c.competition.text}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-4 text-xs leading-relaxed text-ink3">
+                  이미 많이 찍힌 곳도 함께 보여드립니다. 비교해보고 고르시라고요.
+                </p>
+              </div>
+            </Reveal>
+
+            {/* 촬영 컷 */}
+            <Reveal delay={80}>
+              <div className="h-full bg-ground p-6">
+                <div className="font-mono text-[11px] tracking-wider text-signal uppercase">
+                  촬영 구성
+                </div>
+                <h3 className="mt-2 font-semibold">뭘 찍을지, 몇 시에 찍을지</h3>
+                <div className="mt-4 space-y-2">
+                  {sample?.shots.slice(0, 4).map((s, i) => (
+                    <div key={i} className="flex items-baseline gap-3">
+                      <span className="shrink-0 font-mono text-[11px] text-open tnum">
+                        {s.best_time ?? "상시"}
+                      </span>
+                      <span className="truncate text-sm text-ink2">{s.caption}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="mt-4 text-xs leading-relaxed text-ink3">
+                  잘 된 영상들의 공통 구성에서 뽑았습니다. 지어낸 게 아닙니다.
+                </p>
+              </div>
+            </Reveal>
+
+            {/* 헛걸음 방지 */}
+            <Reveal delay={160}>
+              <div className="h-full bg-ground p-6">
+                <div className="font-mono text-[11px] tracking-wider text-signal uppercase">
+                  헛걸음 방지
+                </div>
+                <h3 className="mt-2 font-semibold">장날 · 운영시간 · 일출</h3>
+                {sample && (
+                  <div className="mt-4 space-y-1.5 font-mono text-sm text-ink2 tnum">
+                    <div>
+                      장날 <span className="text-ink">{sample.operation.open_cycle ?? "상시"}</span>
+                    </div>
+                    <div>
+                      운영 <span className="text-ink">{sample.operation.open_hours ?? "확인 필요"}</span>
+                    </div>
+                    <div>
+                      일출 <span className="text-ink">{sample.plan.sunrise}</span> · 일몰{" "}
+                      <span className="text-ink">{sample.plan.sunset}</span>
+                    </div>
+                  </div>
+                )}
+                <p className="mt-4 text-xs leading-relaxed text-ink3">
+                  오일장은 5일에 한 번만 섭니다. 모르고 가면 그날 촬영은 끝입니다.
+                </p>
+              </div>
+            </Reveal>
+
+            {/* 묶어 찍기 */}
+            <Reveal delay={240}>
+              <div className="h-full bg-ground p-6">
+                <div className="font-mono text-[11px] tracking-wider text-signal uppercase">
+                  하루 동선
+                </div>
+                <h3 className="mt-2 font-semibold">근처에 같이 찍을 곳</h3>
+                <div className="mt-4 space-y-2">
+                  {sample?.nearby.slice(0, 3).map((n) => (
+                    <div key={n.place_id} className="flex items-baseline justify-between gap-3">
+                      <span className="truncate text-sm text-ink2">
+                        {n.name_ko}
+                        <span className="ml-2 text-xs text-ink3">{n.tag_names.join(" · ")}</span>
+                      </span>
+                      <span className="shrink-0 font-mono text-xs text-ink3 tnum">
+                        차로 {n.drive_minutes}분
+                      </span>
+                    </div>
+                  ))}
+                  {(!sample || sample.nearby.length === 0) && (
+                    <p className="text-sm text-ink3">반경 40km 안의 다른 소재를 함께 묶어드립니다.</p>
+                  )}
+                </div>
+                <p className="mt-4 text-xs leading-relaxed text-ink3">
+                  세 시간 운전해서 한 곳만 찍고 오면 손해니까요.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 왜 믿을 만한지 — 짧게 ══ */}
+      <section className="border-t border-hair px-6 py-20 sm:px-10">
+        <div className="mx-auto max-w-4xl">
+          <Reveal>
+            <h2 className="font-serif text-3xl leading-snug font-normal tracking-tight text-balance">
+              감이 아니라 숫자입니다
+            </h2>
+            <p className="mt-4 max-w-[50ch] leading-relaxed text-ink2">
+              추천한 곳마다 <span className="text-ink">왜 여기인지</span> 근거를 함께 보여드립니다.
+              비슷한 소재 영상이 실제로 몇 배가 났는지, 여긴 왜 아직 비어 있는지까지요.
+            </p>
           </Reveal>
 
           <div className="mt-10 grid gap-px bg-hair sm:grid-cols-3">
             {[
-              ["사람은 콘텐츠로 본 곳에 간다", "콘텐츠가 없는 지역엔 아무도 안 간다"],
-              ["크리에이터는 안 알려진 곳을 피한다", "조회수가 안 나올 리스크 때문에"],
-              ["그래서 그 지역은 영원히 비어 있다", "이게 진짜 병목이다"],
-            ].map(([a, b], i) => (
-              <Reveal key={a} delay={i * 90}>
+              ["48,925", "한국관광공사 등록 장소", "국문 관광정보 전수"],
+              ["3년", "이내 영상만 사용", "오래된 성과는 지금과 다릅니다"],
+              ["국내 / 해외", "따로 계산", "먹히는 소재가 정반대입니다"],
+            ].map(([big, mid, small], i) => (
+              <Reveal key={mid} delay={i * 80}>
                 <div className="h-full bg-ground p-6">
-                  <div className="font-mono text-xs text-signal">{String(i + 1).padStart(2, "0")}</div>
-                  <p className="mt-3 leading-relaxed text-ink">{a}</p>
-                  <p className={`mt-2 text-sm ${i === 2 ? "text-open" : "text-ink3"}`}>{b}</p>
+                  <div className="font-mono text-2xl font-bold text-signal tnum">{big}</div>
+                  <div className="mt-1.5 text-sm text-ink">{mid}</div>
+                  <div className="mt-1 text-xs text-ink3">{small}</div>
                 </div>
               </Reveal>
             ))}
           </div>
 
-          <Reveal delay={120}>
-            <p className="mt-10 max-w-[52ch] leading-relaxed text-ink2">
-              그래서 우리는 관광객을 보내지 않습니다.{" "}
-              <span className="text-ink">관광객을 데려올 사람</span>을 보냅니다. 크리에이터는 촬영
-              때문에 2~3일 머물고, 그가 만든 영상이 후속 방문자를 부릅니다.
+          <Reveal delay={200}>
+            <p className="mt-6 text-xs leading-relaxed text-ink3">
+              예상 조회수는 범위로만 알려드립니다. 단일 숫자로 장담하지 않습니다 — 결과는 콘텐츠
+              완성도에 따라 달라지니까요.
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* ── 2. 계산 ── */}
-      <section className="grid-floor border-t border-hair px-6 py-24 sm:px-10">
-        <div className="mx-auto max-w-3xl">
+      {/* ══ 마지막 입력 ══ */}
+      <section className="border-t border-hair px-6 py-20 sm:px-10">
+        <div className="mx-auto max-w-4xl">
           <Reveal>
-            <div className="font-mono text-[11px] tracking-[0.16em] text-ink3 uppercase">
-              02 &nbsp;계산
-            </div>
-            <h2 className="mt-4 font-serif text-3xl leading-snug font-normal tracking-tight text-balance sm:text-4xl">
-              공식을 숨기지 않는다
+            <h2 className="font-serif text-3xl leading-snug font-normal tracking-tight text-balance">
+              채널 주소 하나면 됩니다
             </h2>
-          </Reveal>
-
-          <div className="mt-10 space-y-px bg-hair">
-            {[
-              {
-                n: "①",
-                t: "영상 한 편이 얼마나 잘 됐나",
-                eq: "VSR = 조회수 ÷ 구독자 수",
-                d: "절대 조회수로 비교하면 큰 채널이 전부 이깁니다. 3년 이내 영상만, 구독자 1,000 미만 채널 제외, 평균이 아니라 중앙값.",
-              },
-              {
-                n: "②",
-                t: "이 소재가 얼마나 먹히나",
-                eq: "소재 성과 = 그 소재 영상들의 VSR 중앙값",
-                d: "언어별로 반드시 나눕니다. 재래시장은 해외 4.1배 / 국내 0.6배로 정반대입니다. 합치면 모든 소재가 평균으로 수렴해 추천이 무의미해집니다.",
-              },
-              {
-                n: "③",
-                t: "그래서 어디로 보낼까",
-                eq: "추천 점수 = 소재 성과 × 1 / log(경쟁 영상 수 + 2)",
-                d: "인구감소지역에 가산점을 주지 않습니다. 희소성만으로 자연히 위로 올라옵니다. 그래야 «우리가 편애했다»가 아니라 «데이터가 그렇게 말했다»가 됩니다.",
-              },
-            ].map((s, i) => (
-              <Reveal key={s.n} delay={i * 90}>
-                <div className="bg-ground p-6 sm:p-8">
-                  <div className="flex items-baseline gap-3">
-                    <span className="font-mono text-open">{s.n}</span>
-                    <h3 className="font-semibold tracking-tight">{s.t}</h3>
-                  </div>
-                  <div className="mt-4 overflow-x-auto border border-hair2 bg-panel px-4 py-3 font-mono text-sm whitespace-nowrap text-ink tnum">
-                    {s.eq}
-                  </div>
-                  <p className="mt-3 max-w-[58ch] text-sm leading-relaxed text-ink2">{s.d}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. 결과 ── */}
-      <section className="border-t border-hair px-6 py-24 sm:px-10">
-        <div className="mx-auto max-w-3xl">
-          <Reveal>
-            <div className="font-mono text-[11px] tracking-[0.16em] text-ink3 uppercase">
-              03 &nbsp;결과
-            </div>
-            <h2 className="mt-4 font-serif text-3xl leading-snug font-normal tracking-tight text-balance sm:text-4xl">
-              오일장 소재로 계산하면 이렇게 나온다
-            </h2>
-            <p className="mt-4 max-w-[52ch] text-sm leading-relaxed text-ink2">
-              해외 채널(구독자 2.1만) 기준. 소재 성과는 후보 전체가 3.2배로 같습니다. 순위를 가르는
-              건 경쟁 영상 수 하나뿐입니다.
-            </p>
-          </Reveal>
-
-          <div className="mt-10">
-            {cards.map((c, i) => {
-              const zero = c.competition.count === 0;
-              return (
-                <Reveal key={c.place.id} delay={i * 70}>
-                  <div className="grid grid-cols-[2rem_1fr] gap-4 border-b border-hair py-4">
-                    <span
-                      className={`font-mono text-sm font-bold ${zero ? "text-open" : "text-ink3"}`}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <div>
-                      <div className="flex flex-wrap items-baseline gap-x-2.5">
-                        <span className="font-semibold">{c.place.name_ko}</span>
-                        <span className="font-mono text-xs text-ink3">
-                          {c.place.sido} {c.place.sigungu}
-                        </span>
-                        {c.place.is_declining_area && (
-                          <span className="border border-hair2 px-1.5 py-0.5 font-mono text-[10px] text-ink3">
-                            {S.decliningArea}
-                          </span>
-                        )}
-                      </div>
-                      <div className="mt-2 grid grid-cols-[1fr_auto] items-center gap-3">
-                        <span className="relative h-1 bg-panel2">
-                          <i
-                            className={`absolute inset-y-0 left-0 ${zero ? "bg-open" : "bg-signal"}`}
-                            style={{ width: `${(c.soom_score / maxScore) * 100}%` }}
-                          />
-                        </span>
-                        <span className="font-mono text-sm text-ink3 tnum">
-                          <b
-                            className={`mr-2 text-base font-bold ${zero ? "text-open" : "text-ink"}`}
-                          >
-                            {c.soom_score.toFixed(2)}
-                          </b>
-                          {c.competition.text}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </Reveal>
-              );
-            })}
-
-            <Reveal delay={200}>
-              <div className="mt-6 border border-hair bg-panel p-5">
-                <div className="font-mono text-[11px] tracking-wider text-ink3 uppercase">
-                  추천에서 빠진 곳
-                </div>
-                <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-ink3">
-                  {occupied.map((o) => (
-                    <span key={o.place.id}>
-                      {o.place.name_ko}
-                      <span className="ml-1.5 font-mono tnum">{S.videoCount(o.count)}</span>
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-3 max-w-[52ch] text-sm leading-relaxed text-ink2">
-                  유명한 곳을 지우지 않습니다. 비교 기준으로 남겨둡니다.{" "}
-                  <span className="text-ink">정선이 보여야 곡성이 좋아 보이기</span> 때문입니다.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal delay={260}>
-              <p className="mt-8 max-w-[52ch] leading-relaxed text-ink2">
-                상위 다섯 곳이 전부 인구감소지역인데{" "}
-                <span className="text-ink">가산점은 한 줄도 없습니다.</span> 희소성 가중치만으로
-                자연히 올라온 결과입니다.
-              </p>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 4. 대상 ── */}
-      <section className="border-t border-hair px-6 py-24 sm:px-10">
-        <div className="mx-auto max-w-3xl">
-          <Reveal>
-            <div className="font-mono text-[11px] tracking-[0.16em] text-ink3 uppercase">
-              04 &nbsp;누가 쓰나
-            </div>
-          </Reveal>
-          <div className="mt-8 grid gap-px bg-hair sm:grid-cols-2">
-            <Reveal>
-              <div className="h-full bg-ground p-7">
-                <h3 className="font-serif text-2xl font-normal">크리에이터</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink2">
-                  소재는 정했는데 어디로 갈지 못 정한 사람. 그냥 두면 제일 유명한 곳으로 갑니다.
-                  그걸 돌려세우는 게 이 서비스의 일입니다.
-                </p>
-                <Link
-                  href="/start"
-                  className="mt-5 inline-block font-mono text-xs text-open hover:underline"
+            <form action="/profile" method="get" className="mt-6 max-w-lg">
+              <div className="flex gap-2">
+                <input
+                  name="q"
+                  type="text"
+                  placeholder={S.s1UrlPlaceholder}
+                  aria-label={S.s1UrlLabel}
+                  className="min-w-0 flex-1 border border-hair2 bg-panel px-4 py-3.5 text-sm outline-none placeholder:text-ink3 focus:border-open"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 bg-open px-6 py-3.5 text-sm font-semibold text-ground transition-opacity hover:opacity-90"
                 >
-                  채널 분석하기 →
-                </Link>
+                  분석
+                </button>
               </div>
-            </Reveal>
-            <Reveal delay={90}>
-              <div className="h-full bg-ground p-7">
-                <h3 className="font-serif text-2xl font-normal">지자체 · 관광공사</h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink2">
-                  같은 엔진, 다른 뷰. 우리 지역에 아직 남은 소재가 뭔지, 어떤 채널을 부르면 맞는지
-                  봅니다. 성공 지표는 인구감소지역에서 새로 생긴 영상 수입니다.
-                </p>
-                <Link
-                  href="/admin"
-                  className="mt-5 inline-block font-mono text-xs text-signal hover:underline"
-                >
-                  어드민 콘솔 →
-                </Link>
-              </div>
-            </Reveal>
-          </div>
+            </form>
+          </Reveal>
         </div>
       </section>
 
-      {/* ── 개발용 ── */}
-      <footer className="border-t border-hair px-6 py-10 sm:px-10">
-        <div className="mx-auto flex max-w-3xl flex-wrap items-center gap-x-5 gap-y-2">
-          <span className="font-mono text-[11px] tracking-wider text-ink3 uppercase">
-            개발용 화면
-          </span>
-          {SCREENS.map((s) => (
-            <Link
-              key={s.href}
-              href={s.href}
-              className="font-mono text-xs text-ink3 transition-colors hover:text-open"
-            >
-              {s.label}
-            </Link>
-          ))}
+      <footer className="border-t border-hair px-6 py-8 sm:px-10">
+        <div className="mx-auto flex max-w-4xl flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[11px] text-ink3">
+          <span>{S.appName}</span>
+          <span>2026 관광데이터 활용 공모전</span>
+          <Link href="/admin" className="transition-colors hover:text-ink2">
+            기관용 콘솔
+          </Link>
+          <Link href="/check" className="transition-colors hover:text-ink2">
+            데이터 검증
+          </Link>
         </div>
       </footer>
     </main>

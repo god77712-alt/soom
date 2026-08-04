@@ -23,15 +23,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </span>
             {S.appName}
           </Link>
-          <nav className="ml-auto flex gap-5 font-mono text-xs text-ink3">
-            <Link href="/start" className="hover:text-ink2">
-              시작
+          {/* 서비스 내비게이션. 개발용 화면(/check)은 여기 넣지 않는다 */}
+          <nav className="ml-auto flex items-center gap-5 text-xs text-ink3">
+            <Link href="/start" className="transition-colors hover:text-ink2">
+              소재로 찾기
             </Link>
-            <Link href="/admin" className="hover:text-ink2">
-              어드민
+            <Link href="/admin" className="transition-colors hover:text-ink2">
+              기관용
             </Link>
-            <Link href="/check" className="hover:text-ink2">
-              검증
+            <Link
+              href="/#top"
+              className="border border-open px-3 py-1.5 font-medium text-open transition-colors hover:bg-open hover:text-ground"
+            >
+              채널 분석
             </Link>
           </nav>
         </header>
