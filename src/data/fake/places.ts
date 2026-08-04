@@ -268,15 +268,66 @@ export const FAKE_PLACES: Place[] = ROWS.map((r) => ({
   created_at: now,
 }));
 
-export const FAKE_PLACE_TAGS: PlaceTag[] = ROWS.flatMap((r) =>
-  r.tags.map((code, i) => ({
-    place_id: r.id,
-    tag_id: `t_${code}`,
-    // 첫 번째 태그를 대표 태그로 본다. 4단계에서 LLM 이 실제 confidence 를 넣는다.
-    confidence: i === 0 ? 0.92 : 0.71,
-    method: (r.src === "tourapi" ? "llm" : "rule") as "llm" | "rule",
-  })),
-);
+/**
+ * 무드 태그는 소개글이 아니라 **영상과 댓글에서** 나온다. [지지 영상/댓글 수]
+ *
+ * ⚠️ TourAPI 소개글에서 무드를 뽑으면 안 된다. 관광공사 홍보문은 어디를 읽어도
+ *    정겹고 아름다워서 30곳 전부에 '인간미'가 붙는다. 그러면 변별력이 0이다.
+ *    "the ajumma gave me extra" 같은 댓글만이 그 장소에 '정'을 붙일 근거가 된다.
+ *
+ * 그래서 영상이 없는 곳에는 무드 태그가 아예 없다. 그건 결함이 아니라 정직한 상태다.
+ */
+const MOOD_FROM_VIDEOS: Record<string, Array<[code: string, support: number, from: "video" | "comment"]>> = {
+  p_jeongseon_market: [["bustling", 22, "video"], ["warmth", 9, "comment"], ["nostalgia", 6, "video"]],
+  p_hwagae_market: [["bustling", 14, "video"], ["warmth", 5, "comment"]],
+  p_sunchang_market: [["warmth", 3, "comment"], ["unstaged", 2, "video"]],
+  p_bonghwa_market: [["unstaged", 2, "video"], ["craft_pride", 1, "comment"]],
+  p_guryongpo_market: [["nostalgia", 11, "video"], ["unstaged", 7, "video"]],
+  p_samcheonpo_market: [["bustling", 9, "video"], ["warmth", 4, "comment"]],
+  p_seoho_market: [["predawn", 6, "video"], ["warmth", 4, "comment"]],
+  p_yeongju_dawn: [["predawn", 3, "video"]],
+  p_taepyeong_salt: [["craft_pride", 8, "video"], ["sublime", 6, "video"]],
+  p_darangyi: [["sublime", 17, "video"], ["quiet", 8, "video"]],
+  p_cheongsando: [["quiet", 5, "video"], ["nostalgia", 3, "video"]],
+  p_jusanji: [["sublime", 12, "video"], ["quiet", 9, "video"], ["predawn", 7, "video"]],
+  p_mindungsan: [["sublime", 7, "video"]],
+  p_station_hwabon: [["nostalgia", 8, "video"], ["quiet", 5, "video"]],
+  p_station_simcheon: [["nostalgia", 2, "video"], ["desolate", 1, "video"]],
+  p_station_imp: [["nostalgia", 4, "video"], ["desolate", 2, "video"]],
+  p_school_goheung: [["desolate", 2, "video"]],
+  p_school_jeongseon: [["desolate", 1, "video"]],
+  p_gunsan_bath: [["nostalgia", 2, "video"]],
+  p_bupyeong_market: [["bustling", 28, "video"]],
+  p_seomun_market: [["bustling", 19, "video"]],
+  p_ganggu_market: [["unstaged", 6, "video"], ["craft_pride", 3, "video"]],
+};
+
+export const FAKE_PLACE_TAGS: PlaceTag[] = [
+  // 소재 태그 — 소개글·공공데이터에서
+  ...ROWS.flatMap((r) =>
+    r.tags.map((code, i) => ({
+      place_id: r.id,
+      tag_id: `t_${code}`,
+      // 첫 번째 태그를 대표 태그로 본다. 4단계에서 LLM 이 실제 confidence 를 넣는다.
+      confidence: i === 0 ? 0.92 : 0.71,
+      method: (r.src === "tourapi" ? "llm" : "rule") as "llm" | "rule",
+      evidence: (r.src === "tourapi" ? "overview" : "rule") as "overview" | "rule",
+      support: 1,
+    })),
+  ),
+  // 무드 태그 — 영상·댓글에서 역전파
+  ...Object.entries(MOOD_FROM_VIDEOS).flatMap(([placeId, moods]) =>
+    moods.map(([code, support, from]) => ({
+      place_id: placeId,
+      tag_id: `t_${code}`,
+      // 근거가 쌓일수록 신뢰도가 올라간다. 1~2편짜리는 낮게 잡는다.
+      confidence: Math.min(0.95, 0.4 + support * 0.06),
+      method: "llm" as const,
+      evidence: from,
+      support,
+    })),
+  ),
+];
 
 /**
  * S3 카드의 "서울에서 3시간 20분".

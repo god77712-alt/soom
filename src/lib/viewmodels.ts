@@ -5,15 +5,26 @@
  * 둘을 섞으면 7단계에서 뭘 DB에서 읽고 뭘 실시간으로 부르는지 헷갈린다.
  */
 
-/** S2. 4-5 채널 분석의 결과물 */
+/**
+ * S2. 채널 분석의 결과물.
+ *
+ * 소재만 뽑으면 "당신은 시장을 찍는군요"에서 끝난다. 그건 크리에이터가 이미 아는 사실이다.
+ * 형식·성향·무드·시청자까지 맞춰야 "내 채널을 봤구나" 소리가 나온다.
+ */
 export interface ChannelProfile {
   channel_id: string;
   /** 분석한 영상 수 (SPEC: 최근 50편) */
   analyzed_count: number;
   /** 그중 VSR 상위 영상 수. S2 근거 문구에 그대로 나간다 */
   top_performer_count: number;
-  /** 강한 순서. 첫 번째가 S3 추천의 기준 태그가 된다 */
+  /** 강한 순서. 첫 번째가 S3 추천의 기준 태그가 된다 (subject 축) */
   tag_ids: string[];
+  /**
+   * 축별 태그. subject 는 tag_ids 와 겹친다.
+   * audience 는 추정값이다 — 시청자 인구통계는 채널 소유자만 볼 수 있어서
+   * 우리는 댓글 언어와 영상 언어로 역추정한다. 화면에 "추정"이라고 밝힌다.
+   */
+  axes: Partial<Record<"subject" | "mood" | "format" | "persona" | "audience", string[]>>;
 }
 
 /**

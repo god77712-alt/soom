@@ -25,6 +25,15 @@ export const FAKE_CHANNELS: Channel[] = [
   { id: "ch_tiny", youtube_channel_id: "UCdemo_tiny", title: "tiny traveler", subscriber_count: 500, sub_band: 1, language: "en" },
 ];
 
+/**
+ * 채널 프로필.
+ *
+ * 소재만 뽑으면 "당신은 시장을 찍는군요"로 끝난다 — 크리에이터가 이미 아는 사실이다.
+ * 형식·성향·무드·시청자까지 맞춰야 "내 채널을 봤구나" 소리가 나온다.
+ *
+ * ⚠️ audience 는 추정이다. 시청자 연령·국적 통계는 채널 소유자만 볼 수 있어서
+ *    (YouTube Analytics) 우리는 댓글 언어와 영상 언어로 역추정한다. 화면에 그렇게 밝힌다.
+ */
 export const FAKE_CHANNEL_PROFILES: ChannelProfile[] = [
   {
     channel_id: "ch_wander",
@@ -32,12 +41,26 @@ export const FAKE_CHANNEL_PROFILES: ChannelProfile[] = [
     top_performer_count: 12,
     // 강한 순서. 첫 번째(오일장)가 S3 추천 5곳의 기준 태그가 된다.
     tag_ids: ["t_oil_market", "t_old_diner", "t_small_station"],
+    axes: {
+      subject: ["t_oil_market", "t_old_diner", "t_small_station"],
+      mood: ["t_warmth", "t_unstaged", "t_nostalgia"],
+      format: ["t_vlog", "t_no_commentary", "t_interview"],
+      persona: ["t_observer", "t_participant"],
+      audience: ["t_aud_en", "t_aud_30_40s"],
+    },
   },
   {
     channel_id: "ch_ddeona",
     analyzed_count: 50,
     top_performer_count: 9,
     tag_ids: ["t_fish_market", "t_gukbap", "t_dawn_market"],
+    axes: {
+      subject: ["t_fish_market", "t_gukbap", "t_dawn_market"],
+      mood: ["t_bustling", "t_unstaged"],
+      format: ["t_vlog", "t_mukbang"],
+      persona: ["t_participant", "t_explainer"],
+      audience: ["t_aud_ko", "t_aud_20s"],
+    },
   },
 ];
 

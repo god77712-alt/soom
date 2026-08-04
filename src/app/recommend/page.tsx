@@ -73,7 +73,7 @@ export default async function RecommendPage({
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(110% 85% at 8% 45%, #000 0%, rgba(0,0,0,.86) 24%, rgba(0,0,0,.4) 52%, rgba(0,0,0,.06) 78%, transparent 100%)",
+              "linear-gradient(90deg, #000 0%, rgba(0,0,0,.94) 32%, rgba(0,0,0,.55) 48%, rgba(0,0,0,.12) 62%, transparent 74%)",
           }}
         />
         <div

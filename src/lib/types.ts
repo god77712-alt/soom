@@ -46,27 +46,69 @@ export interface Place {
 
 // ─── tags ────────────────────────────────────────────────
 
+/**
+ * 태그 축.
+ *
+ * 태그를 하나의 나무로만 두면 "무엇을 찍나"밖에 표현하지 못한다.
+ * 채널 분석은 영상의 컨셉, 만드는 사람의 성향, 장소의 성격, 보는 사람까지 덮어야 하므로
+ * 축을 나눈다. 축마다 붙는 대상과 쓰임이 다르다.
+ *
+ *   subject   소재·장소   장소 O / 영상 O   → 어디로 갈지 결정한다 (숨 스코어의 입력)
+ *   mood      무드·정서   장소 O / 영상 O   → 같은 소재 안에서 어느 곳이 맞는지 가른다
+ *   time      시간대      장소 O / 영상 O   → 촬영 시각을 정한다
+ *   format    영상 형식   영상만            → 촬영 구성안(S4 ⑤)의 형태를 바꾼다
+ *   persona   화자 성향   영상만            → 구성안의 화법을 바꾼다
+ *   audience  시청자      채널만            → 언어별 점수판을 더 잘게 쪼갠다
+ */
+export type TagAxis = "subject" | "mood" | "time" | "format" | "persona" | "audience";
+
 export interface Tag {
   id: string;
   /** slug (예: oil_market) */
   code: string;
   name_ko: string;
   name_en: string;
+  /** 어느 축에 속하는가 */
+  axis: TagAxis;
   /** NULL 이면 대분류 */
   parent_id: string | null;
-  /** 1=대분류(20개) | 2=세부(~150개) */
+  /** 1=대분류 | 2=세부 */
   level: 1 | 2;
   is_seasonal: boolean;
   /** [4,5] 형태. 상시면 null */
   season_months: number[] | null;
 }
 
+/**
+ * 태그의 근거.
+ *
+ * ⚠️ 이 필드가 이 설계의 핵심이다.
+ * '정', '인간미' 같은 무형 태그를 TourAPI 소개글에서 뽑으면 안 된다. 그건 관광공사가 쓴
+ * 홍보문이라 어디를 읽어도 따뜻하고 정겹다. 전부 같은 태그가 붙어 변별력이 0이 된다.
+ *
+ * 무형 태그는 **영상과 댓글에서 뽑아 장소로 역전파**한다.
+ *   "the ajumma gave me extra" 같은 댓글이 그 장소에 '정' 태그를 붙일 유일한 근거다.
+ */
+export type TagEvidence =
+  /** TourAPI 소개글에서 LLM 추출 — subject/time 에만 쓸 것 */
+  | "overview"
+  /** 공공데이터 규칙 (전통시장·폐교·역) */
+  | "rule"
+  /** 그 장소를 찍은 영상의 내용에서 */
+  | "video"
+  /** 그 영상에 달린 댓글에서 — 무형 태그의 근거 */
+  | "comment";
+
 export interface PlaceTag {
   place_id: string;
   tag_id: string;
-  /** 0.0~1.0 LLM 추출 신뢰도 */
+  /** 0.0~1.0 추출 신뢰도 */
   confidence: number;
   method: "llm" | "rule";
+  /** 어디서 나온 태그인가. 무형 태그는 video/comment 여야 한다 */
+  evidence: TagEvidence;
+  /** 근거가 된 영상/댓글 수. 적으면 화면에서 흐리게 */
+  support: number;
 }
 
 // ─── videos / channels ───────────────────────────────────

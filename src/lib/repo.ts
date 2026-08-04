@@ -35,7 +35,7 @@ import {
 } from "./display";
 import { distanceKm, estimateDriveMinutes } from "./geo";
 import { MIN_SUBSCRIBER_COUNT, reachRange, resolveTagScore, soomScore, vsr, type ResolvedTagScore } from "./score";
-import type { Channel, Language, Place, PlaceLanguageStat, Tag, TagScore, Video } from "./types";
+import type { Channel, Language, Place, PlaceLanguageStat, Tag, TagEvidence, TagScore, Video } from "./types";
 import type {
   AdminGapRow,
   AdminImpact,
@@ -76,7 +76,8 @@ export async function getTagScores(): Promise<TagScore[]> {
  */
 function tagIdsForPlaceLookup(tagId: string): Set<string> {
   const tag = FAKE_TAGS.find((t) => t.id === tagId);
-  if (!tag || tag.level === 2) return new Set([tagId]);
+  // 소재 축의 대분류만 하위로 펼친다. 다른 축은 부모가 없어 그대로 쓴다.
+  if (!tag || tag.level === 2 || tag.axis !== "subject") return new Set([tagId]);
   return new Set([tagId, ...FAKE_TAGS.filter((t) => t.parent_id === tagId).map((t) => t.id)]);
 }
 
@@ -88,12 +89,13 @@ export async function getExpansionTags(tagId: string): Promise<{ siblings: Tag[]
   const tag = FAKE_TAGS.find((t) => t.id === tagId);
   if (!tag) return { siblings: [], explore: [] };
 
+  // 확장은 소재 축 안에서만 한다. 무드·형식 태그는 여기 섞지 않는다.
   const siblings = FAKE_TAGS.filter(
-    (t) => t.level === 2 && t.parent_id === tag.parent_id && t.id !== tag.id,
+    (t) => t.axis === "subject" && t.level === 2 && t.parent_id === tag.parent_id && t.id !== tag.id,
   ).slice(0, 8);
 
   const explore = FAKE_TAGS.filter(
-    (t) => t.level === 2 && t.parent_id !== tag.parent_id,
+    (t) => t.axis === "subject" && t.level === 2 && t.parent_id !== tag.parent_id,
   )
     // 대분류가 서로 겹치지 않게 2개만 고른다
     .filter((t, i, arr) => arr.findIndex((x) => x.parent_id === t.parent_id) === i)
@@ -309,7 +311,11 @@ export async function getPlaceTagScores(
   const channel = await getChannel(channelId);
   if (!channel) return [];
 
-  const rows = FAKE_PLACE_TAGS.filter((pt) => pt.place_id === placeId);
+  // 소재 축만 점수를 가진다. 무드·시간대는 성과 점수판이 없다.
+  const rows = FAKE_PLACE_TAGS.filter((pt) => {
+    const tag = FAKE_TAGS.find((t) => t.id === pt.tag_id);
+    return tag?.axis === "subject" && pt.place_id === placeId;
+  });
   return rows
     .map((pt) => {
       const tag = FAKE_TAGS.find((t) => t.id === pt.tag_id);
@@ -324,6 +330,34 @@ export async function getPlaceTagScores(
     .filter((x): x is PlaceTagScore => x !== null)
     // 성적이 좋은 태그를 앞에 둔다. 표본 부족은 뒤로.
     .sort((a, b) => (b.label.resolved.score?.median_vsr ?? -1) - (a.label.resolved.score?.median_vsr ?? -1));
+}
+
+export interface PlaceMoodTag {
+  tag: Tag;
+  /** 근거가 된 영상/댓글 수 */
+  support: number;
+  evidence: TagEvidence;
+  confidence: number;
+}
+
+/**
+ * 이 장소의 무드 태그.
+ *
+ * 소재 태그와 달리 성과 점수가 없다. 대신 **근거 수**를 보여준다.
+ * "정 3건(댓글)" 은 "정 ★★★" 보다 정직하고, 크리에이터가 스스로 판단할 수 있다.
+ *
+ * 영상이 없는 장소는 무드 태그가 비어 있다. 그건 결함이 아니라 정직한 상태다 —
+ * 아직 아무도 안 찍었으니 그곳이 어떤 느낌인지 우리는 모른다.
+ */
+export async function getPlaceMoodTags(placeId: string): Promise<PlaceMoodTag[]> {
+  return FAKE_PLACE_TAGS.filter((pt) => pt.place_id === placeId)
+    .map((pt) => {
+      const tag = FAKE_TAGS.find((t) => t.id === pt.tag_id);
+      if (!tag || (tag.axis !== "mood" && tag.axis !== "time")) return null;
+      return { tag, support: pt.support, evidence: pt.evidence, confidence: pt.confidence };
+    })
+    .filter((x): x is PlaceMoodTag => x !== null)
+    .sort((a, b) => b.support - a.support);
 }
 
 /**
@@ -392,8 +426,10 @@ export interface EvidenceVideo {
 export interface PlaceDetail {
   place: Place;
   tags: Tag[];
-  /** 태그 전부 + 각각의 성적 */
+  /** 소재 태그 + 각각의 성적 */
   tagScores: PlaceTagScore[];
+  /** 무드·시간대 태그. 영상·댓글에서 나온 것이라 점수가 아니라 근거 수를 갖는다 */
+  moodTags: PlaceMoodTag[];
   /** 여기서 찍을 수 있는 컷 */
   shots: PlaceShot[];
   /** 장날 · 운영시간 · 촬영 특이사항 */
@@ -471,6 +507,7 @@ export async function getPlaceDetail(
     place,
     tags: await getPlaceTags(placeId),
     tagScores: await getPlaceTagScores(placeId, channel.id),
+    moodTags: await getPlaceMoodTags(placeId),
     shots: await getPlaceShots(placeId),
     operation: await getPlaceOperation(placeId),
     nearby: await getNearbySpots(placeId, lang),
@@ -522,7 +559,8 @@ export async function occupiedPlaces(
     .slice(0, limit);
 }
 
-export interface TagEvidence {
+/** S3 상단에 들어갈 근거 묶음. types.ts 의 TagEvidence(태그 출처)와 다른 것이다 */
+export interface SubjectEvidence {
   tag: Tag;
   channel: Channel;
   score: ResolvedTagScore;
@@ -533,7 +571,10 @@ export interface TagEvidence {
 }
 
 /** S3 상단(①②)에 들어갈 것 전부. 여기가 크리에이터를 움직이는 부분이다. */
-export async function getTagEvidence(channelId: string, tagId: string): Promise<TagEvidence | null> {
+export async function getTagEvidence(
+  channelId: string,
+  tagId: string,
+): Promise<SubjectEvidence | null> {
   const channel = await getChannel(channelId);
   const tag = await getTag(tagId);
   if (!channel || !tag) return null;

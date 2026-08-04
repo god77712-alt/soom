@@ -8,7 +8,7 @@
  * 대분류는 SPEC 3장의 20개를 그대로 두고, 세부 태그는 화면 검증에 필요한 만큼만 넣었다.
  */
 
-import type { Tag } from "@/lib/types";
+import type { Tag, TagAxis } from "@/lib/types";
 
 /** 대분류 20개 (SPEC 3장) */
 const L1: Array<[code: string, ko: string, en: string]> = [
@@ -80,12 +80,67 @@ const L2: Array<[string, string, string, string, number[]?]> = [
   ["bamboo_craft", "죽공예", "Bamboo craft", "craft"],
 ];
 
+/**
+ * 소재 외 축들.
+ *
+ * ⚠️ mood(무드·정서)는 TourAPI 소개글에서 뽑지 않는다.
+ *    관광공사 홍보문은 어디를 읽어도 정겹고 아름다워서 전부 같은 태그가 붙는다.
+ *    무드는 영상 내용과 댓글에서 뽑아 장소로 역전파한다 (PlaceTag.evidence 참고).
+ *
+ * audience(시청자)는 채널에만 붙고, 그마저도 추정이다.
+ *    시청자 연령·국적 통계는 채널 소유자만 볼 수 있다(YouTube Analytics).
+ *    우리는 댓글 언어·내용으로 역추정하고 화면에 "추정"이라고 밝힌다.
+ */
+const OTHER: Array<[axis: Exclude<TagAxis, "subject">, code: string, ko: string, en: string]> = [
+  // ── 무드·정서 — 영상/댓글에서만 나온다 ──
+  ["mood", "warmth", "인간미·정", "Human warmth"],
+  ["mood", "unstaged", "날것 그대로", "Unstaged"],
+  ["mood", "nostalgia", "향수·옛날", "Nostalgic"],
+  ["mood", "quiet", "고요함", "Quiet"],
+  ["mood", "bustling", "활기·북적", "Bustling"],
+  ["mood", "desolate", "쓸쓸함", "Desolate"],
+  ["mood", "sublime", "압도적 풍경", "Sublime"],
+  ["mood", "craft_pride", "장인의 자부심", "Craftsmanship"],
+
+  // ── 시간대 ──
+  ["time", "predawn", "동트기 전", "Pre-dawn"],
+  ["time", "golden_hour", "황금시간", "Golden hour"],
+  ["time", "blue_hour", "해질녘", "Blue hour"],
+  ["time", "night", "야간", "Night"],
+
+  // ── 영상 형식 — 영상에만 ──
+  ["format", "vlog", "브이로그", "Vlog"],
+  ["format", "no_commentary", "무해설", "No commentary"],
+  ["format", "documentary", "다큐", "Documentary"],
+  ["format", "asmr", "ASMR·환경음", "ASMR"],
+  ["format", "interview", "인터뷰", "Interview"],
+  ["format", "mukbang", "먹방", "Food eating"],
+  ["format", "timelapse", "타임랩스", "Timelapse"],
+  ["format", "drone", "드론", "Drone"],
+
+  // ── 화자 성향 — 영상에만 ──
+  ["persona", "observer", "관찰자형", "Observer"],
+  ["persona", "participant", "참여형", "Participant"],
+  ["persona", "explainer", "정보전달형", "Explainer"],
+  ["persona", "narrator", "감성 내레이션", "Narrator"],
+
+  // ── 시청자 — 채널에만, 추정값 ──
+  ["audience", "aud_en", "영어권", "English-speaking"],
+  ["audience", "aud_ja", "일본어권", "Japanese-speaking"],
+  ["audience", "aud_sea", "동남아", "Southeast Asia"],
+  ["audience", "aud_ko", "국내", "Korean"],
+  ["audience", "aud_20s", "20대 중심", "20s"],
+  ["audience", "aud_30_40s", "30~40대 중심", "30-40s"],
+  ["audience", "aud_50p", "50대 이상", "50+"],
+];
+
 export const FAKE_TAGS: Tag[] = [
   ...L1.map(([code, ko, en]) => ({
     id: `t_${code}`,
     code,
     name_ko: ko,
     name_en: en,
+    axis: "subject" as const,
     parent_id: null,
     level: 1 as const,
     is_seasonal: false,
@@ -96,12 +151,26 @@ export const FAKE_TAGS: Tag[] = [
     code,
     name_ko: ko,
     name_en: en,
+    axis: "subject" as const,
     parent_id: `t_${parent}`,
     level: 2 as const,
     is_seasonal: months !== undefined,
     season_months: months ?? null,
   })),
+  ...OTHER.map(([axis, code, ko, en]) => ({
+    id: `t_${code}`,
+    code,
+    name_ko: ko,
+    name_en: en,
+    axis,
+    parent_id: null,
+    level: 1 as const,
+    is_seasonal: false,
+    season_months: null,
+  })),
 ];
+
+export const tagsByAxis = (axis: TagAxis): Tag[] => FAKE_TAGS.filter((t) => t.axis === axis);
 
 export const tagByCode = (code: string): Tag => {
   const t = FAKE_TAGS.find((x) => x.code === code);

@@ -77,11 +77,26 @@ export function MapHero({
     let raf = 0;
     const t0 = performance.now();
 
+    /**
+     * 축척과 위치.
+     *
+     * ⚠️ 가로/세로 중 작은 쪽에 맞추면 안 된다. 한국은 세로로 긴데 히어로는 가로로 길어서,
+     *    세로 기준이 이기면 지도가 화면 한가운데 좁은 띠로 쪼그라든다.
+     *    높이를 살짝 넘기게 키우고, 글자가 앉는 왼쪽을 피해 오른쪽에 놓는다.
+     */
+    const metrics = () => {
+      const fitH = (H * 1.18) / (BOUNDS.n - BOUNDS.s);
+      const fitW = (W * 0.9) / (BOUNDS.e - BOUNDS.w);
+      const narrow = W < 720;
+      const scale = narrow ? Math.min(fitH, fitW) : fitH;
+      return { scale, cx: narrow ? W * 0.5 : W * 0.7, cy: H * 0.5 };
+    };
+
     const project = (lat: number, lng: number): [number, number] => {
-      const scale = Math.min(W / (BOUNDS.e - BOUNDS.w), H / (BOUNDS.n - BOUNDS.s)) * 0.94;
+      const { scale, cx, cy } = metrics();
       return [
-        W / 2 + (lng - (BOUNDS.w + BOUNDS.e) / 2) * scale,
-        H / 2 - (lat - (BOUNDS.s + BOUNDS.n) / 2) * scale,
+        cx + (lng - (BOUNDS.w + BOUNDS.e) / 2) * scale,
+        cy - (lat - (BOUNDS.s + BOUNDS.n) / 2) * scale,
       ];
     };
 
@@ -118,15 +133,15 @@ export function MapHero({
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       dots = [];
-      const scale = Math.min(W / (BOUNDS.e - BOUNDS.w), H / (BOUNDS.n - BOUNDS.s)) * 0.94;
-      for (let py = 0; py < H; py += 5) {
-        for (let px = 0; px < W; px += 5) {
-          const lng = (px - W / 2) / scale + (BOUNDS.w + BOUNDS.e) / 2;
-          const lat = (BOUNDS.s + BOUNDS.n) / 2 - (py - H / 2) / scale;
+      const { scale, cx, cy } = metrics();
+      for (let py = -20; py < H + 20; py += 4) {
+        for (let px = 0; px < W; px += 4) {
+          const lng = (px - cx) / scale + (BOUNDS.w + BOUNDS.e) / 2;
+          const lat = (BOUNDS.s + BOUNDS.n) / 2 - (py - cy) / scale;
           if (!inPoly(lng, lat) && !inJeju(lng, lat)) continue;
           const n = hash(px * 0.37, py * 0.53);
-          if (n < 0.3) continue;
-          dots.push([px + (hash(px, py) - 0.5) * 2.2, py + (hash(py, px) - 0.5) * 2.2, n]);
+          if (n < 0.26) continue;
+          dots.push([px + (hash(px, py) - 0.5) * 2, py + (hash(py, px) - 0.5) * 2, n]);
         }
       }
 
@@ -141,8 +156,8 @@ export function MapHero({
       ctx.clearRect(0, 0, W, H);
 
       for (const [x, y, n] of dots) {
-        ctx.fillStyle = n > 0.82 ? "rgba(88,196,221,0.30)" : "rgba(35,107,142,0.42)";
-        ctx.fillRect(x, y, 1.35, 1.35);
+        ctx.fillStyle = n > 0.82 ? "rgba(88,196,221,0.62)" : "rgba(35,107,142,0.72)";
+        ctx.fillRect(x, y, 1.6, 1.6);
       }
 
       // 경로 바탕선

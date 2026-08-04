@@ -22,9 +22,13 @@ import {
 
 const S = getStrings("ko");
 
+/**
+ * 글자가 앉는 왼쪽만 가린다. 지도가 있는 오른쪽은 건드리지 않는다.
+ * 예전엔 원형으로 덮어서 지도 한가운데가 제일 어두웠다.
+ */
 const VEIL =
-  "radial-gradient(115% 92% at 12% 48%, #000 0%, rgba(0,0,0,.9) 26%, rgba(0,0,0,.45) 55%, rgba(0,0,0,.08) 80%, transparent 100%)";
-const VEIL_BOTTOM = "linear-gradient(to bottom, transparent 58%, #000 100%)";
+  "linear-gradient(90deg, #000 0%, rgba(0,0,0,.94) 30%, rgba(0,0,0,.55) 46%, rgba(0,0,0,.12) 60%, transparent 72%)";
+const VEIL_BOTTOM = "linear-gradient(to bottom, transparent 62%, #000 100%)";
 
 export default async function Home() {
   const [demoChannels, occupied] = await Promise.all([
