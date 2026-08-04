@@ -17,7 +17,9 @@ import { PlaceRecommendCard } from "@/components/PlaceRecommendCard";
 import { Reveal } from "@/components/Reveal";
 import { ShareButton } from "@/components/ShareButton";
 import { TagChip } from "@/components/TagChip";
+import { reachText } from "@/lib/display";
 import { getStrings } from "@/lib/i18n";
+import { reachRange } from "@/lib/score";
 import {
   GUEST_CHANNEL,
   getChannelProfile,
@@ -88,6 +90,15 @@ export default async function Home({
   /** 소재를 바꿀 때 유지해야 하는 주소 앞부분 */
   const base = isGuest ? "/?guest=1" : `/?q=${encodeURIComponent(q)}`;
 
+  // 예상 도달은 소재 단위로 한 번만 계산한다 (카드마다 넣으면 전부 같은 값이 된다)
+  const reachRangeValue =
+    channel && evidence?.score.score
+      ? reachRange(channel.subscriber_count, evidence.score.score)
+      : null;
+  const reach = reachRangeValue
+    ? reachText(reachRangeValue.low, reachRangeValue.high)
+    : null;
+
   const allTags = await getTags();
   const byId = (id: string): Tag | undefined => allTags.find((t) => t.id === id);
 
@@ -122,7 +133,6 @@ export default async function Home({
       >
         <div className="absolute inset-0">
           <MapHero
-            origin={{ name: "서울", lat: 37.5665, lng: 126.978 }}
             open={mapOpen}
             held={mapHeld}
           />
@@ -276,6 +286,7 @@ export default async function Home({
           </div>
 
           <div id="result" className="mx-auto max-w-3xl px-6 py-14 sm:px-10">
+          {/* ── 소재 현황 — 성과·예상 도달·성공 사례·촬영 완료를 한 블록으로 ── */}
           <Reveal>
             <div className="flex flex-wrap items-baseline justify-between gap-3">
               <h2 className="font-serif text-3xl font-normal tracking-tight">
@@ -290,11 +301,26 @@ export default async function Home({
                 </span>
               )}
             </div>
+
+            {/*
+              예상 도달은 여기 한 번만 둔다.
+              소재 점수 × 구독자라서 카드마다 넣으면 5장이 전부 같은 숫자가 된다.
+              SPEC 11장: 단일 숫자 금지 — 반드시 범위 + 추정 고지.
+            */}
+            {reach && (
+              <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 border-y border-hair py-3">
+                <span className="font-mono text-[11px] text-ink3">
+                  {S.s4ReachLabel(channel.subscriber_count)} 예상 도달
+                </span>
+                <span className="font-mono text-xl font-bold text-ink tnum">{reach.range}</span>
+                <span className="font-mono text-[11px] text-ink3">{reach.disclaimer}</span>
+              </div>
+            )}
           </Reveal>
 
           {evidence.provenVideos.length > 0 && (
             <Reveal delay={80}>
-              <div className="mt-5 grid gap-3 sm:grid-cols-3">
+              <div className="mt-6 grid gap-3 sm:grid-cols-3">
                 {evidence.provenVideos.map((v) => (
                   <EvidenceVideoCard key={v.video.id} item={v} />
                 ))}
@@ -304,24 +330,22 @@ export default async function Home({
 
           {occupied.length > 0 && (
             <Reveal delay={140}>
-              <div className="mt-10 border border-hair bg-panel px-4 py-3">
-                <div className="font-mono text-[11px] tracking-wider text-ink3 uppercase">
+              <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1.5 border border-hair bg-panel px-4 py-2.5">
+                <span className="font-mono text-[11px] tracking-wider text-ink3 uppercase">
                   {S.s3OccupiedTitle}
-                </div>
-                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1.5 text-sm text-ink3">
-                  {occupied.map((o) => (
-                    <span key={o.place.id}>
-                      {o.place.name_ko}
-                      <span className="ml-1.5 font-mono tnum">{S.videoCount(o.count)}</span>
-                    </span>
-                  ))}
-                </div>
+                </span>
+                {occupied.map((o) => (
+                  <span key={o.place.id} className="text-sm text-ink3">
+                    {o.place.name_ko}
+                    <span className="ml-1.5 font-mono tnum">{S.videoCount(o.count)}</span>
+                  </span>
+                ))}
               </div>
             </Reveal>
           )}
 
           <Reveal delay={180}>
-            <div className="mt-10 flex items-baseline justify-between">
+            <div className="mt-12 flex items-baseline justify-between">
               <h2 className="text-xl font-bold tracking-tight">{S.s3RecommendTitle}</h2>
               <span className="font-mono text-[11px] text-ink3">
                 {S.s3RecommendHelp(cards.length)}

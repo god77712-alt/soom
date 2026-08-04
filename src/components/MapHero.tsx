@@ -46,14 +46,26 @@ const hash = (x: number, y: number) => {
   return s - Math.floor(s);
 };
 
+/**
+ * 국제선이 들어오는 공항.
+ *
+ * 목적지는 **가장 가까운 공항**에 붙는다. 해외 크리에이터는 어차피 공항으로 들어오고,
+ * 어느 공항으로 들어와야 하는지가 실제로 필요한 정보다.
+ */
+export const AIRPORTS: MapPoint[] = [
+  { name: "인천", lat: 37.4602, lng: 126.4407 },
+  { name: "김해", lat: 35.1795, lng: 128.9382 },
+  { name: "제주", lat: 33.5113, lng: 126.493 },
+];
+
 export function MapHero({
-  origin,
+  origins = AIRPORTS,
   open,
   held,
   className = "",
 }: {
-  /** 출발지 (보통 서울) */
-  origin: MapPoint;
+  /** 출발 공항들. 목적지는 가장 가까운 공항에 연결된다 */
+  origins?: MapPoint[];
   /** 추천 구역 — 금색으로 맥동한다 */
   open: MapPoint[];
   /** 이미 관광지가 된 곳 — 가라앉는다 */
@@ -160,9 +172,17 @@ export function MapHero({
       }
 
       pos = {};
-      for (const p of [...open, ...held]) pos[p.name] = project(p.lat, p.lng);
-      pos[origin.name] = project(origin.lat, origin.lng);
-      routes = open.map((p) => arc(pos[origin.name], pos[p.name]));
+      for (const p of [...open, ...held, ...origins]) pos[p.name] = project(p.lat, p.lng);
+
+      // 목적지마다 가장 가까운 공항을 찾아 잇는다
+      routes = open.map((p) => {
+        const hub = origins.reduce((best, a) => {
+          const d = (a.lat - p.lat) ** 2 + (a.lng - p.lng) ** 2;
+          const bd = (best.lat - p.lat) ** 2 + (best.lng - p.lng) ** 2;
+          return d < bd ? a : best;
+        }, origins[0]);
+        return arc(pos[hub.name], pos[p.name]);
+      });
     };
 
     const draw = (now: number) => {
@@ -248,29 +268,34 @@ export function MapHero({
         ctx.fill();
       });
 
-      // 출발지 — 관제탑처럼 링이 퍼져나간다
-      const o = pos[origin.name];
-      if (o) {
+      // 공항 — 관제탑처럼 링이 퍼져나간다
+      origins.forEach((a, ai) => {
+        const o = pos[a.name];
+        if (!o) return;
         if (!reduce) {
           for (let k = 0; k < 3; k++) {
-            const ph = ((t * 0.45 + k / 3) % 1);
-            ctx.strokeStyle = `rgba(88,196,221,${(1 - ph) * 0.32})`;
+            const ph = (t * 0.45 + k / 3 + ai * 0.28) % 1;
+            ctx.strokeStyle = `rgba(88,196,221,${(1 - ph) * 0.3})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.arc(o[0], o[1], 5 + ph * 34, 0, 7);
+            ctx.arc(o[0], o[1], 5 + ph * 32, 0, 7);
             ctx.stroke();
           }
         }
         ctx.strokeStyle = "rgba(88,196,221,0.4)";
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(o[0], o[1], 8, 0, 7);
+        ctx.arc(o[0], o[1], 7, 0, 7);
         ctx.stroke();
         ctx.fillStyle = "rgba(88,196,221,0.95)";
         ctx.beginPath();
-        ctx.arc(o[0], o[1], 3.2, 0, 7);
+        ctx.arc(o[0], o[1], 3, 0, 7);
         ctx.fill();
-      }
+
+        ctx.fillStyle = "rgba(88,196,221,0.62)";
+        ctx.font = "500 9px ui-monospace, Consolas, monospace";
+        ctx.fillText(a.name, o[0] + 11, o[1] + 3);
+      });
 
       if (!reduce) raf = requestAnimationFrame(draw);
     };
@@ -293,7 +318,7 @@ export function MapHero({
       clearTimeout(tid);
       window.removeEventListener("resize", onResize);
     };
-  }, [origin, open, held]);
+  }, [origins, open, held]);
 
   return <canvas ref={ref} aria-hidden className={`block h-full w-full ${className}`} />;
 }
