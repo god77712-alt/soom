@@ -72,7 +72,7 @@ export default async function PlaceDetailPage({
       <div className="border-b border-hair px-6 pt-6 pb-0 sm:px-10">
         <div className="mx-auto max-w-4xl">
           <Link
-            href={`/recommend?channel=${channel.id}&tag=${tag.id}`}
+            href={`/?q=${encodeURIComponent(channel.title)}&tag=${tag.id}#result`}
             className="font-mono text-xs text-ink3 hover:text-ink2"
           >
             ← 추천 목록

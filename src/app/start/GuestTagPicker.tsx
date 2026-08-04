@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { GUEST_CHANNEL } from "@/lib/repo";
+
 import type { Tag } from "@/lib/types";
 
 /** 채널 URL 없이 들어온 사용자용. 태그 3개까지 고르고 첫 번째 태그로 추천을 시작한다. */
@@ -41,9 +41,7 @@ export function GuestTagPicker({ tags }: { tags: Tag[] }) {
         <button
           type="button"
           disabled={picked.length === 0}
-          onClick={() =>
-            router.push(`/recommend?channel=${GUEST_CHANNEL.id}&tag=${picked[0]}`)
-          }
+          onClick={() => router.push(`/?guest=1&tag=${picked[0]}#result`)}
           className="rounded-lg bg-ink px-4 py-2.5 text-sm font-medium text-panel transition enabled:hover:bg-white disabled:opacity-30"
         >
           이 소재로 찾아보기

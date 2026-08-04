@@ -72,7 +72,7 @@ export function MapHero({
     let W = 0;
     let H = 0;
     let dots: Array<[number, number, number]> = [];
-    let routes: Path2D[] = [];
+    let routes: Array<{ path: Path2D; p0: [number, number]; c: [number, number]; p1: [number, number] }> = [];
     let pos: Record<string, [number, number]> = {};
     let raf = 0;
     const t0 = performance.now();
@@ -100,26 +100,40 @@ export function MapHero({
       ];
     };
 
-    /** 직교 + 크게 둥근 모서리. 회로 배선처럼 보이게 한다 */
-    const orthPath = (a: [number, number], b: [number, number], r: number) => {
+    /**
+     * 항공 노선도처럼 휘는 호.
+     *
+     * 두 점을 잇는 이차 베지에인데, 제어점을 현(弦)의 수직 방향으로 밀어 부풀린다.
+     * 모든 호를 같은 회전 방향으로 부풀려야 노선도처럼 보인다 — 제각각이면 그냥 지저분하다.
+     * 부푸는 정도는 거리에 비례한다. 가까운 곳은 거의 직선, 먼 곳은 크게 휜다.
+     */
+    type Arc = { path: Path2D; p0: [number, number]; c: [number, number]; p1: [number, number] };
+
+    const arc = (a: [number, number], b: [number, number]): Arc => {
       const [x1, y1] = a;
       const [x2, y2] = b;
-      const midY = y1 + (y2 - y1) * 0.55;
-      const dx = Math.sign(x2 - x1) || 1;
-      const dy = Math.sign(midY - y1) || 1;
-      const dy2 = Math.sign(y2 - midY) || 1;
-      const rr = Math.max(
-        0,
-        Math.min(r, Math.abs(midY - y1) / 2, Math.abs(x2 - x1) / 2, Math.abs(y2 - midY) / 2),
-      );
-      const p = new Path2D();
-      p.moveTo(x1, y1);
-      p.lineTo(x1, midY - rr * dy);
-      p.quadraticCurveTo(x1, midY, x1 + rr * dx, midY);
-      p.lineTo(x2 - rr * dx, midY);
-      p.quadraticCurveTo(x2, midY, x2, midY + rr * dy2);
-      p.lineTo(x2, y2);
-      return p;
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const dist = Math.hypot(dx, dy) || 1;
+      // 현의 수직 단위벡터. 부호를 고정해 모든 호가 같은 쪽으로 휜다.
+      const nx = -dy / dist;
+      const ny = dx / dist;
+      const bow = Math.min(dist * 0.22, 74);
+      const c: [number, number] = [x1 + dx / 2 + nx * bow, y1 + dy / 2 + ny * bow];
+
+      const path = new Path2D();
+      path.moveTo(x1, y1);
+      path.quadraticCurveTo(c[0], c[1], x2, y2);
+      return { path, p0: a, c, p1: b };
+    };
+
+    /** 이차 베지에 위의 점 */
+    const atT = (a: Arc, t: number): [number, number] => {
+      const u = 1 - t;
+      return [
+        u * u * a.p0[0] + 2 * u * t * a.c[0] + t * t * a.p1[0],
+        u * u * a.p0[1] + 2 * u * t * a.c[1] + t * t * a.p1[1],
+      ];
     };
 
     const build = () => {
@@ -148,7 +162,7 @@ export function MapHero({
       pos = {};
       for (const p of [...open, ...held]) pos[p.name] = project(p.lat, p.lng);
       pos[origin.name] = project(origin.lat, origin.lng);
-      routes = open.map((p) => orthPath(pos[origin.name], pos[p.name], 26));
+      routes = open.map((p) => arc(pos[origin.name], pos[p.name]));
     };
 
     const draw = (now: number) => {
@@ -160,21 +174,48 @@ export function MapHero({
         ctx.fillRect(x, y, 1.6, 1.6);
       }
 
-      // 경로 바탕선
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgba(138,98,52,0.5)";
-      for (const p of routes) ctx.stroke(p);
+      // 노선 바탕선 — 항상 떠 있는 얇은 실선
+      ctx.lineWidth = 0.8;
+      ctx.strokeStyle = "rgba(138,98,52,0.45)";
+      for (const r of routes) ctx.stroke(r.path);
 
-      // 흐르는 빛
+      // 출발지에서 목적지로 뻗어나가는 빛
       ctx.save();
-      ctx.strokeStyle = "rgba(224,164,88,0.95)";
-      ctx.lineWidth = 1.25;
-      ctx.setLineDash([26, 190]);
-      ctx.lineDashOffset = reduce ? 0 : -((t * 58) % 216);
-      ctx.shadowColor = "rgba(224,164,88,0.8)";
-      ctx.shadowBlur = 6;
-      for (const p of routes) ctx.stroke(p);
+      ctx.lineCap = "round";
+      ctx.strokeStyle = "rgba(224,164,88,0.9)";
+      ctx.lineWidth = 1.4;
+      ctx.setLineDash([30, 260]);
+      ctx.lineDashOffset = reduce ? 0 : -((t * 62) % 290);
+      ctx.shadowColor = "rgba(224,164,88,0.85)";
+      ctx.shadowBlur = 7;
+      for (const r of routes) ctx.stroke(r.path);
       ctx.restore();
+
+      // 노선을 따라 이동하는 기체
+      if (!reduce) {
+        routes.forEach((r, i) => {
+          // 노선마다 출발 시각을 어긋나게 해서 동시에 뜨지 않게 한다
+          const phase = (t * 0.24 + i * 0.19) % 1;
+          const [px, py] = atT(r, phase);
+          const [ax, ay] = atT(r, Math.min(1, phase + 0.02));
+          const angle = Math.atan2(ay - py, ax - px);
+
+          ctx.save();
+          ctx.translate(px, py);
+          ctx.rotate(angle);
+          // 도착 직전·직후에 흐려진다
+          ctx.globalAlpha = Math.min(1, Math.sin(phase * Math.PI) * 2.2);
+          ctx.fillStyle = "rgba(255,214,160,0.98)";
+          ctx.beginPath();
+          ctx.moveTo(4.4, 0);
+          ctx.lineTo(-2.6, 2.4);
+          ctx.lineTo(-1.2, 0);
+          ctx.lineTo(-2.6, -2.4);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        });
+      }
 
       // 이미 관광지가 된 곳
       for (const p of held) {
@@ -207,18 +248,28 @@ export function MapHero({
         ctx.fill();
       });
 
-      // 출발지
+      // 출발지 — 관제탑처럼 링이 퍼져나간다
       const o = pos[origin.name];
       if (o) {
-        ctx.fillStyle = "rgba(88,196,221,0.9)";
-        ctx.beginPath();
-        ctx.arc(o[0], o[1], 3, 0, 7);
-        ctx.fill();
-        ctx.strokeStyle = "rgba(88,196,221,0.35)";
+        if (!reduce) {
+          for (let k = 0; k < 3; k++) {
+            const ph = ((t * 0.45 + k / 3) % 1);
+            ctx.strokeStyle = `rgba(88,196,221,${(1 - ph) * 0.32})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.arc(o[0], o[1], 5 + ph * 34, 0, 7);
+            ctx.stroke();
+          }
+        }
+        ctx.strokeStyle = "rgba(88,196,221,0.4)";
         ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(o[0], o[1], 9, 0, 7);
+        ctx.arc(o[0], o[1], 8, 0, 7);
         ctx.stroke();
+        ctx.fillStyle = "rgba(88,196,221,0.95)";
+        ctx.beginPath();
+        ctx.arc(o[0], o[1], 3.2, 0, 7);
+        ctx.fill();
       }
 
       if (!reduce) raf = requestAnimationFrame(draw);
