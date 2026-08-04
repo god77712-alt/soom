@@ -15,14 +15,14 @@ export type Tone = "normal" | "uncharted" | "muted" | "warn";
 export function toneClass(tone: Tone): string {
   switch (tone) {
     case "uncharted":
-      // 강조색. 미개척은 나쁜 게 아니라 가장 좋은 후보라는 신호다.
-      return "text-amber-300 font-semibold";
+      // 금색. 이 색이 보이면 "비어 있다 = 기회"라는 뜻이다.
+      return "text-open font-semibold";
     case "muted":
-      return "text-neutral-500";
+      return "text-ink3";
     case "warn":
-      return "text-orange-300";
+      return "text-open-d";
     default:
-      return "text-neutral-200";
+      return "text-ink";
   }
 }
 

@@ -15,19 +15,19 @@ export function ShotStrip({ shots, columns = 4 }: { shots: PlaceShot[]; columns?
   return (
     <div className={`grid grid-cols-2 gap-2 ${grid}`}>
       {shots.map((shot, i) => (
-        <div key={i} className="overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900/40">
-          <div className="flex aspect-[4/3] items-center justify-center bg-neutral-900">
+        <div key={i} className="overflow-hidden rounded-lg border border-hair bg-panel/40">
+          <div className="flex aspect-[4/3] items-center justify-center bg-panel">
             {shot.photo_url ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={shot.photo_url} alt={shot.caption} className="h-full w-full object-cover" />
             ) : (
-              <span className="text-[10px] text-neutral-700">사진 준비 중</span>
+              <span className="text-[10px] text-hair2">사진 준비 중</span>
             )}
           </div>
           <div className="p-2.5">
-            <div className="text-xs leading-relaxed text-neutral-300">{shot.caption}</div>
+            <div className="text-xs leading-relaxed text-ink2">{shot.caption}</div>
             {shot.best_time && (
-              <div className="mt-1 text-[10px] text-amber-300/70">{shot.best_time}</div>
+              <div className="mt-1 text-[10px] text-open/70">{shot.best_time}</div>
             )}
           </div>
         </div>

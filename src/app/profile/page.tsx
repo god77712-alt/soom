@@ -25,11 +25,11 @@ export default async function ProfilePage({
     const demo = await getDemoChannels();
     return (
       <main className="mx-auto max-w-xl px-6 py-16">
-        <Link href="/start" className="text-xs text-neutral-500 hover:text-neutral-300">
+        <Link href="/start" className="text-xs text-ink3 hover:text-ink2">
           ← 다시 입력
         </Link>
         <h1 className="mt-6 text-2xl font-bold">채널을 찾지 못했습니다</h1>
-        <p className="mt-2 text-sm text-neutral-500">
+        <p className="mt-2 text-sm text-ink3">
           0단계에서는 실제 유튜브를 조회하지 않습니다. 아래 데모 채널로 확인해주세요.
         </p>
         <div className="mt-6 flex flex-wrap gap-2">
@@ -37,7 +37,7 @@ export default async function ProfilePage({
             <Link
               key={c.id}
               href={`/profile?q=${encodeURIComponent(c.title)}`}
-              className="rounded-lg border border-neutral-700 px-3 py-2 text-sm transition hover:border-neutral-500"
+              className="rounded-lg border border-hair2 px-3 py-2 text-sm transition hover:border-ink3"
             >
               {c.title}
             </Link>
@@ -52,12 +52,12 @@ export default async function ProfilePage({
 
   return (
     <main className="mx-auto max-w-xl px-6 py-16">
-      <Link href="/start" className="text-xs text-neutral-500 hover:text-neutral-300">
+      <Link href="/start" className="text-xs text-ink3 hover:text-ink2">
         ← 다시 입력
       </Link>
 
       {/* 국적을 묻지 않는다. 영상 언어로 자동 판별한 결과만 보여준다. */}
-      <div className="mt-6 text-sm text-neutral-500">
+      <div className="mt-6 text-sm text-ink3">
         {ch.title} · {S.subscribers(ch.subscriber_count)} · 주 언어{" "}
         {ch.language === "en" ? "English" : "한국어"}
       </div>
@@ -71,14 +71,14 @@ export default async function ProfilePage({
       </div>
 
       {/* 근거를 반드시 함께 보여준다. 태그만 던지면 점집처럼 보인다. */}
-      <p className="mt-4 text-sm text-neutral-500">
+      <p className="mt-4 text-sm text-ink3">
         근거: {S.s2Basis(profile.analyzed_count, profile.top_performer_count)}
       </p>
 
       {strongest && (
         <Link
           href={`/recommend?channel=${ch.id}&tag=${strongest.id}`}
-          className="mt-10 block rounded-lg bg-neutral-100 px-5 py-3.5 text-center text-sm font-medium text-neutral-900 transition hover:bg-white"
+          className="mt-10 block rounded-lg bg-ink px-5 py-3.5 text-center text-sm font-medium text-panel transition hover:bg-white"
         >
           {S.s2Next}
         </Link>

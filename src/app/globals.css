@@ -1,11 +1,70 @@
 @import "tailwindcss";
 
+/**
+ * 디자인 토큰.
+ *
+ * 색·글꼴을 여기 한 곳에만 둔다. 화면 컴포넌트는 bg-ground / text-signal 같은
+ * 이름으로만 쓰고 hex 를 직접 적지 않는다. 다음에 톤을 바꿀 때 이 파일만 고치면 된다.
+ *
+ * 색이 뜻을 가진다 (임의로 다른 데 쓰지 말 것)
+ *   signal  파랑 — 계산·기준선·시스템
+ *   open    금색 — 기회. 이 색이 보이면 "비어 있다"는 뜻이다
+ *   held    가라앉은 청회색 — 이미 관광지가 된 곳
+ */
+@theme {
+  --color-ground: #000000;
+  --color-panel: #080b0f;
+  --color-panel2: #0c1218;
+  --color-hair: #141c24;
+  --color-hair2: #1e2a35;
+
+  --color-ink: #e6ecf1;
+  --color-ink2: #8896a3;
+  --color-ink3: #4c5966;
+
+  --color-signal: #58c4dd;
+  --color-signal-d: #236b8e;
+
+  --color-open: #e0a458;
+  --color-open-d: #8a6234;
+
+  --color-held: #1a2630;
+
+  --font-sans: "Pretendard", -apple-system, "Segoe UI", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", Consolas, "D2Coding", monospace;
+  /* 문장용. 수식을 쓰는 글꼴이라 "계산했다"는 인상이 붙는다 */
+  --font-serif: "Iowan Old Style", Georgia, "Nanum Myeongjo", "Batang", serif;
+}
+
 :root {
   color-scheme: dark;
 }
 
 body {
-  background: #0a0a0a;
-  color: #e5e5e5;
+  background: var(--color-ground);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
+}
+
+/* 숫자가 세로로 줄 맞게 */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 원근으로 사라지는 격자 — 히어로 외 구역의 바탕 */
+.grid-floor {
+  background-image:
+    linear-gradient(rgba(88, 196, 221, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(88, 196, 221, 0.09) 1px, transparent 1px);
+  background-size: 3.5rem 3.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

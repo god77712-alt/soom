@@ -1,0 +1,233 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
+/**
+ * 도트 지도 + 움직이는 배차 경로.
+ *
+ * 배경 이미지를 깔지 않는다. 좌표를 점으로 찍어서 국토 모양이 나오게 한다.
+ * 지금은 해안선 근사 폴리곤 안을 채워 흉내내지만, 7단계에 실제 4만 8천 건이 들어오면
+ * places 좌표를 그대로 뿌린다. 그러면 수도권은 빽빽하고 인구감소지역은 성기게 나오는데,
+ * 그 대비 자체가 이 서비스의 논지라 따로 설명할 필요가 없어진다.
+ */
+
+export interface MapPoint {
+  name: string;
+  lat: number;
+  lng: number;
+}
+
+/** 남한 해안선 근사. 도트 마스크용이라 정밀할 필요는 없다 */
+const OUTLINE: Array<[number, number]> = [
+  [126.65, 37.8], [127.0, 38.28], [127.55, 38.3], [128.35, 38.58], [128.75, 38.05],
+  [129.0, 37.4], [129.3, 36.6], [129.45, 36.05], [129.36, 35.5], [129.1, 35.1],
+  [128.6, 34.85], [127.75, 34.72], [126.95, 34.58], [126.4, 34.3], [126.28, 34.82],
+  [126.45, 35.45], [126.5, 35.95], [126.2, 36.6], [126.15, 36.92], [126.6, 37.42],
+  [126.65, 37.8],
+];
+const JEJU = { lng: 126.55, lat: 33.38, rx: 0.44, ry: 0.2 };
+const BOUNDS = { w: 125.6, e: 129.9, s: 33.0, n: 38.8 };
+
+const inPoly = (x: number, y: number) => {
+  let hit = false;
+  for (let i = 0, j = OUTLINE.length - 1; i < OUTLINE.length; j = i++) {
+    const [xi, yi] = OUTLINE[i];
+    const [xj, yj] = OUTLINE[j];
+    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) hit = !hit;
+  }
+  return hit;
+};
+const inJeju = (x: number, y: number) =>
+  ((x - JEJU.lng) / JEJU.rx) ** 2 + ((y - JEJU.lat) / JEJU.ry) ** 2 <= 1;
+
+/** 결정적 유사난수 — 디더링 질감. 매번 같은 그림이 나와야 한다 */
+const hash = (x: number, y: number) => {
+  const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+  return s - Math.floor(s);
+};
+
+export function MapHero({
+  origin,
+  open,
+  held,
+  className = "",
+}: {
+  /** 출발지 (보통 서울) */
+  origin: MapPoint;
+  /** 추천 구역 — 금색으로 맥동한다 */
+  open: MapPoint[];
+  /** 이미 관광지가 된 곳 — 가라앉는다 */
+  held: MapPoint[];
+  className?: string;
+}) {
+  const ref = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const cv = ref.current;
+    if (!cv) return;
+    const ctx = cv.getContext("2d");
+    if (!ctx) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let W = 0;
+    let H = 0;
+    let dots: Array<[number, number, number]> = [];
+    let routes: Path2D[] = [];
+    let pos: Record<string, [number, number]> = {};
+    let raf = 0;
+    const t0 = performance.now();
+
+    const project = (lat: number, lng: number): [number, number] => {
+      const scale = Math.min(W / (BOUNDS.e - BOUNDS.w), H / (BOUNDS.n - BOUNDS.s)) * 0.94;
+      return [
+        W / 2 + (lng - (BOUNDS.w + BOUNDS.e) / 2) * scale,
+        H / 2 - (lat - (BOUNDS.s + BOUNDS.n) / 2) * scale,
+      ];
+    };
+
+    /** 직교 + 크게 둥근 모서리. 회로 배선처럼 보이게 한다 */
+    const orthPath = (a: [number, number], b: [number, number], r: number) => {
+      const [x1, y1] = a;
+      const [x2, y2] = b;
+      const midY = y1 + (y2 - y1) * 0.55;
+      const dx = Math.sign(x2 - x1) || 1;
+      const dy = Math.sign(midY - y1) || 1;
+      const dy2 = Math.sign(y2 - midY) || 1;
+      const rr = Math.max(
+        0,
+        Math.min(r, Math.abs(midY - y1) / 2, Math.abs(x2 - x1) / 2, Math.abs(y2 - midY) / 2),
+      );
+      const p = new Path2D();
+      p.moveTo(x1, y1);
+      p.lineTo(x1, midY - rr * dy);
+      p.quadraticCurveTo(x1, midY, x1 + rr * dx, midY);
+      p.lineTo(x2 - rr * dx, midY);
+      p.quadraticCurveTo(x2, midY, x2, midY + rr * dy2);
+      p.lineTo(x2, y2);
+      return p;
+    };
+
+    const build = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = cv.getBoundingClientRect();
+      W = rect.width;
+      H = rect.height;
+      if (W === 0 || H === 0) return;
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      dots = [];
+      const scale = Math.min(W / (BOUNDS.e - BOUNDS.w), H / (BOUNDS.n - BOUNDS.s)) * 0.94;
+      for (let py = 0; py < H; py += 5) {
+        for (let px = 0; px < W; px += 5) {
+          const lng = (px - W / 2) / scale + (BOUNDS.w + BOUNDS.e) / 2;
+          const lat = (BOUNDS.s + BOUNDS.n) / 2 - (py - H / 2) / scale;
+          if (!inPoly(lng, lat) && !inJeju(lng, lat)) continue;
+          const n = hash(px * 0.37, py * 0.53);
+          if (n < 0.3) continue;
+          dots.push([px + (hash(px, py) - 0.5) * 2.2, py + (hash(py, px) - 0.5) * 2.2, n]);
+        }
+      }
+
+      pos = {};
+      for (const p of [...open, ...held]) pos[p.name] = project(p.lat, p.lng);
+      pos[origin.name] = project(origin.lat, origin.lng);
+      routes = open.map((p) => orthPath(pos[origin.name], pos[p.name], 26));
+    };
+
+    const draw = (now: number) => {
+      const t = (now - t0) / 1000;
+      ctx.clearRect(0, 0, W, H);
+
+      for (const [x, y, n] of dots) {
+        ctx.fillStyle = n > 0.82 ? "rgba(88,196,221,0.30)" : "rgba(35,107,142,0.42)";
+        ctx.fillRect(x, y, 1.35, 1.35);
+      }
+
+      // 경로 바탕선
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = "rgba(138,98,52,0.5)";
+      for (const p of routes) ctx.stroke(p);
+
+      // 흐르는 빛
+      ctx.save();
+      ctx.strokeStyle = "rgba(224,164,88,0.95)";
+      ctx.lineWidth = 1.25;
+      ctx.setLineDash([26, 190]);
+      ctx.lineDashOffset = reduce ? 0 : -((t * 58) % 216);
+      ctx.shadowColor = "rgba(224,164,88,0.8)";
+      ctx.shadowBlur = 6;
+      for (const p of routes) ctx.stroke(p);
+      ctx.restore();
+
+      // 이미 관광지가 된 곳
+      for (const p of held) {
+        const at = pos[p.name];
+        if (!at) continue;
+        ctx.fillStyle = "rgba(42,55,66,0.95)";
+        ctx.beginPath();
+        ctx.arc(at[0], at[1], 3, 0, 7);
+        ctx.fill();
+        ctx.strokeStyle = "rgba(76,89,102,0.7)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(at[0], at[1], 6, 0, 7);
+        ctx.stroke();
+      }
+
+      // 추천 구역 — 맥동
+      open.forEach((p, i) => {
+        const at = pos[p.name];
+        if (!at) return;
+        const ph = reduce ? 0.5 : (Math.sin(t * 1.5 - i * 0.7) + 1) / 2;
+        ctx.strokeStyle = `rgba(224,164,88,${0.1 + ph * 0.3})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(at[0], at[1], 8 + ph * 7, 0, 7);
+        ctx.stroke();
+        ctx.fillStyle = "rgba(224,164,88,0.95)";
+        ctx.beginPath();
+        ctx.arc(at[0], at[1], 3.2, 0, 7);
+        ctx.fill();
+      });
+
+      // 출발지
+      const o = pos[origin.name];
+      if (o) {
+        ctx.fillStyle = "rgba(88,196,221,0.9)";
+        ctx.beginPath();
+        ctx.arc(o[0], o[1], 3, 0, 7);
+        ctx.fill();
+        ctx.strokeStyle = "rgba(88,196,221,0.35)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(o[0], o[1], 9, 0, 7);
+        ctx.stroke();
+      }
+
+      if (!reduce) raf = requestAnimationFrame(draw);
+    };
+
+    const start = () => {
+      build();
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(draw);
+    };
+    start();
+
+    let tid: ReturnType<typeof setTimeout>;
+    const onResize = () => {
+      clearTimeout(tid);
+      tid = setTimeout(start, 160);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(tid);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [origin, open, held]);
+
+  return <canvas ref={ref} aria-hidden className={`block h-full w-full ${className}`} />;
+}

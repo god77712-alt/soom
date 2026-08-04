@@ -27,8 +27,8 @@ export function GuestTagPicker({ tags }: { tags: Tag[] }) {
               onClick={() => toggle(t.id)}
               className={`rounded-full border px-3 py-1.5 text-sm transition ${
                 on
-                  ? "border-amber-400/50 bg-amber-400/10 text-amber-200"
-                  : "border-neutral-800 text-neutral-400 hover:border-neutral-600"
+                  ? "border-open/50 bg-open/10 text-open"
+                  : "border-hair text-ink2 hover:border-ink3"
               }`}
             >
               {t.name_ko}
@@ -44,11 +44,11 @@ export function GuestTagPicker({ tags }: { tags: Tag[] }) {
           onClick={() =>
             router.push(`/recommend?channel=${GUEST_CHANNEL.id}&tag=${picked[0]}`)
           }
-          className="rounded-lg bg-neutral-100 px-4 py-2.5 text-sm font-medium text-neutral-900 transition enabled:hover:bg-white disabled:opacity-30"
+          className="rounded-lg bg-ink px-4 py-2.5 text-sm font-medium text-panel transition enabled:hover:bg-white disabled:opacity-30"
         >
           이 소재로 찾아보기
         </button>
-        <span className="text-xs text-neutral-600">{picked.length}/3 선택</span>
+        <span className="text-xs text-ink3">{picked.length}/3 선택</span>
       </div>
     </div>
   );

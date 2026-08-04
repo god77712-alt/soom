@@ -32,19 +32,19 @@ function Kpi({
   return (
     <div
       className={`rounded-lg border p-4 ${
-        highlight ? "border-amber-400/40 bg-amber-400/5" : "border-neutral-800 bg-neutral-900/40"
+        highlight ? "border-open/40 bg-open/5" : "border-hair bg-panel/40"
       }`}
     >
-      <div className="text-xs text-neutral-500">{label}</div>
+      <div className="text-xs text-ink3">{label}</div>
       <div className="mt-1.5 flex items-baseline gap-1">
         <span
-          className={`text-2xl font-bold tabular-nums ${highlight ? "text-amber-300" : "text-neutral-100"}`}
+          className={`text-2xl font-bold tabular-nums ${highlight ? "text-open" : "text-ink"}`}
         >
           {value}
         </span>
-        {unit && <span className="text-xs text-neutral-500">{unit}</span>}
+        {unit && <span className="text-xs text-ink3">{unit}</span>}
       </div>
-      {note && <div className="mt-1 text-[10px] leading-relaxed text-neutral-600">{note}</div>}
+      {note && <div className="mt-1 text-[10px] leading-relaxed text-ink3">{note}</div>}
     </div>
   );
 }
@@ -62,20 +62,20 @@ export default async function AdminPage() {
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-12">
-      <Link href="/" className="text-xs text-neutral-500 hover:text-neutral-300">
+      <Link href="/" className="text-xs text-ink3 hover:text-ink2">
         ← 처음으로
       </Link>
 
       <header className="mt-6">
         <h1 className="text-2xl font-bold tracking-tight">{S.s5Title}</h1>
-        <p className="mt-1.5 text-sm text-neutral-500">
+        <p className="mt-1.5 text-sm text-ink3">
           크리에이터에게 보여주는 것과 같은 엔진입니다. 보는 사람만 바뀝니다.
         </p>
       </header>
 
       {/* ── 성과 환산 ── */}
       <section className="mt-8">
-        <h2 className="text-sm font-medium text-neutral-300">{S.s5ImpactTitle}</h2>
+        <h2 className="text-sm font-medium text-ink2">{S.s5ImpactTitle}</h2>
         <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <Kpi label="누적 추천" value={impact.recommended_places.toLocaleString("ko-KR")} unit="건" />
           <Kpi label="실제 방문 확인" value={impact.estimated_visits.toLocaleString("ko-KR")} unit="명" />
@@ -102,15 +102,15 @@ export default async function AdminPage() {
 
       {/* ── 시군구별 미개척 랭킹 ── */}
       <section className="mt-10">
-        <h2 className="text-sm font-medium text-neutral-300">{S.s5RankTitle}</h2>
-        <p className="mt-1 text-xs text-neutral-600">
+        <h2 className="text-sm font-medium text-ink2">{S.s5RankTitle}</h2>
+        <p className="mt-1 text-xs text-ink3">
           해외 채널 영상이 0편인 장소 수 기준. 어느 지역에 아직 기회가 남아 있는지 봅니다.
         </p>
 
         <div className="mt-3 overflow-x-auto">
           <table className="w-full border-collapse text-sm">
             <thead>
-              <tr className="border-b border-neutral-800 text-xs text-neutral-500">
+              <tr className="border-b border-hair text-xs text-ink3">
                 <th className="py-2 text-left font-normal">시군구</th>
                 <th className="py-2 text-left font-normal">미개척 장소</th>
                 <th className="py-2 text-left font-normal">대표 소재</th>
@@ -119,31 +119,31 @@ export default async function AdminPage() {
             </thead>
             <tbody>
               {gaps.map((g) => (
-                <tr key={`${g.sido}-${g.sigungu}`} className="border-b border-neutral-900">
+                <tr key={`${g.sido}-${g.sigungu}`} className="border-b border-panel">
                   <td className="py-2.5">
-                    <span className="text-neutral-200">{g.sigungu}</span>
-                    <span className="ml-1.5 text-xs text-neutral-600">{g.sido}</span>
+                    <span className="text-ink">{g.sigungu}</span>
+                    <span className="ml-1.5 text-xs text-ink3">{g.sido}</span>
                     {g.is_declining_area && (
-                      <span className="ml-2 rounded bg-neutral-800 px-1.5 py-0.5 text-[10px] text-neutral-400">
+                      <span className="ml-2 rounded bg-hair px-1.5 py-0.5 text-[10px] text-ink2">
                         {S.decliningArea}
                       </span>
                     )}
                   </td>
                   <td className="py-2.5">
                     <div className="flex items-center gap-2">
-                      <div className="h-1.5 w-24 overflow-hidden rounded-full bg-neutral-800">
+                      <div className="h-1.5 w-24 overflow-hidden rounded-full bg-hair">
                         <div
-                          className="h-full rounded-full bg-amber-400/70"
+                          className="h-full rounded-full bg-open/70"
                           style={{ width: `${(g.uncharted_count / maxGap) * 100}%` }}
                         />
                       </div>
-                      <span className="tabular-nums text-xs text-neutral-400">
+                      <span className="tabular-nums text-xs text-ink2">
                         {g.uncharted_count}곳
                       </span>
                     </div>
                   </td>
-                  <td className="py-2.5 text-neutral-400">{tagName(g.top_tag_id)}</td>
-                  <td className="py-2.5 text-right tabular-nums font-medium text-amber-300/90">
+                  <td className="py-2.5 text-ink2">{tagName(g.top_tag_id)}</td>
+                  <td className="py-2.5 text-right tabular-nums font-medium text-open/90">
                     {g.tag_median_vsr.toFixed(1)}배
                   </td>
                 </tr>
@@ -155,8 +155,8 @@ export default async function AdminPage() {
 
       {/* ── 채널 ↔ 지역 매칭 ── */}
       <section className="mt-10">
-        <h2 className="text-sm font-medium text-neutral-300">{S.s5MatchTitle}</h2>
-        <p className="mt-1 text-xs text-neutral-600">
+        <h2 className="text-sm font-medium text-ink2">{S.s5MatchTitle}</h2>
+        <p className="mt-1 text-xs text-ink3">
           채널 프로필과 지역 소재를 맞춰 섭외 대상을 고릅니다. 근거를 함께 표시합니다.
         </p>
 
@@ -164,18 +164,18 @@ export default async function AdminPage() {
           {matches.map((m, i) => (
             <div
               key={i}
-              className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 rounded-lg border border-neutral-800 bg-neutral-900/40 px-4 py-3"
+              className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 rounded-lg border border-hair bg-panel/40 px-4 py-3"
             >
               <div>
-                <span className="font-medium text-neutral-200">{m.channel_title}</span>
-                <span className="ml-2 text-xs text-neutral-500">
+                <span className="font-medium text-ink">{m.channel_title}</span>
+                <span className="ml-2 text-xs text-ink3">
                   {S.subscribers(m.subscriber_count)} · {m.language === "en" ? "해외" : "국내"}
                 </span>
-                <div className="mt-0.5 text-xs text-neutral-600">{m.reason}</div>
+                <div className="mt-0.5 text-xs text-ink3">{m.reason}</div>
               </div>
               <div className="text-right text-sm">
-                <span className="text-neutral-300">{m.sigungu}</span>
-                <span className="ml-2 rounded border border-neutral-700 px-2 py-0.5 text-xs text-neutral-400">
+                <span className="text-ink2">{m.sigungu}</span>
+                <span className="ml-2 rounded border border-hair2 px-2 py-0.5 text-xs text-ink2">
                   {tagName(m.matched_tag_id)}
                 </span>
               </div>
@@ -184,7 +184,7 @@ export default async function AdminPage() {
         </div>
       </section>
 
-      <p className="mt-10 border-t border-neutral-800 pt-6 text-xs text-neutral-600">
+      <p className="mt-10 border-t border-hair pt-6 text-xs text-ink3">
         추천 이력(recommendation_logs)은 지금 기록만 하고 있습니다. 쌓이면 &quot;비슷한 채널이 많이 고른
         소재&quot; 추천으로 이어집니다.
       </p>

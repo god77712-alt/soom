@@ -26,12 +26,12 @@ export function TagChip({
   const base = "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition";
   const style =
     variant === "active"
-      ? "border-amber-400/50 bg-amber-400/10 text-amber-200"
+      ? "border-open/50 bg-open/10 text-open"
       : variant === "explore"
-        ? "border-dashed border-neutral-700 text-neutral-400 hover:border-neutral-500"
+        ? "border-dashed border-hair2 text-ink2 hover:border-ink3"
         : badge.state === "off"
-          ? "border-neutral-800 text-neutral-500 hover:border-neutral-600"
-          : "border-neutral-700 text-neutral-300 hover:border-neutral-500";
+          ? "border-hair text-ink3 hover:border-ink3"
+          : "border-hair2 text-ink2 hover:border-ink3";
 
   const inner = (
     <>
@@ -39,7 +39,7 @@ export function TagChip({
       {badge.label && (
         <span
           className={`rounded px-1 py-0.5 text-[10px] font-medium ${
-            badge.state === "now" ? "bg-amber-400/20 text-amber-200" : "text-neutral-600"
+            badge.state === "now" ? "bg-open/20 text-open" : "text-ink3"
           }`}
         >
           {badge.label}

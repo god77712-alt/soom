@@ -14,10 +14,10 @@ export function EvidenceVideoCard({ item }: { item: EvidenceVideo }) {
   const isDemo = item.video.youtube_id.startsWith("DEMO_");
 
   return (
-    <div className="overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900/40">
-      <div className="aspect-video bg-neutral-900">
+    <div className="overflow-hidden rounded-lg border border-hair bg-panel/40">
+      <div className="aspect-video bg-panel">
         {isDemo ? (
-          <div className="flex h-full flex-col items-center justify-center gap-1 text-neutral-600">
+          <div className="flex h-full flex-col items-center justify-center gap-1 text-ink3">
             <span className="text-2xl">▶</span>
             <span className="text-[10px]">데모 — 실제 영상 아님</span>
           </div>
@@ -33,18 +33,18 @@ export function EvidenceVideoCard({ item }: { item: EvidenceVideo }) {
       </div>
 
       <div className="p-3">
-        <div className="line-clamp-2 text-sm font-medium text-neutral-200">{item.video.title}</div>
-        <div className="mt-1.5 text-xs text-neutral-500">
+        <div className="line-clamp-2 text-sm font-medium text-ink">{item.video.title}</div>
+        <div className="mt-1.5 text-xs text-ink3">
           {item.channel.title} · {item.place.name_ko}
         </div>
         <div className="mt-2 flex items-baseline gap-2">
-          <span className="text-lg font-semibold text-amber-300">{item.vsr.toFixed(1)}배</span>
-          <span className="text-xs text-neutral-500">
+          <span className="text-lg font-semibold text-open">{item.vsr.toFixed(1)}배</span>
+          <span className="text-xs text-ink3">
             구독자 {formatCount(item.channel.subscriber_count)} → 조회 {formatCount(item.video.view_count)}
           </span>
         </div>
         {item.excluded_from_score && (
-          <div className="mt-1.5 text-[10px] text-neutral-600">
+          <div className="mt-1.5 text-[10px] text-ink3">
             구독자 1,000 미만 — 점수 계산에서는 제외된 영상입니다
           </div>
         )}
