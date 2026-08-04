@@ -1,36 +1,59 @@
 import type { PlaceShot } from "@/lib/viewmodels";
 
 /**
- * 여기서 찍을 수 있는 컷.
+ * 촬영 컷 갤러리.
  *
- * 사진만 있으면 관광지 소개고, 컷 설명이 붙어야 촬영 계획이 된다.
- * photo_url 이 null 인 동안(0단계)은 설명이 주인공이고 사진 자리는 비워둔다.
- * 7단계에서 TourAPI 갤러리 이미지가 들어오면 자동으로 사진이 깔린다.
+ * 사진이 주인공이다. 크리에이터는 글보다 그림을 보고 판단한다.
+ * photo_url 이 null 인 동안(0단계)은 도트 질감 자리표시를 깔고 컷 이름만 얹는다.
+ * 회색 빈 박스로 두면 고장난 것처럼 보이는데, 질감이 있으면 의도된 자리로 읽힌다.
+ * 7단계에서 관광사진 갤러리 이미지가 들어오면 그대로 사진이 깔린다.
  */
-export function ShotStrip({ shots, columns = 4 }: { shots: PlaceShot[]; columns?: 2 | 3 | 4 }) {
+
+const DOTS =
+  "radial-gradient(rgba(88,196,221,.16) 1px, transparent 1px), radial-gradient(rgba(35,107,142,.12) 1px, transparent 1px)";
+
+export function ShotStrip({ shots }: { shots: PlaceShot[] }) {
   if (shots.length === 0) return null;
 
-  const grid = columns === 2 ? "sm:grid-cols-2" : columns === 3 ? "sm:grid-cols-3" : "sm:grid-cols-4";
-
   return (
-    <div className={`grid grid-cols-2 gap-2 ${grid}`}>
+    <div className="grid grid-cols-2 gap-1.5 md:grid-cols-4">
       {shots.map((shot, i) => (
-        <div key={i} className="overflow-hidden rounded-lg border border-hair bg-panel/40">
-          <div className="flex aspect-[4/3] items-center justify-center bg-panel">
+        <figure
+          key={i}
+          /* 첫 컷은 두 칸을 쓴다. 대표 그림이라 크게 보여준다 */
+          className={`group relative overflow-hidden bg-panel ${
+            i === 0 ? "col-span-2 md:row-span-2" : ""
+          }`}
+        >
+          <div className={i === 0 ? "aspect-[4/3] md:aspect-square" : "aspect-[4/3]"}>
             {shot.photo_url ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={shot.photo_url} alt={shot.caption} className="h-full w-full object-cover" />
+              <img
+                src={shot.photo_url}
+                alt={shot.caption}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              />
             ) : (
-              <span className="text-[10px] text-hair2">사진 준비 중</span>
+              <div
+                className="h-full w-full"
+                style={{
+                  backgroundImage: DOTS,
+                  backgroundSize: "12px 12px, 12px 12px",
+                  backgroundPosition: "0 0, 6px 6px",
+                }}
+              />
             )}
           </div>
-          <div className="p-2.5">
-            <div className="text-xs leading-relaxed text-ink2">{shot.caption}</div>
+
+          <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/80 to-transparent p-3 pt-8">
+            <div className={`leading-snug text-ink ${i === 0 ? "text-sm" : "text-xs"}`}>
+              {shot.caption}
+            </div>
             {shot.best_time && (
-              <div className="mt-1 text-[10px] text-open/70">{shot.best_time}</div>
+              <div className="mt-1 font-mono text-[10px] text-open tnum">{shot.best_time}</div>
             )}
-          </div>
-        </div>
+          </figcaption>
+        </figure>
       ))}
     </div>
   );

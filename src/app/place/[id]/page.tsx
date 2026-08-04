@@ -67,44 +67,89 @@ export default async function PlaceDetailPage({
   const reachLabels = reach ? reachText(reach.low, reach.high) : null;
 
   return (
-    <main className="mx-auto max-w-2xl px-6 py-12">
-      <Link
-        href={`/recommend?channel=${channel.id}&tag=${tag.id}`}
-        className="text-xs text-ink3 hover:text-ink2"
-      >
-        ← 추천 목록
-      </Link>
+    <main>
+      {/* ── 사진이 먼저 온다 ── */}
+      <div className="border-b border-hair px-6 pt-6 pb-0 sm:px-10">
+        <div className="mx-auto max-w-4xl">
+          <Link
+            href={`/recommend?channel=${channel.id}&tag=${tag.id}`}
+            className="font-mono text-xs text-ink3 hover:text-ink2"
+          >
+            ← 추천 목록
+          </Link>
+          <div className="mt-5 pb-6">
+            <ShotStrip shots={shots} />
+          </div>
+        </div>
+      </div>
 
-      {/* ── 머리말: 이 장소가 뭔지 ── */}
-      <header className="mt-6">
-        <div className="flex items-start justify-between gap-3">
-          <h1 className="text-3xl font-bold tracking-tight">{place.name_ko}</h1>
-          {place.is_declining_area && (
-            <span className="mt-2 shrink-0 rounded bg-hair px-2 py-1 text-[10px] text-ink2">
-              {S.decliningArea}
+      <div className="mx-auto max-w-4xl px-6 py-10 sm:px-10">
+        {/* ── 머리말 ── */}
+        <header>
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <h1 className="font-serif text-4xl font-normal tracking-tight">{place.name_ko}</h1>
+            {place.is_declining_area && (
+              <span className="border border-hair2 px-2 py-0.5 font-mono text-[10px] text-ink3">
+                {S.decliningArea}
+              </span>
+            )}
+          </div>
+          <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 font-mono text-xs text-ink3 tnum">
+            <span>
+              {place.sido} {place.sigungu} · {place.sigungu_code}
             </span>
-          )}
-        </div>
-        <div className="mt-1 text-sm text-ink3">
-          {place.sido} {place.sigungu} · {place.name_en}
-        </div>
-        <p className="mt-4 leading-relaxed text-ink2">{place.description_ko}</p>
-        {note && <p className="mt-3 text-xs text-open-d/70">⚠ {note}</p>}
-      </header>
+            <span>
+              {place.lat.toFixed(4)}, {place.lng.toFixed(4)}
+            </span>
+            <span>{place.name_en}</span>
+          </div>
+          <p className="mt-5 max-w-[62ch] leading-relaxed text-ink2">{place.description_ko}</p>
+          {note && <p className="mt-3 font-mono text-xs text-open-d">⚠ {note}</p>}
+        </header>
 
-      {/* ── 이 장소의 소재 전부 + 각각의 성적 ── */}
-      <section className="mt-8 rounded-xl border border-hair bg-panel/30 p-5">
-        <h2 className="text-sm font-medium text-ink2">
-          이 장소에서 찍을 수 있는 소재
-          <span className="ml-2 text-xs font-normal text-ink3">
-            {channel.language === "en" ? "해외" : "국내"} 채널 · 구독자{" "}
-            {formatCount(channel.subscriber_count)} 기준
-          </span>
-        </h2>
-        <div className="mt-2">
-          <TagScoreList items={tagScores} />
-        </div>
-      </section>
+        {/* ── 운영 정보. 장날이 안 맞으면 나머지가 다 무의미하다 ── */}
+        {(operation.open_cycle || operation.open_hours || operation.parking) && (
+          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-y border-hair py-4 font-mono text-sm text-ink2 tnum">
+            {operation.open_cycle && (
+              <span>
+                장날 <span className="text-open">{operation.open_cycle}</span>
+              </span>
+            )}
+            {operation.open_hours && (
+              <span>
+                운영 <span className="text-ink">{operation.open_hours}</span>
+              </span>
+            )}
+            {operation.parking && (
+              <span>
+                주차 <span className="text-ink">{operation.parking}</span>
+              </span>
+            )}
+            {operation.entrance_fee && (
+              <span>
+                입장 <span className="text-ink">{operation.entrance_fee}</span>
+              </span>
+            )}
+            <span>
+              일출 <span className="text-ink">{plan.sunrise}</span> · 일몰{" "}
+              <span className="text-ink">{plan.sunset}</span>
+            </span>
+          </div>
+        )}
+
+        {/* ── 소재 + 각각의 성적 ── */}
+        <section className="mt-8">
+          <h2 className="text-sm font-medium text-ink2">
+            소재
+            <span className="ml-2 font-mono text-xs font-normal text-ink3">
+              {channel.language === "en" ? "해외" : "국내"} 채널 · 구독자{" "}
+              {formatCount(channel.subscriber_count)} 기준
+            </span>
+          </h2>
+          <div className="mt-2">
+            <TagScoreList items={tagScores} />
+          </div>
+        </section>
 
       {/*
         무드 키워드. 영상·댓글에서 나온 것이라 성과 점수 대신 근거 수를 갖는다.
@@ -131,17 +176,7 @@ export default async function PlaceDetailPage({
         </section>
       )}
 
-      {/* ── 찍을 수 있는 컷 ── */}
-      {shots.length > 0 && (
-        <section className="mt-8">
-          <h2 className="text-sm font-medium text-ink2">어떤 그림이 나오나</h2>
-          <div className="mt-3">
-            <ShotStrip shots={shots} />
-          </div>
-        </section>
-      )}
-
-      <div className="mt-12 space-y-8">
+      <div className="mt-14 space-y-8">
         {/* ── ① 이 소재는 먹힌다 ── */}
         <Step n="①" title={S.s4Step1}>
           {step1Score.score ? (
@@ -215,43 +250,29 @@ export default async function PlaceDetailPage({
 
         {/* ── ⑤ 이렇게 찍으면 된다 ── */}
         <Step n="⑤" title={S.s4Step5}>
-          <div className="rounded-lg border border-hair bg-panel/30 p-4">
-            <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
-              <span className="font-medium text-ink">{plan.date_label}</span>
-              <span className="text-ink2">일출 {plan.sunrise}</span>
-              <span className="text-ink2">일몰 {plan.sunset}</span>
-            </div>
-
-            {/* 운영 정보. 장날이 안 맞으면 위 계획이 전부 무의미하다 */}
-            {(operation.open_cycle || operation.open_hours || operation.parking) && (
-              <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-hair pt-3 text-xs text-ink2">
-                {operation.open_cycle && <span>장날 {operation.open_cycle}</span>}
-                {operation.open_hours && <span>운영 {operation.open_hours}</span>}
-                {operation.parking && <span>주차 {operation.parking}</span>}
-                {operation.entrance_fee && <span>입장 {operation.entrance_fee}</span>}
-              </div>
-            )}
-            {operation.filming_note && (
-              <p className="mt-2 text-xs text-open-d/70">⚠ {operation.filming_note}</p>
-            )}
-            {operation.source === "estimate" && (
-              <p className="mt-2 text-[10px] text-ink3">
-                운영 정보는 공공데이터에 없어 추정한 값입니다. 방문 전 확인하세요.
-              </p>
-            )}
-
-            <ol className="mt-4 space-y-2 border-t border-hair pt-3">
+          {/* 운영 정보는 머리말에 이미 있다. 여기는 시간 순서만 */}
+          <div className="border border-hair bg-panel p-5">
+            <div className="font-mono text-sm font-medium text-open tnum">{plan.date_label}</div>
+            <ol className="mt-4 space-y-2.5">
               {plan.steps.map((s, i) => (
-                <li key={i} className="text-sm text-ink2">
+                <li key={i} className="flex gap-3 text-sm text-ink2">
+                  <span className="shrink-0 font-mono text-xs text-ink3 tnum">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   {s}
                 </li>
               ))}
             </ol>
+            {operation.filming_note && (
+              <p className="mt-4 border-t border-hair pt-3 font-mono text-xs text-open-d">
+                ⚠ {operation.filming_note}
+              </p>
+            )}
           </div>
 
           <div className="mt-4">
-            <div className="text-xs text-ink3">제목 예시</div>
-            <ul className="mt-1.5 space-y-1">
+            <div className="font-mono text-xs text-ink3">제목 예시</div>
+            <ul className="mt-2 space-y-1.5">
               {plan.title_examples.map((t, i) => (
                 <li key={i} className="text-sm text-ink2">
                   “{t}”
@@ -273,12 +294,7 @@ export default async function PlaceDetailPage({
           */}
           {nearby.length > 0 && (
             <div className="mb-5">
-              <h3 className="text-sm font-medium text-ink2">
-                근처에 같이 찍을 소재
-                <span className="ml-2 text-xs font-normal text-ink3">
-                  하루에 2~3곳을 묶으면 이동비가 빠집니다
-                </span>
-              </h3>
+              <h3 className="text-sm font-medium text-ink2">근처에 같이 찍을 소재</h3>
               <ul className="mt-2 space-y-1.5">
                 {nearby.map((n) => (
                   <li
@@ -291,16 +307,13 @@ export default async function PlaceDetailPage({
                         {n.tag_names.join(" · ")}
                       </span>
                     </span>
-                    <span className="shrink-0 text-xs text-ink3">
+                    <span className="shrink-0 font-mono text-xs text-ink3 tnum">
                       차로 {formatMinutes(n.drive_minutes)}
-                      <span className="ml-2 text-ink3">{S.competition(n.video_count)}</span>
+                      <span className="ml-2">{S.competition(n.video_count)}</span>
                     </span>
                   </li>
                 ))}
               </ul>
-              <p className="mt-2 text-[10px] text-ink3">
-                이동시간은 직선거리 기반 어림값입니다.
-              </p>
             </div>
           )}
 
@@ -329,6 +342,7 @@ export default async function PlaceDetailPage({
           <h3 className="mt-4 text-sm font-medium text-ink2">예상 동선</h3>
           <p className="mt-1.5 text-sm text-ink2">{stay.route}</p>
         </Step>
+        </div>
       </div>
     </main>
   );
