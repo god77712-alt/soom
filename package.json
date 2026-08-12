@@ -33,7 +33,9 @@
     "eval:hypothesis": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/eval-hypothesis.ts",
     "export:shootdays": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-shootdays.ts",
     "report:inventory": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/report-inventory.ts",
-    "fill:schoolcoords": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/fill-school-coords.ts"
+    "fill:schoolcoords": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/fill-school-coords.ts",
+    "report:grid": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/report-grid.ts",
+    "export:availability": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-availability.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
