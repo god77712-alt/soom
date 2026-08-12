@@ -45,8 +45,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           가짜 수치가 실제 값처럼 캡처되는 걸 막는다. 7단계에서 IS_DEMO_DATA 를 끄면 사라진다.
         */}
         {IS_DEMO_DATA && (
-          <div className="border-b border-open-d/40 bg-open/10 px-4 py-1.5 text-center font-mono text-[11px] text-open">
-            {S.demoBanner}
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 border-b border-open-d/40 bg-open/10 px-4 py-1.5 text-center font-mono text-[11px] text-open">
+            <span>{S.demoBanner}</span>
+            <Link href="/data-sources" className="underline underline-offset-2 hover:no-underline">
+              {S.demoBannerLink}
+            </Link>
           </div>
         )}
 

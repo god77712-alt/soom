@@ -405,6 +405,16 @@ export default async function Home({
           <Link href="/check" className="transition-colors hover:text-ink2">
             데이터 검증
           </Link>
+          {/* 아래 셋은 YouTube API 심사가 요구한다. 지우지 말 것. */}
+          <Link href="/data-sources" className="transition-colors hover:text-ink2">
+            데이터 출처
+          </Link>
+          <Link href="/privacy" className="transition-colors hover:text-ink2">
+            개인정보처리방침
+          </Link>
+          <Link href="/terms" className="transition-colors hover:text-ink2">
+            이용약관
+          </Link>
         </div>
       </footer>
     </main>
