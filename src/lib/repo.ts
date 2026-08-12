@@ -127,6 +127,8 @@ type RealChannel = {
   language: string;
   video_count: number;
   recent: ChannelFormatStats;
+  /** 이 채널이 실제로 찍는 소재 (tag:channel 결과). 잘 된 순 */
+  subjects?: { name: string; count: number; hits: number }[];
   top: {
     video_id: string;
     title: string;
@@ -260,6 +262,8 @@ export interface ChannelProfileView {
    * 한 화면에 실측과 시연이 섞이므로 **어느 쪽이 어느 쪽인지 화면이 밝혀야 한다.**
    */
   tagsAreDemo: boolean;
+  /** 실측 소재 원문. 화면 태그 체계에 없는 것도 들어 있다 */
+  realSubjects?: { name: string; count: number; hits: number }[];
 }
 
 export async function getChannelProfile(channelId: string): Promise<ChannelProfileView | null> {
@@ -289,6 +293,42 @@ export async function getChannelProfile(channelId: string): Promise<ChannelProfi
   const base = wantShort ? real.recent.short : real.recent.long;
   const cut = (base.median_vsr ?? 0) * 1.5;
   const topCount = real.top.filter((v) => v.is_short === wantShort && v.vsr >= cut).length;
+
+  /**
+   * ── 소재 태그가 실데이터가 됐다 (2026-08-13) ────────────
+   *
+   * `npm run tag:channel` 이 채널의 **롱폼 + 설명 100자 이상** 영상을 LLM 으로
+   * 분류해 둔다. 규칙으로는 안 됐다 — 채널 영상은 대부분 쇼츠라 제목이 짧고
+   * 설명란이 비어서, 소재 이름 문자열 매칭은 50편 중 0~13편밖에 못 잡았다.
+   *
+   * 정렬은 **잘 된 소재 순**이다 (채널 평균 조회수를 넘긴 편수 기준).
+   * 많이 찍은 소재가 아니라 잘 되는 소재를 앞에 둔다 (SPEC 4-5).
+   *
+   * ⚠️ 소재를 못 뽑은 채널은 `export:channels` 가 아예 안 내보낸다.
+   *    그러니 여기 도달했으면 소재가 있다. 없으면 시연으로 떨어진다.
+   */
+  if (real.subjects && real.subjects.length > 0) {
+    const realTags = real.subjects
+      .map((s) => FAKE_TAGS.find((t) => t.name_ko === s.name))
+      // 화면 태그 체계에 없는 소재는 칩으로 못 그린다. 지어내지 않고 버린다
+      .filter((t): t is Tag => Boolean(t));
+
+    return {
+      channel,
+      profile: {
+        channel_id: channel.id,
+        analyzed_count: real.recent.sample,
+        top_performer_count: topCount,
+        tag_ids: realTags.map((t) => t.id),
+        axes: { subject: realTags.map((t) => t.id) },
+      },
+      tags: realTags,
+      /** 소재까지 실측이다. 화면이 "시연 데이터" 라고 쓰면 안 된다 */
+      tagsAreDemo: false,
+      /** 화면이 원문 소재명을 보여줄 수 있게 (태그 체계에 없는 것 포함) */
+      realSubjects: real.subjects,
+    };
+  }
 
   /**
    * 소재 태그는 같은 언어의 시연 프로필에서 빌려온다.

@@ -1,141 +1,23 @@
 [
   {
-    "id": "UCg-p3lQIqmhh7gHpyaOmOiQ",
-    "handle": "@koreanenglishman",
-    "title": "영국남자 Korean Englishman",
-    "subscriber_count": 6200000,
-    "sub_band": "o1m",
-    "language": "ko",
-    "video_count": 949,
-    "recent": {
-      "sample": 50,
-      "cut_sec": 180,
-      "primary": "short",
-      "long": {
-        "sample": 5,
-        "median_vsr": 0.318,
-        "p25_vsr": 0.232,
-        "p75_vsr": 0.423,
-        "median_views": 1968765,
-        "median_duration": 904
-      },
-      "short": {
-        "sample": 45,
-        "median_vsr": 0.015,
-        "p25_vsr": 0.011,
-        "p75_vsr": 0.025,
-        "median_views": 90211,
-        "median_duration": 43
-      }
-    },
-    "top": [
-      {
-        "video_id": "kAaQafKGF7U",
-        "title": "The British Fishermen Who Feed 50 Million Koreans (But Have Never Tried the Food)",
-        "view_count": 4862895,
-        "published_at": "2026-05-15",
-        "vsr": 0.78,
-        "duration_sec": 963,
-        "is_short": false
-      },
-      {
-        "video_id": "dZjc6BW2opg",
-        "title": "Can British Fishermen Handle Korean Seafood Snacks?!",
-        "view_count": 2619833,
-        "published_at": "2026-06-19",
-        "vsr": 0.42,
-        "duration_sec": 670,
-        "is_short": false
-      },
-      {
-        "video_id": "lOPvMP1H27Y",
-        "title": "British Cabin Crew tries Real Korean Food for the First Time!",
-        "view_count": 1968765,
-        "published_at": "2026-07-22",
-        "vsr": 0.32,
-        "duration_sec": 1195,
-        "is_short": false
-      }
-    ]
-  },
-  {
-    "id": "UCxEyrf1Ud59fvH9A5mNGwIg",
-    "handle": "@her86m2",
-    "title": "Her 86m2",
-    "subscriber_count": 2370000,
+    "id": "UCFCtZJTuJhE18k8IXwmXTYQ",
+    "handle": "@ebsdocumentary",
+    "title": "EBSDocumentary (EBS 다큐)",
+    "subscriber_count": 5430000,
     "sub_band": "o1m",
     "language": "en",
-    "video_count": 256,
-    "recent": {
-      "sample": 50,
-      "cut_sec": 180,
-      "primary": "short",
-      "long": {
-        "sample": 19,
-        "median_vsr": 0.103,
-        "p25_vsr": 0.07,
-        "p75_vsr": 0.16,
-        "median_views": 242979,
-        "median_duration": 1151
-      },
-      "short": {
-        "sample": 31,
-        "median_vsr": 0.069,
-        "p25_vsr": 0.046,
-        "p75_vsr": 0.138,
-        "median_views": 164683,
-        "median_duration": 20
-      }
-    },
-    "top": [
-      {
-        "video_id": "r8dGTA0wF5I",
-        "title": "Magnolia 🌸 No Al, no reverse, no trees harmed 🌿",
-        "view_count": 7535004,
-        "published_at": "2025-12-11",
-        "vsr": 3.18,
-        "duration_sec": 12,
-        "is_short": true
-      },
-      {
-        "video_id": "_rFi0D49PDs",
-        "title": "Harvest with me 🌿 September edition 🍑🥒🍓🥒🥕",
-        "view_count": 6709307,
-        "published_at": "2025-09-16",
-        "vsr": 2.83,
-        "duration_sec": 20,
-        "is_short": true
-      },
-      {
-        "video_id": "9raSn8RETYo",
-        "title": "Guess it’s time to make some sumac tea 🍵 #countrysidelife",
-        "view_count": 3421710,
-        "published_at": "2025-10-08",
-        "vsr": 1.44,
-        "duration_sec": 30,
-        "is_short": true
-      }
-    ]
-  },
-  {
-    "id": "UCBElRVEL-H0eDYdL2mb1Sng",
-    "handle": "@travelwithak",
-    "title": "Travel with AK",
-    "subscriber_count": 1970000,
-    "sub_band": "o1m",
-    "language": "en",
-    "video_count": 358,
+    "video_count": 68768,
     "recent": {
       "sample": 50,
       "cut_sec": 180,
       "primary": "long",
       "long": {
-        "sample": 47,
-        "median_vsr": 0.635,
-        "p25_vsr": 0.454,
-        "p75_vsr": 1.154,
-        "median_views": 1250667,
-        "median_duration": 2475
+        "sample": 49,
+        "median_vsr": 0.001,
+        "p25_vsr": 0,
+        "p75_vsr": 0.002,
+        "median_views": 4764,
+        "median_duration": 1182
       },
       "short": {
         "sample": 1,
@@ -146,268 +28,585 @@
         "median_duration": null
       }
     },
+    "subjects": [
+      {
+        "name": "섬",
+        "count": 9,
+        "hits": 9
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 6,
+        "hits": 6
+      },
+      {
+        "name": "계곡",
+        "count": 5,
+        "hits": 5
+      },
+      {
+        "name": "산",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "한식",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "항구/포구",
+        "count": 3,
+        "hits": 3
+      }
+    ],
     "top": [
       {
-        "video_id": "Z0jQfo-x__g",
-        "title": "Crossing The Drake Passage to ANTARCTICA 🇦🇶 (World’s Roughest Sea)",
-        "view_count": 5845837,
-        "published_at": "2025-12-07",
-        "vsr": 2.97,
-        "duration_sec": 2833,
+        "video_id": "gPkxThydMdA",
+        "title": "운명처럼 매물로 나온 산 알고 봤더니 돈이 지천에 깔려 있었다!｜아파트 단지 10배 규모 엄청난 산을 통째로 샀더니 대박｜아등바등 살았는데 인생이 바뀐 남자｜한국기행｜#골라듄다큐",
+        "view_count": 128258,
+        "published_at": "2026-08-11",
+        "vsr": 0.02,
+        "duration_sec": 954,
         "is_short": false
       },
       {
-        "video_id": "kXE8qlvPK2o",
-        "title": "The Final Chapter of Antarctica & Drake Passage Storm 🇦🇶🌊",
-        "view_count": 4814743,
-        "published_at": "2026-01-07",
-        "vsr": 2.44,
-        "duration_sec": 2475,
+        "video_id": "lVIqkU-WmDk",
+        "title": "꿈에 용을 타고 나타난 관세음보살을 본 뒤 그 자리를 파봤더니 헉｜한국기행｜#골라듄다큐",
+        "view_count": 65044,
+        "published_at": "2026-08-11",
+        "vsr": 0.01,
+        "duration_sec": 937,
         "is_short": false
       },
       {
-        "video_id": "-UHM6iNcv84",
-        "title": "CHINA Shocked an INDIAN (Welcome to Year 2080)🇨🇳",
-        "view_count": 3951847,
-        "published_at": "2026-06-16",
-        "vsr": 2.01,
-        "duration_sec": 2938,
+        "video_id": "CLSQNV8v-NA",
+        "title": "문어 잡아 먹고 자고. 작은 컨테이너 바닷가에 세워뒀더니｜한국기행｜#골라듄다큐",
+        "view_count": 48379,
+        "published_at": "2026-08-11",
+        "vsr": 0.01,
+        "duration_sec": 900,
         "is_short": false
       }
     ]
   },
   {
-    "id": "UCDMLdKoalJdyqKto6KahNGg",
-    "handle": "@itsjinakim",
-    "title": "itsjinakim 지나킴",
-    "subscriber_count": 592000,
+    "id": "UC4zNtKX3XTplYQWNFPorvXQ",
+    "handle": "@kirincamp",
+    "title": "Kirin Camp",
+    "subscriber_count": 2650000,
+    "sub_band": "o1m",
+    "language": "ko",
+    "video_count": 191,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 37,
+        "median_vsr": 0.742,
+        "p25_vsr": 0.533,
+        "p75_vsr": 1.61,
+        "median_views": 1965310,
+        "median_duration": 1684
+      },
+      "short": {
+        "sample": 13,
+        "median_vsr": 0.226,
+        "p25_vsr": 0.151,
+        "p75_vsr": 0.39,
+        "median_views": 598697,
+        "median_duration": 48
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 6,
+        "hits": 6
+      }
+    ],
+    "top": [
+      {
+        "video_id": "ElD2OvPZH-0",
+        "title": "☔CAMPING IN HEAVY RAIN WITH A NEW TENT TRAILER",
+        "view_count": 13432774,
+        "published_at": "2025-08-23",
+        "vsr": 5.07,
+        "duration_sec": 2056,
+        "is_short": false
+      },
+      {
+        "video_id": "09tXZrV3Wb8",
+        "title": "🚐 RAINY CAMPING IN A DREAM CARAVAN",
+        "view_count": 10486335,
+        "published_at": "2025-10-11",
+        "vsr": 3.96,
+        "duration_sec": 1807,
+        "is_short": false
+      },
+      {
+        "video_id": "twXiiDMGGJk",
+        "title": "LUXURY RV CAMPING IN THE RAIN⚡",
+        "view_count": 10250989,
+        "published_at": "2025-08-30",
+        "vsr": 3.87,
+        "duration_sec": 1568,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCeAnUT7zm00vcb1BS2-K8FQ",
+    "handle": "@5g.explorer",
+    "title": "오지는 오진다",
+    "subscriber_count": 541000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 734,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 29,
+        "median_vsr": 0.206,
+        "p25_vsr": 0.103,
+        "p75_vsr": 0.329,
+        "median_views": 111243,
+        "median_duration": 1075
+      },
+      "short": {
+        "sample": 21,
+        "median_vsr": 0.026,
+        "p25_vsr": 0.016,
+        "p75_vsr": 0.034,
+        "median_views": 14015,
+        "median_duration": 77
+      }
+    },
+    "subjects": [
+      {
+        "name": "고택",
+        "count": 19,
+        "hits": 19
+      },
+      {
+        "name": "공원",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "민박",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "사찰",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "섬",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "카페/전통찻집",
+        "count": 2,
+        "hits": 2
+      }
+    ],
+    "top": [
+      {
+        "video_id": "Stqin_GehXM",
+        "title": "\"이 많은 집이 다 빈집입니다\" 돈줄 끊기자 멀쩡한 집도 다 버려두고 떠나버린 중국인들",
+        "view_count": 1673531,
+        "published_at": "2026-05-16",
+        "vsr": 3.09,
+        "duration_sec": 1119,
+        "is_short": false
+      },
+      {
+        "video_id": "MRQKFa-1czY",
+        "title": "\"마을 최고 재벌급 집도 폐허가 돼버렸다\" 미국서 찾아온 남자의 눈물",
+        "view_count": 660158,
+        "published_at": "2026-05-19",
+        "vsr": 1.22,
+        "duration_sec": 1802,
+        "is_short": false
+      },
+      {
+        "video_id": "DBKkoy-hRz4",
+        "title": "중국을 탈출해 한국 오지마을에 정착한 사람들... 그들이 세운 '비밀의 사원'",
+        "view_count": 477199,
+        "published_at": "2026-06-03",
+        "vsr": 0.88,
+        "duration_sec": 1094,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCxjRJr-F5R5UxZZfoLd2NDQ",
+    "handle": "@waterfall_jang",
+    "title": "계곡은개골개골",
+    "subscriber_count": 523000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 519,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 24,
+        "median_vsr": 0.286,
+        "p25_vsr": 0.233,
+        "p75_vsr": 0.373,
+        "median_views": 149513,
+        "median_duration": 1035
+      },
+      "short": {
+        "sample": 26,
+        "median_vsr": 0.094,
+        "p25_vsr": 0.055,
+        "p75_vsr": 0.186,
+        "median_views": 49318,
+        "median_duration": 21
+      }
+    },
+    "subjects": [
+      {
+        "name": "계곡",
+        "count": 34,
+        "hits": 34
+      },
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 6,
+        "hits": 6
+      },
+      {
+        "name": "온천/욕장/스파",
+        "count": 6,
+        "hits": 6
+      },
+      {
+        "name": "폭포",
+        "count": 5,
+        "hits": 5
+      },
+      {
+        "name": "스노쿨링/스킨스쿠버다이빙",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "기타행사",
+        "count": 2,
+        "hits": 2
+      }
+    ],
+    "top": [
+      {
+        "video_id": "yqVIkvNB9kA",
+        "title": "여길 왜 아무도 몰랐지? 우연히 발견한 대한민국 역대급 지상낙원",
+        "view_count": 341327,
+        "published_at": "2026-06-07",
+        "vsr": 0.65,
+        "duration_sec": 1172,
+        "is_short": false
+      },
+      {
+        "video_id": "3LKrpbLlnCk",
+        "title": "[수심 3M] 이렇게 맑은 폭포 본 적 있나요? 전 난생처음입니다.",
+        "view_count": 308047,
+        "published_at": "2026-05-31",
+        "vsr": 0.59,
+        "duration_sec": 1130,
+        "is_short": false
+      },
+      {
+        "video_id": "ncduQSVE0aA",
+        "title": "전쟁 중에도 아이가 생기는 이유",
+        "view_count": 234484,
+        "published_at": "2026-07-16",
+        "vsr": 0.45,
+        "duration_sec": 20,
+        "is_short": true
+      }
+    ]
+  },
+  {
+    "id": "UC86GzuZXRb7aZnhnnUA3IAg",
+    "handle": "@higaengs",
+    "title": "하이갱스 higaengs",
+    "subscriber_count": 453000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 442,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 43,
+        "median_vsr": 0.14,
+        "p25_vsr": 0.097,
+        "p75_vsr": 0.226,
+        "median_views": 63229,
+        "median_duration": 1712
+      },
+      "short": {
+        "sample": 7,
+        "median_vsr": 0.029,
+        "p25_vsr": 0.021,
+        "p75_vsr": 0.034,
+        "median_views": 13307,
+        "median_duration": 177
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 47,
+        "hits": 47
+      },
+      {
+        "name": "맛코스",
+        "count": 40,
+        "hits": 40
+      },
+      {
+        "name": "상설시장",
+        "count": 9,
+        "hits": 9
+      },
+      {
+        "name": "카페/전통찻집",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "5일장",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "관광호텔",
+        "count": 2,
+        "hits": 2
+      }
+    ],
+    "top": [
+      {
+        "video_id": "u7cI8OiQwy8",
+        "title": "인천 계양구 맛집 Best 9",
+        "view_count": 236851,
+        "published_at": "2026-04-05",
+        "vsr": 0.52,
+        "duration_sec": 1632,
+        "is_short": false
+      },
+      {
+        "video_id": "Xqlv25zvWs0",
+        "title": "부산 사하구 맛집 Best 13",
+        "view_count": 226094,
+        "published_at": "2026-06-09",
+        "vsr": 0.5,
+        "duration_sec": 2261,
+        "is_short": false
+      },
+      {
+        "video_id": "jMuASvaK1iw",
+        "title": "서울 영등포구 신길동 신풍,보라매,신길 맛집 Best 13",
+        "view_count": 195796,
+        "published_at": "2026-03-08",
+        "vsr": 0.43,
+        "duration_sec": 2006,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCzjXBk6GY0wHt_iXAvKaaVA",
+    "handle": "@miyut",
+    "title": "MIYUT미윳",
+    "subscriber_count": 280000,
     "sub_band": "100k_1m",
     "language": "en",
-    "video_count": 624,
+    "video_count": 334,
     "recent": {
       "sample": 50,
       "cut_sec": 180,
-      "primary": "short",
+      "primary": "long",
       "long": {
-        "sample": 3,
-        "median_vsr": null,
-        "p25_vsr": null,
-        "p75_vsr": null,
-        "median_views": null,
-        "median_duration": null
+        "sample": 28,
+        "median_vsr": 0.164,
+        "p25_vsr": 0.124,
+        "p75_vsr": 0.204,
+        "median_views": 45857,
+        "median_duration": 1227
       },
       "short": {
-        "sample": 47,
-        "median_vsr": 0.013,
-        "p25_vsr": 0.009,
-        "p75_vsr": 0.017,
-        "median_views": 7803,
-        "median_duration": 46
+        "sample": 22,
+        "median_vsr": 0.349,
+        "p25_vsr": 0.24,
+        "p75_vsr": 0.496,
+        "median_views": 97770,
+        "median_duration": 59
       }
     },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "게스트하우스",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "공원",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "민박",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "백화점",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "전문매장/상가",
+        "count": 1,
+        "hits": 0
+      }
+    ],
     "top": [
       {
-        "video_id": "MC3eV7EiKaE",
-        "title": "Korea vlog: date with my bf 💕 featuring #piccasso brushes",
-        "view_count": 41353,
-        "published_at": "2025-05-11",
-        "vsr": 0.07,
-        "duration_sec": 50,
+        "video_id": "BE2sRnb4WJs",
+        "title": "자라 f/w 대충 언박싱 + 문의 폭주한 코디",
+        "view_count": 564203,
+        "published_at": "2025-09-08",
+        "vsr": 2.02,
+        "duration_sec": 57,
         "is_short": true
       },
       {
-        "video_id": "iMUXr8OgnwU",
-        "title": "Koreans trying American food 🇺🇸",
-        "view_count": 23847,
-        "published_at": "2025-03-05",
-        "vsr": 0.04,
-        "duration_sec": 39,
+        "video_id": "ToB88EVt9OY",
+        "title": "인플루언서 실물 + (악플읽기)",
+        "view_count": 216262,
+        "published_at": "2026-04-01",
+        "vsr": 0.77,
+        "duration_sec": 59,
         "is_short": true
       },
       {
-        "video_id": "vL8FD0_Bsj0",
-        "title": "Living in Korea vlog - work day as a content creator",
-        "view_count": 22950,
-        "published_at": "2025-03-31",
-        "vsr": 0.04,
-        "duration_sec": 43,
+        "video_id": "8DTpQLTMTHw",
+        "title": "하객룩 골라주세요",
+        "view_count": 210488,
+        "published_at": "2025-07-06",
+        "vsr": 0.75,
+        "duration_sec": 52,
         "is_short": true
       }
     ]
   },
   {
-    "id": "UC81r3hHm-GWld8IAHKX20Xw",
-    "handle": "@longkiettrinh",
-    "title": "Korea travel",
-    "subscriber_count": 32300,
-    "sub_band": "10k_100k",
-    "language": "en",
-    "video_count": 91,
-    "recent": {
-      "sample": 50,
-      "cut_sec": 180,
-      "primary": "short",
-      "long": {
-        "sample": 0,
-        "median_vsr": null,
-        "p25_vsr": null,
-        "p75_vsr": null,
-        "median_views": null,
-        "median_duration": null
-      },
-      "short": {
-        "sample": 50,
-        "median_vsr": 0.939,
-        "p25_vsr": 0.392,
-        "p75_vsr": 4.425,
-        "median_views": 30339,
-        "median_duration": 89
-      }
-    },
-    "top": [
-      {
-        "video_id": "tDKDbErwJmg",
-        "title": "날씨 좋을 때 반드시 가야할 경기도 여행지 TOP11#경기도 #여행#여행을떠나자#여행영상#여행지추천#여행지#경기도여행#경기도가볼만한곳#포천#포천여행",
-        "view_count": 1081080,
-        "published_at": "2025-07-28",
-        "vsr": 33.47,
-        "duration_sec": 105,
-        "is_short": true
-      },
-      {
-        "video_id": "9BgIhTrVHRQ",
-        "title": "대구 여행시 반드시 가봐야 할 명소TOP 17#대구#여행#여행지#여행지추천#trip#travel#대구여행#대구핫플#대구가볼만한곳#국내여행#국내여행지추천1,071#추천",
-        "view_count": 696017,
-        "published_at": "2025-08-09",
-        "vsr": 21.55,
-        "duration_sec": 113,
-        "is_short": true
-      },
-      {
-        "video_id": "eTuLFcq7Nm4",
-        "title": "부산 여행시 반드시 가봐야 할 명소 TOP 17 #여행 #여행지 #국내여행",
-        "view_count": 612049,
-        "published_at": "2025-07-22",
-        "vsr": 18.95,
-        "duration_sec": 103,
-        "is_short": true
-      }
-    ]
-  },
-  {
-    "id": "UCZt72-MtyTpnNPKDhePC4Sw",
-    "handle": "@summer_jiin",
-    "title": "써머진",
-    "subscriber_count": 22100,
-    "sub_band": "10k_100k",
+    "id": "UCVPkwz7nxd5bbR536ugmiBw",
+    "handle": "@uniis_meal",
+    "title": "우니의끼니 UNIII",
+    "subscriber_count": 261000,
+    "sub_band": "100k_1m",
     "language": "ko",
-    "video_count": 399,
+    "video_count": 575,
     "recent": {
       "sample": 50,
       "cut_sec": 180,
-      "primary": "short",
+      "primary": "long",
       "long": {
-        "sample": 0,
-        "median_vsr": null,
-        "p25_vsr": null,
-        "p75_vsr": null,
-        "median_views": null,
-        "median_duration": null
+        "sample": 36,
+        "median_vsr": 0.533,
+        "p25_vsr": 0.414,
+        "p75_vsr": 0.593,
+        "median_views": 138999,
+        "median_duration": 2320
       },
       "short": {
-        "sample": 50,
-        "median_vsr": 0.247,
-        "p25_vsr": 0.1,
-        "p75_vsr": 0.423,
-        "median_views": 5468,
-        "median_duration": 20
+        "sample": 14,
+        "median_vsr": 0.526,
+        "p25_vsr": 0.283,
+        "p75_vsr": 0.709,
+        "median_views": 137391,
+        "median_duration": 24
       }
     },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 24,
+        "hits": 24
+      },
+      {
+        "name": "산",
+        "count": 10,
+        "hits": 10
+      },
+      {
+        "name": "상설시장",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "관광호텔",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "해수욕장",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "고택",
+        "count": 1,
+        "hits": 1
+      }
+    ],
     "top": [
       {
-        "video_id": "yZbCM9LLt2o",
-        "title": "올해 꼭 가봐야할 신비로운 국내여행지 5곳🇰🇷✨#국내여행지추천 #국내여행 #마이산 #삼성궁#진안여행 #하동여행 #영월여행 #철원여행 #옥천여행 #국내여행가볼만한곳",
-        "view_count": 311875,
-        "published_at": "2026-06-05",
-        "vsr": 14.11,
+        "video_id": "dA8-7zMsFIc",
+        "title": "팩트 폭격기",
+        "view_count": 285494,
+        "published_at": "2026-03-16",
+        "vsr": 1.09,
+        "duration_sec": 22,
+        "is_short": true
+      },
+      {
+        "video_id": "sa_gthTrK38",
+        "title": "미리 죄송합니다..",
+        "view_count": 272662,
+        "published_at": "2026-07-21",
+        "vsr": 1.04,
         "duration_sec": 15,
         "is_short": true
       },
       {
-        "video_id": "TWls2WN-a_k",
-        "title": "여기 왜 안유명해요..?🌸 역대급 아름다웠던 벚꽃드라이브길💗 #상주여행 #상주시 #상주가볼만한곳 #벚꽃드라이브 #벚꽃여행 #벚꽃명소",
-        "view_count": 148099,
-        "published_at": "2026-04-07",
-        "vsr": 6.7,
-        "duration_sec": 11,
-        "is_short": true
-      },
-      {
-        "video_id": "qnJNN0WedJ0",
-        "title": "우리나라에 출렁이는 작약 바다가 있다구?..🩷 #합천여행 #핫들생태공원 #합천가볼만한곳 #작약꽃 #국내여행지추천 #5월여행지",
-        "view_count": 144125,
-        "published_at": "2026-05-04",
-        "vsr": 6.52,
-        "duration_sec": 8,
-        "is_short": true
-      }
-    ]
-  },
-  {
-    "id": "UCNpqEtwrJAeIqGz2UmEnJ5g",
-    "handle": "@chu_o3o_",
-    "title": "은윤이행님",
-    "subscriber_count": 2080,
-    "sub_band": "1k_10k",
-    "language": "ko",
-    "video_count": 70,
-    "recent": {
-      "sample": 49,
-      "cut_sec": 180,
-      "primary": "short",
-      "long": {
-        "sample": 11,
-        "median_vsr": 0.05,
-        "p25_vsr": 0.023,
-        "p75_vsr": 0.271,
-        "median_views": 105,
-        "median_duration": 371
-      },
-      "short": {
-        "sample": 37,
-        "median_vsr": 2.168,
-        "p25_vsr": 1.42,
-        "p75_vsr": 4.613,
-        "median_views": 4510,
-        "median_duration": 30
-      }
-    },
-    "top": [
-      {
-        "video_id": "hTqs4LWDUwU",
-        "title": "결혼식 당일 30초만으로 정리해보기 #결혼 #결혼식",
-        "view_count": 53565,
-        "published_at": "2024-11-27",
-        "vsr": 25.75,
-        "duration_sec": 29,
-        "is_short": true
-      },
-      {
-        "video_id": "fR9ye7gMG0I",
-        "title": "발리 첫날 호텔 조식 먹으러 가는길 #신혼여행",
-        "view_count": 36201,
-        "published_at": "2024-11-27",
-        "vsr": 17.4,
-        "duration_sec": 37,
-        "is_short": true
-      },
-      {
-        "video_id": "zf0h0nN5U_E",
-        "title": "영화보다가 울기직전인 F 남편과 그걸 지켜보는 T 와이프 ㅋ #영화 #신혼부부 #신혼부부브이로그 #mbti",
-        "view_count": 31333,
-        "published_at": "2024-12-04",
-        "vsr": 15.06,
-        "duration_sec": 17,
+        "video_id": "GuMenPNZ_MI",
+        "title": "우리네 아버지 재질",
+        "view_count": 196365,
+        "published_at": "2026-06-12",
+        "vsr": 0.75,
+        "duration_sec": 38,
         "is_short": true
       }
     ]

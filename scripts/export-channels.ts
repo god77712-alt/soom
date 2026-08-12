@@ -10,8 +10,8 @@
  *
  * ── 지금 진짜로 보여줄 수 있는 것과 없는 것 ───────────────
  * 있음: 구독자 수, 구독자 구간, 언어, 최근 영상 성과(조회수 ÷ 구독자 중앙값), 상위 영상
- * 없음: **잘 되는 소재** — 영상→장소→태그 연결이 5단계라 아직 없다.
- *       그래서 소재 추천은 계속 시연 데이터를 쓴다. 섞어서 진짜인 척하지 않는다.
+ * 있음: **잘 되는 소재** — tag:channel 이 LLM 으로 붙인다 (2026-08-13).
+ *       소재가 5편 이상 붙은 채널만 내보낸다. 못 뽑은 채널은 아예 목록에 없다.
  *
  * 실행: npm run export:channels
  */
@@ -21,6 +21,30 @@ import { openDb } from "./lib/db";
 const OUT = "./src/data/real/channels.json";
 
 const db = openDb();
+
+/**
+ * 채널이 실제로 찍는 소재. `npm run tag:channel` 이 LLM 으로 붙여 둔다.
+ *
+ * 편수만 세지 않고 **잘 된 영상에 가중치**를 준다 (SPEC 4-5).
+ * "평균 색깔"이 아니라 "잘 되는 색깔"을 찾는 게 목적이라서다 —
+ * 매번 찍지만 매번 안 되는 소재를 대표 소재로 내밀면 안 된다.
+ */
+const SUBJECT_SQL = `
+  select vs.subject s,
+         count(*) c,
+         sum(case when v.view_count >= (
+               select avg(v2.view_count) from yt_video v2
+                where v2.channel_id = v.channel_id and v2.found_by = 'channel'
+             ) then 1 else 0 end) hits
+    from yt_video_subject vs
+    join yt_video v on v.video_id = vs.video_id
+   where v.channel_id = ?
+   group by vs.subject
+   order by hits desc, c desc
+   limit 6`;
+
+/** 소재가 이만큼 안 붙으면 프로필을 못 만든다. 화면은 그 채널의 소재를 안 그린다 */
+const MIN_SUBJECT_VIDEOS = 5;
 
 type ChannelRow = {
   channel_id: string;
@@ -86,14 +110,29 @@ function statsOf(videos: VideoRow[], subs: number) {
   };
 }
 
+const subjectsOf = db.prepare(SUBJECT_SQL);
+
+/**
+ * ⚠️ **수집한 채널 전부를 내보내면 안 된다.** 2,543개다.
+ *    번들이 커지는 것도 문제지만, 더 큰 문제는 대부분이 소재를 못 뽑은 채널이라
+ *    화면에서 고를 수 있는 게 늘어봐야 전부 빈 프로필이라는 것이다.
+ *
+ * 소재가 5편 이상 붙은 채널만 내보낸다. 그 채널들만 "당신은 이런 걸 찍는군요"를
+ * 실데이터로 말할 수 있다.
+ */
 const channels = db
   .prepare(
-    `select channel_id, title, handle, subscriber_count, sub_band, video_count, language
-       from yt_channel
-      where subscriber_count > 0
-      order by subscriber_count desc`,
+    `select c.channel_id, c.title, c.handle, c.subscriber_count, c.sub_band,
+            c.video_count, c.language
+       from yt_channel c
+      where c.subscriber_count > 0
+        and (select count(distinct vs.video_id)
+               from yt_video_subject vs
+               join yt_video v on v.video_id = vs.video_id
+              where v.channel_id = c.channel_id) >= ?
+      order by c.subscriber_count desc`,
   )
-  .all() as ChannelRow[];
+  .all(MIN_SUBJECT_VIDEOS) as ChannelRow[];
 
 const out = channels.map((c) => {
   const videos = db
@@ -152,6 +191,14 @@ const out = channels.map((c) => {
       long: statsOf(long, c.subscriber_count),
       short: statsOf(shorts, c.subscriber_count),
     },
+    /**
+     * 이 채널이 실제로 찍는 소재 — **더 이상 시연 데이터가 아니다.**
+     * `hits` 는 채널 평균 조회수를 넘긴 편수다. 많이 찍은 소재가 아니라
+     * **잘 된 소재**가 앞에 오게 정렬돼 있다.
+     */
+    subjects: (subjectsOf.all(c.channel_id) as { s: string; c: number; hits: number }[]).map(
+      (r) => ({ name: r.s, count: r.c, hits: r.hits }),
+    ),
     /** 상위 3편. 채널 주인이 자기 채널을 알아보게 하는 장치 */
     top: videos
       .slice()

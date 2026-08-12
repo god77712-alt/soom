@@ -199,6 +199,35 @@ export default async function Home({
                 </p>
               )}
 
+              {/*
+                실측 소재 — LLM 이 이 채널의 롱폼 영상을 분류한 결과다 (`tag:channel`).
+                **화면의 옛 태그 체계로 억지로 옮기지 않는다.** `계곡`·`온천/욕장/스파`
+                처럼 시연 태그 목록에 없는 소재가 많아서, 옮기려 들면 조용히 사라진다
+                (실제로 계곡은개골개골의 소재가 전부 사라진 걸 화면에서 보고 고쳤다).
+
+                편수와 함께 보여준다 — `계곡 34편` 이라야 근거가 읽힌다.
+                정렬은 잘 된 순이다 (채널 평균 조회수를 넘긴 편수 기준).
+              */}
+              {view.realSubjects && view.realSubjects.length > 0 && (
+                <div className="mt-7 flex flex-wrap items-baseline gap-x-3 gap-y-2">
+                  <span className="w-10 shrink-0 font-mono text-[11px] text-ink3">소재</span>
+                  {view.realSubjects.map((s) => (
+                    <span
+                      key={s.name}
+                      className="border border-open/50 bg-open/10 px-2.5 py-1 text-sm text-open"
+                    >
+                      {s.name}
+                      <span className="ml-1.5 font-mono text-[11px] text-open-d tnum">
+                        {s.count}편
+                      </span>
+                    </span>
+                  ))}
+                  <span className="w-full font-mono text-[10px] text-ink3">
+                    최근 롱폼 영상을 분류한 결과 · 채널 평균 조회수를 넘긴 소재 순
+                  </span>
+                </div>
+              )}
+
               <div className="mt-7 space-y-3">
                 {AXES.map((axis) => {
                   const ids = view.profile.axes[axis.key] ?? [];

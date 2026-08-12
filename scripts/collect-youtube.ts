@@ -664,6 +664,33 @@ async function main(): Promise<void> {
 
   try {
     if (mode === "channel") {
+      /**
+       * `--all` — 이미 수집한 채널 전부를 **더 깊이** 다시 훑는다.
+       *
+       * 최근 50편만 받으면 요즘 채널은 대부분 쇼츠라, 소재를 분류할 텍스트가 없다
+       * (실측: 써머진·Korea travel 은 50편 중 롱폼 0편, 설명 100자 이상 0편).
+       * 업로드 재생목록은 50개당 1 unit 이라 200편으로 늘려도 채널당 8 units 다.
+       */
+      if (argv.includes("--all")) {
+        const list = db
+          .prepare(`select channel_id, title from yt_channel where uploads_playlist <> '' order by subscriber_count desc`)
+          .all() as { channel_id: string; title: string }[];
+        console.log(`  채널 ${list.length}개를 다시 훑습니다\n`);
+        for (const ch of list) {
+          if (!quota.canAfford("playlistItems")) {
+            console.log("\n  쿼터 소진 — 여기까지.\n");
+            break;
+          }
+          try {
+            await collectChannel(ch.channel_id);
+          } catch (e) {
+            if (e instanceof QuotaExceeded) throw e;
+            console.log(`  ${ch.title}: ${(e as Error).message.slice(0, 50)}`);
+          }
+        }
+        return;
+      }
+
       const input = argv[1] && !argv[1].startsWith("--") ? argv[1] : argOf("id");
       if (!input) {
         console.log("  채널을 지정하세요: npm run yt:channel -- @핸들\n");
