@@ -93,6 +93,48 @@ function main(): void {
       limit ?`,
   );
 
+  /**
+   * 이 장소를 언급한 수집 영상. **전수가 아니다** — 우리 코퍼스 3,696편 기준이다.
+   * 화면은 반드시 모수를 함께 말해야 한다 (build-video-place.ts 주석).
+   */
+  const placeVideos = db.prepare(
+    `select v.video_id, v.title, v.channel_title, v.view_count, v.duration_sec,
+            v.language, v.chapters, c.subscriber_count subs
+       from video_place vp
+       join yt_video v on v.video_id = vp.video_id
+       left join yt_channel c on c.channel_id = v.channel_id
+      where vp.place_id = ?
+      order by v.view_count desc
+      limit 3`,
+  );
+
+  const videoCountByLang = db.prepare(
+    `select v.language lang, count(*) n
+       from video_place vp
+       join yt_video v on v.video_id = vp.video_id
+      where vp.place_id = ?
+      group by v.language`,
+  );
+
+  interface VideoRow {
+    video_id: string;
+    title: string;
+    channel_title: string;
+    view_count: number;
+    duration_sec: number;
+    language: string;
+    chapters: string;
+    subs: number | null;
+  }
+
+  /** 언어별 언급 수. `en` 이 아니면 전부 국내로 본다 (detectLanguage 와 같은 기준) */
+  const langCount = (placeId: string, want: "ko" | "en"): number => {
+    const rows = videoCountByLang.all(placeId) as { lang: string; n: number }[];
+    return rows
+      .filter((r) => (want === "en" ? r.lang === "en" : r.lang !== "en"))
+      .reduce((s, r) => s + r.n, 0);
+  };
+
   const counts = db.prepare(
     `select count(*) n,
             sum(case when pl.is_declining_area = 1 then 1 else 0 end) d,
@@ -145,6 +187,20 @@ function main(): void {
         low_reliability: r.data_reliability === "low",
         /** 원본이 아니면 화면이 정확도를 낮춰 말한다 */
         coord_estimated: r.coord_source === "읍면추정" || r.coord_source === "시군구추정",
+        /** 언어별 언급 영상 수. 0 은 "없다"가 아니라 "우리 코퍼스에서 안 잡혔다" */
+        videos_ko: langCount(r.id, "ko"),
+        videos_en: langCount(r.id, "en"),
+        /** 이 장소를 언급한 영상 상위 3편. 카드 펼침의 근거가 된다 */
+        videos: (placeVideos.all(r.id) as unknown as VideoRow[]).map((v) => ({
+          video_id: v.video_id,
+          title: v.title,
+          channel_title: v.channel_title,
+          view_count: v.view_count,
+          subscriber_count: v.subs ?? 0,
+          duration_sec: v.duration_sec,
+          language: v.language,
+          chapters: JSON.parse(v.chapters || "[]"),
+        })),
       })),
     };
   });

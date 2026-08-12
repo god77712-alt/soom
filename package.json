@@ -36,7 +36,9 @@
     "fill:schoolcoords": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/fill-school-coords.ts",
     "report:grid": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/report-grid.ts",
     "export:availability": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-availability.ts",
-    "export:places": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-places.ts"
+    "export:places": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-places.ts",
+    "build:videoplace": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-video-place.ts",
+    "export:tagscores": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-tagscores.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
