@@ -6,7 +6,7 @@
  */
 
 import { getStrings, type Locale } from "./i18n";
-import { MIN_SAMPLE_SIZE, resolveTagScore, type ResolvedTagScore } from "./score";
+import { MIN_SAMPLE_SIZE, canShowMultiplier, resolveTagScore, type ResolvedTagScore } from "./score";
 import type { Language, Place, PlaceLanguageStat, SubBand, Tag, TagScore } from "./types";
 
 /** 화면에서 색을 결정하는 의미 단위. Tailwind 클래스는 toneClass() 에서만 만든다. */
@@ -15,7 +15,13 @@ export type Tone = "normal" | "uncharted" | "muted" | "warn";
 export function toneClass(tone: Tone): string {
   switch (tone) {
     case "uncharted":
-      // 금색. 이 색이 보이면 "비어 있다 = 기회"라는 뜻이다.
+      /**
+       * 금색 — **"경쟁이 적다"는 사실을 강조하는 색이지 "기회"라는 뜻이 아니다.**
+       *
+       * 원래 주석이 "비어 있다 = 기회" 였는데 실측이 그걸 뒷받침하지 않는다
+       * (`eval:hypothesis` · 희소 지역이 일반 대비 0.79배, 3개 구간 전부 낮음).
+       * 색으로 "여기가 유리하다"고 말하면 안 된다. 눈에 띄게만 하고 판단은 넘긴다.
+       */
       return "text-open font-semibold";
     case "muted":
       return "text-ink3";
@@ -87,7 +93,13 @@ export interface CompetitionLine {
  *
  * "미개척"이라고 쓰지 않는다. 크리에이터에게 "아무도 안 갔다"는 좋은 소식이 아니라
  * 잘 될 증거가 없다는 신호로 읽힌다. 실제로 크리에이터는 잘 된 영상을 따라 만든다.
- * 그래서 같은 사실을 경쟁 영상 수로 말하고, 옆에 이미 찍힌 곳을 붙여 선점 이익으로 읽히게 한다.
+ * 그래서 같은 사실을 **경쟁 영상 수**로 말하고, 옆에 이미 찍힌 곳을 나란히 둔다.
+ *
+ * ⚠️ 다만 **"선점 이익"이라고 읽히게 만들면 안 된다** (2026-08-12 실측 후 수정).
+ *    희소 지역이 일반보다 잘 된다는 증거가 없다 — 오히려 0.79배로 낮고
+ *    구독자 3개 구간 전부 같은 방향이다. 우리가 희소한 곳을 위로 올리는 건
+ *    **편집 방침**이지 성과 예측이 아니다 (`score.ts` scarcity 주석).
+ *    사실(`경쟁 영상 0편` + 비교군)만 적고 해석은 크리에이터에게 넘긴다.
  */
 export function competitionLine(
   stat: PlaceLanguageStat | undefined,
@@ -162,6 +174,26 @@ export function performanceLine(
 
   if (resolved.status === "insufficient" || !resolved.score) {
     return { scope, value: S.insufficientSample, basis: S.insufficientSampleHelp, isOwn: false, tone: "muted" };
+  }
+
+  /**
+   * 표본이 얇으면 **배수를 숫자로 안 쓴다.** (`eval:hypothesis` 실측)
+   *
+   * 소재당 104편으로도 1.5배 차이의 검정력이 27% 다. 100편 미만에서 낸 배수는
+   * 신뢰구간이 사실상 전 구간이라, `1.2×` 와 `2.4×` 를 구분해서 말할 수 없다.
+   *
+   * 그런데 화면에 `1.2×` 라고 찍히면 크리에이터는 그걸 확정된 사실로 읽고
+   * 4시간을 운전한다. → 순위에는 계속 쓰되 **숫자는 감춘다.**
+   * 없는 정밀도를 있는 척하는 것보다 덜 보여주는 쪽이 언제나 낫다.
+   */
+  if (!canShowMultiplier(resolved.score)) {
+    return {
+      scope,
+      value: S.rankOnly,
+      basis: S.rankOnlyHelp(resolved.score.video_count),
+      isOwn: false,
+      tone: "muted",
+    };
   }
 
   const parts: string[] = [];

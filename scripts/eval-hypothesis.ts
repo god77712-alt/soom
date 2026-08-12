@@ -140,17 +140,118 @@ function main(): void {
 
   // 검색 묶음끼리만 비교한다. 채널수집은 소재가 뒤섞여 있어 대조군이 못 된다
   const search = groups.filter((x) => x.g !== "채널수집");
+
+  /**
+   * ── 전체 검정 (omnibus) ────────────────────────────────
+   *
+   * ⚠️ **쌍끼리 비교부터 하면 안 된다.** 12개 묶음이면 66쌍인데, α=0.05 로
+   *    66번 검정하면 아무 효과가 없어도 3쌍쯤은 그냥 유의하게 나온다.
+   *    처음 돌렸을 때 136쌍 중 9쌍이 유의했는데, 우연 기대치가 7쌍이었다.
+   *    그걸 근거로 "소재가 성과를 가른다"고 말했으면 거짓말이 될 뻔했다.
+   *
+   * 그래서 먼저 **하나의 질문**을 하나의 검정으로 묻는다:
+   *   "소재 라벨을 무작위로 섞어도 지금만큼 묶음끼리 벌어지는가?"
+   *
+   * 통계량은 묶음별 로그평균의 (편수 가중) 분산이다. 라벨을 섞었을 때
+   * 이만큼 벌어지는 비율이 p 다. 검정이 하나뿐이라 보정할 것이 없다.
+   */
+  const logMean0 = (xs: number[]) => xs.reduce((s, x) => s + Math.log(x), 0) / xs.length;
+
+  function spread(gs: { xs: number[] }[]): number {
+    const all = gs.flatMap((g) => g.xs);
+    const gm = logMean0(all);
+    let v = 0;
+    for (const g of gs) v += g.xs.length * (logMean0(g.xs) - gm) ** 2;
+    return v / all.length;
+  }
+
+  function omnibus(gs: { g: string; xs: number[] }[], n = 3000): number {
+    const obs = spread(gs);
+    const sizes = gs.map((g) => g.xs.length);
+    const all = gs.flatMap((g) => g.xs);
+    let ge = 0;
+    for (let i = 0; i < n; i++) {
+      const s = [...all];
+      for (let j = s.length - 1; j > 0; j--) {
+        const k = (Math.random() * (j + 1)) | 0;
+        [s[j], s[k]] = [s[k], s[j]];
+      }
+      let off = 0;
+      const shuffled = sizes.map((sz) => {
+        const part = s.slice(off, off + sz);
+        off += sz;
+        return { xs: part };
+      });
+      if (spread(shuffled) >= obs) ge++;
+    }
+    return ge / n;
+  }
+
+  if (search.length >= 3) {
+    const p = omnibus(search);
+    const gms = search.map((s) => ({ g: s.g, m: Math.exp(logMean0(s.xs)) }));
+    gms.sort((a, b) => b.m - a.m);
+    console.log(`\n  ── 전체 검정 · 소재 라벨을 섞어도 이만큼 벌어지는가 ──\n`);
+    console.log(`    묶음 ${search.length}개 · 영상 ${search.reduce((s, x) => s + x.xs.length, 0)}편`);
+    console.log(`    최고 ${gms[0].g.slice(0, 16)} ${gms[0].m.toFixed(3)}  ↔  최저 ${gms[gms.length - 1].g.slice(0, 16)} ${gms[gms.length - 1].m.toFixed(3)}`);
+    console.log(`    격차 ${(gms[0].m / gms[gms.length - 1].m).toFixed(2)}배 (기하평균)`);
+    console.log(`\n    p = ${p.toFixed(4)}  ${p < 0.05 ? "◀ 소재가 성과를 가른다" : "◀ 소재로 갈린다고 말할 수 없다"}`);
+
+    /**
+     * ── 구독자 구성을 걷어낸 재검정 ──────────────────────
+     *
+     * 어떤 소재에 작은 채널이 많이 걸리면 vsr 이 통째로 올라간다. 그걸
+     * 소재 효과로 착각하면 안 된다. 각 영상의 log vsr 에서 **그 구독자 구간의
+     * 평균**을 빼고 다시 돌린다. 구간 구성 차이가 사라진 상태에서도
+     * 남는 차이만 진짜 소재 효과다.
+     */
+    const bandOf = (s: number) =>
+      s < 10_000 ? 0 : s < 100_000 ? 1 : s < 1_000_000 ? 2 : 3;
+    const bandMean = new Map<number, number>();
+    for (const b of [0, 1, 2, 3]) {
+      const xs = data.filter((d) => bandOf(d.subs) === b).map((d) => Math.log(d.vsr));
+      if (xs.length > 0) bandMean.set(b, xs.reduce((s, x) => s + x, 0) / xs.length);
+    }
+    const adj = search.map((s) => ({
+      g: s.g,
+      xs: data
+        .filter((d) => d.group === s.g)
+        .map((d) => Math.exp(Math.log(d.vsr) - (bandMean.get(bandOf(d.subs)) ?? 0))),
+    }));
+    const pAdj = omnibus(adj);
+    console.log(
+      `    구독자 구성 보정 후  p = ${pAdj.toFixed(4)}  ${pAdj < 0.05 ? "◀ 보정해도 남는다" : "◀ 보정하면 사라진다 — 채널 구성 효과였다"}`,
+    );
+  }
+
+  /**
+   * 쌍끼리 비교는 **탐색용으로만** 본다. Benjamini-Hochberg 로 다중비교를 보정한다.
+   * 보정을 통과한 쌍만 "이 둘은 다르다"고 말할 수 있다.
+   */
   if (search.length >= 2) {
-    console.log(`\n  묶음 간 차이가 우연일 확률 (순열검정)\n`);
+    const pairs: { a: string; b: string; p: number }[] = [];
     for (let i = 0; i < search.length; i++) {
       for (let j = i + 1; j < search.length; j++) {
-        const p = permP(search[i].xs, search[j].xs);
-        const mark = p < 0.05 ? "◀ 유의" : "";
-        console.log(
-          `  ${search[i].g.slice(0, 20).padEnd(22)} vs ${search[j].g.slice(0, 20).padEnd(22)} p=${p.toFixed(3)}  ${mark}`,
-        );
+        pairs.push({ a: search[i].g, b: search[j].g, p: permP(search[i].xs, search[j].xs, 2000) });
       }
     }
+    pairs.sort((x, y) => x.p - y.p);
+    const m = pairs.length;
+    // BH: p(k) <= (k/m)·0.05 를 만족하는 가장 큰 k 까지가 통과
+    let cut = 0;
+    for (let k = 1; k <= m; k++) if (pairs[k - 1].p <= (k / m) * 0.05) cut = k;
+
+    console.log(`\n  ── 쌍끼리 비교 (${m}쌍 · BH 다중비교 보정) ──\n`);
+    console.log(`    보정 없이 p<0.05 인 쌍   ${pairs.filter((x) => x.p < 0.05).length}쌍`);
+    console.log(`    우연히 기대되는 수       ${(0.05 * m).toFixed(1)}쌍`);
+    console.log(`    보정을 통과한 쌍         ${cut}쌍\n`);
+    for (const x of pairs.slice(0, Math.max(cut, 5))) {
+      console.log(
+        `    ${x.a.slice(0, 16).padEnd(18)} vs ${x.b.slice(0, 16).padEnd(18)} p=${x.p.toFixed(4)}` +
+          (pairs.indexOf(x) < cut ? "  ◀ 통과" : ""),
+      );
+    }
+    if (cut === 0) console.log(`\n    → 개별 쌍으로는 어느 것도 다르다고 말할 수 없다. 전체 검정만 본다.`);
   }
 
   // ── 구독자 구간을 갈라 본다 ────────────────────────────

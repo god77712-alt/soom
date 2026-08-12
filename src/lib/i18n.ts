@@ -35,6 +35,12 @@ const ko = {
   unchartedEn: "해외 0편",
   insufficientSample: "표본 부족",
   insufficientSampleHelp: "n < 5",
+  /**
+   * 표본이 100편 미만이라 배수를 숫자로 안 쓰는 경우.
+   * "표본 부족" 과 다르다 — 순위에는 쓰고 있다. 그 사실을 정확히 말한다.
+   */
+  rankOnly: "순위만",
+  rankOnlyHelp: (n: number) => `영상 ${n}편 · 배수를 쓰기엔 표본이 얇다`,
   fallbackNote: "상위 소재 기준",
   fallbackHelp: (parentName: string) => `상위 소재 ${parentName} 기준`,
   lowReliabilityNote: "공공데이터 기준 · 현장 확인",

@@ -350,6 +350,50 @@ const SUBJECT_SKIP = new Set([
   "문화전수시설",
 ]);
 
+/**
+ * ★ 소재 점수를 낼 수 있게 만드는 계획 ★  `--plan subject`
+ *
+ * ── 왜 이 계획이 따로 필요한가 ───────────────────────────
+ * `eval:hypothesis` 로 검정력을 재보니 이랬다:
+ *
+ *   소재당 31편으로 잡을 수 있는 차이   3배부터
+ *   1.5배를 80% 로 잡으려면            소재당 약 300편 (로그평균 기준)
+ *
+ * 지금 지역 중심 계획(696개 × 3페이지 = 208,800 units)은 **소재당 표본을 안 만든다.**
+ * 지역으로 긁으면 소재가 뒤섞여서, 아무리 많이 모아도 "오일장이 몇 배" 를 못 낸다.
+ *
+ * → 소재당 300편이 되게 **깊게** 판다. 12개 × 6페이지 = 7,200 units.
+ *   하루 기본 쿼터 10,000 안에 들어간다. **승인을 기다릴 필요가 없다.**
+ *
+ * ── 왜 12개뿐인가 ────────────────────────────────────────
+ * 세부 태그 153종 × 300편은 어떤 쿼터로도 불가능하다. 그래서 이 서비스의
+ * **주력 소재만** 고른다. 고르는 기준 셋:
+ *   ① 인구감소지역에 실제로 많다 (숫자는 place_tag 실측)
+ *   ② 사람이 실제로 그렇게 검색한다 (`5일장` 이 아니라 `오일장`)
+ *   ③ 목적지다 — 먹방·숙소리뷰가 아니라 가서 찍는 곳
+ *
+ * 나머지 태그는 점수를 안 낸다. 순위만 쓰고 배수를 안 그린다.
+ * **표본 없이 배수를 그리는 것이 지금까지의 문제였다.**
+ */
+const SUBJECT_PLAN: { tag: string; query: string; note: string }[] = [
+  // 인구감소지역 보유 수 순. 앞이 잘려도 주력이 남게 둔다
+  { tag: "야영장,오토캠핑장", query: "차박 캠핑 브이로그", note: "감소지역 849 — 가장 두껍다" },
+  { tag: "유적지/사적지", query: "유적지 여행 브이로그", note: "감소지역 640" },
+  { tag: "사찰", query: "사찰 여행 브이로그", note: "감소지역 327" },
+  { tag: "5일장", query: "오일장 여행 브이로그", note: "감소지역 244 · 장날 달력 보유" },
+  { tag: "폐교", query: "폐교 브이로그", note: "감소지역 194 · TourAPI 에 없는 소재" },
+  { tag: "해수욕장", query: "해수욕장 여행 브이로그", note: "감소지역 148" },
+  { tag: "상설시장", query: "전통시장 여행 브이로그", note: "감소지역 131" },
+  { tag: "계곡", query: "계곡 여행 브이로그", note: "감소지역 125" },
+  { tag: "항구/포구", query: "항구 여행 브이로그", note: "감소지역 106" },
+  { tag: "고택", query: "고택 한옥 스테이 브이로그", note: "감소지역 75" },
+  { tag: "섬", query: "섬 여행 브이로그", note: "감소지역 62" },
+  { tag: "자연휴양림", query: "자연휴양림 브이로그", note: "감소지역 60" },
+];
+
+/** 검색어 → 태그. 점수 계산이 이 표를 거꾸로 탄다 */
+export const QUERY_TO_TAG = new Map(SUBJECT_PLAN.map((s) => [s.query, s.tag]));
+
 function buildQueries(limit: number): { query: string; language: string }[] {
   /**
    * `--q "곡성 여행"` 으로 검색어를 직접 줄 수 있다.
@@ -358,6 +402,15 @@ function buildQueries(limit: number): { query: string; language: string }[] {
   const manual = argOf("q");
   if (manual) {
     return [{ query: manual, language: argOf("lang") ?? "ko" }];
+  }
+
+  /**
+   * `--plan subject` — 소재 점수를 낼 수 있게 만드는 계획.
+   * 지역 계획과 **섞지 않는다.** 섞으면 쿼터가 지역에 먼저 쓰이고
+   * 소재당 표본은 또 안 쌓인다 (지금까지 그랬다).
+   */
+  if (argOf("plan") === "subject") {
+    return SUBJECT_PLAN.map((s) => ({ query: s.query, language: "ko" }));
   }
 
   const out: { query: string; language: string }[] = [];
