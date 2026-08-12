@@ -255,6 +255,73 @@ function migrate(db: DatabaseSync): void {
       loaded_at     TEXT NOT NULL
     );
 
+    -- ── YouTube 채널 ─────────────────────────────────────
+    -- uploads_playlist 가 핵심이다. 이걸 알면 최근 영상을 search(100 units) 없이
+    -- playlistItems(1 unit) 로 받는다. 채널 하나 분석이 100 units -> 3 units 가 된다.
+    CREATE TABLE IF NOT EXISTS yt_channel (
+      channel_id       TEXT PRIMARY KEY,
+      title            TEXT,
+      handle           TEXT,
+      subscriber_count INTEGER,
+      sub_band         TEXT,          -- u1k | 1k_10k | 10k_100k | 100k_1m | o1m
+      video_count      INTEGER,
+      view_count       INTEGER,
+      uploads_playlist TEXT,
+      language         TEXT,          -- ko | en
+      country          TEXT,
+      fetched_at       TEXT NOT NULL
+    );
+
+    -- ── YouTube 영상 ─────────────────────────────────────
+    -- ⚠️ 자막은 받을 수 없다 (captions.download 는 영상 소유자 전용).
+    --    그래서 chapters 가 자막의 대체재다 — 설명란 타임스탬프에서 뽑는다.
+    --    요약은 지명을 뭉개지만 챕터는 순서까지 남아 오히려 낫다.
+    CREATE TABLE IF NOT EXISTS yt_video (
+      video_id      TEXT PRIMARY KEY,
+      channel_id    TEXT,
+      channel_title TEXT,
+      title         TEXT NOT NULL,
+      description   TEXT,
+      published_at  TEXT,
+      duration_sec  INTEGER,
+      view_count    INTEGER,
+      like_count    INTEGER,
+      comment_count INTEGER,
+      language      TEXT,           -- ko | en
+      chapters      TEXT,           -- JSON [{at,title}] · 없으면 '[]'
+      found_by      TEXT,           -- channel | search:<검색어>
+      fetched_at    TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_yt_video_channel ON yt_video (channel_id);
+    CREATE INDEX IF NOT EXISTS idx_yt_video_lang ON yt_video (language);
+
+    -- ── YouTube 댓글 ─────────────────────────────────────
+    -- ★ 해외 채널 영상은 제목에 지명이 없다 ("I Visited Korea's Most Beautiful Village").
+    --   댓글에 한국인들이 "여기 OO 아니에요?" 하고 달아준다. 지명 확보의 유일한 경로다.
+    CREATE TABLE IF NOT EXISTS yt_comment (
+      comment_id   TEXT PRIMARY KEY,
+      video_id     TEXT NOT NULL,
+      text         TEXT,
+      like_count   INTEGER,
+      published_at TEXT,
+      fetched_at   TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_yt_comment_video ON yt_comment (video_id);
+
+    -- ── 검색어 진행 상황 ─────────────────────────────────
+    -- search 는 100 units 라 같은 검색어를 두 번 돌리면 그만큼 날린다.
+    -- 어디까지 받았는지 남겨 이어받는다.
+    CREATE TABLE IF NOT EXISTS yt_search_log (
+      query       TEXT NOT NULL,
+      language    TEXT NOT NULL,
+      page_token  TEXT,            -- 다음에 이어받을 위치. NULL 이면 끝까지 받음
+      pages_done  INTEGER NOT NULL DEFAULT 0,
+      found       INTEGER NOT NULL DEFAULT 0,
+      done        INTEGER NOT NULL DEFAULT 0,
+      updated_at  TEXT NOT NULL,
+      PRIMARY KEY (query, language)
+    );
+
     -- ── 수집 로그 ─────────────────────────────────────────
     -- 어느 구간을 언제 얼마나 받았는지. 쿼터가 마르면 여기를 보고 이어받는다.
     CREATE TABLE IF NOT EXISTS collect_run (

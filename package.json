@@ -20,7 +20,10 @@
     "collect:category": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-category.ts",
     "build:tags": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-tags.ts",
     "build:places": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-places.ts",
-    "eval:tagging": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/eval-tagging.ts"
+    "eval:tagging": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/eval-tagging.ts",
+    "yt:channel": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts channel",
+    "yt:search": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts search",
+    "yt:comments": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts comments"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
