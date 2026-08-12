@@ -203,48 +203,150 @@ async function collectChannel(input: string): Promise<void> {
 //  2. 검색 — 페이지당 100 units. 제일 비싸다
 // ═══════════════════════════════════════════════════════
 /**
- * 검색어를 데이터에서 만든다.
+ * ⚠️ 소재 이름만으로 검색하면 안 된다 — 실측으로 확인했다 (`npm run eval:videoplace`).
  *
- * 지어내지 않고 실제로 태그가 붙은 소재와 인구감소지역 시군구명을 쓴다.
- * SPEC 8장의 형태를 따른다.
+ * `한식 브이로그` 로 받은 50편에는 중국·러시아·남극 영상이 섞여 있었고,
+ * 그 채널들의 장소 적중률은 **0%** 였다. 여행 영상이 아니라 음식·일상 영상이라서다.
+ * 반면 국내 여행 브이로그(써머진)는 33% 가 붙었다.
+ *
+ * → 검색어는 **여행 맥락을 명시**해야 하고, 소재보다 **지명**이 강하다 (22.6% vs 8.6%).
+ *   국내 여행 브이로그는 설명란에 코스를 나열한다:
+ *   "공주여행 → 루치아의 뜰, 가가책방, 메타세콰이어길"
  */
-function buildQueries(limit: number): { query: string; language: string }[] {
-  const out: { query: string; language: string }[] = [];
 
+/**
+ * 지역과 함께 쓰는 패턴.
+ * "여행"·"브이로그"·"코스" 가 들어가야 여행 영상만 걸린다.
+ * "1박2일 코스" 는 설명란에 일정이 적힌 영상을 특히 잘 끌어온다.
+ */
+const KO_REGION_PATTERNS = ["{r} 여행 브이로그", "{r} 여행 코스", "{r} 1박2일"];
+const EN_REGION_PATTERNS = ["{r} Korea travel vlog"];
+
+/**
+ * 소재 검색에 쓸 대분류.
+ *
+ * 음식점·숙박·레포츠·공연은 뺀다. 그 이름으로 검색하면 여행 영상이 아니라
+ * 먹방·숙소리뷰·경기중계가 온다. 장소 자체가 목적지인 것만 남긴다.
+ */
+const SUBJECT_PARENTS = [
+  "자연관광지",
+  "관광자원",
+  "역사관광지",
+  "휴양관광지",
+  "체험관광지",
+  "건축/조형물",
+  "문화시설",
+  "쇼핑",
+  "유휴공간",
+];
+
+/** 소재 이름이 검색어로 안 되는 것들. 너무 일반적이거나 장소가 아니다. */
+const SUBJECT_SKIP = new Set([
+  "기타",
+  "이색체험",
+  "전문매장/상가",
+  "대형마트",
+  "백화점",
+  "면세점",
+  "사후면세점",
+  "스키(보드) 렌탈샵",
+  "학교",
+  "어학당",
+  "외국문화원",
+  "컨벤션센터",
+  "영화관",
+  "도서관",
+  "문화전수시설",
+]);
+
+function buildQueries(limit: number): { query: string; language: string }[] {
   /**
    * `--q "곡성 여행"` 으로 검색어를 직접 줄 수 있다.
-   * 전량 수집 전에 특정 소재·지역을 찍어서 확인할 때 쓴다 — 한 번이 100 units 라
-   * 전체를 돌려보고 판단할 수가 없다.
+   * 한 번이 100 units 라 전체를 돌려보고 판단할 수 없어서, 찍어보는 수단이 필요하다.
    */
   const manual = argOf("q");
   if (manual) {
     return [{ query: manual, language: argOf("lang") ?? "ko" }];
   }
 
-  const subjects = db
-    .prepare(
-      `select t.name_ko n, count(*) c from place_tag pt
-         join tag t on t.id = pt.tag_id
-        where t.axis = 'subject' and t.level = 2
-        group by t.id order by c desc limit 40`,
-    )
-    .all() as { n: string }[];
+  const out: { query: string; language: string }[] = [];
+  const seen = new Set<string>();
+  const push = (query: string, language: string) => {
+    const k = `${language}|${query}`;
+    if (seen.has(k)) return;
+    seen.add(k);
+    out.push({ query, language });
+  };
 
-  for (const s of subjects) {
-    out.push({ query: `${s.n} 브이로그`, language: "ko" });
-    out.push({ query: `Korea ${s.n} travel`, language: "en" });
-  }
-
+  /**
+   * ① 지역 — 가장 강한 신호라 먼저 채운다.
+   *
+   * 인구감소지역(89곳)을 앞에 둔다. 쿼터가 중간에 마르면 뒤쪽이 잘리는데,
+   * 이 서비스가 답해야 하는 곳이 거기라서 뒤로 밀면 안 된다.
+   */
   const regions = db
     .prepare(
-      `select distinct sigungu n from place
-        where is_declining_area = 1 and sigungu is not null limit 60`,
+      `select distinct sigungu n, is_declining_area d from place
+        where sigungu is not null and sigungu <> ''
+        order by is_declining_area desc, sigungu`,
     )
-    .all() as { n: string }[];
+    .all() as { n: string; d: number }[];
 
   for (const r of regions) {
-    out.push({ query: `${r.n} 여행`, language: "ko" });
+    // "곡성군" 보다 "곡성" 으로 검색해야 걸린다. 영상은 행정 접미사를 안 쓴다.
+    const base = r.n.replace(/(시|군|구)$/, "");
+    if (base.length < 2) continue;
+    for (const p of KO_REGION_PATTERNS) push(p.replace("{r}", base), "ko");
   }
+
+  /**
+   * ② 소재 — 지역만으로는 소재별 표본이 얇은 곳이 생긴다.
+   *    폐교·간이역처럼 드문 소재는 지역 검색에 거의 안 걸린다.
+   */
+  const subjects = db
+    .prepare(
+      `select c.name_ko n, count(pt.place_id) c
+         from tag c
+         join tag p on p.id = c.parent_id
+         left join place_tag pt on pt.tag_id = c.id
+        where c.axis = 'subject' and c.level = 2
+          and p.name_ko in (${SUBJECT_PARENTS.map(() => "?").join(",")})
+        group by c.id
+        order by c desc`,
+    )
+    .all(...SUBJECT_PARENTS) as { n: string }[];
+
+  for (const s of subjects) {
+    if (SUBJECT_SKIP.has(s.n)) continue;
+    push(`${s.n} 여행 브이로그`, "ko");
+  }
+
+  /**
+   * ③ 영어 — 해외 채널은 지명을 영어로 쓴다.
+   *    시군구를 전부 영어로 옮길 수는 없으니 널리 알려진 곳 위주로 간다.
+   */
+  const EN_REGIONS = [
+    "Jeju", "Busan", "Gyeongju", "Jeonju", "Gangneung", "Yeosu", "Andong",
+    "Tongyeong", "Sokcho", "Pohang", "Suncheon", "Damyang", "Boseong",
+    "Hadong", "Gapyeong", "Chuncheon", "Danyang", "Yeongwol", "Namhae", "Geoje",
+  ];
+  for (const r of EN_REGIONS) {
+    for (const p of EN_REGION_PATTERNS) push(p.replace("{r}", r), "en");
+  }
+
+  const EN_SUBJECTS = [
+    "Korean traditional market",
+    "Korea five day market",
+    "Korea abandoned school",
+    "Korea rural train station",
+    "Korea lighthouse",
+    "Korea temple stay",
+    "Korea hanok village",
+    "Korea countryside travel",
+    "Korea small town travel",
+    "Korea hidden gems travel",
+  ];
+  for (const q of EN_SUBJECTS) push(q, "en");
 
   return out.slice(0, limit);
 }
@@ -260,6 +362,26 @@ async function collectSearch(): Promise<void> {
     `  검색어 ${queries.length}개 · 검색어당 ${pagesPer}페이지\n` +
       `  남은 쿼터로 가능한 검색 ${affordable}회 (필요 ${queries.length * pagesPer}회)\n`,
   );
+
+  /**
+   * `--dry` 는 검색어만 보여주고 끝낸다.
+   * 1,000개 × 100 units 짜리 계획을 눈으로 확인하지 않고 돌릴 수는 없다.
+   */
+  if (argv.includes("--dry")) {
+    const byLang = new Map<string, string[]>();
+    for (const q of queries) (byLang.get(q.language) ?? byLang.set(q.language, []).get(q.language)!).push(q.query);
+    for (const [lang, qs] of byLang) {
+      console.log(`  [${lang}] ${qs.length}개`);
+      console.log(`    ${qs.slice(0, 6).join(" / ")}`);
+      console.log(`    …`);
+      console.log(`    ${qs.slice(-3).join(" / ")}\n`);
+    }
+    console.log(
+      `  예상 소비 ${(queries.length * pagesPer * COST.search).toLocaleString()} units` +
+        ` (${pagesPer}페이지 기준)\n`,
+    );
+    return;
+  }
   if (affordable === 0) {
     console.log("  오늘 검색할 여유가 없습니다.\n");
     return;
