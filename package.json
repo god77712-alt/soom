@@ -16,7 +16,9 @@
     "report:stage1": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/report-stage1.ts",
     "export:share": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-share-dataset.ts",
     "load:raw": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/load-raw.ts",
-    "dedup": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/dedup.ts"
+    "dedup": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/dedup.ts",
+    "collect:category": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-category.ts",
+    "build:tags": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-tags.ts"
   },
   "dependencies": {
     "next": "^15.5.4",
