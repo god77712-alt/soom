@@ -24,7 +24,8 @@
     "yt:channel": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts channel",
     "yt:search": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts search",
     "yt:comments": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts comments",
-    "export:channels": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-channels.ts"
+    "export:channels": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-channels.ts",
+    "eval:videoplace": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/eval-video-place.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",
