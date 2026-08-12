@@ -18,6 +18,7 @@ tsconfig.tsbuildinfo
 /data/*.db-journal
 /data/*.db-wal
 /data/*.db-shm
+/data/daily.log
 /data/raw/
 # 제출용 내보내기. 8MB 넘고 npm run export:share 로 언제든 다시 만든다.
 /data/share/
