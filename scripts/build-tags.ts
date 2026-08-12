@@ -30,7 +30,14 @@ import { openDb, nowIso } from "./lib/db";
 const db = openDb();
 const now = nowIso();
 
+/**
+ * 두 표는 매 실행마다 통째로 다시 만든다 (원본은 category_code·place 쪽에 있다).
+ * `IF NOT EXISTS` 만 쓰면 예전 스키마가 그대로 남아, 열을 바꿔도 반영되지 않는다.
+ */
 db.exec(`
+  DROP TABLE IF EXISTS place_tag;
+  DROP TABLE IF EXISTS tag;
+
   CREATE TABLE IF NOT EXISTS tag (
     id            TEXT PRIMARY KEY,
     code          TEXT NOT NULL UNIQUE,
@@ -48,19 +55,25 @@ db.exec(`
     built_at      TEXT NOT NULL
   );
 
+  /** ⚠️ place.id 를 가리킨다. tour_place.content_id 가 아니다. */
   CREATE TABLE IF NOT EXISTS place_tag (
-    content_id  TEXT NOT NULL,
+    place_id    TEXT NOT NULL,
     tag_id      TEXT NOT NULL,
     evidence    TEXT NOT NULL,
     confidence  REAL NOT NULL DEFAULT 1.0,
     detail      TEXT,               -- 장날 "2,7" 처럼 태그에 딸린 값
     tagged_at   TEXT NOT NULL,
-    PRIMARY KEY (content_id, tag_id)
+    PRIMARY KEY (place_id, tag_id)
   );
   CREATE INDEX IF NOT EXISTS idx_place_tag_tag ON place_tag (tag_id);
 `);
-db.exec("DELETE FROM tag");
-db.exec("DELETE FROM place_tag");
+
+if (
+  (db.prepare("select count(*) c from place").get() as { c: number }).c === 0
+) {
+  console.error("\nplace 표가 비어 있습니다. `npm run build:places` 를 먼저 돌리세요.\n");
+  process.exit(1);
+}
 
 const insTag = db.prepare(`
   INSERT INTO tag (id, code, name_ko, name_en, axis, parent_id, level,
@@ -68,7 +81,7 @@ const insTag = db.prepare(`
   VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
 `);
 const insPlaceTag = db.prepare(`
-  INSERT OR IGNORE INTO place_tag (content_id, tag_id, evidence, confidence, detail, tagged_at)
+  INSERT OR IGNORE INTO place_tag (place_id, tag_id, evidence, confidence, detail, tagged_at)
   VALUES (?,?,?,?,?,?)
 `);
 
@@ -322,55 +335,77 @@ for (const a of AXES) {
 // ═══════════════════════════════════════════════════════
 //  4. 규칙 기반 1차 태깅 — 돈 한 푼 안 드는 부분부터
 // ═══════════════════════════════════════════════════════
+/** 이름으로 태그를 찾는다. 관광공사 소분류 코드는 외우기 어려워 이름이 안전하다. */
+function tagByName(name: string): string | null {
+  const r = db.prepare("select id from tag where name_ko = ? and axis = 'subject'").get(name) as
+    | { id: string }
+    | undefined;
+  if (!r) console.log(`  ⚠️ 태그 없음: ${name}`);
+  return r?.id ?? null;
+}
+
+// ── TourAPI 출신 장소: 분류코드로 ──────────────────────────
 let byCat = 0;
 for (const p of db
-  .prepare("select content_id, cat2, cat3 from tour_place where cat3 <> ''")
-  .all() as { content_id: string; cat2: string; cat3: string }[]) {
+  .prepare(
+    `select pl.id, tp.cat2, tp.cat3
+       from place pl
+       join tour_place tp on tp.content_id = pl.source_id
+      where pl.source = 'tourapi' and tp.cat3 <> ''`,
+  )
+  .all() as { id: string; cat2: string; cat3: string }[]) {
   const t3 = tagIdByCat.get(p.cat3);
   const t2 = tagIdByCat.get(p.cat2);
   if (t3) {
-    insPlaceTag.run(p.content_id, t3, "rule", 1.0, null, now);
+    insPlaceTag.run(p.id, t3, "rule", 1.0, null, now);
     byCat++;
   }
-  if (t2) insPlaceTag.run(p.content_id, t2, "rule", 1.0, null, now);
+  if (t2) insPlaceTag.run(p.id, t2, "rule", 1.0, null, now);
 }
 
 /**
- * 보강 데이터로 태그를 얹는다. place_link 로 이미 이어둔 짝만 대상이다.
- * 장날은 태그가 아니라 태그에 딸린 값(detail)이다 — "2,7" 을 태그로 만들면 태그가 폭발한다.
+ * 보강 데이터의 태그.
+ *
+ * 두 경로가 있다. 둘 다 해야 빠지는 곳이 없다.
+ *   ① TourAPI 에 이미 있는 곳 → place_link 를 타고 그 장소(t…)에 얹는다
+ *   ② TourAPI 에 없어 승격된 곳 → 승격된 장소(m…/s…/r…)에 바로 붙인다
+ *
+ * 장날은 태그가 아니라 태그에 딸린 값(detail)이다.
+ * "2,7" 을 태그로 만들면 조합마다 태그가 생겨 폭발한다.
  */
+const TAG_PERIODIC = tagByName("5일장");
+const TAG_PERMANENT = tagByName("상설시장");
+
 let byMarket = 0;
 for (const r of db
   .prepare(
-    `select l.content_id, m.market_days
+    `select coalesce('t' || l.content_id, 'm' || m.id) place_id,
+            m.is_periodic, m.market_days
        from raw_market m
-       join place_link l on l.source = 'market' and l.source_id = cast(m.id as text)
-      where m.is_periodic = 1`,
+       left join place_link l
+              on l.source = 'market' and l.source_id = cast(m.id as text)`,
   )
-  .all() as { content_id: string; market_days: string }[]) {
-  // 5일장 소분류 코드는 A04010100 계열. 이름으로 찾아 붙인다.
-  const t = db.prepare("select id from tag where name_ko = '5일장'").get() as
-    | { id: string }
-    | undefined;
-  if (!t) break;
-  insPlaceTag.run(r.content_id, t.id, "rule", 1.0, r.market_days, now);
+  .all() as { place_id: string; is_periodic: number; market_days: string }[]) {
+  const tagId = r.is_periodic ? TAG_PERIODIC : TAG_PERMANENT;
+  if (!tagId) continue;
+  insPlaceTag.run(r.place_id, tagId, "rule", 1.0, r.market_days || null, now);
   byMarket++;
 }
 
 let byExtra = 0;
-for (const [source, tagId, where] of [
-  ["school", "t_x_closed_school", "usable = 1"],
-  ["station", "t_x_small_station", "is_small = 1"],
+for (const [source, prefix, tagId, where] of [
+  ["school", "s", "t_x_closed_school", "usable = 1"],
+  ["station", "r", "t_x_small_station", "is_small = 1"],
 ] as const) {
   for (const r of db
     .prepare(
-      `select l.content_id
-         from raw_${source} r
-         join place_link l on l.source = ? and l.source_id = cast(r.id as text)
+      `select coalesce('t' || l.content_id, '${prefix}' || x.id) place_id
+         from raw_${source} x
+         left join place_link l on l.source = ? and l.source_id = cast(x.id as text)
         where ${where}`,
     )
-    .all(source) as { content_id: string }[]) {
-    insPlaceTag.run(r.content_id, tagId, "rule", 1.0, null, now);
+    .all(source) as { place_id: string }[]) {
+    insPlaceTag.run(r.place_id, tagId, "rule", 1.0, null, now);
     byExtra++;
   }
 }
@@ -378,9 +413,9 @@ for (const [source, tagId, where] of [
 // ═══════════════════════════════════════════════════════
 //  결과
 // ═══════════════════════════════════════════════════════
-const total = (db.prepare("select count(*) c from tour_place").get() as { c: number }).c;
+const total = (db.prepare("select count(*) c from place").get() as { c: number }).c;
 const tagged = (
-  db.prepare("select count(distinct content_id) c from place_tag").get() as { c: number }
+  db.prepare("select count(distinct place_id) c from place_tag").get() as { c: number }
 ).c;
 const subjectTags = (
   db.prepare("select count(*) c from tag where axis = 'subject'").get() as { c: number }

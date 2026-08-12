@@ -24,6 +24,7 @@ export function openDb(path: string = DB_PATH): DatabaseSync {
   db.exec("PRAGMA synchronous = NORMAL");
 
   migrate(db);
+  patchColumns(db);
   return db;
 }
 
@@ -106,7 +107,14 @@ function migrate(db: DatabaseSync): void {
       overview    TEXT,
       homepage    TEXT,
       overview_en TEXT,
-      status      TEXT NOT NULL,   -- ok | empty | fail
+      /**
+       * ⚠️ status 는 **국문 전용**이다. 영문은 status_en 을 쓴다.
+       *    한 칸을 같이 쓰면, 영문이 먼저 받은 행이 status='ok' 가 되어
+       *    국문 큐("아직 안 받았거나 fail 인 것")에서 영원히 빠진다.
+       *    실제로 1,984건이 그렇게 잠겨 있었다. 조용히 사라져서 안 보인다.
+       */
+      status      TEXT,            -- ok | empty | fail (국문)
+      status_en   TEXT,            -- ok | empty | fail (영문)
       fail_code   TEXT,
       fetched_at  TEXT NOT NULL
     );
@@ -259,6 +267,66 @@ function migrate(db: DatabaseSync): void {
       started_at  TEXT NOT NULL,
       ended_at    TEXT
     );
+  `);
+}
+
+/**
+ * 이미 만들어진 DB 를 따라잡게 한다.
+ *
+ * `CREATE TABLE IF NOT EXISTS` 는 표가 이미 있으면 아무것도 안 한다.
+ * 열을 새로 넣었으면 여기서 따로 붙여야 한다.
+ */
+function patchColumns(db: DatabaseSync): void {
+  const info = db.prepare("PRAGMA table_info(tour_overview)").all() as {
+    name: string;
+    notnull: number;
+  }[];
+  if (info.length === 0) return;
+
+  const cols = info.map((c) => c.name);
+  const statusIsNotNull = info.find((c) => c.name === "status")?.notnull === 1;
+  if (cols.includes("status_en") && !statusIsNotNull) return;
+
+  /**
+   * SQLite 는 열의 NOT NULL 을 나중에 뗄 수 없다. 표를 새로 만들어 옮긴다.
+   *
+   * 옮기면서 **영문이 잠가버린 행을 푼다.** 국문 본문이 없는데 status='ok' 인 행은
+   * 전부 영문 수집기가 만든 것이다 (그때는 status 를 같이 썼다).
+   * 이 행들은 국문 큐에서 빠져 있어서, 안 풀면 소개글을 영원히 못 받는다.
+   */
+  db.exec(`
+    BEGIN;
+
+    CREATE TABLE tour_overview_new (
+      content_id  TEXT PRIMARY KEY,
+      overview    TEXT,
+      homepage    TEXT,
+      overview_en TEXT,
+      status      TEXT,
+      status_en   TEXT,
+      fail_code   TEXT,
+      fetched_at  TEXT NOT NULL
+    );
+
+    INSERT INTO tour_overview_new
+      (content_id, overview, homepage, overview_en, status, status_en, fail_code, fetched_at)
+    SELECT
+      content_id, overview, homepage, overview_en,
+      CASE WHEN (overview IS NULL OR overview = '')
+            AND overview_en IS NOT NULL AND overview_en <> ''
+           THEN NULL ELSE status END,
+      CASE WHEN (overview IS NULL OR overview = '')
+            AND overview_en IS NOT NULL AND overview_en <> ''
+           THEN status
+           ELSE ${cols.includes("status_en") ? "status_en" : "NULL"} END,
+      fail_code, fetched_at
+    FROM tour_overview;
+
+    DROP TABLE tour_overview;
+    ALTER TABLE tour_overview_new RENAME TO tour_overview;
+    CREATE INDEX IF NOT EXISTS idx_tour_overview_status ON tour_overview (status);
+
+    COMMIT;
   `);
 }
 

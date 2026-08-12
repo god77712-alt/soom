@@ -69,10 +69,10 @@ const targets = db
     isEn
       ? `SELECT p.content_id FROM tour_place_en p
          LEFT JOIN tour_overview o ON o.content_id = p.content_id
-         WHERE o.content_id IS NULL OR o.overview_en IS NULL`
+         WHERE o.content_id IS NULL OR o.status_en IS NULL OR o.status_en = 'fail'`
       : `SELECT p.content_id, p.content_type_id FROM tour_place p
          LEFT JOIN tour_overview o ON o.content_id = p.content_id
-         WHERE o.content_id IS NULL OR o.status = 'fail'
+         WHERE o.content_id IS NULL OR o.status IS NULL OR o.status = 'fail'
          ORDER BY CASE p.content_type_id
            ${TYPE_PRIORITY.map((t, i) => `WHEN ${t} THEN ${i}`).join(" ")}
            ELSE 99 END, p.content_id`,
@@ -106,11 +106,17 @@ const upsertKo = db.prepare(`
     fetched_at = excluded.fetched_at
 `);
 
+/**
+ * ⚠️ 영문은 `status_en` 에만 쓴다. `status` 를 건드리면 안 된다.
+ *    한 칸을 같이 쓰던 시절, 영문이 먼저 넣은 행이 status='ok' 가 되는 바람에
+ *    국문 큐에서 1,984건이 통째로 빠졌다. 화면에는 아무 오류도 안 뜬다.
+ */
 const upsertEn = db.prepare(`
-  INSERT INTO tour_overview (content_id, overview_en, status, fetched_at)
+  INSERT INTO tour_overview (content_id, overview_en, status_en, fetched_at)
   VALUES (?,?,?,?)
   ON CONFLICT(content_id) DO UPDATE SET
     overview_en = excluded.overview_en,
+    status_en   = excluded.status_en,
     fetched_at  = excluded.fetched_at
 `);
 

@@ -18,7 +18,8 @@
     "load:raw": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/load-raw.ts",
     "dedup": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/dedup.ts",
     "collect:category": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-category.ts",
-    "build:tags": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-tags.ts"
+    "build:tags": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-tags.ts",
+    "build:places": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-places.ts"
   },
   "dependencies": {
     "next": "^15.5.4",
