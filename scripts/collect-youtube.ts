@@ -672,9 +672,38 @@ async function main(): Promise<void> {
        * 업로드 재생목록은 50개당 1 unit 이라 200편으로 늘려도 채널당 8 units 다.
        */
       if (argv.includes("--all")) {
+        /**
+         * 🚨 **몇 개를 훑을지 반드시 명시해야 한다.** (2026-08-13 사고 후 추가)
+         *
+         * 처음엔 제한이 없었다. 채널 7개를 다시 받으려고 돌렸는데 DB 에 있는
+         * **2,543개를 전부** 훑어서 그날 쿼터 10,000 을 한 번에 다 썼다.
+         * 영상이 3,696 → 42,018 편으로 늘어난 건 결과적으로 이득이었지만,
+         * 의도한 동작이 아니었고 그날 다른 수집을 아무것도 못 했다.
+         *
+         * `--limit` 를 안 주면 멈춘다. 쿼터는 하루에 한 번뿐이라
+         * "일단 돌려보고 판단" 이 안 되는 자원이다.
+         */
+        const cap = Number(argOf("limit") ?? 0);
+        if (!cap) {
+          const total = (
+            db
+              .prepare(`select count(*) n from yt_channel where uploads_playlist <> ''`)
+              .get() as { n: number }
+          ).n;
+          console.log(
+            `  대상이 ${total.toLocaleString()}개입니다. 몇 개를 훑을지 정하세요:\n` +
+              `    npm run yt:channel -- --all --limit 10 --max 250\n\n` +
+              `  참고: 채널당 대략 max/50 × 2 units 입니다 (250편이면 약 10 units).\n`,
+          );
+          return;
+        }
+
         const list = db
-          .prepare(`select channel_id, title from yt_channel where uploads_playlist <> '' order by subscriber_count desc`)
-          .all() as { channel_id: string; title: string }[];
+          .prepare(
+            `select channel_id, title from yt_channel
+              where uploads_playlist <> '' order by subscriber_count desc limit ?`,
+          )
+          .all(cap) as { channel_id: string; title: string }[];
         console.log(`  채널 ${list.length}개를 다시 훑습니다\n`);
         for (const ch of list) {
           if (!quota.canAfford("playlistItems")) {
