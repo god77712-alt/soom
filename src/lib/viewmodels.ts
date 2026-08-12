@@ -4,6 +4,7 @@
  * types.ts 는 "저장되는 것"(SPEC 3장), 여기는 "계산되거나 온디맨드로 불러오는 것"이다.
  * 둘을 섞으면 7단계에서 뭘 DB에서 읽고 뭘 실시간으로 부르는지 헷갈린다.
  */
+import type { ShortsCut } from "./shorts";
 
 /**
  * S2. 채널 분석의 결과물.
@@ -99,6 +100,13 @@ export interface VideoBreakdown {
   chapters: Array<{ at: number; label: string }>;
   /** chapters 의 출처. 화면에 그대로 밝힌다 */
   chapter_source: "description" | "llm";
+  /**
+   * 이 롱폼에서 쇼츠로 떼어낼 만한 구간. 챕터가 없거나 후보가 없으면 null.
+   *
+   * ⚠️ **길이만 보고 고른 것이다.** 구간별 시청 유지율은 영상 주인만 볼 수 있어
+   *    "여기가 제일 재미있다"고는 말할 수 없다. 화면도 그만큼만 말해야 한다.
+   */
+  shorts_cut: ShortsCut | null;
 }
 
 /** 근처에 묶어 찍을 수 있는 소재. 좌표로 실제 계산한다 */

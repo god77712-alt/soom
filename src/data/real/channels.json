@@ -9,10 +9,24 @@
     "video_count": 949,
     "recent": {
       "sample": 50,
-      "median_vsr": 0.016,
-      "p25_vsr": 0.011,
-      "p75_vsr": 0.036,
-      "median_views": 97299
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 5,
+        "median_vsr": 0.318,
+        "p25_vsr": 0.232,
+        "p75_vsr": 0.423,
+        "median_views": 1968765,
+        "median_duration": 904
+      },
+      "short": {
+        "sample": 45,
+        "median_vsr": 0.015,
+        "p25_vsr": 0.011,
+        "p75_vsr": 0.025,
+        "median_views": 90211,
+        "median_duration": 43
+      }
     },
     "top": [
       {
@@ -20,21 +34,27 @@
         "title": "The British Fishermen Who Feed 50 Million Koreans (But Have Never Tried the Food)",
         "view_count": 4862895,
         "published_at": "2026-05-15",
-        "vsr": 0.78
+        "vsr": 0.78,
+        "duration_sec": 963,
+        "is_short": false
       },
       {
         "video_id": "dZjc6BW2opg",
         "title": "Can British Fishermen Handle Korean Seafood Snacks?!",
         "view_count": 2619833,
         "published_at": "2026-06-19",
-        "vsr": 0.42
+        "vsr": 0.42,
+        "duration_sec": 670,
+        "is_short": false
       },
       {
         "video_id": "lOPvMP1H27Y",
         "title": "British Cabin Crew tries Real Korean Food for the First Time!",
         "view_count": 1968765,
         "published_at": "2026-07-22",
-        "vsr": 0.32
+        "vsr": 0.32,
+        "duration_sec": 1195,
+        "is_short": false
       }
     ]
   },
@@ -48,10 +68,24 @@
     "video_count": 256,
     "recent": {
       "sample": 50,
-      "median_vsr": 0.075,
-      "p25_vsr": 0.052,
-      "p75_vsr": 0.146,
-      "median_views": 178109
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 19,
+        "median_vsr": 0.103,
+        "p25_vsr": 0.07,
+        "p75_vsr": 0.16,
+        "median_views": 242979,
+        "median_duration": 1151
+      },
+      "short": {
+        "sample": 31,
+        "median_vsr": 0.069,
+        "p25_vsr": 0.046,
+        "p75_vsr": 0.138,
+        "median_views": 164683,
+        "median_duration": 20
+      }
     },
     "top": [
       {
@@ -59,21 +93,27 @@
         "title": "Magnolia 🌸 No Al, no reverse, no trees harmed 🌿",
         "view_count": 7535004,
         "published_at": "2025-12-11",
-        "vsr": 3.18
+        "vsr": 3.18,
+        "duration_sec": 12,
+        "is_short": true
       },
       {
         "video_id": "_rFi0D49PDs",
         "title": "Harvest with me 🌿 September edition 🍑🥒🍓🥒🥕",
         "view_count": 6709307,
         "published_at": "2025-09-16",
-        "vsr": 2.83
+        "vsr": 2.83,
+        "duration_sec": 20,
+        "is_short": true
       },
       {
         "video_id": "9raSn8RETYo",
         "title": "Guess it’s time to make some sumac tea 🍵 #countrysidelife",
         "view_count": 3421710,
         "published_at": "2025-10-08",
-        "vsr": 1.44
+        "vsr": 1.44,
+        "duration_sec": 30,
+        "is_short": true
       }
     ]
   },
@@ -87,10 +127,24 @@
     "video_count": 358,
     "recent": {
       "sample": 50,
-      "median_vsr": 0.595,
-      "p25_vsr": 0.447,
-      "p75_vsr": 1.149,
-      "median_views": 1171937
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 47,
+        "median_vsr": 0.635,
+        "p25_vsr": 0.454,
+        "p75_vsr": 1.154,
+        "median_views": 1250667,
+        "median_duration": 2475
+      },
+      "short": {
+        "sample": 1,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
     },
     "top": [
       {
@@ -98,21 +152,27 @@
         "title": "Crossing The Drake Passage to ANTARCTICA 🇦🇶 (World’s Roughest Sea)",
         "view_count": 5845837,
         "published_at": "2025-12-07",
-        "vsr": 2.97
+        "vsr": 2.97,
+        "duration_sec": 2833,
+        "is_short": false
       },
       {
         "video_id": "kXE8qlvPK2o",
         "title": "The Final Chapter of Antarctica & Drake Passage Storm 🇦🇶🌊",
         "view_count": 4814743,
         "published_at": "2026-01-07",
-        "vsr": 2.44
+        "vsr": 2.44,
+        "duration_sec": 2475,
+        "is_short": false
       },
       {
         "video_id": "-UHM6iNcv84",
         "title": "CHINA Shocked an INDIAN (Welcome to Year 2080)🇨🇳",
         "view_count": 3951847,
         "published_at": "2026-06-16",
-        "vsr": 2.01
+        "vsr": 2.01,
+        "duration_sec": 2938,
+        "is_short": false
       }
     ]
   },
@@ -126,10 +186,24 @@
     "video_count": 624,
     "recent": {
       "sample": 50,
-      "median_vsr": 0.013,
-      "p25_vsr": 0.008,
-      "p75_vsr": 0.017,
-      "median_views": 7676
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 3,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      },
+      "short": {
+        "sample": 47,
+        "median_vsr": 0.013,
+        "p25_vsr": 0.009,
+        "p75_vsr": 0.017,
+        "median_views": 7803,
+        "median_duration": 46
+      }
     },
     "top": [
       {
@@ -137,21 +211,27 @@
         "title": "Korea vlog: date with my bf 💕 featuring #piccasso brushes",
         "view_count": 41353,
         "published_at": "2025-05-11",
-        "vsr": 0.07
+        "vsr": 0.07,
+        "duration_sec": 50,
+        "is_short": true
       },
       {
         "video_id": "iMUXr8OgnwU",
         "title": "Koreans trying American food 🇺🇸",
         "view_count": 23847,
         "published_at": "2025-03-05",
-        "vsr": 0.04
+        "vsr": 0.04,
+        "duration_sec": 39,
+        "is_short": true
       },
       {
         "video_id": "vL8FD0_Bsj0",
         "title": "Living in Korea vlog - work day as a content creator",
         "view_count": 22950,
         "published_at": "2025-03-31",
-        "vsr": 0.04
+        "vsr": 0.04,
+        "duration_sec": 43,
+        "is_short": true
       }
     ]
   },
@@ -165,10 +245,24 @@
     "video_count": 91,
     "recent": {
       "sample": 50,
-      "median_vsr": 0.939,
-      "p25_vsr": 0.392,
-      "p75_vsr": 4.425,
-      "median_views": 30339
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 0,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      },
+      "short": {
+        "sample": 50,
+        "median_vsr": 0.939,
+        "p25_vsr": 0.392,
+        "p75_vsr": 4.425,
+        "median_views": 30339,
+        "median_duration": 89
+      }
     },
     "top": [
       {
@@ -176,21 +270,27 @@
         "title": "날씨 좋을 때 반드시 가야할 경기도 여행지 TOP11#경기도 #여행#여행을떠나자#여행영상#여행지추천#여행지#경기도여행#경기도가볼만한곳#포천#포천여행",
         "view_count": 1081080,
         "published_at": "2025-07-28",
-        "vsr": 33.47
+        "vsr": 33.47,
+        "duration_sec": 105,
+        "is_short": true
       },
       {
         "video_id": "9BgIhTrVHRQ",
         "title": "대구 여행시 반드시 가봐야 할 명소TOP 17#대구#여행#여행지#여행지추천#trip#travel#대구여행#대구핫플#대구가볼만한곳#국내여행#국내여행지추천1,071#추천",
         "view_count": 696017,
         "published_at": "2025-08-09",
-        "vsr": 21.55
+        "vsr": 21.55,
+        "duration_sec": 113,
+        "is_short": true
       },
       {
         "video_id": "eTuLFcq7Nm4",
         "title": "부산 여행시 반드시 가봐야 할 명소 TOP 17 #여행 #여행지 #국내여행",
         "view_count": 612049,
         "published_at": "2025-07-22",
-        "vsr": 18.95
+        "vsr": 18.95,
+        "duration_sec": 103,
+        "is_short": true
       }
     ]
   },
@@ -204,10 +304,24 @@
     "video_count": 399,
     "recent": {
       "sample": 50,
-      "median_vsr": 0.247,
-      "p25_vsr": 0.1,
-      "p75_vsr": 0.423,
-      "median_views": 5468
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 0,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      },
+      "short": {
+        "sample": 50,
+        "median_vsr": 0.247,
+        "p25_vsr": 0.1,
+        "p75_vsr": 0.423,
+        "median_views": 5468,
+        "median_duration": 20
+      }
     },
     "top": [
       {
@@ -215,21 +329,27 @@
         "title": "올해 꼭 가봐야할 신비로운 국내여행지 5곳🇰🇷✨#국내여행지추천 #국내여행 #마이산 #삼성궁#진안여행 #하동여행 #영월여행 #철원여행 #옥천여행 #국내여행가볼만한곳",
         "view_count": 311875,
         "published_at": "2026-06-05",
-        "vsr": 14.11
+        "vsr": 14.11,
+        "duration_sec": 15,
+        "is_short": true
       },
       {
         "video_id": "TWls2WN-a_k",
         "title": "여기 왜 안유명해요..?🌸 역대급 아름다웠던 벚꽃드라이브길💗 #상주여행 #상주시 #상주가볼만한곳 #벚꽃드라이브 #벚꽃여행 #벚꽃명소",
         "view_count": 148099,
         "published_at": "2026-04-07",
-        "vsr": 6.7
+        "vsr": 6.7,
+        "duration_sec": 11,
+        "is_short": true
       },
       {
         "video_id": "qnJNN0WedJ0",
         "title": "우리나라에 출렁이는 작약 바다가 있다구?..🩷 #합천여행 #핫들생태공원 #합천가볼만한곳 #작약꽃 #국내여행지추천 #5월여행지",
         "view_count": 144125,
         "published_at": "2026-05-04",
-        "vsr": 6.52
+        "vsr": 6.52,
+        "duration_sec": 8,
+        "is_short": true
       }
     ]
   },
@@ -243,10 +363,24 @@
     "video_count": 70,
     "recent": {
       "sample": 49,
-      "median_vsr": 1.539,
-      "p25_vsr": 0.623,
-      "p75_vsr": 3.166,
-      "median_views": 3202
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 11,
+        "median_vsr": 0.05,
+        "p25_vsr": 0.023,
+        "p75_vsr": 0.271,
+        "median_views": 105,
+        "median_duration": 371
+      },
+      "short": {
+        "sample": 37,
+        "median_vsr": 2.168,
+        "p25_vsr": 1.42,
+        "p75_vsr": 4.613,
+        "median_views": 4510,
+        "median_duration": 30
+      }
     },
     "top": [
       {
@@ -254,21 +388,27 @@
         "title": "결혼식 당일 30초만으로 정리해보기 #결혼 #결혼식",
         "view_count": 53565,
         "published_at": "2024-11-27",
-        "vsr": 25.75
+        "vsr": 25.75,
+        "duration_sec": 29,
+        "is_short": true
       },
       {
         "video_id": "fR9ye7gMG0I",
         "title": "발리 첫날 호텔 조식 먹으러 가는길 #신혼여행",
         "view_count": 36201,
         "published_at": "2024-11-27",
-        "vsr": 17.4
+        "vsr": 17.4,
+        "duration_sec": 37,
+        "is_short": true
       },
       {
         "video_id": "zf0h0nN5U_E",
         "title": "영화보다가 울기직전인 F 남편과 그걸 지켜보는 T 와이프 ㅋ #영화 #신혼부부 #신혼부부브이로그 #mbti",
         "view_count": 31333,
         "published_at": "2024-12-04",
-        "vsr": 15.06
+        "vsr": 15.06,
+        "duration_sec": 17,
+        "is_short": true
       }
     ]
   }

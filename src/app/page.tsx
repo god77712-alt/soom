@@ -11,6 +11,7 @@
  */
 
 import Link from "next/link";
+import { ChannelStats } from "@/components/ChannelStats";
 import { EvidenceVideoCard } from "@/components/EvidenceVideoCard";
 import { MapHero } from "@/components/MapHero";
 import { PlaceRecommendCard } from "@/components/PlaceRecommendCard";
@@ -165,40 +166,12 @@ export default async function Home({
                    큰 채널이 항상 이기지만, 채널 규모를 지우면 순서가 뒤집힌다
                    (실측: 구독자 2천 채널 1.539× vs 620만 채널 0.016×).
               */}
-              {view.channel.is_real && view.channel.recent_median_vsr !== undefined && (
-                <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3 border-y border-hair/70 py-4">
-                  <div>
-                    <div className="font-mono text-[10px] tracking-wide text-ink3">구독자</div>
-                    <div className="mt-0.5 font-mono text-lg text-ink">
-                      {view.channel.subscriber_count.toLocaleString()}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="font-mono text-[10px] tracking-wide text-ink3">
-                      최근 영상 조회수 중앙값
-                    </div>
-                    <div className="mt-0.5 font-mono text-lg text-ink">
-                      {(view.channel.recent_median_views ?? 0).toLocaleString()}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="font-mono text-[10px] tracking-wide text-ink3">
-                      구독자 대비
-                    </div>
-                    <div className="mt-0.5 font-mono text-lg font-bold text-signal">
-                      {view.channel.recent_median_vsr}×
-                    </div>
-                  </div>
-                  <div>
-                    <div className="font-mono text-[10px] tracking-wide text-ink3">표본</div>
-                    <div className="mt-0.5 font-mono text-lg text-ink">
-                      {view.channel.recent_sample}편
-                      {view.channel.total_video_count ? (
-                        <span className="text-sm text-ink3"> / {view.channel.total_video_count}</span>
-                      ) : null}
-                    </div>
-                  </div>
-                </div>
+              {view.channel.is_real && view.channel.recent && (
+                <ChannelStats
+                  recent={view.channel.recent}
+                  subscriberCount={view.channel.subscriber_count}
+                  totalVideoCount={view.channel.total_video_count}
+                />
               )}
 
               {/*

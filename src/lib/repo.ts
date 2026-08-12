@@ -37,9 +37,10 @@ import {
   type TagScoreLabel,
 } from "./display";
 import { distanceKm, estimateDriveMinutes } from "./geo";
+import { pickShortsCut, SHORTS_MAX_SEC } from "./shorts";
 import { MIN_SUBSCRIBER_COUNT, reachRange, resolveTagScore, soomScore, vsr, type ResolvedTagScore } from "./score";
 import REAL_CHANNELS_JSON from "@/data/real/channels.json";
-import type { Channel, Language, Place, PlaceLanguageStat, SubBand, Tag, TagEvidence, TagScore, Video } from "./types";
+import type { Channel, ChannelFormatStats, Language, Place, PlaceLanguageStat, SubBand, Tag, TagEvidence, TagScore, Video } from "./types";
 import type {
   AdminGapRow,
   AdminImpact,
@@ -123,8 +124,15 @@ type RealChannel = {
   sub_band: string;
   language: string;
   video_count: number;
-  recent: { sample: number; median_vsr: number; median_views: number };
-  top: { video_id: string; title: string; view_count: number; vsr: number }[];
+  recent: ChannelFormatStats;
+  top: {
+    video_id: string;
+    title: string;
+    view_count: number;
+    vsr: number;
+    duration_sec: number;
+    is_short: boolean;
+  }[];
 };
 
 const REAL_CHANNELS = REAL_CHANNELS_JSON as RealChannel[];
@@ -150,9 +158,7 @@ function toChannel(c: RealChannel): Channel {
     sub_band: SUB_BAND_MAP[c.sub_band] ?? 2,
     language: c.language === "en" ? "en" : "ko",
     is_real: true,
-    recent_median_vsr: c.recent.median_vsr,
-    recent_sample: c.recent.sample,
-    recent_median_views: c.recent.median_views,
+    recent: c.recent,
     total_video_count: c.video_count,
     top_videos: c.top,
   };
@@ -267,9 +273,14 @@ export async function getChannelProfile(channelId: string): Promise<ChannelProfi
   /**
    * 상위 성과 편수는 **실측으로 센다.**
    * 중앙값의 1.5배를 넘긴 영상이 몇 편인가 — 이 채널이 실제로 터뜨린 횟수다.
+   *
+   * ⚠️ 형식을 맞춰서 센다. 롱폼 중앙값에 쇼츠를 대면 쇼츠형 채널은 전편이
+   *    "상위 성과"로 잡히고, 롱폼형 채널은 한 편도 안 잡힌다.
    */
-  const cut = real.recent.median_vsr * 1.5;
-  const topCount = real.top.filter((v) => v.vsr >= cut).length;
+  const wantShort = real.recent.primary === "short";
+  const base = wantShort ? real.recent.short : real.recent.long;
+  const cut = (base.median_vsr ?? 0) * 1.5;
+  const topCount = real.top.filter((v) => v.is_short === wantShort && v.vsr >= cut).length;
 
   /**
    * 소재 태그는 같은 언어의 시연 프로필에서 빌려온다.
@@ -573,6 +584,7 @@ function toBreakdown(video: Video): VideoBreakdown | null {
   if (!channel || !place) return null;
 
   const narrative = FAKE_VIDEO_NARRATIVE[video.id];
+  const chapters = narrative?.chapters ?? [];
   return {
     video_id: video.id,
     youtube_id: video.youtube_id,
@@ -585,8 +597,14 @@ function toBreakdown(video: Video): VideoBreakdown | null {
     place_id: place.id,
     place_name: place.name_ko,
     hook: narrative?.hook ?? null,
-    chapters: narrative?.chapters ?? [],
+    chapters,
     chapter_source: narrative?.chapter_source ?? "description",
+    /**
+     * 쇼츠로 떼어낼 구간. 쇼츠 길이(180초) 안에 들어가는 영상에는 안 붙인다 —
+     * 이미 쇼츠라서 "여기서 쇼츠를 뽑으세요"가 말이 안 된다.
+     */
+    shorts_cut:
+      video.duration > SHORTS_MAX_SEC ? pickShortsCut(chapters, video.duration) : null,
   };
 }
 

@@ -142,16 +142,52 @@ export interface Channel {
    *    화면은 이 값을 보고 출처를 밝혀야 한다.
    */
   is_real?: boolean;
-  /** 실채널일 때만. 최근 영상 기준 조회수÷구독자 중앙값 */
-  recent_median_vsr?: number;
-  /** 실채널일 때만. 그 중앙값을 낸 표본 수 */
-  recent_sample?: number;
-  /** 실채널일 때만. 최근 영상 조회수 중앙값 (평균이 아니다 — 대박 한 편에 안 흔들리게) */
-  recent_median_views?: number;
+  /** 실채널일 때만. 최근 영상 형식별 성적 */
+  recent?: ChannelFormatStats;
   /** 실채널일 때만. 채널 전체 영상 수 */
   total_video_count?: number;
   /** 실채널일 때만. 상위 영상 (원본 링크용) */
-  top_videos?: { video_id: string; title: string; view_count: number; vsr: number }[];
+  top_videos?: {
+    video_id: string;
+    title: string;
+    view_count: number;
+    vsr: number;
+    duration_sec?: number;
+    is_short?: boolean;
+  }[];
+}
+
+/**
+ * 한 형식(롱폼 또는 쇼츠)의 성적.
+ *
+ * 표본이 5편 미만이면 `median_vsr` 이 **null 이다.** 0 이 아니다 —
+ * 0 으로 두면 화면이 "성적 0배"로 그려서, 표본이 없는 것과 성적이 나쁜 것을
+ * 구분할 수 없게 된다. null 이어야 화면이 사유를 대신 띄운다.
+ */
+export interface FormatStats {
+  sample: number;
+  median_vsr: number | null;
+  p25_vsr: number | null;
+  p75_vsr: number | null;
+  median_views: number | null;
+  median_duration: number | null;
+}
+
+/**
+ * 롱폼과 쇼츠를 끝까지 따로 들고 다닌다.
+ *
+ * ⚠️ 합산값을 여기에 만들지 말 것. 실측에서 두 값이 채널마다 정반대로 갈렸다
+ *    (영국남자는 롱폼이 20배, 은윤이행님은 쇼츠가 43배). 합치면 방향이 사라진다.
+ */
+export interface ChannelFormatStats {
+  /** 롱폼·쇼츠 합친 표본 수 (분류 전 원본 편수) */
+  sample: number;
+  /** 쇼츠 경계 초. 2024년 10월부터 180 이다 */
+  cut_sec: number;
+  /** 이 채널의 주력 형식. 화면이 어느 쪽을 먼저 보여줄지 정한다 */
+  primary: "long" | "short" | null;
+  long: FormatStats;
+  short: FormatStats;
 }
 
 /** 영상 한 편에 장소가 5~6곳 나온다. 조회수를 전부에게 100% 주면 데이터가 오염된다. */
