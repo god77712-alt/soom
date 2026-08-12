@@ -19,9 +19,11 @@
     "dedup": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/dedup.ts",
     "collect:category": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-category.ts",
     "build:tags": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-tags.ts",
-    "build:places": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-places.ts"
+    "build:places": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-places.ts",
+    "eval:tagging": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/eval-tagging.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.116.0",
     "next": "^15.5.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
