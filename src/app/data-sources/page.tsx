@@ -88,6 +88,49 @@ export default function DataSourcesPage() {
         />
       </Section>
 
+      {/*
+        YouTube 임베드 실물.
+        ⚠️ 심사가 "플레이어를 어디에 어떻게 붙였는지" 스크린샷을 요구한다.
+           추천 화면의 영상 카드는 시연 데이터라 자리표시 박스만 나오므로,
+           실제 임베드를 확인할 수 있는 곳이 여기 하나는 있어야 한다.
+           **여기에는 지어낸 지표를 붙이지 않는다** — 아래 수치는 전부 실측값이다.
+      */}
+      <Section title="영상은 이렇게 표시합니다">
+        <p>
+          영상은 YouTube 공식 iframe 플레이어로만 재생합니다. 파일을 내려받거나 다시
+          올리지 않으며, 제목과 채널명을 눌러 YouTube 원본으로 이동할 수 있습니다.
+        </p>
+        <div className="mt-3 max-w-md border border-hair">
+          <div className="relative aspect-video w-full bg-ground">
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src="https://www.youtube-nocookie.com/embed/lOPvMP1H27Y"
+              title="British Cabin Crew tries Real Korean Food for the First Time!"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
+          <div className="space-y-1 p-3">
+            <a
+              href="https://www.youtube.com/watch?v=lOPvMP1H27Y"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="block text-[13px] font-bold text-ink hover:underline"
+            >
+              British Cabin Crew tries Real Korean Food for the First Time!
+            </a>
+            <p className="font-mono text-[11px] text-ink3">
+              영국남자 Korean Englishman · 조회 1,968,765 · 2026-07-22
+            </p>
+          </div>
+        </div>
+        <p className="text-[12px] text-ink3">
+          위 영상과 수치는 YouTube Data API 로 실제 조회한 값입니다. 추천 화면의 영상
+          카드는 아직 시연 데이터라 자리표시로 표시됩니다.
+        </p>
+      </Section>
+
       <Section title="하지 않는 것">
         <Bullets
           items={[

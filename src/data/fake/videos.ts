@@ -66,6 +66,16 @@ export const FAKE_CHANNEL_PROFILES: ChannelProfile[] = [
 
 export const FAKE_VIDEOS: Video[] = [
   // ── S4 ① "이 소재는 먹힌다" — 오일장 소재 en 상위 3편 ──
+  /**
+   * ⚠️ 여기에 **실제 영상 ID 를 넣지 말 것.**
+   *
+   * 한 번 넣어봤다가 되돌렸다. 카드가 실제 창작자의 영상에 가짜 채널명과 가짜 배수를
+   * 붙여 표시한다 — 영국남자 영상이 "Slow Trip Korea · 164.1×" 로 나왔다.
+   * 실존 인물의 영상에 지어낸 성과를 붙이는 꼴이라 해서는 안 된다.
+   *
+   * 임베드 동작을 눈으로 확인할 곳이 필요하면 `/data-sources` 에 실제 영상 한 편을
+   * 실측값 그대로 붙여 뒀다. 거기는 가짜 지표가 없다.
+   */
   {
     id: "v_jeongseon_en", youtube_id: "DEMO_jeongseon_en", channel_id: "ch_slowtrip",
     title: "The Korean market tourists never find", description: "Jeongseon five-day market, 5AM.",

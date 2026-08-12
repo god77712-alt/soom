@@ -416,6 +416,42 @@ export default async function Home({
             이용약관
           </Link>
         </div>
+
+        {/*
+          YouTube 귀속 표시.
+          ⚠️ 심사가 "홈페이지에 YouTube 브랜딩과 개인정보처리방침 링크가 함께 보이는 화면"
+             스크린샷을 요구한다. 위 링크 줄과 같은 푸터 안에 있어야 한 장에 담긴다.
+             영상 통계를 화면에 쓰는 이상 약관상으로도 필요하다.
+        */}
+        <div className="mx-auto mt-4 flex max-w-3xl flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-ink3">
+          <svg viewBox="0 0 90 20" aria-label="YouTube" className="h-3.5 w-auto" role="img">
+            <path
+              fill="#FF0000"
+              d="M27.97 3.12A3.57 3.57 0 0 0 25.45.6C23.23 0 14.32 0 14.32 0S5.41 0 3.19.6A3.57 3.57 0 0 0 .67 3.12C.07 5.35.07 10 .07 10s0 4.65.6 6.88a3.57 3.57 0 0 0 2.52 2.52c2.22.6 11.13.6 11.13.6s8.91 0 11.13-.6a3.57 3.57 0 0 0 2.52-2.52c.6-2.23.6-6.88.6-6.88s0-4.65-.6-6.88Z"
+            />
+            <path fill="#fff" d="m11.48 14.29 7.4-4.29-7.4-4.29v8.58Z" />
+            <text x="34" y="14.5" fill="currentColor" fontSize="12" fontFamily="inherit">
+              YouTube
+            </text>
+          </svg>
+          <span>영상 통계는 YouTube API Services 로 조회합니다</span>
+          <a
+            href="https://www.youtube.com/t/terms"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="underline underline-offset-2 transition-colors hover:text-ink2"
+          >
+            YouTube 서비스 약관
+          </a>
+          <a
+            href="https://policies.google.com/privacy"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="underline underline-offset-2 transition-colors hover:text-ink2"
+          >
+            Google 개인정보처리방침
+          </a>
+        </div>
       </footer>
     </main>
   );
