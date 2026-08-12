@@ -156,6 +156,22 @@ export default async function Home({
                 {view.profile.top_performer_count}편에서 추출
               </p>
 
+              {/*
+                실채널은 구독자·편수·성과가 실측이지만 소재 태그는 아직 시연 데이터다
+                (영상→장소→태그 연결이 5단계). 한 화면에 둘이 섞이므로 어느 쪽이
+                어느 쪽인지 밝힌다. 밝히지 않으면 화면 전체가 거짓말이 된다.
+              */}
+              {view.channel.is_real && (
+                <p className="mt-1.5 font-mono text-[11px] text-open">
+                  구독자 · 분석 편수
+                  {view.channel.recent_median_vsr !== undefined && (
+                    <> · 최근 성과 {view.channel.recent_median_vsr}×</>
+                  )}
+                  는 YouTube 실측
+                  {view.tagsAreDemo && <> · 아래 소재는 시연 데이터</>}
+                </p>
+              )}
+
               <div className="mt-7 space-y-3">
                 {AXES.map((axis) => {
                   const ids = view.profile.axes[axis.key] ?? [];

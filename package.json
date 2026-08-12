@@ -23,7 +23,8 @@
     "eval:tagging": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/eval-tagging.ts",
     "yt:channel": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts channel",
     "yt:search": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts search",
-    "yt:comments": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts comments"
+    "yt:comments": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts comments",
+    "export:channels": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-channels.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",

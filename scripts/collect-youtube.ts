@@ -211,6 +211,16 @@ async function collectChannel(input: string): Promise<void> {
 function buildQueries(limit: number): { query: string; language: string }[] {
   const out: { query: string; language: string }[] = [];
 
+  /**
+   * `--q "곡성 여행"` 으로 검색어를 직접 줄 수 있다.
+   * 전량 수집 전에 특정 소재·지역을 찍어서 확인할 때 쓴다 — 한 번이 100 units 라
+   * 전체를 돌려보고 판단할 수가 없다.
+   */
+  const manual = argOf("q");
+  if (manual) {
+    return [{ query: manual, language: argOf("lang") ?? "ko" }];
+  }
+
   const subjects = db
     .prepare(
       `select t.name_ko n, count(*) c from place_tag pt

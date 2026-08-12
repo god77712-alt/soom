@@ -134,6 +134,18 @@ export interface Channel {
   subscriber_count: number;
   sub_band: SubBand;
   language: Language;
+  /**
+   * YouTube API 로 실제 수집한 채널인가.
+   *
+   * ⚠️ 시연 채널과 섞이는 순간 화면이 거짓말을 하게 된다.
+   *    실채널이면 구독자·최근 성과가 실측치이고, 시연 채널이면 전부 지어낸 값이다.
+   *    화면은 이 값을 보고 출처를 밝혀야 한다.
+   */
+  is_real?: boolean;
+  /** 실채널일 때만. 최근 영상 기준 조회수÷구독자 중앙값 */
+  recent_median_vsr?: number;
+  /** 실채널일 때만. 상위 영상 (원본 링크용) */
+  top_videos?: { video_id: string; title: string; view_count: number; vsr: number }[];
 }
 
 /** 영상 한 편에 장소가 5~6곳 나온다. 조회수를 전부에게 100% 주면 데이터가 오염된다. */

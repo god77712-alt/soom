@@ -38,7 +38,8 @@ import {
 } from "./display";
 import { distanceKm, estimateDriveMinutes } from "./geo";
 import { MIN_SUBSCRIBER_COUNT, reachRange, resolveTagScore, soomScore, vsr, type ResolvedTagScore } from "./score";
-import type { Channel, Language, Place, PlaceLanguageStat, Tag, TagEvidence, TagScore, Video } from "./types";
+import REAL_CHANNELS_JSON from "@/data/real/channels.json";
+import type { Channel, Language, Place, PlaceLanguageStat, SubBand, Tag, TagEvidence, TagScore, Video } from "./types";
 import type {
   AdminGapRow,
   AdminImpact,
@@ -111,20 +112,81 @@ export async function getExpansionTags(tagId: string): Promise<{ siblings: Tag[]
 // ─── 채널 (S1 · S2) ──────────────────────────────────────
 
 /**
+ * 실제로 수집한 채널. `npm run export:channels` 가 구워낸다.
+ * 파일이 비어 있어도(수집 전) 화면은 시연 채널로 그대로 돈다.
+ */
+type RealChannel = {
+  id: string;
+  handle: string | null;
+  title: string;
+  subscriber_count: number;
+  sub_band: string;
+  language: string;
+  recent: { sample: number; median_vsr: number; median_views: number };
+  top: { video_id: string; title: string; view_count: number; vsr: number }[];
+};
+
+const REAL_CHANNELS = REAL_CHANNELS_JSON as RealChannel[];
+
+/**
+ * 수집기의 5구간을 SPEC 의 4구간으로 접는다.
+ * 1천 미만과 1천~1만은 표본이 얇아 따로 둘 실익이 없어 하나로 본다.
+ */
+const SUB_BAND_MAP: Record<string, SubBand> = {
+  u1k: 1,
+  "1k_10k": 1,
+  "10k_100k": 2,
+  "100k_1m": 3,
+  o1m: 4,
+};
+
+function toChannel(c: RealChannel): Channel {
+  return {
+    id: c.id,
+    youtube_channel_id: c.id,
+    title: c.title,
+    subscriber_count: c.subscriber_count,
+    sub_band: SUB_BAND_MAP[c.sub_band] ?? 2,
+    language: c.language === "en" ? "en" : "ko",
+    is_real: true,
+    recent_median_vsr: c.recent.median_vsr,
+    top_videos: c.top,
+  };
+}
+
+/**
  * S1: 유튜브 채널 URL 입력.
- * 실제로는 URL → 채널 ID 변환에 YouTube API 가 필요하지만, SPEC 6장 절대원칙 1에 따라
- * 화면에서 유튜브를 직접 부르지 않는다. 7단계에서는 서버측 1회 조회 + 캐시로 처리한다.
+ *
+ * ⚠️ 화면에서 YouTube API 를 부르지 않는다 (SPEC 6장 절대원칙 1).
+ *    시연 중 쿼터가 마르면 서비스가 통째로 멈추고, 배포된 사이트는 우리 DB 도 못 읽는다.
+ *    → `npm run export:channels` 로 구워둔 JSON 만 본다. 방문자가 늘어도 쿼터는 0 이다.
+ *
+ * 실제로 수집한 채널을 먼저 찾고, 없으면 시연 채널로 떨어진다.
+ * 둘을 섞지 않는다 — `is_real` 로 끝까지 구분해서 화면이 출처를 밝힐 수 있게 한다.
  */
 export async function resolveChannel(input: string): Promise<Channel | null> {
   const q = input.trim().toLowerCase().replace(/^@/, "");
   if (!q) return null;
+
+  const norm = (s: string) => s.toLowerCase().replace(/\s+/g, "");
+  const key = norm(q);
+
+  const real = REAL_CHANNELS.find(
+    (c) =>
+      c.id.toLowerCase() === q ||
+      (c.handle && norm(c.handle.replace(/^@/, "")) === key) ||
+      norm(c.title) === key ||
+      (key.length >= 3 && norm(c.title).includes(key)),
+  );
+  if (real) return toChannel(real);
+
   return (
     FAKE_CHANNELS.find(
       (c) =>
         c.id === q ||
         c.youtube_channel_id.toLowerCase() === q ||
-        c.title.toLowerCase().replace(/\s+/g, "") === q.replace(/\s+/g, "") ||
-        q.includes(c.title.toLowerCase().replace(/\s+/g, "")),
+        norm(c.title) === key ||
+        q.includes(norm(c.title)),
     ) ?? null
   );
 }
@@ -146,10 +208,25 @@ export const GUEST_CHANNEL: Channel = {
 
 export async function getChannel(channelId: string): Promise<Channel | null> {
   if (channelId === GUEST_CHANNEL.id) return GUEST_CHANNEL;
+  const real = REAL_CHANNELS.find((c) => c.id === channelId);
+  if (real) return toChannel(real);
   return FAKE_CHANNELS.find((c) => c.id === channelId) ?? null;
 }
 
+/**
+ * 홈 화면의 예시 버튼.
+ *
+ * 실채널이 있으면 그걸 먼저 보여준다 — 눌러서 나오는 구독자·성과가 실측치라
+ * "이거 진짜 도는 거구나" 를 첫 화면에서 증명한다.
+ * 언어가 서로 다른 둘을 고른다. 점수판이 언어별로 갈리는 게 이 서비스의 핵심이라
+ * 예시부터 그걸 보여주는 편이 낫다.
+ */
 export async function getDemoChannels(): Promise<Channel[]> {
+  const ko = REAL_CHANNELS.find((c) => c.language === "ko" && c.recent.sample >= 20);
+  const en = REAL_CHANNELS.find((c) => c.language === "en" && c.recent.sample >= 20);
+  const picked = [ko, en].filter((c): c is RealChannel => Boolean(c)).map(toChannel);
+  if (picked.length === 2) return picked;
+
   return FAKE_CHANNELS.filter((c) => c.id === "ch_wander" || c.id === "ch_ddeona");
 }
 
@@ -157,16 +234,66 @@ export interface ChannelProfileView {
   channel: Channel;
   profile: ChannelProfile;
   tags: Tag[];
+  /**
+   * 이 화면에서 **소재 태그만** 시연 데이터인가.
+   *
+   * 실채널은 구독자·분석 편수·성과가 전부 실측이지만, "잘 되는 소재" 는 아직 못 낸다 —
+   * 영상→장소→태그 연결이 5단계 일이라서다.
+   * 한 화면에 실측과 시연이 섞이므로 **어느 쪽이 어느 쪽인지 화면이 밝혀야 한다.**
+   */
+  tagsAreDemo: boolean;
 }
 
 export async function getChannelProfile(channelId: string): Promise<ChannelProfileView | null> {
   const channel = await getChannel(channelId);
-  const profile = FAKE_CHANNEL_PROFILES.find((p) => p.channel_id === channelId);
-  if (!channel || !profile) return null;
-  const tags = profile.tag_ids
+  if (!channel) return null;
+
+  const own = FAKE_CHANNEL_PROFILES.find((p) => p.channel_id === channelId);
+  if (own) {
+    const tags = own.tag_ids
+      .map((id) => FAKE_TAGS.find((t) => t.id === id))
+      .filter((t): t is Tag => Boolean(t));
+    return { channel, profile: own, tags, tagsAreDemo: true };
+  }
+
+  // ── 실제로 수집한 채널 ────────────────────────────────
+  const real = REAL_CHANNELS.find((c) => c.id === channelId);
+  if (!real) return null;
+
+  /**
+   * 상위 성과 편수는 **실측으로 센다.**
+   * 중앙값의 1.5배를 넘긴 영상이 몇 편인가 — 이 채널이 실제로 터뜨린 횟수다.
+   */
+  const cut = real.recent.median_vsr * 1.5;
+  const topCount = real.top.filter((v) => v.vsr >= cut).length;
+
+  /**
+   * 소재 태그는 같은 언어의 시연 프로필에서 빌려온다.
+   * ⚠️ 지어낸 값이다. `tagsAreDemo` 로 반드시 표시할 것.
+   *    이걸 실측인 척 두면 크리에이터가 없는 근거를 믿고 움직인다.
+   */
+  const donor =
+    FAKE_CHANNEL_PROFILES.find((p) => {
+      const c = FAKE_CHANNELS.find((x) => x.id === p.channel_id);
+      return c?.language === channel.language;
+    }) ?? FAKE_CHANNEL_PROFILES[0];
+  if (!donor) return null;
+
+  const tags = donor.tag_ids
     .map((id) => FAKE_TAGS.find((t) => t.id === id))
     .filter((t): t is Tag => Boolean(t));
-  return { channel, profile, tags };
+
+  return {
+    channel,
+    profile: {
+      ...donor,
+      channel_id: channel.id,
+      analyzed_count: real.recent.sample,
+      top_performer_count: topCount,
+    },
+    tags,
+    tagsAreDemo: true,
+  };
 }
 
 // ─── 장소 · 추천 (S3) ────────────────────────────────────
