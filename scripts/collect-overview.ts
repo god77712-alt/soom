@@ -39,13 +39,52 @@ const LIMIT = Number(flag("limit") ?? 0) || Infinity;
 const CONCURRENCY = Math.max(1, Number(flag("concurrency") ?? 4));
 
 /**
- * 수집 우선순위.
+ * 수집 우선순위 — **콘텐츠 타입이 아니라 소재로 정한다.** (2026-08-12 전면 수정)
  *
- * 전수를 받되 **순서를 정한다.** 2.7시간짜리 작업이라 중간에 쿼터가 마르거나 끊길 수 있는데,
- * 그때 주력 소재가 이미 들어와 있으면 그 상태로도 다음 단계를 시작할 수 있다.
- * 오일장·재래시장이 쇼핑(38), 노포가 음식점(39)이다. 숙박은 S4 ⑥ 에만 쓰여서 맨 뒤.
+ * ── 무엇이 잘못됐었나 ────────────────────────────────────
+ * 원래는 타입 순서(38 쇼핑 먼저)였다. 하루 1,000건씩 몇 주를 돌린 뒤 확인해 보니
+ * **받아둔 소개글 2,995건이 전부 타입 38 이었다.**
+ *
+ *   타입 38 전체 12,248곳 · 받은 것 2,996 · 남은 것 9,252
+ *   → 관광지(12)로 넘어가려면 **9일을 더 쇼핑에만 써야 했다.**
+ *
+ * 게다가 쇼핑의 대부분은 대형마트·백화점·면세점이다. 검색 계획에서 이미
+ * 제외한 것들이라(`SUBJECT_SKIP`) 이 서비스가 절대 추천하지 않는 곳이다.
+ * 사찰·계곡·해수욕장은 소개글이 **한 건도** 없었다.
+ *
+ * ⚠️ 오류가 안 뜬다. 리포트에는 "소개글 2,995건" 으로 찍혀서 잘 되는 것처럼 보인다.
+ *    소재별로 갈라 보고 나서야 드러났다 (`npm run report:inventory`).
+ *
+ * ── 그래서 순서를 이렇게 바꿨다 ──────────────────────────
+ * 소개글은 4단계 LLM 태깅의 유일한 원료이고, 태깅은 추천 화면에 쓰인다.
+ * 그러니 **화면에 실제로 나올 곳부터** 받는다.
+ *
+ *   ① 12개 주력 소재 × 인구감소지역   2,410곳
+ *   ② 12개 주력 소재 나머지           2,097곳   → 여기까지 5일이면 끝난다
+ *   ③ 태그가 붙은 곳 × 인구감소지역
+ *   ④ 태그가 붙은 곳
+ *   ⑤ 나머지 (타입 순서)
  */
-const TYPE_PRIORITY = [38, 12, 39, 14, 28, 15, 25, 32];
+const TYPE_PRIORITY = [12, 14, 38, 28, 39, 25, 15, 32];
+
+/**
+ * 성과가 검증된 12개 주력 소재 (`eval:hypothesis` · `collect-youtube.ts` SUBJECT_PLAN).
+ * 이 이름들은 관광공사 소분류명 그대로다 — 바꾸면 조인이 조용히 0건이 된다.
+ */
+const TARGET_SUBJECTS = [
+  "야영장,오토캠핑장",
+  "유적지/사적지",
+  "사찰",
+  "5일장",
+  "폐교",
+  "해수욕장",
+  "상설시장",
+  "계곡",
+  "항구/포구",
+  "고택",
+  "섬",
+  "자연휴양림",
+];
 
 const db = openDb();
 
@@ -72,12 +111,25 @@ const targets = db
          WHERE o.content_id IS NULL OR o.status_en IS NULL OR o.status_en = 'fail'`
       : `SELECT p.content_id, p.content_type_id FROM tour_place p
          LEFT JOIN tour_overview o ON o.content_id = p.content_id
+         LEFT JOIN place pl
+                ON pl.source_id = p.content_id AND pl.source = 'tourapi'
          WHERE o.content_id IS NULL OR o.status IS NULL OR o.status = 'fail'
-         ORDER BY CASE p.content_type_id
-           ${TYPE_PRIORITY.map((t, i) => `WHEN ${t} THEN ${i}`).join(" ")}
-           ELSE 99 END, p.content_id`,
+         ORDER BY
+           CASE
+             WHEN EXISTS (SELECT 1 FROM place_tag pt JOIN tag t ON t.id = pt.tag_id
+                           WHERE pt.place_id = pl.id
+                             AND t.name_ko IN (${TARGET_SUBJECTS.map(() => "?").join(",")}))
+              THEN CASE WHEN pl.is_declining_area = 1 THEN 0 ELSE 1 END
+             WHEN EXISTS (SELECT 1 FROM place_tag pt WHERE pt.place_id = pl.id)
+              THEN CASE WHEN pl.is_declining_area = 1 THEN 2 ELSE 3 END
+             ELSE 4
+           END,
+           CASE p.content_type_id
+             ${TYPE_PRIORITY.map((t, i) => `WHEN ${t} THEN ${i}`).join(" ")}
+             ELSE 99 END,
+           p.content_id`,
   )
-  .all() as Array<{ content_id: string }>;
+  .all(...(isEn ? [] : TARGET_SUBJECTS)) as Array<{ content_id: string }>;
 
 const queue = targets.slice(0, LIMIT === Infinity ? undefined : LIMIT);
 
