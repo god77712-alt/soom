@@ -37,9 +37,10 @@ import {
   type TagScoreLabel,
 } from "./display";
 import { distanceKm, estimateDriveMinutes } from "./geo";
-import { pickShortsCut, SHORTS_MAX_SEC } from "./shorts";
+import { pickShortsCut, type Hotspot } from "./shorts";
 import { MIN_SUBSCRIBER_COUNT, reachRange, resolveTagScore, soomScore, vsr, type ResolvedTagScore } from "./score";
 import REAL_CHANNELS_JSON from "@/data/real/channels.json";
+import REAL_HOTSPOTS_JSON from "@/data/real/hotspots.json";
 import type { Channel, ChannelFormatStats, Language, Place, PlaceLanguageStat, SubBand, Tag, TagEvidence, TagScore, Video } from "./types";
 import type {
   AdminGapRow,
@@ -136,6 +137,12 @@ type RealChannel = {
 };
 
 const REAL_CHANNELS = REAL_CHANNELS_JSON as RealChannel[];
+
+/**
+ * 영상별 화제 구간. `npm run build:hotspots` 가 댓글 타임스탬프에서 구워 둔다.
+ * 키는 YouTube 영상 ID, 값은 댓글이 많이 몰린 순서 (상위 3개).
+ */
+const REAL_HOTSPOTS = REAL_HOTSPOTS_JSON as Record<string, Hotspot[]>;
 
 /**
  * 수집기의 5구간을 SPEC 의 4구간으로 접는다.
@@ -600,11 +607,17 @@ function toBreakdown(video: Video): VideoBreakdown | null {
     chapters,
     chapter_source: narrative?.chapter_source ?? "description",
     /**
-     * 쇼츠로 떼어낼 구간. 쇼츠 길이(180초) 안에 들어가는 영상에는 안 붙인다 —
-     * 이미 쇼츠라서 "여기서 쇼츠를 뽑으세요"가 말이 안 된다.
+     * 쇼츠로 떼어낼 구간.
+     *
+     * 댓글이 몰린 지점을 먼저 본다. 실제로 수집한 영상은 `build:hotspots` 가
+     * 구운 JSON 에서, 시연 영상은 narrative 에서 온다 — **둘을 섞지 않는다.**
+     * `youtube_id` 로 찾으므로 시연 영상(DEMO_ 접두사)이 실측에 걸릴 일은 없다.
      */
-    shorts_cut:
-      video.duration > SHORTS_MAX_SEC ? pickShortsCut(chapters, video.duration) : null,
+    shorts_cut: pickShortsCut(
+      chapters,
+      video.duration,
+      REAL_HOTSPOTS[video.youtube_id]?.[0] ?? narrative?.hotspot ?? null,
+    ),
   };
 }
 
@@ -613,7 +626,7 @@ function toBreakdown(video: Video): VideoBreakdown | null {
  *
  * 여기서 찍힌 영상이 있으면 그걸 먼저 보여준다. 없으면 같은 소재의 다른 지역 영상을
  * 가져오고, 화면에는 **어디서 찍은 영상인지** 반드시 함께 적는다.
- * 구성(챕터)이 없는 영상은 제외한다 — 제목만 있는 카드는 보여줄 게 없다.
+ * 챕터도 화제 구간도 없는 영상은 제외한다 — 제목만 있는 카드는 보여줄 게 없다.
  */
 export async function getVideoBreakdowns(
   placeId: string,
@@ -632,7 +645,15 @@ export async function getVideoBreakdowns(
     .filter((b): b is VideoBreakdown => b !== null)
     // 구독자 1,000 미만은 배수가 폭발한다. "이렇게 하면 된다"의 본보기로 쓸 수 없다.
     .filter((b) => b.subscriber_count >= MIN_SUBSCRIBER_COUNT)
-    .filter((b) => b.chapters.length > 0)
+    /**
+     * 보여줄 구성이 하나도 없는 카드는 뺀다. 제목과 배수만 있는 카드는
+     * "가서 뭘 찍을지"에 아무 답도 못 준다.
+     *
+     * 챕터 **또는** 화제 구간 중 하나만 있으면 된다. 챕터를 요구하면
+     * 실측 12% 만 남는다 — 여행 브이로그가 설명란에 타임스탬프를 잘 안 적는다.
+     * 화제 구간은 챕터가 없는 영상에서도 나오므로 여기가 더 두껍다.
+     */
+    .filter((b) => b.chapters.length > 0 || b.shorts_cut !== null)
     .sort((a, b) => {
       const own = Number(b.place_id === placeId) - Number(a.place_id === placeId);
       return own !== 0 ? own : b.vsr - a.vsr;

@@ -12,6 +12,50 @@ const S = getStrings("ko");
  * 챕터 출처를 반드시 함께 적는다. 우리가 지어낸 구성이 아니라 그 사람이 설명란에
  * 직접 적어 둔 목차라는 사실이 이 블록을 믿게 만드는 유일한 근거다.
  */
+/**
+ * 롱폼에서 쇼츠로 떼어낼 구간.
+ *
+ * 한 번 가서 두 형식으로 쓰는 길이다. 쇼츠가 훨씬 잘 되는 채널이 실제로 있다
+ * (실측: 은윤이행님 롱폼 0.05× / 쇼츠 2.168×).
+ *
+ * ⚠️ **근거가 무엇인지 반드시 밝힌다.** 둘의 격이 다르다:
+ *    - `comment` 여러 명이 그 지점을 댓글로 짚었다 → 반응. 댓글 원문까지 보여준다
+ *    - `length`  그냥 쇼츠 길이에 들어간다 → 그뿐. 단정하면 안 된다
+ *    길이로 고른 것을 반응으로 고른 것처럼 보이게 하면, 크리에이터가 없는 근거를
+ *    믿고 편집 순서를 바꾼다.
+ */
+function ShortsCutBlock({ cut }: { cut: NonNullable<VideoBreakdown["shorts_cut"]> }) {
+  const byComment = cut.reason === "comment";
+
+  return (
+    <div className="mt-2.5 border-t border-hair/70 pt-2.5">
+      <div className="flex flex-wrap items-baseline gap-x-2 font-mono text-[11px]">
+        <span className="text-signal">
+          {S.timestamp(cut.at)}–{S.timestamp(cut.end)}
+        </span>
+        <span className="text-ink3">{cut.span}초</span>
+        {cut.label && <span className="text-ink2">{cut.label}</span>}
+        <span className="text-[10px] text-ink3">
+          {byComment ? `댓글 ${cut.mentions}건이 짚은 지점` : "길이 기준"}
+        </span>
+      </div>
+
+      {/* 댓글 원문. 우리가 판단한 게 아니라 시청자가 남긴 것이라는 유일한 증거다 */}
+      {byComment && cut.top_comment && (
+        <div className="mt-1.5 border-l border-hair2 pl-2.5 text-[12px] text-ink2">
+          {cut.top_comment}
+        </div>
+      )}
+
+      <div className="mt-1.5 font-mono text-[10px] text-ink3">
+        {byComment
+          ? "댓글 타임스탬프가 몰린 구간 · 앞뒤를 붙여 쇼츠 길이로 맞췄다"
+          : "쇼츠 길이(180초) 안에 들어가는 구간 · 반응 데이터는 아직 없다"}
+      </div>
+    </div>
+  );
+}
+
 export function VideoBreakdownCard({ item }: { item: VideoBreakdown }) {
   const isDemo = item.youtube_id.startsWith("DEMO_");
 
@@ -68,28 +112,15 @@ export function VideoBreakdownCard({ item }: { item: VideoBreakdown }) {
             {S.cardChapterSource[item.chapter_source]}
           </div>
 
-          {/*
-            한 번 가서 두 형식으로 쓰는 길. 쇼츠가 훨씬 잘 되는 채널이 실제로 있다
-            (실측: 은윤이행님 롱폼 0.05× / 쇼츠 2.168×).
-
-            ⚠️ **길이만 보고 고른 것이라고 반드시 밝힌다.** 구간별 시청 유지율은
-               영상 주인만 볼 수 있어서 "여기가 제일 재미있다"고는 말할 수 없다.
-               근거 없이 단정하면 이 블록 하나 때문에 화면 전체를 의심받는다.
-          */}
-          {item.shorts_cut && (
-            <div className="mt-2.5 border-t border-hair/70 pt-2.5">
-              <div className="font-mono text-[11px] text-signal">
-                {S.timestamp(item.shorts_cut.at)}–{S.timestamp(item.shorts_cut.end)}{" "}
-                <span className="text-ink2">{item.shorts_cut.label}</span>
-                <span className="text-ink3"> · {item.shorts_cut.span}초</span>
-              </div>
-              <div className="mt-1 font-mono text-[10px] text-ink3">
-                쇼츠 길이(180초) 안에 그대로 들어가는 구간 · 길이 기준 제안
-              </div>
-            </div>
-          )}
         </>
       )}
+
+      {/*
+        쇼츠 후보 구간. 챕터 목록 **바깥에** 둔다 — 화제 구간은 챕터가 없는
+        영상에서도 나온다. 챕터를 적는 여행 브이로그는 실측 12% 뿐이라,
+        챕터 블록 안에 넣으면 대부분의 영상에서 이 블록이 통째로 사라진다.
+      */}
+      {item.shorts_cut && <ShortsCutBlock cut={item.shorts_cut} />}
 
       {isDemo && (
         <div className="mt-2 font-mono text-[10px] text-ink3">데모 — 실제 영상 아님</div>

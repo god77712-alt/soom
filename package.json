@@ -27,7 +27,8 @@
     "export:channels": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-channels.ts",
     "eval:videoplace": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/eval-video-place.ts",
     "collect:sunrise": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-sunrise.ts",
-    "export:suntime": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-suntime.ts"
+    "export:suntime": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-suntime.ts",
+    "build:hotspots": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-hotspots.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",

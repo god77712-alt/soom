@@ -119,7 +119,17 @@ export function fakePlaceOperation(placeId: string): PlaceOperation {
  */
 export const FAKE_VIDEO_NARRATIVE: Record<
   string,
-  { hook: string | null; chapters: Array<{ at: number; label: string }>; chapter_source: "description" | "llm" }
+  {
+    hook: string | null;
+    chapters: Array<{ at: number; label: string }>;
+    chapter_source: "description" | "llm";
+    /**
+     * 댓글이 몰린 지점 (시연값). 실채널은 `npm run build:hotspots` 가 구운
+     * `hotspots.json` 에서 온다 — 이건 시연 영상이라 여기 적어 둔다.
+     * 카드에 '데모 — 실제 영상 아님' 이 함께 뜬다.
+     */
+    hotspot?: { at: number; from: number; to: number; mentions: number; likes: number; top_comment: string };
+  }
 > = {
   v_jeongseon_en: {
     hook: "첫 40초 대사 없음 — 새벽 버스 창밖과 좌판 펴는 소리만",
@@ -132,6 +142,10 @@ export const FAKE_VIDEO_NARRATIVE: Record<
       { at: 725, label: "오후 2시, 장이 파한다" },
     ],
     chapter_source: "description",
+    hotspot: {
+      at: 402, from: 395, to: 415, mentions: 9, likes: 1240,
+      top_comment: '6:42 할머니가 대뜸 나이 물어보는 거 너무 정선다움 ㅋㅋㅋ',
+    },
   },
   v_hwagae_en: {
     hook: "장터 입구 간판 클로즈업 → 바로 먹는 장면. 인사말 없음",
@@ -144,6 +158,10 @@ export const FAKE_VIDEO_NARRATIVE: Record<
       { at: 880, label: "총 지출 정산" },
     ],
     chapter_source: "description",
+    hotspot: {
+      at: 712, from: 705, to: 726, mentions: 6, likes: 480,
+      top_comment: '11:52 덤으로 한 줌 더 얹어주시는 거 보고 눈물남',
+    },
   },
   v_bonghwa_en: {
     hook: "빈 도로 드론 15초 + 자막 한 줄 \"인구 3만\"",
@@ -155,6 +173,10 @@ export const FAKE_VIDEO_NARRATIVE: Record<
       { at: 640, label: "돌아가는 길" },
     ],
     chapter_source: "description",
+    hotspot: {
+      at: 318, from: 310, to: 332, mentions: 4, likes: 210,
+      top_comment: '5:18 이 나물 이름 아는 사람? 저희 할머니가 매년 뜯어오시던 건데',
+    },
   },
   v_sunchang_ko: {
     // 설명란 타임스탬프가 그대로 챕터가 된 경우. 7단계 파싱 결과가 이렇게 생긴다.
