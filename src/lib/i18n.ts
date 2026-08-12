@@ -72,6 +72,26 @@ const ko = {
   s3ExploreLabel: "다른 분류",
   s3TravelTime: (from: string, text: string) => `${from} ${text}`,
 
+  // 카드 성과 — 이 장소 성적과 소재 성적은 반드시 다르게 읽혀야 한다
+  perfOwnScope: (n: number) => `여기서 찍은 ${n}편`,
+  perfTagScope: (tagName: string) => `${tagName} 영상`,
+  perfSourcePlaces: (names: string[]) => `${names.join(" · ")} 기준`,
+
+  // 카드 펼침
+  cardOpen: "구성 보기",
+  cardClose: "접기",
+  cardShotsTitle: "찍을 수 있는 컷",
+  cardNearbyTitle: "묶어서 찍을 곳",
+  cardBreakdownTitle: "잘 된 영상의 구성",
+  cardBreakdownAt: (placeName: string) => `${placeName} 촬영`,
+  cardChapterSource: { description: "영상 설명란 타임스탬프", llm: "자막 기준" },
+  cardHookLabel: "초반 30초",
+  cardFullEvidence: "근거 6단 전체",
+  duration: (sec: number) => `${Math.floor(sec / 60)}분`,
+  timestamp: (sec: number) =>
+    `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`,
+  nearbyDistance: (km: number, min: number) => `${km}km · 차 ${min}분`,
+
   // S4 — 6단 구조. 순서와 제목을 바꾸지 말 것 (SPEC S4)
   s4Step1: "이 소재는 먹힌다",
   s4Step2: "그런데 여긴 비어 있다",

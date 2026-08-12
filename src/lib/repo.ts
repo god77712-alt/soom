@@ -17,6 +17,7 @@ import {
   FAKE_ADMIN_GAPS,
   FAKE_ADMIN_IMPACT,
   FAKE_ADMIN_MATCHES,
+  FAKE_VIDEO_NARRATIVE,
   fakePlaceEvidence,
   fakePlaceOperation,
   fakePlaceShots,
@@ -25,10 +26,12 @@ import {
 } from "@/data/fake/details";
 import {
   competitionLine,
+  performanceLine,
   placeLanguageLine,
   seasonBadge,
   tagScoreLabel,
   type CompetitionLine,
+  type PerformanceLine,
   type PlaceLanguageLine,
   type SeasonBadge,
   type TagScoreLabel,
@@ -47,6 +50,7 @@ import type {
   PlaceShot,
   ShootingPlan,
   StayPlan,
+  VideoBreakdown,
 } from "./viewmodels";
 
 /** 0단계는 가짜 데이터로 돈다는 사실을 화면이 알아야 배너를 띄울 수 있다. */
@@ -167,6 +171,13 @@ export async function getChannelProfile(channelId: string): Promise<ChannelProfi
 
 // ─── 장소 · 추천 (S3) ────────────────────────────────────
 
+/**
+ * S3 카드.
+ *
+ * 접힌 상태에서 쓰는 것은 place · performance · tagScores 뿐이다.
+ * 나머지는 카드를 펼쳤을 때 쓴다 — 펼침은 페이지 이동이 아니라 같은 자리에서 열리므로
+ * 5장치를 미리 다 실어 보낸다.
+ */
 export interface PlaceCard {
   place: Place;
   /** 국내 채널 줄 */
@@ -175,6 +186,8 @@ export interface PlaceCard {
   enLine: PlaceLanguageLine;
   /** 카드에서 가장 눈에 띄어야 할 줄. "경쟁 영상 0편" + 비교군 */
   competition: CompetitionLine;
+  /** 접힌 카드의 주인공. 여기 성적이 없으면 같은 소재의 다른 지역 성적이 들어온다 */
+  performance: PerformanceLine;
   travelFromSeoul: string | null;
   soom_score: number;
   score: ResolvedTagScore;
@@ -184,8 +197,10 @@ export interface PlaceCard {
   shots: PlaceShot[];
   /** 장날 등. 오일장은 이게 안 맞으면 헛걸음이라 카드에서부터 보여준다 */
   operation: PlaceOperation;
-  /** 근처에 묶어 찍을 소재 수 */
-  nearbyCount: number;
+  /** 근처에 묶어 찍을 소재 */
+  nearby: NearbySpot[];
+  /** 잘 된 영상을 뜯어 놓은 것. 펼침의 중심 */
+  breakdowns: VideoBreakdown[];
 }
 
 async function statOf(placeId: string, language: Language): Promise<PlaceLanguageStat | undefined> {
@@ -236,13 +251,23 @@ export async function recommendPlaces(
         koLine: placeLanguageLine(await statOf(placeId, "ko"), "ko"),
         enLine: placeLanguageLine(await statOf(placeId, "en"), "en"),
         competition: competitionLine(stat, peers),
+        performance: performanceLine(
+          stat,
+          tag,
+          lang,
+          channel.sub_band,
+          FAKE_TAG_SCORES,
+          FAKE_TAGS,
+          peers.map((p) => p.name),
+        ),
         travelFromSeoul: FAKE_TRAVEL_FROM_SEOUL[placeId] ?? null,
         soom_score: score.score ? soomScore(score.score.median_vsr, count) : 0,
         score,
         tagScores: await getPlaceTagScores(placeId, channel.id),
         shots: await getPlaceShots(placeId),
         operation: await getPlaceOperation(placeId),
-        nearbyCount: (await getNearbySpots(placeId, lang)).length,
+        nearby: await getNearbySpots(placeId, lang),
+        breakdowns: await getVideoBreakdowns(placeId, tagId, lang),
         _tiebreak: (await statOf(placeId, other))?.median_vsr ?? 0,
       };
     }),
@@ -406,6 +431,64 @@ export async function getNearbySpots(
 
 export async function getPlaceShots(placeId: string): Promise<PlaceShot[]> {
   return fakePlaceShots(placeId);
+}
+
+// ─── 잘 된 영상의 구성 ───────────────────────────────────
+
+function toBreakdown(video: Video): VideoBreakdown | null {
+  const channel = FAKE_CHANNELS.find((c) => c.id === video.channel_id);
+  const vp = FAKE_VIDEO_PLACES.find((x) => x.video_id === video.id);
+  const place = vp ? FAKE_PLACES.find((p) => p.id === vp.place_id) : undefined;
+  if (!channel || !place) return null;
+
+  const narrative = FAKE_VIDEO_NARRATIVE[video.id];
+  return {
+    video_id: video.id,
+    youtube_id: video.youtube_id,
+    title: video.title,
+    channel_title: channel.title,
+    subscriber_count: channel.subscriber_count,
+    view_count: video.view_count,
+    vsr: vsr(video.view_count, channel.subscriber_count),
+    duration: video.duration,
+    place_id: place.id,
+    place_name: place.name_ko,
+    hook: narrative?.hook ?? null,
+    chapters: narrative?.chapters ?? [],
+    chapter_source: narrative?.chapter_source ?? "description",
+  };
+}
+
+/**
+ * 카드를 펼쳤을 때 보여줄 "이렇게 생긴 영상이 잘 됐다".
+ *
+ * 여기서 찍힌 영상이 있으면 그걸 먼저 보여준다. 없으면 같은 소재의 다른 지역 영상을
+ * 가져오고, 화면에는 **어디서 찍은 영상인지** 반드시 함께 적는다.
+ * 구성(챕터)이 없는 영상은 제외한다 — 제목만 있는 카드는 보여줄 게 없다.
+ */
+export async function getVideoBreakdowns(
+  placeId: string,
+  tagId: string,
+  language: Language,
+  limit = 2,
+): Promise<VideoBreakdown[]> {
+  const lookup = tagIdsForPlaceLookup(tagId);
+  const taggedPlaceIds = new Set(
+    FAKE_PLACE_TAGS.filter((pt) => lookup.has(pt.tag_id)).map((pt) => pt.place_id),
+  );
+
+  return FAKE_VIDEOS.filter((v) => v.language === language)
+    .filter((v) => FAKE_VIDEO_PLACES.some((vp) => vp.video_id === v.id && taggedPlaceIds.has(vp.place_id)))
+    .map(toBreakdown)
+    .filter((b): b is VideoBreakdown => b !== null)
+    // 구독자 1,000 미만은 배수가 폭발한다. "이렇게 하면 된다"의 본보기로 쓸 수 없다.
+    .filter((b) => b.subscriber_count >= MIN_SUBSCRIBER_COUNT)
+    .filter((b) => b.chapters.length > 0)
+    .sort((a, b) => {
+      const own = Number(b.place_id === placeId) - Number(a.place_id === placeId);
+      return own !== 0 ? own : b.vsr - a.vsr;
+    })
+    .slice(0, limit);
 }
 
 export async function getPlaceOperation(placeId: string): Promise<PlaceOperation> {

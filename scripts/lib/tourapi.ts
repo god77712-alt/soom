@@ -91,6 +91,28 @@ export async function callTourApi<T = unknown>(
     return { ok: false, code: "PARSE", message: "JSON 파싱 실패", totalCount: 0, items: [], raw: text.slice(0, 300) };
   }
 
+  /**
+   * ⚠️ 게이트웨이 오류는 **응답 봉투가 다르다.**
+   *
+   *   정상/서비스 오류 : { response: { header: { resultCode, resultMsg } } }
+   *   게이트웨이 오류  : { OpenAPI_ServiceResponse: { cmmMsgHeader: { returnReasonCode, errMsg } } }
+   *
+   * `response.header` 만 보면 게이트웨이 오류의 코드를 못 읽어 전부 "?" 가 된다.
+   * 그러면 호출자가 쿼터 초과(22)를 구분하지 못해 **한도를 넘긴 뒤에도 계속 두드린다.**
+   * 실제로 그렇게 18,000건을 헛돌았다. 두 봉투를 모두 볼 것.
+   */
+  const gw = json?.OpenAPI_ServiceResponse?.cmmMsgHeader;
+  if (gw) {
+    return {
+      ok: false,
+      code: String(gw.returnReasonCode ?? "?"),
+      message: String(gw.errMsg ?? gw.returnAuthMsg ?? ""),
+      totalCount: 0,
+      items: [],
+      raw: text.slice(0, 300),
+    };
+  }
+
   const header = json?.response?.header ?? {};
   const code = String(header.resultCode ?? "?");
   const message = String(header.resultMsg ?? "");

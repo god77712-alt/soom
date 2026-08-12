@@ -1,0 +1,21 @@
+# Netlify 배포 설정.
+#
+# 지금 배포하는 건 0단계 결과물이다 — 가짜 데이터로 도는 화면.
+# API 키가 하나도 없어도 빌드되고 돌아간다. 그래서 초안 배포에 아무 준비물이 필요 없다.
+# (화면 상단에 "데모 데이터 · 실제 값 아님" 배너가 항상 떠 있다)
+#
+# ⚠️ 수집 스크립트(scripts/)는 배포에 포함되지 않는다. 서버에서 도는 코드가 아니다.
+#    .env 의 키도 Netlify 에 올리지 않는다 — 화면은 키를 쓰지 않는다.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Next 15 + React 19 기준. 로컬은 24 지만 Netlify 기본 LTS 로 맞춘다.
+  NODE_VERSION = "22"
+
+# Next.js App Router 를 Netlify 에서 돌리는 공식 플러그인.
+# netlify.toml 에 적어두면 Netlify 가 알아서 설치한다 (package.json 에 넣을 필요 없음).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

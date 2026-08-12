@@ -8,7 +8,14 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "probe": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/probe-tourapi.ts",
-    "sample": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/sample-collect.ts"
+    "sample": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/sample-collect.ts",
+    "collect:list": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-list.ts",
+    "collect:overview": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-overview.ts",
+    "collect:extra": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-extra.ts",
+    "build:declining": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-declining-area.ts",
+    "report:stage1": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/report-stage1.ts",
+    "export:share": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-share-dataset.ts",
+    "load:raw": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/load-raw.ts"
   },
   "dependencies": {
     "next": "^15.5.4",
@@ -22,6 +29,7 @@
     "@types/react-dom": "^19.1.9",
     "tailwindcss": "^4.1.13",
     "tsx": "^4.23.5",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "xlsx": "^0.18.5"
   }
 }

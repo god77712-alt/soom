@@ -1,5 +1,7 @@
-import { formatCount } from "@/lib/i18n";
+import { formatCount, getStrings } from "@/lib/i18n";
 import type { EvidenceVideo } from "@/lib/repo";
+
+const S = getStrings("ko");
 
 /**
  * 성공 영상 한 편.
@@ -38,7 +40,7 @@ export function EvidenceVideoCard({ item }: { item: EvidenceVideo }) {
           {item.channel.title} · {item.place.name_ko}
         </div>
         <div className="mt-2 flex items-baseline gap-2">
-          <span className="text-lg font-semibold text-open">{item.vsr.toFixed(1)}배</span>
+          <span className="font-mono text-lg font-bold text-open tnum">{S.multiplier(item.vsr)}</span>
           <span className="text-xs text-ink3">
             구독자 {formatCount(item.channel.subscriber_count)} → 조회 {formatCount(item.video.view_count)}
           </span>

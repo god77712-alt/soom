@@ -6,7 +6,7 @@
  */
 
 import { getStrings, type Locale } from "./i18n";
-import { resolveTagScore, type ResolvedTagScore } from "./score";
+import { MIN_SAMPLE_SIZE, resolveTagScore, type ResolvedTagScore } from "./score";
 import type { Language, Place, PlaceLanguageStat, SubBand, Tag, TagScore } from "./types";
 
 /** 화면에서 색을 결정하는 의미 단위. Tailwind 클래스는 toneClass() 에서만 만든다. */
@@ -105,6 +105,78 @@ export function competitionLine(
     // 경쟁이 적을수록 강조한다. 이게 카드에서 가장 눈에 띄어야 할 숫자다.
     tone: count === 0 ? "uncharted" : count < 5 ? "warn" : "muted",
     count,
+  };
+}
+
+// ─── 성과 한 줄 (S3 카드의 주인공) ───────────────────────
+
+export interface PerformanceLine {
+  /** "여기서 찍은 8편" | "재래시장 영상" */
+  scope: string;
+  /** "2.9×" | "표본 부족" */
+  value: string;
+  /** "정선 5일장 · 화개장터 기준" — 이 장소 성적일 때는 null */
+  basis: string | null;
+  /** 이 장소에서 실제로 찍힌 영상의 성적인가 */
+  isOwn: boolean;
+  tone: Tone;
+}
+
+/**
+ * 카드에 적을 성과.
+ *
+ * 추천 상위는 대부분 경쟁 0편이다(희소성 가중치). 그래서 이 장소 자체의 성적은 거의 없다.
+ * 그때 칸을 비우거나 "데이터 없음"이라 쓰면 크리에이터는 거기서 판단을 멈춘다.
+ * 대신 **같은 소재가 다른 지역에서 낸 성적**을 출처와 함께 보여준다.
+ *
+ * 두 줄은 반드시 다르게 읽혀야 한다. 같은 모양으로 그리면 "여기서 4.1× 나왔다"는
+ * 거짓말이 된다. scope 가 그 구분을 진다.
+ */
+export function performanceLine(
+  stat: PlaceLanguageStat | undefined,
+  tag: Tag,
+  language: Language,
+  band: SubBand,
+  allScores: TagScore[],
+  allTags: Tag[],
+  /** 소재 성적으로 대체할 때 출처로 밝힐 장소 이름들 */
+  sourcePlaces: string[] = [],
+  locale: Locale = "ko",
+): PerformanceLine {
+  const S = getStrings(locale);
+
+  // ① 여기서 찍힌 영상이 충분하면 그 성적을 그대로 쓴다
+  if (stat && stat.video_count >= MIN_SAMPLE_SIZE && stat.median_vsr !== null) {
+    return {
+      scope: S.perfOwnScope(stat.video_count),
+      value: S.multiplier(stat.median_vsr),
+      basis: null,
+      isOwn: true,
+      tone: "normal",
+    };
+  }
+
+  // ② 없으면 같은 소재의 다른 지역 성적. 어디서 온 숫자인지 반드시 함께 적는다
+  const resolved = resolveTagScore(tag, language, band, allScores, allTags);
+  const scope = S.perfTagScope(tag.name_ko);
+
+  if (resolved.status === "insufficient" || !resolved.score) {
+    return { scope, value: S.insufficientSample, basis: S.insufficientSampleHelp, isOwn: false, tone: "muted" };
+  }
+
+  const parts: string[] = [];
+  if (sourcePlaces.length > 0) parts.push(S.perfSourcePlaces(sourcePlaces));
+  else parts.push(S.s3TagBasis(resolved.score.video_count));
+  if (resolved.status === "fallback" && resolved.fallback_from) {
+    parts.push(S.fallbackHelp(resolved.fallback_from.name_ko));
+  }
+
+  return {
+    scope,
+    value: S.multiplier(resolved.score.median_vsr),
+    basis: parts.join(" · "),
+    isOwn: false,
+    tone: resolved.status === "fallback" ? "warn" : "normal",
   };
 }
 

@@ -65,6 +65,42 @@ export interface PlaceOperation {
   source: "tourapi" | "market" | "estimate";
 }
 
+/**
+ * 잘 된 영상 한 편을 뜯어 놓은 것.
+ *
+ * 크리에이터는 "여기 좋습니다"로 움직이지 않는다. 잘 된 영상이 **어떻게 생겼는지**를 봐야
+ * 자기 영상을 머릿속에 그린다. 그래서 점수가 아니라 구성을 보여준다.
+ *
+ * 7단계 조달 경로 (전부 실제로 얻을 수 있는 것만 넣었다)
+ *   title · duration · view_count   YouTube API
+ *   chapters                        영상 설명란의 타임스탬프 목록을 파싱
+ *   hook                            자막 앞 30초 → LLM 한 줄 요약
+ *
+ * chapters 가 비어 있는 영상이 많다. 그때는 억지로 만들지 말고 빈 배열로 둔다 —
+ * 화면이 구성 블록 자체를 그리지 않는다.
+ */
+export interface VideoBreakdown {
+  video_id: string;
+  youtube_id: string;
+  title: string;
+  channel_title: string;
+  subscriber_count: number;
+  view_count: number;
+  /** 조회수 ÷ 구독자 */
+  vsr: number;
+  /** 초 단위 */
+  duration: number;
+  /** 이 영상이 찍은 장소 (추천 장소가 아니라 다른 곳일 수 있다 — 그 사실을 화면에 밝힌다) */
+  place_id: string;
+  place_name: string;
+  /** 초반 30초에 무엇이 나오는가. 없으면 null */
+  hook: string | null;
+  /** 설명란 타임스탬프에서 나온 구성. 없으면 빈 배열 */
+  chapters: Array<{ at: number; label: string }>;
+  /** chapters 의 출처. 화면에 그대로 밝힌다 */
+  chapter_source: "description" | "llm";
+}
+
 /** 근처에 묶어 찍을 수 있는 소재. 좌표로 실제 계산한다 */
 export interface NearbySpot {
   place_id: string;

@@ -106,6 +106,68 @@ export function fakePlaceOperation(placeId: string): PlaceOperation {
   };
 }
 
+// ─── 잘 된 영상의 구성 ───────────────────────────────────
+
+/**
+ * 성공한 영상을 뜯어 놓은 것. video_id 로 찾는다.
+ *
+ * 여기 적힌 건 **영상 설명란의 타임스탬프**를 흉내낸 것이다. 실제로 여행 브이로그의
+ * 절반쯤은 설명란에 챕터를 적어 둔다. 7단계에서는 그걸 정규식으로 뽑아 그대로 채운다.
+ * (v_sunchang_ko 의 설명란 "00:00 순창 / 08:12 남원 / 15:40 임실" 이 그 형태다)
+ *
+ * 챕터가 없는 영상에는 아무것도 만들어 넣지 않는다. 화면이 구성 블록을 안 그린다.
+ */
+export const FAKE_VIDEO_NARRATIVE: Record<
+  string,
+  { hook: string | null; chapters: Array<{ at: number; label: string }>; chapter_source: "description" | "llm" }
+> = {
+  v_jeongseon_en: {
+    hook: "첫 40초 대사 없음 — 새벽 버스 창밖과 좌판 펴는 소리만",
+    chapters: [
+      { at: 0, label: "새벽 5시, 정선行 첫차" },
+      { at: 80, label: "해 뜨기 전 좌판 펴는 시간" },
+      { at: 225, label: "메밀전 매대" },
+      { at: 370, label: "40년 장사한 할머니와 대화" },
+      { at: 570, label: "3,000원으로 살 수 있는 것" },
+      { at: 725, label: "오후 2시, 장이 파한다" },
+    ],
+    chapter_source: "description",
+  },
+  v_hwagae_en: {
+    hook: "장터 입구 간판 클로즈업 → 바로 먹는 장면. 인사말 없음",
+    chapters: [
+      { at: 0, label: "화개장터 도착" },
+      { at: 65, label: "100년 된 장터 지도 훑기" },
+      { at: 200, label: "재첩국 한 그릇" },
+      { at: 425, label: "약초 매대 — 이름을 하나도 모른다" },
+      { at: 660, label: "상인이 덤으로 얹어 준 것" },
+      { at: 880, label: "총 지출 정산" },
+    ],
+    chapter_source: "description",
+  },
+  v_bonghwa_en: {
+    hook: "빈 도로 드론 15초 + 자막 한 줄 \"인구 3만\"",
+    chapters: [
+      { at: 0, label: "왜 아무도 안 오는가" },
+      { at: 95, label: "봉화 장날 아침 5시" },
+      { at: 290, label: "산나물 매대" },
+      { at: 480, label: "국밥집에서 아침" },
+      { at: 640, label: "돌아가는 길" },
+    ],
+    chapter_source: "description",
+  },
+  v_sunchang_ko: {
+    // 설명란 타임스탬프가 그대로 챕터가 된 경우. 7단계 파싱 결과가 이렇게 생긴다.
+    hook: null,
+    chapters: [
+      { at: 0, label: "순창" },
+      { at: 492, label: "남원" },
+      { at: 940, label: "임실" },
+    ],
+    chapter_source: "description",
+  },
+};
+
 // ─── S4 ③ "별로라서가 아니다" ────────────────────────────
 
 const EVIDENCE_OVERRIDES: Record<string, Partial<PlaceEvidence>> = {
