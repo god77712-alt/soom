@@ -14,6 +14,7 @@
 
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BackLink } from "@/components/BackLink";
 import { EvidenceVideoCard } from "@/components/EvidenceVideoCard";
 import { ShotStrip } from "@/components/ShotStrip";
 import { TagScoreList } from "@/components/TagScoreList";
@@ -71,12 +72,16 @@ export default async function PlaceDetailPage({
       {/* ── 사진이 먼저 온다 ── */}
       <div className="border-b border-hair px-6 pt-6 pb-0 sm:px-10">
         <div className="mx-auto max-w-4xl">
-          <Link
+          {/*
+            그냥 Link 로 두면 목록 맨 위로 올라간다. 5장을 비교하는 화면이라
+            3번째 카드를 보고 돌아왔을 때 위치가 유지돼야 한다 (BackLink 주석 참조).
+          */}
+          <BackLink
             href={`/?q=${encodeURIComponent(channel.title)}&tag=${tag.id}#result`}
             className="font-mono text-xs text-ink3 hover:text-ink2"
           >
             ← 추천 목록
-          </Link>
+          </BackLink>
           <div className="mt-5 pb-6">
             <ShotStrip shots={shots} />
           </div>

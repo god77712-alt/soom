@@ -144,6 +144,12 @@ export interface Channel {
   is_real?: boolean;
   /** 실채널일 때만. 최근 영상 기준 조회수÷구독자 중앙값 */
   recent_median_vsr?: number;
+  /** 실채널일 때만. 그 중앙값을 낸 표본 수 */
+  recent_sample?: number;
+  /** 실채널일 때만. 최근 영상 조회수 중앙값 (평균이 아니다 — 대박 한 편에 안 흔들리게) */
+  recent_median_views?: number;
+  /** 실채널일 때만. 채널 전체 영상 수 */
+  total_video_count?: number;
   /** 실채널일 때만. 상위 영상 (원본 링크용) */
   top_videos?: { video_id: string; title: string; view_count: number; vsr: number }[];
 }

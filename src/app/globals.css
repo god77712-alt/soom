@@ -106,3 +106,24 @@ body {
     display: none !important;
   }
 }
+
+/*
+ * 부드러운 이동.
+ *
+ * 앵커(#result)로 뛸 때 화면이 뚝 끊기지 않게 한다. 소재를 바꿀 때마다
+ * 순간이동하면 "다른 페이지로 갔나" 싶어서 흐름이 끊긴다.
+ *
+ * ⚠️ scroll-padding-top 이 없으면 고정 헤더 뒤로 제목이 숨는다.
+ *    헤더(약 3rem) + 배너(약 2rem) 만큼 띄운다.
+ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+/* 움직임을 줄이도록 설정한 사용자에게는 즉시 이동한다 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

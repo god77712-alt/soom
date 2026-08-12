@@ -85,6 +85,8 @@ export function MapHero({
     let H = 0;
     let dots: Array<[number, number, number]> = [];
     let routes: Array<{ path: Path2D; p0: [number, number]; c: [number, number]; p1: [number, number] }> = [];
+    /** 인천에서 전국으로 뻗는 배경 층. 최근접 노선보다 흐리게 깐다 */
+    let gatewayRoutes: Array<{ path: Path2D; p0: [number, number]; c: [number, number]; p1: [number, number] }> = [];
     let pos: Record<string, [number, number]> = {};
     let raf = 0;
     const t0 = performance.now();
@@ -183,6 +185,23 @@ export function MapHero({
         }, origins[0]);
         return arc(pos[hub.name], pos[p.name]);
       });
+
+      /**
+       * 관문 노선 — 인천에서 전국으로 뻗는 층.
+       *
+       * 최근접 공항만 그리면 목적지가 남쪽에 몰릴 때 김해에서만 퍼지는 그림이 된다.
+       * 실제로는 해외 크리에이터 대부분이 인천으로 들어오므로, 인천에서 전국으로
+       * 뻗는 선을 **한 겹 더** 깐다.
+       *
+       * ⚠️ 최근접 노선과 같은 굵기로 그리면 화면이 선으로 뒤덮인다.
+       *    이건 배경 층이라 더 얇고 어둡게, 빛도 흐르지 않게 둔다.
+       */
+      const gateway = origins.find((a) => a.name === "인천");
+      gatewayRoutes = gateway
+        ? open
+            .filter((p) => Math.hypot(p.lat - gateway.lat, p.lng - gateway.lng) > 0.6)
+            .map((p) => arc(pos[gateway.name], pos[p.name]))
+        : [];
     };
 
     const draw = (now: number) => {
@@ -192,6 +211,32 @@ export function MapHero({
       for (const [x, y, n] of dots) {
         ctx.fillStyle = n > 0.82 ? "rgba(88,196,221,0.62)" : "rgba(35,107,142,0.72)";
         ctx.fillRect(x, y, 1.6, 1.6);
+      }
+
+      /**
+       * 인천 관문 층 — 전국으로 퍼지는 그림.
+       *
+       * 최근접 노선(금색)과 **다른 색**을 쓴다. 같은 색으로 겹쳐 그리면
+       * 노선이 두 배로 늘어난 것처럼 보여서 어느 게 어느 건지 못 읽는다.
+       * 청록은 도트 지도와 같은 계열이라 배경에 얹힌 층으로 읽힌다.
+       */
+      ctx.lineWidth = 0.7;
+      ctx.strokeStyle = "rgba(88,196,221,0.3)";
+      for (const r of gatewayRoutes) ctx.stroke(r.path);
+
+      // 관문 층에도 빛이 흐른다. 금색보다 느리게 — 배경이라 시선을 뺏으면 안 된다
+      if (!reduce) {
+        ctx.save();
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "rgba(88,196,221,0.55)";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([18, 320]);
+        ctx.lineDashOffset = -((t * 34) % 338);
+        ctx.shadowColor = "rgba(88,196,221,0.6)";
+        ctx.shadowBlur = 5;
+        for (const r of gatewayRoutes) ctx.stroke(r.path);
+        ctx.restore();
+        ctx.setLineDash([]);
       }
 
       // 노선 바탕선 — 항상 떠 있는 얇은 실선

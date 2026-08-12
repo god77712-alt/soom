@@ -122,6 +122,7 @@ type RealChannel = {
   subscriber_count: number;
   sub_band: string;
   language: string;
+  video_count: number;
   recent: { sample: number; median_vsr: number; median_views: number };
   top: { video_id: string; title: string; view_count: number; vsr: number }[];
 };
@@ -150,6 +151,9 @@ function toChannel(c: RealChannel): Channel {
     language: c.language === "en" ? "en" : "ko",
     is_real: true,
     recent_median_vsr: c.recent.median_vsr,
+    recent_sample: c.recent.sample,
+    recent_median_views: c.recent.median_views,
+    total_video_count: c.video_count,
     top_videos: c.top,
   };
 }

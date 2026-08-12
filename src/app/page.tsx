@@ -157,17 +157,58 @@ export default async function Home({
               </p>
 
               {/*
-                실채널은 구독자·편수·성과가 실측이지만 소재 태그는 아직 시연 데이터다
+                채널 지표 — 전부 YouTube 실측이다.
+
+                ⚠️ 평균이 아니라 **중앙값**을 쓴다. 대박 영상 한 편이 채널 전체를
+                   실제보다 좋아 보이게 만들면, 그걸 기준으로 잡은 예상 도달이 전부 부풀려진다.
+                ⚠️ 구독자 대비 배수가 이 화면에서 제일 중요한 값이다. 조회수만 보면
+                   큰 채널이 항상 이기지만, 채널 규모를 지우면 순서가 뒤집힌다
+                   (실측: 구독자 2천 채널 1.539× vs 620만 채널 0.016×).
+              */}
+              {view.channel.is_real && view.channel.recent_median_vsr !== undefined && (
+                <div className="mt-5 flex flex-wrap gap-x-8 gap-y-3 border-y border-hair/70 py-4">
+                  <div>
+                    <div className="font-mono text-[10px] tracking-wide text-ink3">구독자</div>
+                    <div className="mt-0.5 font-mono text-lg text-ink">
+                      {view.channel.subscriber_count.toLocaleString()}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="font-mono text-[10px] tracking-wide text-ink3">
+                      최근 영상 조회수 중앙값
+                    </div>
+                    <div className="mt-0.5 font-mono text-lg text-ink">
+                      {(view.channel.recent_median_views ?? 0).toLocaleString()}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="font-mono text-[10px] tracking-wide text-ink3">
+                      구독자 대비
+                    </div>
+                    <div className="mt-0.5 font-mono text-lg font-bold text-signal">
+                      {view.channel.recent_median_vsr}×
+                    </div>
+                  </div>
+                  <div>
+                    <div className="font-mono text-[10px] tracking-wide text-ink3">표본</div>
+                    <div className="mt-0.5 font-mono text-lg text-ink">
+                      {view.channel.recent_sample}편
+                      {view.channel.total_video_count ? (
+                        <span className="text-sm text-ink3"> / {view.channel.total_video_count}</span>
+                      ) : null}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/*
+                실채널은 위 지표가 실측이지만 소재 태그는 아직 시연 데이터다
                 (영상→장소→태그 연결이 5단계). 한 화면에 둘이 섞이므로 어느 쪽이
                 어느 쪽인지 밝힌다. 밝히지 않으면 화면 전체가 거짓말이 된다.
               */}
               {view.channel.is_real && (
-                <p className="mt-1.5 font-mono text-[11px] text-open">
-                  구독자 · 분석 편수
-                  {view.channel.recent_median_vsr !== undefined && (
-                    <> · 최근 성과 {view.channel.recent_median_vsr}×</>
-                  )}
-                  는 YouTube 실측
+                <p className="mt-2 font-mono text-[11px] text-open">
+                  위 수치는 YouTube 실측 (조회수는 중앙값)
                   {view.tagsAreDemo && <> · 아래 소재는 시연 데이터</>}
                 </p>
               )}
