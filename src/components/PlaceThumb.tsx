@@ -1,4 +1,15 @@
-import type { Place } from "@/lib/types";
+/**
+ * 썸네일이 실제로 쓰는 것만 요구한다.
+ *
+ * 원래 `Place` 전체를 받았는데, 목록 화면(`catalog.ts`)의 장소는 모양이 다르다.
+ * 구조만 맞으면 되도록 좁혀 두면 두 곳에서 같은 컴포넌트를 쓸 수 있다.
+ */
+export interface ThumbPlace {
+  name_ko: string;
+  lat: number;
+  lng: number;
+  image_url: string | null;
+}
 
 /**
  * 장소 썸네일.
@@ -15,9 +26,18 @@ import type { Place } from "@/lib/types";
 const COLS = 11;
 const ROWS = 8;
 
-/** 좌표를 정수 씨앗으로 접는다. 같은 장소는 언제 그려도 같은 그림이 된다. */
-function seedOf(place: Place): number {
-  const n = Math.round(place.lat * 10_000) * 31 + Math.round(place.lng * 10_000);
+/**
+ * 좌표 + 이름을 정수 씨앗으로 접는다. 같은 장소는 언제 그려도 같은 그림이 된다.
+ *
+ * ⚠️ **이름을 반드시 섞는다.** 좌표만 쓰면 같은 자리의 장소들이 똑같이 생긴다.
+ *    폐교는 좌표가 읍면 중심 추정값이라 한 읍면의 분교 여러 곳이 좌표를 공유한다 —
+ *    목록에 같은 그림이 줄줄이 뜨는 걸 실제로 보고 고쳤다.
+ */
+function seedOf(place: ThumbPlace): number {
+  let n = Math.round(place.lat * 10_000) * 31 + Math.round(place.lng * 10_000);
+  for (let i = 0; i < place.name_ko.length; i++) {
+    n = (n * 33 + place.name_ko.charCodeAt(i)) % 2_147_483_647;
+  }
   return Math.abs(n) % 2_147_483_647 || 1;
 }
 
@@ -36,7 +56,7 @@ export function PlaceThumb({
   open = false,
   className = "",
 }: {
-  place: Place;
+  place: ThumbPlace;
   open?: boolean;
   className?: string;
 }) {
