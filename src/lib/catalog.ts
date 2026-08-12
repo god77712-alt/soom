@@ -31,6 +31,27 @@ export interface CatalogPlace {
   low_reliability: boolean;
   /** 좌표가 읍면·시군구 중심 추정값이다. 실제 위치와 km 단위로 다를 수 있다 */
   coord_estimated: boolean;
+  /**
+   * 이 장소를 언급한 **수집 영상** 수 (언어별).
+   *
+   * ⚠️ 0 은 "세상에 영상이 없다"가 아니라 **"우리 코퍼스에서 안 잡혔다"** 다.
+   *    화면은 반드시 모수를 함께 말해야 한다.
+   */
+  videos_ko: number;
+  videos_en: number;
+  /** 그중 조회수 상위 3편. 카드 펼침의 근거 */
+  videos: CatalogVideo[];
+}
+
+export interface CatalogVideo {
+  video_id: string;
+  title: string;
+  channel_title: string;
+  view_count: number;
+  subscriber_count: number;
+  duration_sec: number;
+  language: string;
+  chapters: Array<{ at: number; label: string }>;
 }
 
 export interface Subject {

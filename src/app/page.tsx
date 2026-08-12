@@ -15,6 +15,7 @@ import { ChannelStats } from "@/components/ChannelStats";
 import { EvidenceVideoCard } from "@/components/EvidenceVideoCard";
 import { MapHero } from "@/components/MapHero";
 import { PlaceRecommendCard } from "@/components/PlaceRecommendCard";
+import { realCards, subjectForTagName } from "@/lib/realcards";
 import { Reveal } from "@/components/Reveal";
 import { ShareButton } from "@/components/ShareButton";
 import { TagChip } from "@/components/TagChip";
@@ -77,15 +78,27 @@ export default async function Home({
   const tagId = tagParam ?? view?.profile.tag_ids[0];
   const evidence = channel && tagId ? await getTagEvidence(channel.id, tagId) : null;
   const occupied = evidence?.occupied ?? [];
-  const cards =
-    channel && tagId
-      ? await recommendPlaces(
-          channel.id,
-          tagId,
-          5,
-          occupied.map((o) => o.place.id),
-        )
-      : [];
+  /**
+   * 추천 카드 — **실데이터가 있으면 그걸 먼저 쓴다.**
+   *
+   * 12개 주력 소재는 실장소·실영상·실장날로 카드를 만든다 (`realcards.ts`).
+   * 나머지 소재는 아직 시연 데이터다. 한 화면에 둘이 섞이지 않게
+   * **소재 단위로 통째로** 갈린다 — 카드마다 진짜/가짜가 섞이면 구분이 불가능해진다.
+   */
+  const realSubject = evidence ? subjectForTagName(evidence.tag.name_ko) : null;
+  const cardsAreReal = Boolean(realSubject);
+  const cards = !channel
+    ? []
+    : realSubject
+      ? realCards(realSubject, channel.language, channel.sub_band, 5)
+      : tagId
+        ? await recommendPlaces(
+            channel.id,
+            tagId,
+            5,
+            occupied.map((o) => o.place.id),
+          )
+        : [];
   const expansion = tagId ? await getExpansionTags(tagId) : { siblings: [], explore: [] };
 
   /** 소재를 바꿀 때 유지해야 하는 주소 앞부분 */
@@ -377,8 +390,17 @@ export default async function Home({
           <Reveal delay={180}>
             <div className="mt-12 flex items-baseline justify-between">
               <h2 className="text-xl font-bold tracking-tight">{S.s3RecommendTitle}</h2>
-              <span className="font-mono text-[11px] text-ink3">
-                {S.s3RecommendHelp(cards.length)}
+              {/*
+                ⚠️ 실데이터 카드와 시연 카드를 구분해서 말한다.
+                   12개 주력 소재만 실데이터고 나머지는 아직 시연이다.
+                   밝히지 않으면 크리에이터가 시연값을 근거로 움직인다.
+              */}
+              <span
+                className={`font-mono text-[11px] ${cardsAreReal ? "text-open" : "text-ink3"}`}
+              >
+                {cardsAreReal
+                  ? `공공데이터 ${realSubject!.total.toLocaleString()}곳에서 · 실데이터`
+                  : `${S.s3RecommendHelp(cards.length)} · 시연 데이터`}
               </span>
             </div>
           </Reveal>

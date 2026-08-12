@@ -9,6 +9,7 @@ import { VideoBreakdownCard } from "@/components/VideoBreakdownCard";
 import { reliabilityNote, toneClass } from "@/lib/display";
 import { getStrings } from "@/lib/i18n";
 import type { PlaceCard } from "@/lib/repo";
+import type { RealCard } from "@/lib/realcards";
 import type { Tag } from "@/lib/types";
 
 const S = getStrings("ko");
@@ -30,7 +31,12 @@ export function PlaceRecommendCard({
   channelId,
   rank,
 }: {
-  card: PlaceCard;
+  /**
+   * 시연 카드와 실데이터 카드를 **둘 다** 받는다.
+   * 실데이터 카드(RealCard)에는 지어낸 컷·촬영순서가 없어서 그 블록이 안 그려진다.
+   * 컴포넌트는 있는 것만 그리므로 분기가 필요 없다.
+   */
+  card: PlaceCard | RealCard;
   tag: Tag;
   channelId: string;
   rank: number;

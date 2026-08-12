@@ -199,7 +199,14 @@ function main(): void {
           subscriber_count: v.subs ?? 0,
           duration_sec: v.duration_sec,
           language: v.language,
-          chapters: JSON.parse(v.chapters || "[]"),
+          /**
+           * ⚠️ 키 이름을 여기서 맞춘다. 수집기(`parseChapters`)는 `title` 로 저장하는데
+           *    화면(`VideoBreakdown`·`shorts.ts`)은 `label` 을 본다. 안 바꾸면
+           *    챕터가 전부 `undefined` 로 그려진다 — 타입 오류로 잡힌 실수다.
+           */
+          chapters: (JSON.parse(v.chapters || "[]") as { at: number; title: string }[]).map(
+            (c) => ({ at: c.at, label: c.title }),
+          ),
         })),
       })),
     };
