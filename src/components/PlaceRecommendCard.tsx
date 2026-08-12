@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { PlaceThumb } from "@/components/PlaceThumb";
+import { ShootPlanBlock } from "@/components/ShootPlanBlock";
 import { TagScoreList } from "@/components/TagScoreList";
 import { VideoBreakdownCard } from "@/components/VideoBreakdownCard";
 import { reliabilityNote, toneClass } from "@/lib/display";
@@ -119,6 +120,13 @@ export function PlaceRecommendCard({
         <div className="grid gap-6 pb-6 sm:grid-cols-[10rem_1fr] sm:gap-5">
           <div className="hidden sm:block" />
           <div className="min-w-0 space-y-6">
+            {/*
+              촬영 계획을 펼침 맨 위에 둔다. 잘 된 영상 구성보다 앞이다 —
+              오일장은 날짜를 안 맞추면 그냥 빈 공터라, 아무리 좋은 구성을 봐도
+              헛걸음하면 두 번 다시 이 서비스를 안 쓴다.
+            */}
+            {card.shootPlan && <ShootPlanBlock plan={card.shootPlan} />}
+
             {card.breakdowns.length > 0 && (
               <section>
                 <h3 className="font-mono text-[11px] tracking-wider text-ink3 uppercase">

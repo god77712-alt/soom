@@ -1,0 +1,6034 @@
+[
+  {
+    "key": "운천|포천시",
+    "name": "운천전통시장",
+    "sido": "경기도",
+    "sigungu": "포천시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 38.0899666,
+    "lng": 127.2722253,
+    "is_declining": false,
+    "shop_count": 48
+  },
+  {
+    "key": "통복|평택시",
+    "name": "통복시장",
+    "sido": "경기도",
+    "sigungu": "평택시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.99782533,
+    "lng": 127.0850763,
+    "is_declining": false,
+    "shop_count": 594
+  },
+  {
+    "key": "송탄|평택시",
+    "name": "송탄시장",
+    "sido": "경기도",
+    "sigungu": "평택시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 37.08146214,
+    "lng": 127.0567273,
+    "is_declining": false,
+    "shop_count": 142
+  },
+  {
+    "key": "안중|평택시",
+    "name": "안중시장",
+    "sido": "경기도",
+    "sigungu": "평택시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.98766055,
+    "lng": 126.9276616,
+    "is_declining": false,
+    "shop_count": 115
+  },
+  {
+    "key": "서정리|평택시",
+    "name": "서정리시장",
+    "sido": "경기도",
+    "sigungu": "평택시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.05742213,
+    "lng": 127.0555064,
+    "is_declining": false,
+    "shop_count": 100
+  },
+  {
+    "key": "봉일천|파주시",
+    "name": "봉일천시장",
+    "sido": "경기도",
+    "sigungu": "파주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.74353235,
+    "lng": 126.8078457,
+    "is_declining": false,
+    "shop_count": 139
+  },
+  {
+    "key": "장호원|이천시",
+    "name": "장호원전통시장",
+    "sido": "경기도",
+    "sigungu": "이천시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 37.11809055,
+    "lng": 127.631251,
+    "is_declining": false,
+    "shop_count": 64
+  },
+  {
+    "key": "관고|이천시",
+    "name": "관고전통시장",
+    "sido": "경기도",
+    "sigungu": "이천시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.2808079,
+    "lng": 127.4403637,
+    "is_declining": false,
+    "shop_count": 99
+  },
+  {
+    "key": "오색|오산시",
+    "name": "오색시장",
+    "sido": "경기도",
+    "sigungu": "오산시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.15133204,
+    "lng": 127.0709405,
+    "is_declining": false,
+    "shop_count": 319
+  },
+  {
+    "key": "여주한글|여주시",
+    "name": "여주한글시장(여주중앙로상점가)",
+    "sido": "경기도",
+    "sigungu": "여주시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.29755162,
+    "lng": 127.6342927,
+    "is_declining": false,
+    "shop_count": 180
+  },
+  {
+    "key": "용문천년|양평군",
+    "name": "용문천년시장",
+    "sido": "경기도",
+    "sigungu": "양평군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.48396864,
+    "lng": 127.5947554,
+    "is_declining": false,
+    "shop_count": 153
+  },
+  {
+    "key": "양수리|양평군",
+    "name": "양수리전통시장(양평양수리시장)",
+    "sido": "경기도",
+    "sigungu": "양평군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 37.54506648,
+    "lng": 127.3197944,
+    "is_declining": false,
+    "shop_count": 203
+  },
+  {
+    "key": "왜관|칠곡군",
+    "name": "왜관시장",
+    "sido": "경상북도",
+    "sigungu": "칠곡군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.9951519,
+    "lng": 128.39825,
+    "is_declining": false,
+    "shop_count": 134
+  },
+  {
+    "key": "죽산|안성시",
+    "name": "죽산시장",
+    "sido": "경기도",
+    "sigungu": "안성시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.07598943,
+    "lng": 127.4233876,
+    "is_declining": false,
+    "shop_count": 103
+  },
+  {
+    "key": "중앙|안성시",
+    "name": "중앙시장",
+    "sido": "경기도",
+    "sigungu": "안성시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.00656227,
+    "lng": 127.2687966,
+    "is_declining": false,
+    "shop_count": 67
+  },
+  {
+    "key": "황금|김천시",
+    "name": "황금시장",
+    "sido": "경상북도",
+    "sigungu": "김천시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.11666261,
+    "lng": 128.1252827,
+    "is_declining": false,
+    "shop_count": 175
+  },
+  {
+    "key": "연풍|괴산군",
+    "name": "연풍전통시장",
+    "sido": "충청북도",
+    "sigungu": "괴산군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.76472468,
+    "lng": 127.9951005,
+    "is_declining": true,
+    "shop_count": 53
+  },
+  {
+    "key": "목도재래|괴산군",
+    "name": "목도재래시장",
+    "sido": "충청북도",
+    "sigungu": "괴산군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.87204755,
+    "lng": 127.8530473,
+    "is_declining": true,
+    "shop_count": 75
+  },
+  {
+    "key": "홍성|홍성군",
+    "name": "홍성전통시장",
+    "sido": "충청남도",
+    "sigungu": "홍성군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.60214738,
+    "lng": 126.6680243,
+    "is_declining": false,
+    "shop_count": 220
+  },
+  {
+    "key": "광천문화|홍성군",
+    "name": "광천문화시장",
+    "sido": "충청남도",
+    "sigungu": "홍성군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.50232616,
+    "lng": 126.6250081,
+    "is_declining": false,
+    "shop_count": 148
+  },
+  {
+    "key": "광천|홍성군",
+    "name": "광천전통시장",
+    "sido": "충청남도",
+    "sigungu": "홍성군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.4998307,
+    "lng": 126.6252434,
+    "is_declining": false,
+    "shop_count": 179
+  },
+  {
+    "key": "갈산|홍성군",
+    "name": "갈산전통시장",
+    "sido": "충청남도",
+    "sigungu": "홍성군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.6036997,
+    "lng": 126.5505509,
+    "is_declining": false,
+    "shop_count": 40
+  },
+  {
+    "key": "태안동부|서산시",
+    "name": "태안동부시장(태안특산물전통시장)",
+    "sido": "충청남도",
+    "sigungu": "서산시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.78114144,
+    "lng": 126.4582001,
+    "is_declining": false,
+    "shop_count": 99
+  },
+  {
+    "key": "정산|청양군",
+    "name": "정산시장",
+    "sido": "충청남도",
+    "sigungu": "청양군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.41059786,
+    "lng": 126.9480121,
+    "is_declining": true,
+    "shop_count": 104
+  },
+  {
+    "key": "청양|청양군",
+    "name": "청양전통시장",
+    "sido": "충청남도",
+    "sigungu": "청양군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.45048364,
+    "lng": 126.8018476,
+    "is_declining": true,
+    "shop_count": 149
+  },
+  {
+    "key": "북부|익산시",
+    "name": "북부시장",
+    "sido": "전북특별자치도",
+    "sigungu": "익산시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.94821919,
+    "lng": 126.9565852,
+    "is_declining": false,
+    "shop_count": 179
+  },
+  {
+    "key": "봉동|완주군",
+    "name": "봉동시장",
+    "sido": "전북특별자치도",
+    "sigungu": "완주군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.93871982,
+    "lng": 127.1670778,
+    "is_declining": false,
+    "shop_count": 25
+  },
+  {
+    "key": "병천|천안시",
+    "name": "병천시장",
+    "sido": "충청남도",
+    "sigungu": "천안시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.76242111,
+    "lng": 127.2981701,
+    "is_declining": false,
+    "shop_count": 115
+  },
+  {
+    "key": "삽교|예산군",
+    "name": "삽교시장",
+    "sido": "충청남도",
+    "sigungu": "예산군",
+    "days": [
+      2,
+      5
+    ],
+    "cycle_label": "2일+5일",
+    "lat": 36.68742244,
+    "lng": 126.7410344,
+    "is_declining": true,
+    "shop_count": 12
+  },
+  {
+    "key": "예산|예산군",
+    "name": "예산시장",
+    "sido": "충청남도",
+    "sigungu": "예산군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.67723471,
+    "lng": 126.8494508,
+    "is_declining": true,
+    "shop_count": null
+  },
+  {
+    "key": "예산|예산군",
+    "name": "예산상설시장",
+    "sido": "충청남도",
+    "sigungu": "예산군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.67723471,
+    "lng": 126.8494508,
+    "is_declining": true,
+    "shop_count": 100
+  },
+  {
+    "key": "역전|예산군",
+    "name": "역전시장",
+    "sido": "충청남도",
+    "sigungu": "예산군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.68704166,
+    "lng": 126.829854,
+    "is_declining": true,
+    "shop_count": 40
+  },
+  {
+    "key": "덕산|예산군",
+    "name": "덕산시장",
+    "sido": "충청남도",
+    "sigungu": "예산군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.70498477,
+    "lng": 126.6681533,
+    "is_declining": true,
+    "shop_count": 53
+  },
+  {
+    "key": "광시|예산군",
+    "name": "광시시장",
+    "sido": "충청남도",
+    "sigungu": "예산군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.54911162,
+    "lng": 126.7744446,
+    "is_declining": true,
+    "shop_count": 9
+  },
+  {
+    "key": "안산시시민|안산시",
+    "name": "안산시시민시장",
+    "sido": "경기도",
+    "sigungu": "안산시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.32536495,
+    "lng": 126.8050908,
+    "is_declining": false,
+    "shop_count": 410
+  },
+  {
+    "key": "안강|경주시",
+    "name": "안강공설시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.99030205,
+    "lng": 129.2217127,
+    "is_declining": false,
+    "shop_count": 235
+  },
+  {
+    "key": "도일|안산시",
+    "name": "도일시장",
+    "sido": "경기도",
+    "sigungu": "안산시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.33934833,
+    "lng": 126.7839859,
+    "is_declining": false,
+    "shop_count": 74
+  },
+  {
+    "key": "모란종합|성남시",
+    "name": "모란종합시장",
+    "sido": "경기도",
+    "sigungu": "성남시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 37.4303345,
+    "lng": 127.1288817,
+    "is_declining": false,
+    "shop_count": 61
+  },
+  {
+    "key": "용인중앙|용인시",
+    "name": "용인중앙시장",
+    "sido": "경기도",
+    "sigungu": "용인시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.23671682,
+    "lng": 127.2078548,
+    "is_declining": false,
+    "shop_count": 506
+  },
+  {
+    "key": "정선아리랑|정선군",
+    "name": "정선아리랑시장",
+    "sido": "강원특별자치도",
+    "sigungu": "정선군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.3803854,
+    "lng": 128.6652325,
+    "is_declining": true,
+    "shop_count": 163
+  },
+  {
+    "key": "제천역전한마음|제천시",
+    "name": "제천역전한마음시장",
+    "sido": "충청북도",
+    "sigungu": "제천시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.1289856,
+    "lng": 128.2064541,
+    "is_declining": true,
+    "shop_count": 58
+  },
+  {
+    "key": "음성|음성군",
+    "name": "음성시장",
+    "sido": "충청북도",
+    "sigungu": "음성군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.93816952,
+    "lng": 127.6921309,
+    "is_declining": false,
+    "shop_count": 160
+  },
+  {
+    "key": "단양구경|단양군",
+    "name": "단양구경시장(단양인정시장)",
+    "sido": "충청북도",
+    "sigungu": "단양군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.9824892,
+    "lng": 128.3699866,
+    "is_declining": true,
+    "shop_count": 118
+  },
+  {
+    "key": "박달재|제천시",
+    "name": "박달재전통시장",
+    "sido": "충청북도",
+    "sigungu": "제천시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 37.13820858,
+    "lng": 128.02257,
+    "is_declining": true,
+    "shop_count": 67
+  },
+  {
+    "key": "청천|괴산군",
+    "name": "청천전통시장",
+    "sido": "충청북도",
+    "sigungu": "괴산군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.65914155,
+    "lng": 127.7378523,
+    "is_declining": true,
+    "shop_count": 101
+  },
+  {
+    "key": "성환이화|천안시",
+    "name": "성환이화시장",
+    "sido": "충청남도",
+    "sigungu": "천안시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.91925493,
+    "lng": 127.1298906,
+    "is_declining": false,
+    "shop_count": 80
+  },
+  {
+    "key": "삼성|음성군",
+    "name": "삼성시장",
+    "sido": "충청북도",
+    "sigungu": "음성군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 37.01800836,
+    "lng": 127.4991966,
+    "is_declining": false,
+    "shop_count": 59
+  },
+  {
+    "key": "대소|음성군",
+    "name": "대소시장",
+    "sido": "충청북도",
+    "sigungu": "음성군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.96654372,
+    "lng": 127.4850145,
+    "is_declining": false,
+    "shop_count": 82
+  },
+  {
+    "key": "무극|음성군",
+    "name": "무극시장",
+    "sido": "충청북도",
+    "sigungu": "음성군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.99267414,
+    "lng": 127.5960077,
+    "is_declining": false,
+    "shop_count": 107
+  },
+  {
+    "key": "감곡|음성군",
+    "name": "감곡시장",
+    "sido": "충청북도",
+    "sigungu": "음성군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.11822831,
+    "lng": 127.6391733,
+    "is_declining": false,
+    "shop_count": 42
+  },
+  {
+    "key": "영동|영동군",
+    "name": "영동전통시장",
+    "sido": "충청북도",
+    "sigungu": "영동군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.17521123,
+    "lng": 127.7756379,
+    "is_declining": true,
+    "shop_count": 200
+  },
+  {
+    "key": "영동중앙|영동군",
+    "name": "영동중앙시장",
+    "sido": "충청북도",
+    "sigungu": "영동군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.17467013,
+    "lng": 127.7756992,
+    "is_declining": true,
+    "shop_count": 90
+  },
+  {
+    "key": "회인재래|보은군",
+    "name": "회인재래시장",
+    "sido": "충청북도",
+    "sigungu": "보은군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.49052262,
+    "lng": 127.5978628,
+    "is_declining": true,
+    "shop_count": 48
+  },
+  {
+    "key": "삼승원남|보은군",
+    "name": "삼승원남시장(원남재래시장)",
+    "sido": "충청북도",
+    "sigungu": "보은군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.39692314,
+    "lng": 127.7331366,
+    "is_declining": true,
+    "shop_count": 70
+  },
+  {
+    "key": "보은|보은군",
+    "name": "보은전통시장",
+    "sido": "충청북도",
+    "sigungu": "보은군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.48430017,
+    "lng": 127.7201103,
+    "is_declining": true,
+    "shop_count": 47
+  },
+  {
+    "key": "결초보은|보은군",
+    "name": "결초보은시장(구 보은종합시장)",
+    "sido": "충청북도",
+    "sigungu": "보은군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.48291338,
+    "lng": 127.7193275,
+    "is_declining": true,
+    "shop_count": 115
+  },
+  {
+    "key": "마로관기|보은군",
+    "name": "마로관기시장(관기재래시장)",
+    "sido": "충청북도",
+    "sigungu": "보은군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.43524115,
+    "lng": 127.8175958,
+    "is_declining": true,
+    "shop_count": 48
+  },
+  {
+    "key": "매포|단양군",
+    "name": "매포전통시장(매포재래시장)",
+    "sido": "충청북도",
+    "sigungu": "단양군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 37.03422177,
+    "lng": 128.2990703,
+    "is_declining": true,
+    "shop_count": 54
+  },
+  {
+    "key": "당진|당진시",
+    "name": "당진전통시장",
+    "sido": "충청남도",
+    "sigungu": "당진시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.88993159,
+    "lng": 126.6296051,
+    "is_declining": false,
+    "shop_count": 200
+  },
+  {
+    "key": "괴산|괴산군",
+    "name": "괴산전통시장",
+    "sido": "충청북도",
+    "sigungu": "괴산군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.81122141,
+    "lng": 127.795017,
+    "is_declining": true,
+    "shop_count": 146
+  },
+  {
+    "key": "무주|무주군",
+    "name": "무주시장(반딧불장터)",
+    "sido": "전북특별자치도",
+    "sigungu": "무주군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.00464857,
+    "lng": 127.6535343,
+    "is_declining": true,
+    "shop_count": 50
+  },
+  {
+    "key": "여수서시장주변|여수시",
+    "name": "여수서시장주변시장",
+    "sido": "전라남도",
+    "sigungu": "여수시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.74075239,
+    "lng": 127.7283238,
+    "is_declining": false,
+    "shop_count": 245
+  },
+  {
+    "key": "동두천큰|동두천시",
+    "name": "동두천큰시장",
+    "sido": "경기도",
+    "sigungu": "동두천시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.90048898,
+    "lng": 127.0520744,
+    "is_declining": false,
+    "shop_count": 104
+  },
+  {
+    "key": "남양주장현|남양주시",
+    "name": "남양주장현 전통시장",
+    "sido": "경기도",
+    "sigungu": "남양주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.71761125,
+    "lng": 127.1808928,
+    "is_declining": false,
+    "shop_count": 164
+  },
+  {
+    "key": "단촌정기|의성군",
+    "name": "단촌정기시장",
+    "sido": "경상북도",
+    "sigungu": "의성군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.42254768,
+    "lng": 128.6739013,
+    "is_declining": true,
+    "shop_count": 46
+  },
+  {
+    "key": "능곡|고양시",
+    "name": "능곡시장",
+    "sido": "경기도",
+    "sigungu": "고양시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.62134419,
+    "lng": 126.8207793,
+    "is_declining": false,
+    "shop_count": 43
+  },
+  {
+    "key": "청평여울|가평군",
+    "name": "청평여울시장",
+    "sido": "경기도",
+    "sigungu": "가평군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.73472058,
+    "lng": 127.4158569,
+    "is_declining": true,
+    "shop_count": 77
+  },
+  {
+    "key": "설악눈메골|가평군",
+    "name": "설악눈메골시장",
+    "sido": "경기도",
+    "sigungu": "가평군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 37.67738641,
+    "lng": 127.492189,
+    "is_declining": true,
+    "shop_count": 94
+  },
+  {
+    "key": "횡성|횡성군",
+    "name": "횡성시장",
+    "sido": "강원특별자치도",
+    "sigungu": "횡성군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 37.48980622,
+    "lng": 127.9868107,
+    "is_declining": true,
+    "shop_count": 135
+  },
+  {
+    "key": "화천|화천군",
+    "name": "화천시장",
+    "sido": "강원특별자치도",
+    "sigungu": "화천군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 38.10390585,
+    "lng": 127.7064275,
+    "is_declining": true,
+    "shop_count": 99
+  },
+  {
+    "key": "평창올림픽|평창군",
+    "name": "평창올림픽시장(평창전통시장)",
+    "sido": "강원특별자치도",
+    "sigungu": "평창군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.3672356,
+    "lng": 128.3947764,
+    "is_declining": true,
+    "shop_count": 54
+  },
+  {
+    "key": "진부|평창군",
+    "name": "진부전통시장",
+    "sido": "강원특별자치도",
+    "sigungu": "평창군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.63821324,
+    "lng": 128.5579223,
+    "is_declining": true,
+    "shop_count": 109
+  },
+  {
+    "key": "평창대화|평창군",
+    "name": "평창대화시장",
+    "sido": "강원특별자치도",
+    "sigungu": "평창군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 37.50118639,
+    "lng": 128.4546766,
+    "is_declining": true,
+    "shop_count": 49
+  },
+  {
+    "key": "연원|충주시",
+    "name": "연원시장",
+    "sido": "충청북도",
+    "sigungu": "충주시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.98929115,
+    "lng": 127.9348022,
+    "is_declining": false,
+    "shop_count": 68
+  },
+  {
+    "key": "엄정내창|충주시",
+    "name": "엄정내창시장",
+    "sido": "충청북도",
+    "sigungu": "충주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.08614422,
+    "lng": 127.9163422,
+    "is_declining": false,
+    "shop_count": 102
+  },
+  {
+    "key": "목행|충주시",
+    "name": "목행시장",
+    "sido": "충청북도",
+    "sigungu": "충주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.01395405,
+    "lng": 127.9173286,
+    "is_declining": false,
+    "shop_count": 85
+  },
+  {
+    "key": "오창|청주시",
+    "name": "오창전통시장",
+    "sido": "충청북도",
+    "sigungu": "청주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.74173743,
+    "lng": 127.455627,
+    "is_declining": false,
+    "shop_count": 89
+  },
+  {
+    "key": "내수|청주시",
+    "name": "내수전통시장",
+    "sido": "충청북도",
+    "sigungu": "청주시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.72629088,
+    "lng": 127.536012,
+    "is_declining": false,
+    "shop_count": 52
+  },
+  {
+    "key": "진천중앙|진천군",
+    "name": "진천중앙시장",
+    "sido": "충청북도",
+    "sigungu": "진천군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.85685858,
+    "lng": 127.4423712,
+    "is_declining": false,
+    "shop_count": 53
+  },
+  {
+    "key": "운수대통생거진천|진천군",
+    "name": "운수대통 생거진천전통시장",
+    "sido": "충청북도",
+    "sigungu": "진천군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.85993722,
+    "lng": 127.4501613,
+    "is_declining": false,
+    "shop_count": 74
+  },
+  {
+    "key": "육거리종합|청주시",
+    "name": "육거리종합시장",
+    "sido": "충청북도",
+    "sigungu": "청주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.62794095,
+    "lng": 127.4881836,
+    "is_declining": false,
+    "shop_count": 385
+  },
+  {
+    "key": "증평장뜰|증평군",
+    "name": "증평장뜰시장",
+    "sido": "충청북도",
+    "sigungu": "증평군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.78338958,
+    "lng": 127.5829564,
+    "is_declining": false,
+    "shop_count": 89
+  },
+  {
+    "key": "충주자유|충주시",
+    "name": "충주자유시장",
+    "sido": "충청북도",
+    "sigungu": "충주시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.97393363,
+    "lng": 127.9306725,
+    "is_declining": false,
+    "shop_count": 405
+  },
+  {
+    "key": "칠곡|북구",
+    "name": "칠곡시장",
+    "sido": "대구광역시",
+    "sigungu": "북구",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.94250975,
+    "lng": 128.5512474,
+    "is_declining": false,
+    "shop_count": 58
+  },
+  {
+    "key": "강화풍물|강화군",
+    "name": "강화풍물시장",
+    "sido": "인천광역시",
+    "sigungu": "강화군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.74141775,
+    "lng": 126.4928651,
+    "is_declining": true,
+    "shop_count": 178
+  },
+  {
+    "key": "태화종합|중구",
+    "name": "태화종합시장",
+    "sido": "울산광역시",
+    "sigungu": "중구",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.55419984,
+    "lng": 129.307414,
+    "is_declining": false,
+    "shop_count": 159
+  },
+  {
+    "key": "우정|중구",
+    "name": "우정전통시장",
+    "sido": "울산광역시",
+    "sigungu": "중구",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.55396087,
+    "lng": 129.3107259,
+    "is_declining": false,
+    "shop_count": 101
+  },
+  {
+    "key": "창평|담양군",
+    "name": "창평전통시장",
+    "sido": "전라남도",
+    "sigungu": "담양군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.23810491,
+    "lng": 127.0149083,
+    "is_declining": true,
+    "shop_count": 57
+  },
+  {
+    "key": "영산포풍물|나주시",
+    "name": "영산포풍물시장",
+    "sido": "전라남도",
+    "sigungu": "나주시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.99199963,
+    "lng": 126.7072636,
+    "is_declining": false,
+    "shop_count": 204
+  },
+  {
+    "key": "나주목사고을|나주시",
+    "name": "나주목사고을시장",
+    "sido": "전라남도",
+    "sigungu": "나주시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.03624663,
+    "lng": 126.7237639,
+    "is_declining": false,
+    "shop_count": 125
+  },
+  {
+    "key": "다시5일|나주시",
+    "name": "다시5일시장",
+    "sido": "전라남도",
+    "sigungu": "나주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.01574218,
+    "lng": 126.635656,
+    "is_declining": false,
+    "shop_count": 40
+  },
+  {
+    "key": "공산5일|나주시",
+    "name": "공산5일시장",
+    "sido": "전라남도",
+    "sigungu": "나주시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 34.94263855,
+    "lng": 126.6091667,
+    "is_declining": false,
+    "shop_count": 15
+  },
+  {
+    "key": "구례5일|구례군",
+    "name": "구례5일시장",
+    "sido": "전라남도",
+    "sigungu": "구례군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.21015279,
+    "lng": 127.4700811,
+    "is_declining": true,
+    "shop_count": 168
+  },
+  {
+    "key": "옥곡5일|광양시",
+    "name": "옥곡5일시장",
+    "sido": "전라남도",
+    "sigungu": "광양시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.98850818,
+    "lng": 127.7002388,
+    "is_declining": false,
+    "shop_count": 57
+  },
+  {
+    "key": "옥과5일|곡성군",
+    "name": "옥과5일시장",
+    "sido": "전라남도",
+    "sigungu": "곡성군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.2759017,
+    "lng": 127.1379523,
+    "is_declining": true,
+    "shop_count": 44
+  },
+  {
+    "key": "석곡|곡성군",
+    "name": "석곡전통시장",
+    "sido": "전라남도",
+    "sigungu": "곡성군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.1329487,
+    "lng": 127.2540916,
+    "is_declining": true,
+    "shop_count": 46
+  },
+  {
+    "key": "곡성기차마을|곡성군",
+    "name": "곡성기차마을전통시장",
+    "sido": "전라남도",
+    "sigungu": "곡성군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.27976851,
+    "lng": 127.2984376,
+    "is_declining": true,
+    "shop_count": 123
+  },
+  {
+    "key": "동강|고흥군",
+    "name": "동강전통시장",
+    "sido": "전라남도",
+    "sigungu": "고흥군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 34.78037382,
+    "lng": 127.3349881,
+    "is_declining": true,
+    "shop_count": 27
+  },
+  {
+    "key": "도화|고흥군",
+    "name": "도화전통시장",
+    "sido": "전라남도",
+    "sigungu": "고흥군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.50979056,
+    "lng": 127.3218794,
+    "is_declining": true,
+    "shop_count": 20
+  },
+  {
+    "key": "녹동|고흥군",
+    "name": "녹동전통시장",
+    "sido": "전라남도",
+    "sigungu": "고흥군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 34.52787689,
+    "lng": 127.13833,
+    "is_declining": true,
+    "shop_count": 65
+  },
+  {
+    "key": "과역|고흥군",
+    "name": "과역전통시장",
+    "sido": "전라남도",
+    "sigungu": "고흥군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.67945419,
+    "lng": 127.3622537,
+    "is_declining": true,
+    "shop_count": 31
+  },
+  {
+    "key": "고흥|고흥군",
+    "name": "고흥전통시장",
+    "sido": "전라남도",
+    "sigungu": "고흥군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.60835226,
+    "lng": 127.2866005,
+    "is_declining": true,
+    "shop_count": 170
+  },
+  {
+    "key": "병영|강진군",
+    "name": "병영시장",
+    "sido": "전라남도",
+    "sigungu": "강진군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 34.71380066,
+    "lng": 126.8155558,
+    "is_declining": true,
+    "shop_count": 14
+  },
+  {
+    "key": "마량|강진군",
+    "name": "마량시장",
+    "sido": "전라남도",
+    "sigungu": "강진군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 34.45095924,
+    "lng": 126.8165817,
+    "is_declining": true,
+    "shop_count": 40
+  },
+  {
+    "key": "강진읍|강진군",
+    "name": "강진읍시장",
+    "sido": "전라남도",
+    "sigungu": "강진군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.64016086,
+    "lng": 126.7743152,
+    "is_declining": true,
+    "shop_count": 93
+  },
+  {
+    "key": "지도|신안군",
+    "name": "지도 전통시장",
+    "sido": "전라남도",
+    "sigungu": "신안군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.0588198,
+    "lng": 126.2069832,
+    "is_declining": true,
+    "shop_count": 64
+  },
+  {
+    "key": "괴목|순천시",
+    "name": "괴목시장",
+    "sido": "전라남도",
+    "sigungu": "순천시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.10243423,
+    "lng": 127.4282445,
+    "is_declining": false,
+    "shop_count": 48
+  },
+  {
+    "key": "순천시아랫장|순천시",
+    "name": "순천시아랫장(순천아랫장)",
+    "sido": "전라남도",
+    "sigungu": "순천시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 34.94514825,
+    "lng": 127.496084,
+    "is_declining": false,
+    "shop_count": 206
+  },
+  {
+    "key": "주암|순천시",
+    "name": "주암시장",
+    "sido": "전라남도",
+    "sigungu": "순천시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.07598752,
+    "lng": 127.2352637,
+    "is_declining": false,
+    "shop_count": 22
+  },
+  {
+    "key": "승주|순천시",
+    "name": "승주시장",
+    "sido": "전라남도",
+    "sigungu": "순천시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.01315903,
+    "lng": 127.387664,
+    "is_declining": false,
+    "shop_count": 18
+  },
+  {
+    "key": "웃장|순천시",
+    "name": "웃장",
+    "sido": "전라남도",
+    "sigungu": "순천시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.95864147,
+    "lng": 127.4850305,
+    "is_declining": false,
+    "shop_count": 68
+  },
+  {
+    "key": "조성5일|보성군",
+    "name": "조성5일시장",
+    "sido": "전라남도",
+    "sigungu": "보성군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.80647615,
+    "lng": 127.2452824,
+    "is_declining": true,
+    "shop_count": 22
+  },
+  {
+    "key": "복내5일|보성군",
+    "name": "복내5일시장",
+    "sido": "전라남도",
+    "sigungu": "보성군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.89370035,
+    "lng": 127.1331421,
+    "is_declining": true,
+    "shop_count": 25
+  },
+  {
+    "key": "녹차골보성향토|보성군",
+    "name": "녹차골보성향토시장(보성읍5일시장)",
+    "sido": "전라남도",
+    "sigungu": "보성군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 34.76564839,
+    "lng": 127.0772384,
+    "is_declining": true,
+    "shop_count": 99
+  },
+  {
+    "key": "벌교|보성군",
+    "name": "벌교전통시장",
+    "sido": "전라남도",
+    "sigungu": "보성군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.84493134,
+    "lng": 127.3450789,
+    "is_declining": true,
+    "shop_count": 49
+  },
+  {
+    "key": "일로|무안군",
+    "name": "일로전통시장",
+    "sido": "전라남도",
+    "sigungu": "무안군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 34.84753364,
+    "lng": 126.4943339,
+    "is_declining": false,
+    "shop_count": 56
+  },
+  {
+    "key": "정남진장흥토요|장흥군",
+    "name": "정남진장흥토요시장",
+    "sido": "전라남도",
+    "sigungu": "장흥군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 34.67727214,
+    "lng": 126.903159,
+    "is_declining": true,
+    "shop_count": 140
+  },
+  {
+    "key": "장평|장흥군",
+    "name": "장평시장",
+    "sido": "전라남도",
+    "sigungu": "장흥군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 34.77539717,
+    "lng": 126.9778669,
+    "is_declining": true,
+    "shop_count": 12
+  },
+  {
+    "key": "용산|장흥군",
+    "name": "용산시장",
+    "sido": "전라남도",
+    "sigungu": "장흥군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 34.61490641,
+    "lng": 126.9153133,
+    "is_declining": true,
+    "shop_count": 7
+  },
+  {
+    "key": "대덕읍|장흥군",
+    "name": "대덕읍전통시장(대덕시장)",
+    "sido": "전라남도",
+    "sigungu": "장흥군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.49944415,
+    "lng": 126.8871414,
+    "is_declining": true,
+    "shop_count": 27
+  },
+  {
+    "key": "천관산관광|장흥군",
+    "name": "천관산관광시장",
+    "sido": "전라남도",
+    "sigungu": "장흥군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 34.56277107,
+    "lng": 126.9370717,
+    "is_declining": true,
+    "shop_count": 39
+  },
+  {
+    "key": "황룡|장성군",
+    "name": "황룡시장",
+    "sido": "전라남도",
+    "sigungu": "장성군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.2916867,
+    "lng": 126.7738864,
+    "is_declining": true,
+    "shop_count": 119
+  },
+  {
+    "key": "사창|장성군",
+    "name": "사창시장",
+    "sido": "전라남도",
+    "sigungu": "장성군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.26039872,
+    "lng": 126.6630702,
+    "is_declining": true,
+    "shop_count": 36
+  },
+  {
+    "key": "사거리|장성군",
+    "name": "사거리시장",
+    "sido": "전라남도",
+    "sigungu": "장성군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.42767379,
+    "lng": 126.8072694,
+    "is_declining": true,
+    "shop_count": 30
+  },
+  {
+    "key": "완도남양|완도군",
+    "name": "완도남양시장(구 완도종합시장)",
+    "sido": "전라남도",
+    "sigungu": "완도군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.31651727,
+    "lng": 126.7477207,
+    "is_declining": true,
+    "shop_count": 27
+  },
+  {
+    "key": "남창옹기종기|울주군",
+    "name": "남창옹기종기시장",
+    "sido": "울산광역시",
+    "sigungu": "울주군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.41669194,
+    "lng": 129.2827796,
+    "is_declining": false,
+    "shop_count": 22
+  },
+  {
+    "key": "신북5일|영암군",
+    "name": "신북5일시장",
+    "sido": "전라남도",
+    "sigungu": "영암군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 34.88859606,
+    "lng": 126.6922282,
+    "is_declining": true,
+    "shop_count": 28
+  },
+  {
+    "key": "시종5일|영암군",
+    "name": "시종5일시장",
+    "sido": "전라남도",
+    "sigungu": "영암군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 34.8674024,
+    "lng": 126.6080951,
+    "is_declining": true,
+    "shop_count": 46
+  },
+  {
+    "key": "영광고추특화|영광군",
+    "name": "영광고추특화시장",
+    "sido": "전라남도",
+    "sigungu": "영광군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.27472202,
+    "lng": 126.4935505,
+    "is_declining": true,
+    "shop_count": 42
+  },
+  {
+    "key": "전의왕의물|세종특별자치시",
+    "name": "전의왕의물시장",
+    "sido": "세종특별자치시",
+    "sigungu": "세종특별자치시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.6777398,
+    "lng": 127.2058824,
+    "is_declining": false,
+    "shop_count": 78
+  },
+  {
+    "key": "와수|철원군",
+    "name": "와수시장",
+    "sido": "강원특별자치도",
+    "sigungu": "철원군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 38.23945913,
+    "lng": 127.4394932,
+    "is_declining": true,
+    "shop_count": 59
+  },
+  {
+    "key": "동송|철원군",
+    "name": "동송시장",
+    "sido": "강원특별자치도",
+    "sigungu": "철원군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 38.2088079,
+    "lng": 127.218867,
+    "is_declining": true,
+    "shop_count": 35
+  },
+  {
+    "key": "신철원|철원군",
+    "name": "신철원시장",
+    "sido": "강원특별자치도",
+    "sigungu": "철원군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 38.14471979,
+    "lng": 127.3100285,
+    "is_declining": true,
+    "shop_count": 70
+  },
+  {
+    "key": "임계사통팔달|정선군",
+    "name": "임계사통팔달시장",
+    "sido": "강원특별자치도",
+    "sigungu": "정선군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.49511059,
+    "lng": 128.852576,
+    "is_declining": true,
+    "shop_count": 63
+  },
+  {
+    "key": "광양5일|광양시",
+    "name": "광양5일시장",
+    "sido": "전라남도",
+    "sigungu": "광양시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 34.97115451,
+    "lng": 127.5904463,
+    "is_declining": false,
+    "shop_count": 97
+  },
+  {
+    "key": "원통|인제군",
+    "name": "원통시장",
+    "sido": "강원특별자치도",
+    "sigungu": "인제군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 38.1225741,
+    "lng": 128.204617,
+    "is_declining": false,
+    "shop_count": 56
+  },
+  {
+    "key": "기린|인제군",
+    "name": "기린전통시장",
+    "sido": "강원특별자치도",
+    "sigungu": "인제군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 37.95397964,
+    "lng": 128.3168509,
+    "is_declining": false,
+    "shop_count": 93
+  },
+  {
+    "key": "민속풍물|원주시",
+    "name": "민속풍물시장",
+    "sido": "강원특별자치도",
+    "sigungu": "원주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.34898786,
+    "lng": 127.9541184,
+    "is_declining": false,
+    "shop_count": 109
+  },
+  {
+    "key": "문막|원주시",
+    "name": "문막시장",
+    "sido": "강원특별자치도",
+    "sigungu": "원주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.30602942,
+    "lng": 127.8153678,
+    "is_declining": false,
+    "shop_count": 90
+  },
+  {
+    "key": "대야|군산시",
+    "name": "대야전통시장",
+    "sido": "전북특별자치도",
+    "sigungu": "군산시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.9448597,
+    "lng": 126.816085,
+    "is_declining": false,
+    "shop_count": 70
+  },
+  {
+    "key": "흥덕|고창군",
+    "name": "흥덕전통시장",
+    "sido": "전북특별자치도",
+    "sigungu": "고창군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.52058772,
+    "lng": 126.7002195,
+    "is_declining": true,
+    "shop_count": 10
+  },
+  {
+    "key": "해리|고창군",
+    "name": "해리전통시장",
+    "sido": "전북특별자치도",
+    "sigungu": "고창군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.45865884,
+    "lng": 126.5422037,
+    "is_declining": true,
+    "shop_count": 29
+  },
+  {
+    "key": "상하|고창군",
+    "name": "상하전통시장",
+    "sido": "전북특별자치도",
+    "sigungu": "고창군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.44409017,
+    "lng": 126.4917538,
+    "is_declining": true,
+    "shop_count": 22
+  },
+  {
+    "key": "무장|고창군",
+    "name": "무장전통시장",
+    "sido": "전북특별자치도",
+    "sigungu": "고창군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.41442783,
+    "lng": 126.5605985,
+    "is_declining": true,
+    "shop_count": 29
+  },
+  {
+    "key": "대산|고창군",
+    "name": "대산전통시장",
+    "sido": "전북특별자치도",
+    "sigungu": "고창군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.34010335,
+    "lng": 126.598984,
+    "is_declining": true,
+    "shop_count": 67
+  },
+  {
+    "key": "고창|고창군",
+    "name": "고창전통시장",
+    "sido": "전북특별자치도",
+    "sigungu": "고창군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.43267051,
+    "lng": 126.6987727,
+    "is_declining": true,
+    "shop_count": 74
+  },
+  {
+    "key": "화순고인돌|화순군",
+    "name": "화순고인돌전통시장",
+    "sido": "전라남도",
+    "sigungu": "화순군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.05909434,
+    "lng": 126.9833988,
+    "is_declining": true,
+    "shop_count": 100
+  },
+  {
+    "key": "이양|화순군",
+    "name": "이양전통시장",
+    "sido": "전라남도",
+    "sigungu": "화순군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.88259402,
+    "lng": 126.9868735,
+    "is_declining": true,
+    "shop_count": 11
+  },
+  {
+    "key": "사평|화순군",
+    "name": "사평전통시장",
+    "sido": "전라남도",
+    "sigungu": "화순군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.00537383,
+    "lng": 127.0975835,
+    "is_declining": true,
+    "shop_count": 52
+  },
+  {
+    "key": "동복|화순군",
+    "name": "동복전통시장",
+    "sido": "전라남도",
+    "sigungu": "화순군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.07163148,
+    "lng": 127.1257557,
+    "is_declining": true,
+    "shop_count": 20
+  },
+  {
+    "key": "능주|화순군",
+    "name": "능주전통시장",
+    "sido": "전라남도",
+    "sigungu": "화순군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.99091732,
+    "lng": 126.959364,
+    "is_declining": true,
+    "shop_count": 45
+  },
+  {
+    "key": "남리5일|해남군",
+    "name": "남리5일시장",
+    "sido": "전라남도",
+    "sigungu": "해남군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 34.57532321,
+    "lng": 126.4324845,
+    "is_declining": true,
+    "shop_count": 40
+  },
+  {
+    "key": "화원5일|해남군",
+    "name": "화원5일시장",
+    "sido": "전라남도",
+    "sigungu": "해남군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.66949685,
+    "lng": 126.3282268,
+    "is_declining": true,
+    "shop_count": 7
+  },
+  {
+    "key": "해남읍5일|해남군",
+    "name": "해남읍5일시장",
+    "sido": "전라남도",
+    "sigungu": "해남군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 34.56878428,
+    "lng": 126.5971547,
+    "is_declining": true,
+    "shop_count": 97
+  },
+  {
+    "key": "송지산정5일|해남군",
+    "name": "송지산정5일시장",
+    "sido": "전라남도",
+    "sigungu": "해남군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 34.36966913,
+    "lng": 126.5191941,
+    "is_declining": true,
+    "shop_count": 40
+  },
+  {
+    "key": "우수영5일|해남군",
+    "name": "우수영5일시장",
+    "sido": "전라남도",
+    "sigungu": "해남군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.5969017,
+    "lng": 126.311316,
+    "is_declining": true,
+    "shop_count": 18
+  },
+  {
+    "key": "북평면남창5일|해남군",
+    "name": "북평면남창5일시장",
+    "sido": "전라남도",
+    "sigungu": "해남군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 34.40453441,
+    "lng": 126.6267107,
+    "is_declining": true,
+    "shop_count": 16
+  },
+  {
+    "key": "좌일5일|해남군",
+    "name": "좌일5일시장",
+    "sido": "전라남도",
+    "sigungu": "해남군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 34.46385571,
+    "lng": 126.6725613,
+    "is_declining": true,
+    "shop_count": null
+  },
+  {
+    "key": "해보|함평군",
+    "name": "해보시장",
+    "sido": "전라남도",
+    "sigungu": "함평군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.18104709,
+    "lng": 126.6025443,
+    "is_declining": true,
+    "shop_count": 28
+  },
+  {
+    "key": "월야|함평군",
+    "name": "월야시장",
+    "sido": "전라남도",
+    "sigungu": "함평군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.17926742,
+    "lng": 126.626782,
+    "is_declining": true,
+    "shop_count": 22
+  },
+  {
+    "key": "진도읍조금|진도군",
+    "name": "진도읍조금시장",
+    "sido": "전라남도",
+    "sigungu": "진도군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 34.48155399,
+    "lng": 126.25734,
+    "is_declining": true,
+    "shop_count": 41
+  },
+  {
+    "key": "여산|익산시",
+    "name": "여산시장",
+    "sido": "전북특별자치도",
+    "sigungu": "익산시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.05890563,
+    "lng": 127.083244,
+    "is_declining": false,
+    "shop_count": 12
+  },
+  {
+    "key": "익산장|익산시",
+    "name": "익산장(익산북부장)",
+    "sido": "전북특별자치도",
+    "sigungu": "익산시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.9512294,
+    "lng": 126.9567719,
+    "is_declining": false,
+    "shop_count": 126
+  },
+  {
+    "key": "익산금마|익산시",
+    "name": "익산금마시장",
+    "sido": "전북특별자치도",
+    "sigungu": "익산시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.99217754,
+    "lng": 127.0534309,
+    "is_declining": false,
+    "shop_count": 30
+  },
+  {
+    "key": "삼례|완주군",
+    "name": "삼례시장",
+    "sido": "전북특별자치도",
+    "sigungu": "완주군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.91068557,
+    "lng": 127.0737715,
+    "is_declining": false,
+    "shop_count": 54
+  },
+  {
+    "key": "순창|순창군",
+    "name": "순창시장",
+    "sido": "전북특별자치도",
+    "sigungu": "순창군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.37187647,
+    "lng": 127.1450592,
+    "is_declining": true,
+    "shop_count": 127
+  },
+  {
+    "key": "동계|순창군",
+    "name": "동계시장",
+    "sido": "전북특별자치도",
+    "sigungu": "순창군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.43954095,
+    "lng": 127.2397976,
+    "is_declining": true,
+    "shop_count": 20
+  },
+  {
+    "key": "줄포|부안군",
+    "name": "줄포시장",
+    "sido": "전북특별자치도",
+    "sigungu": "부안군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.58760184,
+    "lng": 126.6768543,
+    "is_declining": true,
+    "shop_count": 28
+  },
+  {
+    "key": "안성|무주군",
+    "name": "안성시장(덕유산장터)",
+    "sido": "전북특별자치도",
+    "sigungu": "무주군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.86627446,
+    "lng": 127.6535366,
+    "is_declining": true,
+    "shop_count": 26
+  },
+  {
+    "key": "설천|무주군",
+    "name": "설천시장(삼도봉장터)",
+    "sido": "전북특별자치도",
+    "sigungu": "무주군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.0099056,
+    "lng": 127.7880133,
+    "is_declining": true,
+    "shop_count": 14
+  },
+  {
+    "key": "무풍|무주군",
+    "name": "무풍시장(대덕산장터)",
+    "sido": "전북특별자치도",
+    "sigungu": "무주군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.96945032,
+    "lng": 127.8487964,
+    "is_declining": true,
+    "shop_count": 11
+  },
+  {
+    "key": "남원인월|남원시",
+    "name": "남원인월시장",
+    "sido": "전북특별자치도",
+    "sigungu": "남원시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.46112561,
+    "lng": 127.6021352,
+    "is_declining": true,
+    "shop_count": 42
+  },
+  {
+    "key": "남원|남원시",
+    "name": "남원공설시장",
+    "sido": "전북특별자치도",
+    "sigungu": "남원시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.40461965,
+    "lng": 127.3758611,
+    "is_declining": true,
+    "shop_count": 125
+  },
+  {
+    "key": "김제|김제시",
+    "name": "김제전통시장",
+    "sido": "전북특별자치도",
+    "sigungu": "김제시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.80162714,
+    "lng": 126.8837248,
+    "is_declining": true,
+    "shop_count": 66
+  },
+  {
+    "key": "원평|김제시",
+    "name": "원평공설시장(김제원평시장)",
+    "sido": "전북특별자치도",
+    "sigungu": "김제시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.71406176,
+    "lng": 126.9947286,
+    "is_declining": true,
+    "shop_count": 34
+  },
+  {
+    "key": "고성오일|서귀포시",
+    "name": "고성오일시장",
+    "sido": "제주특별자치도",
+    "sigungu": "서귀포시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 33.4518552,
+    "lng": 126.9128143,
+    "is_declining": false,
+    "shop_count": 67
+  },
+  {
+    "key": "서귀포향토오일|서귀포시",
+    "name": "서귀포향토오일시장",
+    "sido": "제주특별자치도",
+    "sigungu": "서귀포시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 33.26778279,
+    "lng": 126.5737587,
+    "is_declining": false,
+    "shop_count": 545
+  },
+  {
+    "key": "대정오일|서귀포시",
+    "name": "대정오일시장",
+    "sido": "제주특별자치도",
+    "sigungu": "서귀포시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 33.22061006,
+    "lng": 126.2482168,
+    "is_declining": false,
+    "shop_count": 198
+  },
+  {
+    "key": "진안고원|진안군",
+    "name": "진안고원시장",
+    "sido": "전북특별자치도",
+    "sigungu": "진안군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.79264222,
+    "lng": 127.4296267,
+    "is_declining": true,
+    "shop_count": 70
+  },
+  {
+    "key": "신태인|정읍시",
+    "name": "신태인시장",
+    "sido": "전북특별자치도",
+    "sigungu": "정읍시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.68729453,
+    "lng": 126.8865644,
+    "is_declining": true,
+    "shop_count": 46
+  },
+  {
+    "key": "무안|무안군",
+    "name": "무안전통시장",
+    "sido": "전라남도",
+    "sigungu": "무안군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.99348251,
+    "lng": 126.4724295,
+    "is_declining": false,
+    "shop_count": 65
+  },
+  {
+    "key": "남평5일|나주시",
+    "name": "남평5일시장",
+    "sido": "전라남도",
+    "sigungu": "나주시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.04581389,
+    "lng": 126.8415451,
+    "is_declining": false,
+    "shop_count": 38
+  },
+  {
+    "key": "장수|장수군",
+    "name": "장수시장",
+    "sido": "전북특별자치도",
+    "sigungu": "장수군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.64910345,
+    "lng": 127.5174697,
+    "is_declining": true,
+    "shop_count": 33
+  },
+  {
+    "key": "장계|장수군",
+    "name": "장계시장",
+    "sido": "전북특별자치도",
+    "sigungu": "장수군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.72943479,
+    "lng": 127.5822739,
+    "is_declining": true,
+    "shop_count": 38
+  },
+  {
+    "key": "산서|장수군",
+    "name": "산서시장",
+    "sido": "전북특별자치도",
+    "sigungu": "장수군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.58450071,
+    "lng": 127.3958978,
+    "is_declining": true,
+    "shop_count": 16
+  },
+  {
+    "key": "임실|임실군",
+    "name": "임실시장",
+    "sido": "전북특별자치도",
+    "sigungu": "임실군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.61445375,
+    "lng": 127.2827133,
+    "is_declining": true,
+    "shop_count": 64
+  },
+  {
+    "key": "관촌|임실군",
+    "name": "관촌시장",
+    "sido": "전북특별자치도",
+    "sigungu": "임실군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.67877664,
+    "lng": 127.2676851,
+    "is_declining": true,
+    "shop_count": 26
+  },
+  {
+    "key": "강진|임실군",
+    "name": "강진시장",
+    "sido": "전북특별자치도",
+    "sigungu": "임실군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.5290276,
+    "lng": 127.161009,
+    "is_declining": true,
+    "shop_count": 17
+  },
+  {
+    "key": "황등|익산시",
+    "name": "황등시장",
+    "sido": "전북특별자치도",
+    "sigungu": "익산시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.99943493,
+    "lng": 126.9523869,
+    "is_declining": false,
+    "shop_count": 32
+  },
+  {
+    "key": "금산인삼|금산군",
+    "name": "금산인삼전통시장",
+    "sido": "충청남도",
+    "sigungu": "금산군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.10045233,
+    "lng": 127.4921846,
+    "is_declining": true,
+    "shop_count": 110
+  },
+  {
+    "key": "금산금빛|금산군",
+    "name": "금산금빛시장(금산시장)",
+    "sido": "충청남도",
+    "sigungu": "금산군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.09951247,
+    "lng": 127.490976,
+    "is_declining": true,
+    "shop_count": 211
+  },
+  {
+    "key": "금산수삼센타|금산군",
+    "name": "금산수삼센타",
+    "sido": "충청남도",
+    "sigungu": "금산군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.10015574,
+    "lng": 127.4964497,
+    "is_declining": true,
+    "shop_count": 285
+  },
+  {
+    "key": "유구|공주시",
+    "name": "유구시장",
+    "sido": "충청남도",
+    "sigungu": "공주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.55270354,
+    "lng": 126.9518599,
+    "is_declining": true,
+    "shop_count": 72
+  },
+  {
+    "key": "공주산성|공주시",
+    "name": "공주산성시장",
+    "sido": "충청남도",
+    "sigungu": "공주시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.45881276,
+    "lng": 127.1226147,
+    "is_declining": true,
+    "shop_count": 567
+  },
+  {
+    "key": "한림민속오일|제주시",
+    "name": "한림민속오일시장(한림오일시장)",
+    "sido": "제주특별자치도",
+    "sigungu": "제주시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 33.41983074,
+    "lng": 126.2745011,
+    "is_declining": false,
+    "shop_count": 144
+  },
+  {
+    "key": "함덕오일|제주시",
+    "name": "함덕오일시장",
+    "sido": "제주특별자치도",
+    "sigungu": "제주시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 33.54025266,
+    "lng": 126.6679607,
+    "is_declining": false,
+    "shop_count": 38
+  },
+  {
+    "key": "영암5일|영암군",
+    "name": "영암5일시장",
+    "sido": "전라남도",
+    "sigungu": "영암군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.80123497,
+    "lng": 126.7005743,
+    "is_declining": true,
+    "shop_count": 120
+  },
+  {
+    "key": "제주시민속오일|제주시",
+    "name": "제주시민속오일시장",
+    "sido": "제주특별자치도",
+    "sigungu": "제주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 33.49724208,
+    "lng": 126.474894,
+    "is_declining": false,
+    "shop_count": 911
+  },
+  {
+    "key": "세화오일|제주시",
+    "name": "세화오일시장",
+    "sido": "제주특별자치도",
+    "sigungu": "제주시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 33.52618615,
+    "lng": 126.857297,
+    "is_declining": false,
+    "shop_count": 156
+  },
+  {
+    "key": "표선오일|서귀포시",
+    "name": "표선오일시장",
+    "sido": "제주특별자치도",
+    "sigungu": "서귀포시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 33.32271206,
+    "lng": 126.8303863,
+    "is_declining": false,
+    "shop_count": 47
+  },
+  {
+    "key": "중문오일|서귀포시",
+    "name": "중문오일시장",
+    "sido": "제주특별자치도",
+    "sigungu": "서귀포시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 33.25058008,
+    "lng": 126.4239435,
+    "is_declining": false,
+    "shop_count": 67
+  },
+  {
+    "key": "고덕|예산군",
+    "name": "고덕시장",
+    "sido": "충청남도",
+    "sigungu": "예산군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.74392963,
+    "lng": 126.7052158,
+    "is_declining": true,
+    "shop_count": 30
+  },
+  {
+    "key": "온양온천|아산시",
+    "name": "온양온천시장(온양전통시장)",
+    "sido": "충청남도",
+    "sigungu": "아산시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.78329506,
+    "lng": 127.0042346,
+    "is_declining": false,
+    "shop_count": 377
+  },
+  {
+    "key": "둔포|아산시",
+    "name": "둔포전통시장(둔포시장)",
+    "sido": "충청남도",
+    "sigungu": "아산시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.92946679,
+    "lng": 127.0360407,
+    "is_declining": false,
+    "shop_count": 155
+  },
+  {
+    "key": "장항|서천군",
+    "name": "장항전통시장",
+    "sido": "충청남도",
+    "sigungu": "서천군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.01556607,
+    "lng": 126.6945736,
+    "is_declining": true,
+    "shop_count": 91
+  },
+  {
+    "key": "홍산|부여군",
+    "name": "홍산시장",
+    "sido": "충청남도",
+    "sigungu": "부여군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.21394105,
+    "lng": 126.7576057,
+    "is_declining": true,
+    "shop_count": 50
+  },
+  {
+    "key": "부여새|부여군",
+    "name": "부여 새시장",
+    "sido": "충청남도",
+    "sigungu": "부여군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.28098513,
+    "lng": 126.9096533,
+    "is_declining": true,
+    "shop_count": 70
+  },
+  {
+    "key": "부여|부여군",
+    "name": "부여시장",
+    "sido": "충청남도",
+    "sigungu": "부여군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.28149721,
+    "lng": 126.9075601,
+    "is_declining": true,
+    "shop_count": 86
+  },
+  {
+    "key": "웅천|보령시",
+    "name": "웅천시장",
+    "sido": "충청남도",
+    "sigungu": "보령시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.23298807,
+    "lng": 126.6012701,
+    "is_declining": true,
+    "shop_count": 83
+  },
+  {
+    "key": "보령한내|보령시",
+    "name": "보령한내시장",
+    "sido": "충청남도",
+    "sigungu": "보령시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.34962793,
+    "lng": 126.595819,
+    "is_declining": true,
+    "shop_count": 178
+  },
+  {
+    "key": "보령중앙|보령시",
+    "name": "보령중앙시장",
+    "sido": "충청남도",
+    "sigungu": "보령시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.35085519,
+    "lng": 126.5941055,
+    "is_declining": true,
+    "shop_count": 149
+  },
+  {
+    "key": "합덕|당진시",
+    "name": "합덕전통시장",
+    "sido": "충청남도",
+    "sigungu": "당진시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.80617206,
+    "lng": 126.7719672,
+    "is_declining": false,
+    "shop_count": 64
+  },
+  {
+    "key": "독천5일|영암군",
+    "name": "독천5일시장",
+    "sido": "전라남도",
+    "sigungu": "영암군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.72459224,
+    "lng": 126.5671189,
+    "is_declining": true,
+    "shop_count": 35
+  },
+  {
+    "key": "신평|당진시",
+    "name": "신평시장",
+    "sido": "충청남도",
+    "sigungu": "당진시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.88353946,
+    "lng": 126.7759775,
+    "is_declining": false,
+    "shop_count": 43
+  },
+  {
+    "key": "연산|논산시",
+    "name": "연산전통시장",
+    "sido": "충청남도",
+    "sigungu": "논산시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.21627075,
+    "lng": 127.2164887,
+    "is_declining": true,
+    "shop_count": 56
+  },
+  {
+    "key": "강경대흥|논산시",
+    "name": "강경대흥시장",
+    "sido": "충청남도",
+    "sigungu": "논산시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.15597686,
+    "lng": 127.0136799,
+    "is_declining": true,
+    "shop_count": 106
+  },
+  {
+    "key": "마전|금산군",
+    "name": "마전시장",
+    "sido": "충청남도",
+    "sigungu": "금산군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.1906104,
+    "lng": 127.4669775,
+    "is_declining": true,
+    "shop_count": 14
+  },
+  {
+    "key": "광탄|파주시",
+    "name": "광탄시장",
+    "sido": "경기도",
+    "sigungu": "파주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.78145915,
+    "lng": 126.8484774,
+    "is_declining": false,
+    "shop_count": 118
+  },
+  {
+    "key": "양평물맑은|양평군",
+    "name": "양평물맑은시장",
+    "sido": "경기도",
+    "sigungu": "양평군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.49093506,
+    "lng": 127.4925686,
+    "is_declining": false,
+    "shop_count": 548
+  },
+  {
+    "key": "사강|화성시",
+    "name": "사강시장",
+    "sido": "경기도",
+    "sigungu": "화성시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.21330187,
+    "lng": 126.7360034,
+    "is_declining": false,
+    "shop_count": 341
+  },
+  {
+    "key": "덕풍|하남시",
+    "name": "덕풍전통시장",
+    "sido": "경기도",
+    "sigungu": "하남시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 37.54154098,
+    "lng": 127.202916,
+    "is_declining": false,
+    "shop_count": 140
+  },
+  {
+    "key": "적성|파주시",
+    "name": "적성전통시장",
+    "sido": "경기도",
+    "sigungu": "파주시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.95460991,
+    "lng": 126.9186679,
+    "is_declining": false,
+    "shop_count": 82
+  },
+  {
+    "key": "문산자유|파주시",
+    "name": "문산자유시장",
+    "sido": "경기도",
+    "sigungu": "파주시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 37.85673243,
+    "lng": 126.7839395,
+    "is_declining": false,
+    "shop_count": 113
+  },
+  {
+    "key": "구미새마을중앙|구미시",
+    "name": "구미새마을중앙시장",
+    "sido": "경상북도",
+    "sigungu": "구미시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.13085045,
+    "lng": 128.3297934,
+    "is_declining": false,
+    "shop_count": 96
+  },
+  {
+    "key": "경산|경산시",
+    "name": "경산공설시장",
+    "sido": "경상북도",
+    "sigungu": "경산시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.82052133,
+    "lng": 128.735749,
+    "is_declining": false,
+    "shop_count": 187
+  },
+  {
+    "key": "장유|김해시",
+    "name": "장유전통시장(장유중앙시장)",
+    "sido": "경상남도",
+    "sigungu": "김해시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.20056341,
+    "lng": 128.8148125,
+    "is_declining": false,
+    "shop_count": 98
+  },
+  {
+    "key": "풍산|안동시",
+    "name": "풍산공설시장",
+    "sido": "경상북도",
+    "sigungu": "안동시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.57720568,
+    "lng": 128.5765756,
+    "is_declining": true,
+    "shop_count": 33
+  },
+  {
+    "key": "대림|은평구",
+    "name": "대림시장",
+    "sido": "서울특별시",
+    "sigungu": "은평구",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.58679054,
+    "lng": 126.9177451,
+    "is_declining": false,
+    "shop_count": 61
+  },
+  {
+    "key": "청도|청도군",
+    "name": "청도공설시장",
+    "sido": "경상북도",
+    "sigungu": "청도군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.64393806,
+    "lng": 128.7460405,
+    "is_declining": true,
+    "shop_count": 115
+  },
+  {
+    "key": "세종|세종특별자치시",
+    "name": "세종전통시장",
+    "sido": "세종특별자치시",
+    "sigungu": "세종특별자치시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.59978855,
+    "lng": 127.3006053,
+    "is_declining": false,
+    "shop_count": 333
+  },
+  {
+    "key": "부강|세종특별자치시",
+    "name": "부강전통시장",
+    "sido": "세종특별자치시",
+    "sigungu": "세종특별자치시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.52850118,
+    "lng": 127.3688876,
+    "is_declining": false,
+    "shop_count": 92
+  },
+  {
+    "key": "세종대평|세종특별자치시",
+    "name": "세종대평시장",
+    "sido": "세종특별자치시",
+    "sigungu": "세종특별자치시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.46727471,
+    "lng": 127.2820631,
+    "is_declining": false,
+    "shop_count": 62
+  },
+  {
+    "key": "덕하|울주군",
+    "name": "덕하시장(덕하공설시장)",
+    "sido": "울산광역시",
+    "sigungu": "울주군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.49170116,
+    "lng": 129.3059222,
+    "is_declining": false,
+    "shop_count": 51
+  },
+  {
+    "key": "곡천|울주군",
+    "name": "곡천공설시장",
+    "sido": "울산광역시",
+    "sigungu": "울주군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.46589516,
+    "lng": 129.2099662,
+    "is_declining": false,
+    "shop_count": null
+  },
+  {
+    "key": "덕신1차|울주군",
+    "name": "덕신1차시장",
+    "sido": "울산광역시",
+    "sigungu": "울주군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.43524428,
+    "lng": 129.3093532,
+    "is_declining": false,
+    "shop_count": 36
+  },
+  {
+    "key": "덕신2차|울주군",
+    "name": "덕신2차시장",
+    "sido": "울산광역시",
+    "sigungu": "울주군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.42934746,
+    "lng": 129.3100214,
+    "is_declining": false,
+    "shop_count": 23
+  },
+  {
+    "key": "언양알프스|울주군",
+    "name": "언양알프스시장",
+    "sido": "울산광역시",
+    "sigungu": "울주군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.5637023,
+    "lng": 129.1252974,
+    "is_declining": false,
+    "shop_count": 173
+  },
+  {
+    "key": "언양|울주군",
+    "name": "언양공설시장",
+    "sido": "울산광역시",
+    "sigungu": "울주군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.56280807,
+    "lng": 129.1258239833,
+    "is_declining": false,
+    "shop_count": 57
+  },
+  {
+    "key": "봉계|울주군",
+    "name": "봉계공설시장",
+    "sido": "울산광역시",
+    "sigungu": "울주군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.71338448,
+    "lng": 129.1991813,
+    "is_declining": false,
+    "shop_count": 18
+  },
+  {
+    "key": "호계|북구",
+    "name": "호계공설시장",
+    "sido": "울산광역시",
+    "sigungu": "북구",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.62361423,
+    "lng": 129.3557466,
+    "is_declining": false,
+    "shop_count": 73
+  },
+  {
+    "key": "북평민속|동해시",
+    "name": "북평민속시장",
+    "sido": "강원특별자치도",
+    "sigungu": "동해시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.48246871,
+    "lng": 129.1260256,
+    "is_declining": false,
+    "shop_count": 140
+  },
+  {
+    "key": "말바우|북구",
+    "name": "말바우시장",
+    "sido": "광주광역시",
+    "sigungu": "북구",
+    "days": [
+      2,
+      4,
+      7,
+      9
+    ],
+    "cycle_label": "2일+4일+7일+9일",
+    "lat": 35.1729756,
+    "lng": 126.9213684,
+    "is_declining": false,
+    "shop_count": 441
+  },
+  {
+    "key": "덕산면|제천시",
+    "name": "덕산면전통시장",
+    "sido": "충청북도",
+    "sigungu": "제천시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.90858319,
+    "lng": 128.1679776,
+    "is_declining": true,
+    "shop_count": 44
+  },
+  {
+    "key": "송정5일|광산구",
+    "name": "송정5일시장",
+    "sido": "광주광역시",
+    "sigungu": "광산구",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.13708297,
+    "lng": 126.7969059,
+    "is_declining": false,
+    "shop_count": 147
+  },
+  {
+    "key": "비아5일|광산구",
+    "name": "비아5일시장",
+    "sido": "광주광역시",
+    "sigungu": "광산구",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.22135885,
+    "lng": 126.8252669,
+    "is_declining": false,
+    "shop_count": 49
+  },
+  {
+    "key": "청하|포항시",
+    "name": "청하시장",
+    "sido": "경상북도",
+    "sigungu": "포항시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.19707872,
+    "lng": 129.33967,
+    "is_declining": false,
+    "shop_count": 34
+  },
+  {
+    "key": "춘천풍물|춘천시",
+    "name": "춘천풍물시장",
+    "sido": "강원특별자치도",
+    "sigungu": "춘천시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.86622785,
+    "lng": 127.7195853,
+    "is_declining": false,
+    "shop_count": 145
+  },
+  {
+    "key": "인제|인제군",
+    "name": "인제시장",
+    "sido": "강원특별자치도",
+    "sigungu": "인제군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 38.06709944,
+    "lng": 128.1710826,
+    "is_declining": false,
+    "shop_count": 92
+  },
+  {
+    "key": "반야월종합|동구",
+    "name": "반야월종합시장",
+    "sido": "대구광역시",
+    "sigungu": "동구",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.87240724,
+    "lng": 128.7024478,
+    "is_declining": false,
+    "shop_count": 601
+  },
+  {
+    "key": "불로|동구",
+    "name": "불로전통시장",
+    "sido": "대구광역시",
+    "sigungu": "동구",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.87460697,
+    "lng": 128.688976,
+    "is_declining": false,
+    "shop_count": 87
+  },
+  {
+    "key": "화원|달성군",
+    "name": "화원시장",
+    "sido": "대구광역시",
+    "sigungu": "달성군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.8012506,
+    "lng": 128.4997345,
+    "is_declining": false,
+    "shop_count": 37
+  },
+  {
+    "key": "현풍백년도깨비|달성군",
+    "name": "현풍백년도깨비시장",
+    "sido": "대구광역시",
+    "sigungu": "달성군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.69475898,
+    "lng": 128.4422247,
+    "is_declining": false,
+    "shop_count": 81
+  },
+  {
+    "key": "봉평|평창군",
+    "name": "봉평전통시장(봉평시장)",
+    "sido": "강원특별자치도",
+    "sigungu": "평창군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.61558646,
+    "lng": 128.3772728,
+    "is_declining": true,
+    "shop_count": 70
+  },
+  {
+    "key": "서변중앙|북구",
+    "name": "서변중앙시장",
+    "sido": "대구광역시",
+    "sigungu": "북구",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.92100516,
+    "lng": 128.596183,
+    "is_declining": false,
+    "shop_count": 59
+  },
+  {
+    "key": "경안|광주시",
+    "name": "경안시장",
+    "sido": "경기도",
+    "sigungu": "광주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.40885235,
+    "lng": 127.2570231,
+    "is_declining": false,
+    "shop_count": 91
+  },
+  {
+    "key": "가평잣고을|가평군",
+    "name": "가평잣고을시장",
+    "sido": "경기도",
+    "sigungu": "가평군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.82972123,
+    "lng": 127.5148873,
+    "is_declining": true,
+    "shop_count": 116
+  },
+  {
+    "key": "신탄진|대덕구",
+    "name": "신탄진시장",
+    "sido": "대전광역시",
+    "sigungu": "대덕구",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.44915618,
+    "lng": 127.4265148,
+    "is_declining": false,
+    "shop_count": 135
+  },
+  {
+    "key": "정이있는구포|북구",
+    "name": "정이있는구포시장",
+    "sido": "부산광역시",
+    "sigungu": "북구",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.20835959,
+    "lng": 129.0038559,
+    "is_declining": false,
+    "shop_count": 750
+  },
+  {
+    "key": "하단오일|사하구",
+    "name": "하단오일상설시장",
+    "sido": "부산광역시",
+    "sigungu": "사하구",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.10372566,
+    "lng": 128.9708055,
+    "is_declining": false,
+    "shop_count": 108
+  },
+  {
+    "key": "영산|창녕군",
+    "name": "영산시장",
+    "sido": "경상남도",
+    "sigungu": "창녕군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.45704302,
+    "lng": 128.5325963,
+    "is_declining": true,
+    "shop_count": 51
+  },
+  {
+    "key": "남지|창녕군",
+    "name": "남지시장",
+    "sido": "경상남도",
+    "sigungu": "창녕군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.38911294,
+    "lng": 128.4824933,
+    "is_declining": true,
+    "shop_count": 120
+  },
+  {
+    "key": "일반성|진주시",
+    "name": "일반성시장",
+    "sido": "경상남도",
+    "sigungu": "진주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.17121682,
+    "lng": 128.2822147,
+    "is_declining": false,
+    "shop_count": 51
+  },
+  {
+    "key": "새서부|진주시",
+    "name": "새서부시장",
+    "sido": "경상남도",
+    "sigungu": "진주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.19494636,
+    "lng": 128.0759288,
+    "is_declining": false,
+    "shop_count": 141
+  },
+  {
+    "key": "문산|진주시",
+    "name": "문산시장",
+    "sido": "경상남도",
+    "sigungu": "진주시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.17042347,
+    "lng": 128.1691246,
+    "is_declining": false,
+    "shop_count": 10
+  },
+  {
+    "key": "대곡|진주시",
+    "name": "대곡시장",
+    "sido": "경상남도",
+    "sigungu": "진주시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.26370317,
+    "lng": 128.168562,
+    "is_declining": false,
+    "shop_count": 9
+  },
+  {
+    "key": "금곡|진주시",
+    "name": "금곡시장",
+    "sido": "경상남도",
+    "sigungu": "진주시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.0907536,
+    "lng": 128.1862332,
+    "is_declining": false,
+    "shop_count": null
+  },
+  {
+    "key": "의령|의령군",
+    "name": "의령시장",
+    "sido": "경상남도",
+    "sigungu": "의령군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.31851286,
+    "lng": 128.2606632,
+    "is_declining": true,
+    "shop_count": 99
+  },
+  {
+    "key": "신반|의령군",
+    "name": "신반시장",
+    "sido": "경상남도",
+    "sigungu": "의령군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.46810715,
+    "lng": 128.3250278,
+    "is_declining": true,
+    "shop_count": 21
+  },
+  {
+    "key": "신평|양산시",
+    "name": "신평시장",
+    "sido": "경상남도",
+    "sigungu": "양산시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.49059663,
+    "lng": 129.0858533,
+    "is_declining": false,
+    "shop_count": 48
+  },
+  {
+    "key": "양산남부시장상가|양산시",
+    "name": "양산남부시장상가",
+    "sido": "경상남도",
+    "sigungu": "양산시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.34339273,
+    "lng": 129.037046,
+    "is_declining": false,
+    "shop_count": 107
+  },
+  {
+    "key": "양산남부|양산시",
+    "name": "양산남부시장",
+    "sido": "경상남도",
+    "sigungu": "양산시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.34244341,
+    "lng": 129.0372311,
+    "is_declining": false,
+    "shop_count": 200
+  },
+  {
+    "key": "석계|양산시",
+    "name": "석계시장",
+    "sido": "경상남도",
+    "sigungu": "양산시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.41957782,
+    "lng": 129.06393,
+    "is_declining": false,
+    "shop_count": 62
+  },
+  {
+    "key": "서창|양산시",
+    "name": "서창시장",
+    "sido": "경상남도",
+    "sigungu": "양산시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.41625784,
+    "lng": 129.1720087,
+    "is_declining": false,
+    "shop_count": 38
+  },
+  {
+    "key": "진동|창원시",
+    "name": "진동전통시장",
+    "sido": "경상남도",
+    "sigungu": "창원시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.11331794,
+    "lng": 128.4873368,
+    "is_declining": false,
+    "shop_count": 72
+  },
+  {
+    "key": "진동|창원시",
+    "name": "진동시장",
+    "sido": "경상남도",
+    "sigungu": "창원시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.11359014,
+    "lng": 128.487923,
+    "is_declining": false,
+    "shop_count": 22
+  },
+  {
+    "key": "상남|창원시",
+    "name": "상남시장",
+    "sido": "경상남도",
+    "sigungu": "창원시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.22221729,
+    "lng": 128.6833743,
+    "is_declining": false,
+    "shop_count": 408
+  },
+  {
+    "key": "하동|하동군",
+    "name": "하동공설시장",
+    "sido": "경상남도",
+    "sigungu": "하동군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.0698114,
+    "lng": 127.7483819,
+    "is_declining": true,
+    "shop_count": 140
+  },
+  {
+    "key": "진교|하동군",
+    "name": "진교공설시장",
+    "sido": "경상남도",
+    "sigungu": "하동군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.02717394,
+    "lng": 127.9038204,
+    "is_declining": true,
+    "shop_count": 52
+  },
+  {
+    "key": "북천|하동군",
+    "name": "북천공설시장",
+    "sido": "경상남도",
+    "sigungu": "하동군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.1137211,
+    "lng": 127.8919908,
+    "is_declining": true,
+    "shop_count": 21
+  },
+  {
+    "key": "계천|하동군",
+    "name": "계천공설시장(계천시장)",
+    "sido": "경상남도",
+    "sigungu": "하동군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.9959861,
+    "lng": 127.8094975,
+    "is_declining": true,
+    "shop_count": 35
+  },
+  {
+    "key": "통영중앙|통영시",
+    "name": "통영중앙전통시장",
+    "sido": "경상남도",
+    "sigungu": "통영시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 34.84529762,
+    "lng": 128.4246206,
+    "is_declining": false,
+    "shop_count": 275
+  },
+  {
+    "key": "웅천|창원시",
+    "name": "웅천시장",
+    "sido": "경상남도",
+    "sigungu": "창원시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.11102245,
+    "lng": 128.7509028,
+    "is_declining": false,
+    "shop_count": 4
+  },
+  {
+    "key": "마천|창원시",
+    "name": "마천시장",
+    "sido": "경상남도",
+    "sigungu": "창원시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.12557099,
+    "lng": 128.7822355,
+    "is_declining": false,
+    "shop_count": 9
+  },
+  {
+    "key": "지귀|창원시",
+    "name": "지귀시장",
+    "sido": "경상남도",
+    "sigungu": "창원시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.24568147,
+    "lng": 128.6588339,
+    "is_declining": false,
+    "shop_count": 70
+  },
+  {
+    "key": "소답|창원시",
+    "name": "소답시장",
+    "sido": "경상남도",
+    "sigungu": "창원시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.26563899,
+    "lng": 128.6212756,
+    "is_declining": false,
+    "shop_count": 44
+  },
+  {
+    "key": "북부상가|경주시",
+    "name": "북부상가시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.8534885,
+    "lng": 129.2075834,
+    "is_declining": false,
+    "shop_count": 118
+  },
+  {
+    "key": "중앙신|안동시",
+    "name": "중앙신시장",
+    "sido": "경상북도",
+    "sigungu": "안동시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.56510661,
+    "lng": 128.7241511,
+    "is_declining": true,
+    "shop_count": 406
+  },
+  {
+    "key": "서면|경주시",
+    "name": "서면시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.89506107,
+    "lng": 129.0480446,
+    "is_declining": false,
+    "shop_count": 17
+  },
+  {
+    "key": "불국|경주시",
+    "name": "불국시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.77599831,
+    "lng": 129.3008003,
+    "is_declining": false,
+    "shop_count": 34
+  },
+  {
+    "key": "건천|경주시",
+    "name": "건천시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.84830099,
+    "lng": 129.1048124,
+    "is_declining": false,
+    "shop_count": 37
+  },
+  {
+    "key": "감포|경주시",
+    "name": "감포시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.80410761,
+    "lng": 129.502011,
+    "is_declining": false,
+    "shop_count": 46
+  },
+  {
+    "key": "하양|경산시",
+    "name": "하양공설시장",
+    "sido": "경상북도",
+    "sigungu": "경산시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.91562378,
+    "lng": 128.8192553,
+    "is_declining": false,
+    "shop_count": 92
+  },
+  {
+    "key": "자인|경산시",
+    "name": "자인공설시장",
+    "sido": "경상북도",
+    "sigungu": "경산시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.81649983,
+    "lng": 128.8229427,
+    "is_declining": false,
+    "shop_count": 48
+  },
+  {
+    "key": "합천|합천군",
+    "name": "합천시장",
+    "sido": "경상남도",
+    "sigungu": "합천군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.56850852,
+    "lng": 128.1611582,
+    "is_declining": true,
+    "shop_count": 159
+  },
+  {
+    "key": "초계|합천군",
+    "name": "초계시장",
+    "sido": "경상남도",
+    "sigungu": "합천군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.5595647,
+    "lng": 128.2671002,
+    "is_declining": true,
+    "shop_count": 62
+  },
+  {
+    "key": "야로|합천군",
+    "name": "야로시장",
+    "sido": "경상남도",
+    "sigungu": "합천군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.70579394,
+    "lng": 128.1684717,
+    "is_declining": true,
+    "shop_count": 40
+  },
+  {
+    "key": "삼가|합천군",
+    "name": "삼가시장",
+    "sido": "경상남도",
+    "sigungu": "합천군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.41281571,
+    "lng": 128.1222817,
+    "is_declining": true,
+    "shop_count": 92
+  },
+  {
+    "key": "가야|합천군",
+    "name": "가야시장",
+    "sido": "경상남도",
+    "sigungu": "합천군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.76024553,
+    "lng": 128.1383747,
+    "is_declining": true,
+    "shop_count": 48
+  },
+  {
+    "key": "지리산함양|함양군",
+    "name": "지리산함양시장",
+    "sido": "경상남도",
+    "sigungu": "함양군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.51860419,
+    "lng": 127.7289883,
+    "is_declining": true,
+    "shop_count": 127
+  },
+  {
+    "key": "안의|함양군",
+    "name": "안의시장",
+    "sido": "경상남도",
+    "sigungu": "함양군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.62629354,
+    "lng": 127.8140359,
+    "is_declining": true,
+    "shop_count": 10
+  },
+  {
+    "key": "칠원|함안군",
+    "name": "칠원공설시장",
+    "sido": "경상남도",
+    "sigungu": "함안군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.30564997,
+    "lng": 128.5195218,
+    "is_declining": true,
+    "shop_count": 36
+  },
+  {
+    "key": "대산|함안군",
+    "name": "대산공설시장",
+    "sido": "경상남도",
+    "sigungu": "함안군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.35283551,
+    "lng": 128.4281217,
+    "is_declining": true,
+    "shop_count": 24
+  },
+  {
+    "key": "군북|함안군",
+    "name": "군북공설시장",
+    "sido": "경상남도",
+    "sigungu": "함안군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.26104644,
+    "lng": 128.3469542,
+    "is_declining": true,
+    "shop_count": 19
+  },
+  {
+    "key": "가야|함안군",
+    "name": "가야상설시장(가야시장)",
+    "sido": "경상남도",
+    "sigungu": "함안군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.27725861,
+    "lng": 128.4064722,
+    "is_declining": true,
+    "shop_count": 89
+  },
+  {
+    "key": "횡천|하동군",
+    "name": "횡천공설시장(횡천시장)",
+    "sido": "경상남도",
+    "sigungu": "하동군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.10921398,
+    "lng": 127.8107034,
+    "is_declining": true,
+    "shop_count": 18
+  },
+  {
+    "key": "장천|구미시",
+    "name": "장천시장",
+    "sido": "경상북도",
+    "sigungu": "구미시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.12569593,
+    "lng": 128.4934096,
+    "is_declining": false,
+    "shop_count": 48
+  },
+  {
+    "key": "선산봉황|구미시",
+    "name": "선산봉황시장",
+    "sido": "경상북도",
+    "sigungu": "구미시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.23951857,
+    "lng": 128.300921,
+    "is_declining": false,
+    "shop_count": 314
+  },
+  {
+    "key": "고령대가야|고령군",
+    "name": "고령대가야시장",
+    "sido": "경상북도",
+    "sigungu": "고령군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.72731251,
+    "lng": 128.2666754,
+    "is_declining": true,
+    "shop_count": 80
+  },
+  {
+    "key": "외동|경주시",
+    "name": "외동시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.71460009,
+    "lng": 129.3257089,
+    "is_declining": false,
+    "shop_count": 45
+  },
+  {
+    "key": "산내|경주시",
+    "name": "산내시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.75781767,
+    "lng": 129.0464768,
+    "is_declining": false,
+    "shop_count": 5
+  },
+  {
+    "key": "양남|경주시",
+    "name": "양남시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.67538063,
+    "lng": 129.4636531,
+    "is_declining": false,
+    "shop_count": 68
+  },
+  {
+    "key": "양북|경주시",
+    "name": "양북시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.79041062,
+    "lng": 129.4412131,
+    "is_declining": false,
+    "shop_count": 37
+  },
+  {
+    "key": "성주|성주군",
+    "name": "성주시장",
+    "sido": "경상북도",
+    "sigungu": "성주군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.9150289,
+    "lng": 128.2854812,
+    "is_declining": true,
+    "shop_count": 44
+  },
+  {
+    "key": "화령|상주시",
+    "name": "화령시장",
+    "sido": "경상북도",
+    "sigungu": "상주시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.44479866,
+    "lng": 127.9506906,
+    "is_declining": true,
+    "shop_count": 50
+  },
+  {
+    "key": "은척|상주시",
+    "name": "은척시장",
+    "sido": "경상북도",
+    "sigungu": "상주시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.53266616,
+    "lng": 128.0729497,
+    "is_declining": true,
+    "shop_count": 35
+  },
+  {
+    "key": "남성|상주시",
+    "name": "남성시장",
+    "sido": "경상북도",
+    "sigungu": "상주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.41440724,
+    "lng": 128.1621176,
+    "is_declining": true,
+    "shop_count": 132
+  },
+  {
+    "key": "풍물|상주시",
+    "name": "풍물시장",
+    "sido": "경상북도",
+    "sigungu": "상주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.41285383,
+    "lng": 128.1606228,
+    "is_declining": true,
+    "shop_count": 55
+  },
+  {
+    "key": "상주중앙|상주시",
+    "name": "상주중앙시장",
+    "sido": "경상북도",
+    "sigungu": "상주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.41319426,
+    "lng": 128.1608286,
+    "is_declining": true,
+    "shop_count": 125
+  },
+  {
+    "key": "억지춘양|봉화군",
+    "name": "억지춘양시장",
+    "sido": "경상북도",
+    "sigungu": "봉화군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.93634466,
+    "lng": 128.913044,
+    "is_declining": true,
+    "shop_count": 133
+  },
+  {
+    "key": "봉화내성|봉화군",
+    "name": "봉화내성시장",
+    "sido": "경상북도",
+    "sigungu": "봉화군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.88898151,
+    "lng": 128.7394689,
+    "is_declining": true,
+    "shop_count": 81
+  },
+  {
+    "key": "봉화|봉화군",
+    "name": "봉화상설시장",
+    "sido": "경상북도",
+    "sigungu": "봉화군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.89035721,
+    "lng": 128.7349285,
+    "is_declining": true,
+    "shop_count": 136
+  },
+  {
+    "key": "점촌|문경시",
+    "name": "점촌전통시장 (구 신흥시장)",
+    "sido": "경상북도",
+    "sigungu": "문경시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.60138925,
+    "lng": 128.2041632,
+    "is_declining": true,
+    "shop_count": 100
+  },
+  {
+    "key": "문경|문경시",
+    "name": "문경전통시장",
+    "sido": "경상북도",
+    "sigungu": "문경시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.73558209,
+    "lng": 128.1074832,
+    "is_declining": true,
+    "shop_count": 66
+  },
+  {
+    "key": "가은아자개|문경시",
+    "name": "가은아자개시장",
+    "sido": "경상북도",
+    "sigungu": "문경시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.64660911,
+    "lng": 128.0609864,
+    "is_declining": true,
+    "shop_count": 91
+  },
+  {
+    "key": "평화|김천시",
+    "name": "평화시장",
+    "sido": "경상북도",
+    "sigungu": "김천시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.12364342,
+    "lng": 128.1130862,
+    "is_declining": false,
+    "shop_count": 99
+  },
+  {
+    "key": "의흥|군위군",
+    "name": "의흥시장",
+    "sido": "대구광역시",
+    "sigungu": "군위군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.17425304,
+    "lng": 128.716305,
+    "is_declining": true,
+    "shop_count": 20
+  },
+  {
+    "key": "군위|군위군",
+    "name": "군위전통시장",
+    "sido": "대구광역시",
+    "sigungu": "군위군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.23975138,
+    "lng": 128.5679239,
+    "is_declining": true,
+    "shop_count": 49
+  },
+  {
+    "key": "인동|구미시",
+    "name": "인동시장",
+    "sido": "경상북도",
+    "sigungu": "구미시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.10819473,
+    "lng": 128.4209289,
+    "is_declining": false,
+    "shop_count": 122
+  },
+  {
+    "key": "예천|예천군",
+    "name": "예천상설시장",
+    "sido": "경상북도",
+    "sigungu": "예천군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.65598537,
+    "lng": 128.4561501,
+    "is_declining": false,
+    "shop_count": 72
+  },
+  {
+    "key": "영천|영천시",
+    "name": "영천공설시장",
+    "sido": "경상북도",
+    "sigungu": "영천시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.96425248,
+    "lng": 128.9385821,
+    "is_declining": true,
+    "shop_count": 185
+  },
+  {
+    "key": "신녕|영천시",
+    "name": "신녕공설시장",
+    "sido": "경상북도",
+    "sigungu": "영천시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.04209299,
+    "lng": 128.7874777,
+    "is_declining": true,
+    "shop_count": 52
+  },
+  {
+    "key": "금호|영천시",
+    "name": "금호공설시장",
+    "sido": "경상북도",
+    "sigungu": "영천시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.93166906,
+    "lng": 128.8733589,
+    "is_declining": true,
+    "shop_count": 45
+  },
+  {
+    "key": "영해만세|영덕군",
+    "name": "영해만세시장",
+    "sido": "경상북도",
+    "sigungu": "영덕군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.54088955,
+    "lng": 129.4071791,
+    "is_declining": true,
+    "shop_count": 171
+  },
+  {
+    "key": "남정|영덕군",
+    "name": "남정시장",
+    "sido": "경상북도",
+    "sigungu": "영덕군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.28554787,
+    "lng": 129.3728791,
+    "is_declining": true,
+    "shop_count": 20
+  },
+  {
+    "key": "강구|영덕군",
+    "name": "강구시장",
+    "sido": "경상북도",
+    "sigungu": "영덕군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.35834827,
+    "lng": 129.3795018,
+    "is_declining": true,
+    "shop_count": 57
+  },
+  {
+    "key": "구담|안동시",
+    "name": "구담공설시장",
+    "sido": "경상북도",
+    "sigungu": "안동시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.54171762,
+    "lng": 128.4647059,
+    "is_declining": true,
+    "shop_count": 63
+  },
+  {
+    "key": "안동서부|안동시",
+    "name": "안동서부시장",
+    "sido": "경상북도",
+    "sigungu": "안동시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.56527506,
+    "lng": 128.7149733,
+    "is_declining": true,
+    "shop_count": 113
+  },
+  {
+    "key": "북문|안동시",
+    "name": "북문시장",
+    "sido": "경상북도",
+    "sigungu": "안동시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.56851589,
+    "lng": 128.7326157,
+    "is_declining": true,
+    "shop_count": 71
+  },
+  {
+    "key": "화목|청송군",
+    "name": "화목시장",
+    "sido": "경상북도",
+    "sigungu": "청송군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.27534895,
+    "lng": 128.89736,
+    "is_declining": true,
+    "shop_count": 14
+  },
+  {
+    "key": "도평|청송군",
+    "name": "도평시장",
+    "sido": "경상북도",
+    "sigungu": "청송군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.290109,
+    "lng": 129.0170773,
+    "is_declining": true,
+    "shop_count": 14
+  },
+  {
+    "key": "청송|청송군",
+    "name": "청송시장",
+    "sido": "경상북도",
+    "sigungu": "청송군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.43514221,
+    "lng": 129.0521134,
+    "is_declining": true,
+    "shop_count": 7
+  },
+  {
+    "key": "진보|청송군",
+    "name": "진보시장",
+    "sido": "경상북도",
+    "sigungu": "청송군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.52833051,
+    "lng": 129.0464125,
+    "is_declining": true,
+    "shop_count": 72
+  },
+  {
+    "key": "부남|청송군",
+    "name": "부남시장",
+    "sido": "경상북도",
+    "sigungu": "청송군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.34650543,
+    "lng": 129.0644413,
+    "is_declining": true,
+    "shop_count": 53
+  },
+  {
+    "key": "풍각|청도군",
+    "name": "풍각공설시장",
+    "sido": "경상북도",
+    "sigungu": "청도군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.64090247,
+    "lng": 128.6186232,
+    "is_declining": true,
+    "shop_count": 60
+  },
+  {
+    "key": "동곡|청도군",
+    "name": "동곡공설시장",
+    "sido": "경상북도",
+    "sigungu": "청도군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.69205739,
+    "lng": 128.8910781,
+    "is_declining": true,
+    "shop_count": 41
+  },
+  {
+    "key": "의성공설재래|의성군",
+    "name": "의성공설재래시장",
+    "sido": "경상북도",
+    "sigungu": "의성군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.3451135,
+    "lng": 128.699851,
+    "is_declining": true,
+    "shop_count": 76
+  },
+  {
+    "key": "안계|의성군",
+    "name": "안계공설시장",
+    "sido": "경상북도",
+    "sigungu": "의성군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.38442056,
+    "lng": 128.4383426,
+    "is_declining": true,
+    "shop_count": 40
+  },
+  {
+    "key": "봉양|의성군",
+    "name": "봉양시장",
+    "sido": "경상북도",
+    "sigungu": "의성군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 36.29925956,
+    "lng": 128.5815931,
+    "is_declining": true,
+    "shop_count": 40
+  },
+  {
+    "key": "함평천지|함평군",
+    "name": "함평천지전통시장",
+    "sido": "전라남도",
+    "sigungu": "함평군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.06373037,
+    "lng": 126.5234259,
+    "is_declining": true,
+    "shop_count": 41
+  },
+  {
+    "key": "금성|의성군",
+    "name": "금성시장",
+    "sido": "경상북도",
+    "sigungu": "의성군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.25617739,
+    "lng": 128.6814114,
+    "is_declining": true,
+    "shop_count": 70
+  },
+  {
+    "key": "후포|울진군",
+    "name": "후포시장",
+    "sido": "경상북도",
+    "sigungu": "울진군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.67787465,
+    "lng": 129.4442245,
+    "is_declining": true,
+    "shop_count": 74
+  },
+  {
+    "key": "평해|울진군",
+    "name": "평해시장",
+    "sido": "경상북도",
+    "sigungu": "울진군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.72694696,
+    "lng": 129.4424335,
+    "is_declining": true,
+    "shop_count": 24
+  },
+  {
+    "key": "죽변|울진군",
+    "name": "죽변시장",
+    "sido": "경상북도",
+    "sigungu": "울진군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 37.05897952,
+    "lng": 129.4222545,
+    "is_declining": true,
+    "shop_count": 35
+  },
+  {
+    "key": "울진바지게|울진군",
+    "name": "울진바지게시장",
+    "sido": "경상북도",
+    "sigungu": "울진군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.99192061,
+    "lng": 129.4022797,
+    "is_declining": true,
+    "shop_count": 203
+  },
+  {
+    "key": "흥부|울진군",
+    "name": "흥부시장",
+    "sido": "경상북도",
+    "sigungu": "울진군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 37.10360525,
+    "lng": 129.3753791,
+    "is_declining": true,
+    "shop_count": 20
+  },
+  {
+    "key": "매화|울진군",
+    "name": "매화시장",
+    "sido": "경상북도",
+    "sigungu": "울진군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.90980624,
+    "lng": 129.3799227,
+    "is_declining": true,
+    "shop_count": 16
+  },
+  {
+    "key": "척산|울진군",
+    "name": "척산시장",
+    "sido": "경상북도",
+    "sigungu": "울진군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 36.79693438,
+    "lng": 129.4512978,
+    "is_declining": true,
+    "shop_count": 17
+  },
+  {
+    "key": "풍양|예천군",
+    "name": "풍양시장",
+    "sido": "경상북도",
+    "sigungu": "예천군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 36.50926978,
+    "lng": 128.2998047,
+    "is_declining": false,
+    "shop_count": 32
+  },
+  {
+    "key": "용궁|예천군",
+    "name": "용궁시장",
+    "sido": "경상북도",
+    "sigungu": "예천군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 36.60702184,
+    "lng": 128.2753688,
+    "is_declining": false,
+    "shop_count": 9
+  },
+  {
+    "key": "예천중앙|예천군",
+    "name": "예천중앙시장",
+    "sido": "경상북도",
+    "sigungu": "예천군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.6574335,
+    "lng": 128.4578325,
+    "is_declining": false,
+    "shop_count": 63
+  },
+  {
+    "key": "흥해|포항시",
+    "name": "흥해시장",
+    "sido": "경상북도",
+    "sigungu": "포항시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.11061401,
+    "lng": 129.3482939,
+    "is_declining": false,
+    "shop_count": 130
+  },
+  {
+    "key": "기계|포항시",
+    "name": "기계시장",
+    "sido": "경상북도",
+    "sigungu": "포항시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 36.06996359,
+    "lng": 129.2045078,
+    "is_declining": false,
+    "shop_count": 8
+  },
+  {
+    "key": "연일|포항시",
+    "name": "연일전통시장",
+    "sido": "경상북도",
+    "sigungu": "포항시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.99635173,
+    "lng": 129.3486811,
+    "is_declining": false,
+    "shop_count": 147
+  },
+  {
+    "key": "오천|포항시",
+    "name": "오천시장",
+    "sido": "경상북도",
+    "sigungu": "포항시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.96647172,
+    "lng": 129.4142295,
+    "is_declining": false,
+    "shop_count": 105
+  },
+  {
+    "key": "구룡포|포항시",
+    "name": "구룡포시장",
+    "sido": "경상북도",
+    "sigungu": "포항시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.99031583,
+    "lng": 129.5540012,
+    "is_declining": false,
+    "shop_count": 114
+  },
+  {
+    "key": "양양|양양군",
+    "name": "양양전통시장",
+    "sido": "강원특별자치도",
+    "sigungu": "양양군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 38.07506326,
+    "lng": 128.6232929,
+    "is_declining": true,
+    "shop_count": 68
+  },
+  {
+    "key": "양구중앙|양구군",
+    "name": "양구중앙시장",
+    "sido": "강원특별자치도",
+    "sigungu": "양구군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 38.10410757,
+    "lng": 127.9893261,
+    "is_declining": true,
+    "shop_count": 58
+  },
+  {
+    "key": "삼척중앙|삼척시",
+    "name": "삼척중앙시장",
+    "sido": "강원특별자치도",
+    "sigungu": "삼척시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 37.44210346,
+    "lng": 129.1646216,
+    "is_declining": true,
+    "shop_count": 282
+  },
+  {
+    "key": "거진|고성군",
+    "name": "거진전통시장",
+    "sido": "강원특별자치도",
+    "sigungu": "고성군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 38.44748216,
+    "lng": 128.4543896,
+    "is_declining": true,
+    "shop_count": 62
+  },
+  {
+    "key": "간성|고성군",
+    "name": "간성전통시장",
+    "sido": "강원특별자치도",
+    "sigungu": "고성군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 38.37994273,
+    "lng": 128.4694508,
+    "is_declining": true,
+    "shop_count": 66
+  },
+  {
+    "key": "단계|산청군",
+    "name": "단계시장",
+    "sido": "경상남도",
+    "sigungu": "산청군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.37712433,
+    "lng": 128.0111488,
+    "is_declining": true,
+    "shop_count": 26
+  },
+  {
+    "key": "덕산|산청군",
+    "name": "덕산시장",
+    "sido": "경상남도",
+    "sigungu": "산청군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.2770275,
+    "lng": 127.8377507,
+    "is_declining": true,
+    "shop_count": 30
+  },
+  {
+    "key": "생초|산청군",
+    "name": "생초시장",
+    "sido": "경상남도",
+    "sigungu": "산청군",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.49280603,
+    "lng": 127.8351909,
+    "is_declining": true,
+    "shop_count": 23
+  },
+  {
+    "key": "산청|산청군",
+    "name": "산청시장",
+    "sido": "경상남도",
+    "sigungu": "산청군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.41530225,
+    "lng": 127.8763044,
+    "is_declining": true,
+    "shop_count": 74
+  },
+  {
+    "key": "단성|산청군",
+    "name": "단성시장",
+    "sido": "경상남도",
+    "sigungu": "산청군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.29792788,
+    "lng": 127.9580631,
+    "is_declining": true,
+    "shop_count": 44
+  },
+  {
+    "key": "완사|사천시",
+    "name": "완사시장",
+    "sido": "경상남도",
+    "sigungu": "사천시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.13122005,
+    "lng": 127.9763483,
+    "is_declining": false,
+    "shop_count": 41
+  },
+  {
+    "key": "삼천포중앙|사천시",
+    "name": "삼천포중앙시장",
+    "sido": "경상남도",
+    "sigungu": "사천시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.92892254,
+    "lng": 128.0767148,
+    "is_declining": false,
+    "shop_count": 200
+  },
+  {
+    "key": "서포|사천시",
+    "name": "서포시장",
+    "sido": "경상남도",
+    "sigungu": "사천시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.00686028,
+    "lng": 127.9779028,
+    "is_declining": false,
+    "shop_count": 56
+  },
+  {
+    "key": "삼천포종합|사천시",
+    "name": "삼천포종합시장",
+    "sido": "경상남도",
+    "sigungu": "사천시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.93234179,
+    "lng": 128.0785407,
+    "is_declining": false,
+    "shop_count": 160
+  },
+  {
+    "key": "곤양종합|사천시",
+    "name": "곤양종합시장",
+    "sido": "경상남도",
+    "sigungu": "사천시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.05653208,
+    "lng": 127.9633461,
+    "is_declining": false,
+    "shop_count": 38
+  },
+  {
+    "key": "수산|밀양시",
+    "name": "수산시장",
+    "sido": "경상남도",
+    "sigungu": "밀양시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 35.37422786,
+    "lng": 128.7087852,
+    "is_declining": true,
+    "shop_count": 67
+  },
+  {
+    "key": "송지|밀양시",
+    "name": "송지시장",
+    "sido": "경상남도",
+    "sigungu": "밀양시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.39686406,
+    "lng": 128.8371964,
+    "is_declining": true,
+    "shop_count": 52
+  },
+  {
+    "key": "송백|밀양시",
+    "name": "송백시장",
+    "sido": "경상남도",
+    "sigungu": "밀양시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.58629962,
+    "lng": 128.8817037,
+    "is_declining": true,
+    "shop_count": 5
+  },
+  {
+    "key": "무안|밀양시",
+    "name": "무안시장(무안임시시장)",
+    "sido": "경상남도",
+    "sigungu": "밀양시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.47019254,
+    "lng": 128.6520424,
+    "is_declining": true,
+    "shop_count": 18
+  },
+  {
+    "key": "밀양아리랑|밀양시",
+    "name": "밀양아리랑시장",
+    "sido": "경상남도",
+    "sigungu": "밀양시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.49306115,
+    "lng": 128.7525542,
+    "is_declining": true,
+    "shop_count": 97
+  },
+  {
+    "key": "내일|밀양시",
+    "name": "내일전통시장",
+    "sido": "경상남도",
+    "sigungu": "밀양시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.49332954,
+    "lng": 128.7533093,
+    "is_declining": true,
+    "shop_count": 113
+  },
+  {
+    "key": "이동|남해군",
+    "name": "이동공설시장",
+    "sido": "경상남도",
+    "sigungu": "남해군",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 34.80113755,
+    "lng": 127.9538197,
+    "is_declining": true,
+    "shop_count": 27
+  },
+  {
+    "key": "남해|남해군",
+    "name": "남해전통시장",
+    "sido": "경상남도",
+    "sigungu": "남해군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 34.84014878,
+    "lng": 127.89449,
+    "is_declining": true,
+    "shop_count": 115
+  },
+  {
+    "key": "남면|남해군",
+    "name": "남면공설시장",
+    "sido": "경상남도",
+    "sigungu": "남해군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 34.770945,
+    "lng": 127.8853533,
+    "is_declining": true,
+    "shop_count": 17
+  },
+  {
+    "key": "진영|김해시",
+    "name": "진영전통시장",
+    "sido": "경상남도",
+    "sigungu": "김해시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.30231684,
+    "lng": 128.7306322,
+    "is_declining": false,
+    "shop_count": 72
+  },
+  {
+    "key": "진례|김해시",
+    "name": "진례전통시장",
+    "sido": "경상남도",
+    "sigungu": "김해시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 35.24867545,
+    "lng": 128.7489254,
+    "is_declining": false,
+    "shop_count": null
+  },
+  {
+    "key": "경주중앙|경주시",
+    "name": "경주중앙시장",
+    "sido": "경상북도",
+    "sigungu": "경주시",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.84395286,
+    "lng": 129.2067435,
+    "is_declining": false,
+    "shop_count": 295
+  },
+  {
+    "key": "배둔|고성군",
+    "name": "배둔시장",
+    "sido": "경상남도",
+    "sigungu": "고성군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 35.05736208,
+    "lng": 128.3691501,
+    "is_declining": true,
+    "shop_count": 30
+  },
+  {
+    "key": "영오|고성군",
+    "name": "영오시장",
+    "sido": "경상남도",
+    "sigungu": "고성군",
+    "days": [
+      2,
+      7
+    ],
+    "cycle_label": "2일+7일",
+    "lat": 35.10895031,
+    "lng": 128.2376737,
+    "is_declining": true,
+    "shop_count": 28
+  },
+  {
+    "key": "고성|고성군",
+    "name": "고성시장",
+    "sido": "경상남도",
+    "sigungu": "고성군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 34.97730013,
+    "lng": 128.3230514,
+    "is_declining": true,
+    "shop_count": 265
+  },
+  {
+    "key": "거창|거창군",
+    "name": "거창시장",
+    "sido": "경상남도",
+    "sigungu": "거창군",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 35.68700298,
+    "lng": 127.9138722,
+    "is_declining": true,
+    "shop_count": 299
+  },
+  {
+    "key": "거제읍내|거제시",
+    "name": "거제읍내시장",
+    "sido": "경상남도",
+    "sigungu": "거제시",
+    "days": [
+      3,
+      8
+    ],
+    "cycle_label": "3일+8일",
+    "lat": 34.85055855,
+    "lng": 128.5903037,
+    "is_declining": false,
+    "shop_count": 23
+  },
+  {
+    "key": "발안만세|화성시",
+    "name": "발안만세시장",
+    "sido": "경기도",
+    "sigungu": "화성시",
+    "days": [
+      5,
+      10
+    ],
+    "cycle_label": "5일+10일",
+    "lat": 37.13145931,
+    "lng": 126.9094512,
+    "is_declining": false,
+    "shop_count": 214
+  },
+  {
+    "key": "조암|화성시",
+    "name": "조암시장",
+    "sido": "경기도",
+    "sigungu": "화성시",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 37.08354443,
+    "lng": 126.818488,
+    "is_declining": false,
+    "shop_count": 420
+  },
+  {
+    "key": "금촌|파주시",
+    "name": "금촌전통시장",
+    "sido": "경기도",
+    "sigungu": "파주시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 37.76261761,
+    "lng": 126.7738861,
+    "is_declining": false,
+    "shop_count": 91
+  },
+  {
+    "key": "양동쌍학|양평군",
+    "name": "양동쌍학시장",
+    "sido": "경기도",
+    "sigungu": "양평군",
+    "days": [
+      4,
+      9
+    ],
+    "cycle_label": "4일+9일",
+    "lat": 37.42017548,
+    "lng": 127.7531956,
+    "is_declining": false,
+    "shop_count": 100
+  },
+  {
+    "key": "남양|화성시",
+    "name": "남양시장",
+    "sido": "경기도",
+    "sigungu": "화성시",
+    "days": [
+      1,
+      6
+    ],
+    "cycle_label": "1일+6일",
+    "lat": 37.20902222,
+    "lng": 126.8159971,
+    "is_declining": false,
+    "shop_count": 406
+  }
+]

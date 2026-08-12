@@ -28,7 +28,10 @@
     "eval:videoplace": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/eval-video-place.ts",
     "collect:sunrise": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-sunrise.ts",
     "export:suntime": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-suntime.ts",
-    "build:hotspots": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-hotspots.ts"
+    "build:hotspots": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-hotspots.ts",
+    "yt:channelmeta": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-youtube.ts channelmeta",
+    "eval:hypothesis": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/eval-hypothesis.ts",
+    "export:shootdays": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-shootdays.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",

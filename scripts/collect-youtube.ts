@@ -200,6 +200,97 @@ async function collectChannel(input: string): Promise<void> {
 }
 
 // ═══════════════════════════════════════════════════════
+//  1-B. 채널 메타만 일괄 — 50개 묶음에 1 unit
+// ═══════════════════════════════════════════════════════
+/**
+ * 수집한 영상에 등장하는 채널의 **구독자 수만** 채운다. 영상은 안 받는다.
+ *
+ * ── 왜 이게 급한가 ───────────────────────────────────────
+ * 이 서비스의 모든 점수가 `조회수 ÷ 구독자` 위에 서 있다 (SPEC 4장).
+ * 그런데 수집 영상 548편이 걸친 채널 162개 중 구독자를 아는 건 7개뿐이었다.
+ * → **점수 체계의 유일한 입력값을 96% 에서 못 만들고 있었다.**
+ *
+ * 조회수만으로는 아무것도 못 한다. 구독자 620만 채널의 10만 조회는 실패고
+ * 구독자 2천 채널의 1만 조회는 대박인데, 구독자를 모르면 둘이 구분되지 않는다.
+ *
+ * `channels.list` 는 id 50개를 한 번에 받고 1 unit 이다. 162개면 4 units.
+ * 영상까지 받는 `yt:channel` 과 달리 재생목록을 안 타므로 훨씬 싸다.
+ */
+async function collectChannelMeta(): Promise<void> {
+  const rows = db
+    .prepare(
+      `select distinct v.channel_id from yt_video v
+        where v.channel_id is not null and v.channel_id <> ''
+          and not exists (
+            select 1 from yt_channel c
+             where c.channel_id = v.channel_id and c.subscriber_count > 0)`,
+    )
+    .all() as { channel_id: string }[];
+
+  if (rows.length === 0) {
+    console.log("  채워야 할 채널이 없습니다.\n");
+    return;
+  }
+
+  const ids = rows.map((r) => r.channel_id);
+  console.log(`  대상 ${ids.length}개 · 예상 ${Math.ceil(ids.length / 50)} units\n`);
+
+  const ins = db.prepare(
+    `INSERT INTO yt_channel (channel_id, title, handle, subscriber_count, sub_band,
+       video_count, view_count, uploads_playlist, language, country, fetched_at)
+     VALUES (?,?,?,?,?,?,?,?,?,?,?)
+     ON CONFLICT(channel_id) DO UPDATE SET
+       title = excluded.title,
+       subscriber_count = excluded.subscriber_count,
+       sub_band = excluded.sub_band,
+       video_count = excluded.video_count,
+       view_count = excluded.view_count,
+       fetched_at = excluded.fetched_at`,
+  );
+
+  let saved = 0;
+  let hidden = 0;
+  for (let i = 0; i < ids.length; i += 50) {
+    const batch = ids.slice(i, i + 50);
+    if (!quota.canAfford("channels")) {
+      console.log("  쿼터 소진 — 여기까지.\n");
+      break;
+    }
+    const r = await call<ChannelItem>(quota, "channels", {
+      part: "snippet,statistics,contentDetails",
+      id: batch.join(","),
+      maxResults: 50,
+    });
+    for (const ch of r.items) {
+      const subs = Number(ch.statistics?.subscriberCount ?? 0);
+      /**
+       * 구독자를 숨긴 채널은 0 으로 온다. **저장은 하되 vsr 계산에서는 빠진다** —
+       * 0 으로 나누면 무한대가 되고, 1 로 치면 그 채널이 모든 순위를 쓸어버린다.
+       */
+      if (subs === 0) hidden++;
+      ins.run(
+        ch.id,
+        ch.snippet.title,
+        ch.snippet.customUrl ?? null,
+        subs,
+        subBand(subs),
+        Number(ch.statistics?.videoCount ?? 0),
+        Number(ch.statistics?.viewCount ?? 0),
+        ch.contentDetails?.relatedPlaylists?.uploads ?? "",
+        detectLanguage(ch.snippet.title, ch.snippet.description ?? ""),
+        ch.snippet.country ?? null,
+        now,
+      );
+      saved++;
+    }
+  }
+
+  console.log(
+    `  채널 ${saved}개 저장${hidden ? ` (구독자 비공개 ${hidden}개 — vsr 계산에서 제외된다)` : ""}\n`,
+  );
+}
+
+// ═══════════════════════════════════════════════════════
 //  2. 검색 — 페이지당 100 units. 제일 비싸다
 // ═══════════════════════════════════════════════════════
 /**
@@ -526,12 +617,14 @@ async function main(): Promise<void> {
         return;
       }
       await collectChannel(input);
+    } else if (mode === "channelmeta") {
+      await collectChannelMeta();
     } else if (mode === "search") {
       await collectSearch();
     } else if (mode === "comments") {
       await collectComments();
     } else {
-      console.log(`  알 수 없는 모드: ${mode} (channel | search | comments)\n`);
+      console.log(`  알 수 없는 모드: ${mode} (channel | channelmeta | search | comments)\n`);
       return;
     }
   } catch (e) {

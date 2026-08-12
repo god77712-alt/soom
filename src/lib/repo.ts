@@ -38,6 +38,7 @@ import {
 } from "./display";
 import { distanceKm, estimateDriveMinutes } from "./geo";
 import { pickShortsCut, type Hotspot } from "./shorts";
+import { shootPlanFor, type ShootPlan } from "./shootday";
 import { MIN_SUBSCRIBER_COUNT, reachRange, resolveTagScore, soomScore, vsr, type ResolvedTagScore } from "./score";
 import REAL_CHANNELS_JSON from "@/data/real/channels.json";
 import REAL_HOTSPOTS_JSON from "@/data/real/hotspots.json";
@@ -350,6 +351,14 @@ export interface PlaceCard {
   nearby: NearbySpot[];
   /** 잘 된 영상을 뜯어 놓은 것. 펼침의 중심 */
   breakdowns: VideoBreakdown[];
+  /**
+   * 다음 장날 + 그날의 해 시각. 정기장이 아니면 null.
+   *
+   * 점수는 목록 순서를 정하고, 사람을 실제로 움직이는 건 이것이다 —
+   * 날짜가 박혀 있어야 "안 가면 놓친다" 가 된다. 그리고 소재 점수와 달리
+   * 장날·일출은 예측이 아니라 **사실**이라 검증에 흔들리지 않는다.
+   */
+  shootPlan: ShootPlan | null;
 }
 
 async function statOf(placeId: string, language: Language): Promise<PlaceLanguageStat | undefined> {
@@ -389,6 +398,12 @@ export async function recommendPlaces(
     count: o.count,
   }));
 
+  /**
+   * 촬영 계획의 기준 날짜. **여기서 한 번만 만든다.**
+   * 카드마다 new Date() 를 부르면 자정 근처에서 카드끼리 날짜가 갈린다.
+   */
+  const today = new Date();
+
   const cards = await Promise.all(
     placeIds.map(async (placeId) => {
       const place = FAKE_PLACES.find((p) => p.id === placeId)!;
@@ -417,6 +432,11 @@ export async function recommendPlaces(
         operation: await getPlaceOperation(placeId),
         nearby: await getNearbySpots(placeId, lang),
         breakdowns: await getVideoBreakdowns(placeId, tagId, lang),
+        /**
+         * 기준 날짜를 **호출부에서 한 번만** 만들어 넘긴다.
+         * 카드마다 new Date() 를 부르면 자정 근처에서 카드끼리 날짜가 갈린다.
+         */
+        shootPlan: shootPlanFor(place.name_ko, place.sigungu, today),
         _tiebreak: (await statOf(placeId, other))?.median_vsr ?? 0,
       };
     }),
