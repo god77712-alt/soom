@@ -14,7 +14,7 @@
  * 나머지는 장소는 있어도 영상 표본이 0이라 "이 소재가 어떻게 먹히는지" 를 못 말한다.
  * 목록만 보여줄 수는 있지만, 그건 소개글·태깅이 더 찬 뒤에 늘린다.
  */
-import { writeFileSync, mkdirSync } from "node:fs";
+import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import { openDb } from "./lib/db";
 
 const OUT = "./src/data/real/places.json";
@@ -58,8 +58,34 @@ const QUERY_OF: Record<string, string> = {
   자연휴양림: "자연휴양림 브이로그",
 };
 
-/** 배수를 화면에 그려도 되는 최소 영상 수 (`score.ts` MIN_SAMPLE_FOR_MULTIPLIER) */
-const MIN_FOR_MULTIPLIER = 100;
+/**
+ * 소재 단위 `can_show_multiplier` 는 **직접 판정하지 않는다.**
+ *
+ * ⚠️ 예전엔 여기서 `영상 100편 이상` 으로 따로 셌다. 그런데 카드가 실제로 읽는 건
+ *    `tagscores.json` 의 셀이라, 두 숫자가 어긋났다 — `/subject/hanggu` 는
+ *    "성과 비교 가능"(259편) 인데 카드는 "순위만"(40편) 이 떴다. 모수도 달랐다.
+ *
+ * → **카드가 읽는 그 셀을 그대로 읽는다.** 어긋날 수가 없다.
+ *   ⚠️ 그래서 `export:tagscores` 를 **먼저** 돌려야 한다 (명령 순서 고정).
+ */
+const TAGSCORES_PATH = "./src/data/real/tagscores.json";
+
+interface TagScoreCell {
+  tag: string;
+  language: string;
+  sub_band: number | null;
+  video_count: number;
+  can_show_multiplier: boolean;
+}
+
+function loadTagScores(): TagScoreCell[] {
+  try {
+    return JSON.parse(readFileSync(TAGSCORES_PATH, "utf8")) as TagScoreCell[];
+  } catch {
+    console.log(`\n  ⚠️ ${TAGSCORES_PATH} 가 없습니다 — export:tagscores 를 먼저 돌리세요\n`);
+    return [];
+  }
+}
 
 function main(): void {
   const db = openDb();
@@ -145,9 +171,18 @@ function main(): void {
       where t.name_ko = ?`,
   );
 
+  const tagScores = loadTagScores();
+
   const out = SUBJECTS.map((s) => {
     const c = counts.get(s.tag) as { n: number; d: number; sg: number };
     const v = (videoCount.get(QUERY_OF[s.tag] ? `search:${QUERY_OF[s.tag]}` : "") as { n: number }).n;
+    /**
+     * 카드가 읽는 셀(국내 · 밴드 무관)을 그대로 본다. 여기서 다시 세지 않는다.
+     * 언어는 `ko` 고정 — 소재 목록 화면은 국내 크리에이터가 보는 화면이다.
+     */
+    const cell = tagScores.find(
+      (t) => t.tag === s.tag && t.language === "ko" && t.sub_band === null,
+    );
     const rows = places.all(s.tag, CAP) as {
       id: string;
       name_ko: string;
@@ -170,9 +205,12 @@ function main(): void {
       total: c.n,
       declining: c.d,
       sigungu_count: c.sg,
+      /** 검색으로 수집한 영상 수. 아래 점수 표본(`score_sample`)과 모수가 다르다 */
       video_count: v,
-      /** 배수를 숫자로 써도 되는가 */
-      can_show_multiplier: v >= MIN_FOR_MULTIPLIER,
+      /** 점수를 낸 실제 표본. 화면이 `can_show_multiplier` 와 함께 이 수를 말해야 한다 */
+      score_sample: cell?.video_count ?? 0,
+      /** 배수를 숫자로 써도 되는가 — 카드가 읽는 셀과 **같은 값** */
+      can_show_multiplier: cell?.can_show_multiplier ?? false,
       places: rows.map((r) => ({
         id: r.id,
         name: r.name_ko,

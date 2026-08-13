@@ -22,8 +22,9 @@
  *   채널 매칭      channels.json 의 LLM 소재 분류 × 지역 재고
  */
 import { SUBJECTS, type CatalogPlace, type Subject } from "./catalog";
-import { findTagScore, type RealTagScore } from "./realcards";
+import { type RealTagScore } from "./realcards";
 import CHANNELS_JSON from "@/data/real/channels.json";
+import TAGSCORES_JSON from "@/data/real/tagscores.json";
 import type { Language, SubBand } from "./types";
 
 interface RawChannel {
@@ -38,6 +39,14 @@ interface RawChannel {
 
 // JSON 은 sub_band 등이 넓은 string 으로 추론된다. 좁히려면 unknown 을 거쳐야 한다
 const CHANNELS = CHANNELS_JSON as unknown as RawChannel[];
+const TAGSCORES = TAGSCORES_JSON as RealTagScore[];
+
+/** 밴드 무관·국내 셀. 기관 화면은 특정 채널 크기를 가정하지 않는다 */
+function bandFreeScore(tag: string): RealTagScore | null {
+  return (
+    TAGSCORES.find((t) => t.tag === tag && t.language === "ko" && t.sub_band === null) ?? null
+  );
+}
 
 // ─── ① 지역별 재고 ────────────────────────────────────────
 
@@ -121,8 +130,12 @@ export function realGaps(limit = 10): RealGapRow[] {
         totalCount: a.total,
         decliningArea: a.declining,
         topSubject: top,
-        // 밴드를 풀고 언어는 국내로. 기관은 특정 채널이 아니라 지역을 본다
-        topSubjectScore: subject ? (findTagScore(subject.tag, "ko", 2)?.score ?? null) : null,
+        /**
+         * 밴드 무관 셀을 **직접** 읽는다. 기관 화면은 특정 채널 크기와 무관하다.
+         * ⚠️ 예전엔 `findTagScore(tag, "ko", 2)` 로 밴드 2를 먼저 봤는데,
+         *    그 밴드를 고를 이유가 없었다.
+         */
+        topSubjectScore: subject ? bandFreeScore(subject.tag) : null,
       };
     });
 }

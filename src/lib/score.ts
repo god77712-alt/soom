@@ -73,16 +73,35 @@ export function subBandOf(subscriberCount: number): SubBand | null {
 export const MIN_SAMPLE_SIZE = 5;
 
 /**
- * **배수(`3.2×`)를 화면에 그려도 되는 최소 표본.**
+ * 🚨 **배수(`3.2×`)를 화면에 그려도 되는가 — 판정은 여기 하나뿐이다.**
  *
- * 이 밑이면 순위에만 쓰고 숫자는 안 보여준다. 검정력 계산에서 나온 값이다 —
- * 기하평균 기준 1.5배를 잡으려면 약 300편이 필요하고, 100편이면 40% 다.
- * 100 은 "이 정도면 방향은 믿을 만하다" 의 하한이지 충분하다는 뜻이 아니다.
+ * ⚠️ 예전에는 이 판정이 세 군데에 따로 있었고 서로 달랐다 (2026-08-13 발견):
+ *      score.ts 100편 · export-places.ts 100편(복사본) · export-tagscores.ts CI 기준
+ *    그래서 `/subject/hanggu` 는 "성과 비교 가능" 인데 같은 소재 카드는 "순위만" 이
+ *    떴다. **판정을 늘리지 말 것.** 새 화면이 생기면 이 함수를 부른다.
  *
- * 표본이 이만큼 안 되는데 배수를 그리면, 다음 사람이 그 숫자를 근거로
- * 4시간을 운전한다. 숫자를 안 보여주는 쪽이 언제나 낫다.
+ * ── 왜 표본 수가 아니라 신뢰구간인가 ────────────────────
+ * 처음엔 `100편 이상` 으로 잡았는데 79칸 중 1칸만 통과했다. 기준이 틀렸다.
+ * 100편은 **"소재 A가 B보다 1.5배 낫다"** 를 말할 때 필요한 수다.
+ * 화면이 하는 말은 그게 아니라 **"이 소재의 전형값은 0.9배"** 다 — 다른 주장이고
+ * 필요한 표본도 훨씬 적다.
+ *
+ * → 기하평균 자체의 95% 신뢰구간이 **4배 안**이면 숫자를 쓴다. 그보다 넓으면
+ *   `1.2×` 와 `2.4×` 를 구분해서 말할 수 없으니 감춘다.
+ *
+ * 표본 하한(20편)은 부트스트랩이 의미를 갖는 최소치일 뿐, 이게 판정의 본체가 아니다.
  */
-export const MIN_SAMPLE_FOR_MULTIPLIER = 100;
+export const MIN_SAMPLE_FOR_MULTIPLIER = 20;
+export const MAX_CI_RATIO = 4;
+
+/**
+ * 신뢰구간을 낼 수 없는 점수(시연 `TagScore` 등)에 쓰는 **거친 대용치**.
+ *
+ * CI 를 못 재면 그 숫자가 말이 되는지 확인할 방법이 없다. 그럴 땐 보수적으로 —
+ * 검정력 계산 기준 100편(1.5배 차이를 40% 확률로 잡는 수)을 요구한다.
+ * 느슨하게 풀면 검증 안 된 배수가 화면에 뜬다.
+ */
+export const MIN_SAMPLE_WITHOUT_CI = 100;
 
 export type TagScoreStatus =
   /** 세부 태그 자체 표본이 충분함 */
@@ -92,9 +111,23 @@ export type TagScoreStatus =
   /** 상위 태그도 표본 부족 → 점수 없음. 억지로 채우지 않는다 */
   | "insufficient";
 
-/** 이 점수의 배수를 화면에 숫자로 써도 되는가 */
-export function canShowMultiplier(score: TagScore | null): boolean {
-  return score !== null && score.video_count >= MIN_SAMPLE_FOR_MULTIPLIER;
+/**
+ * 이 점수의 배수를 화면에 숫자로 써도 되는가. **판정은 이 함수 하나뿐이다.**
+ *
+ * 신뢰구간이 있으면 그걸로 판정하고, 없으면 표본 수 대용치로 떨어진다.
+ */
+export function canShowMultiplier(
+  score: { video_count: number; ci_low?: number | null; ci_high?: number | null } | null,
+): boolean {
+  if (score === null) return false;
+  const { video_count, ci_low, ci_high } = score;
+
+  // CI 를 못 재는 점수 — 보수적으로 표본 수만 본다
+  if (ci_low == null || ci_high == null || ci_low <= 0) {
+    return video_count >= MIN_SAMPLE_WITHOUT_CI;
+  }
+
+  return video_count >= MIN_SAMPLE_FOR_MULTIPLIER && ci_high / ci_low <= MAX_CI_RATIO;
 }
 
 export interface ResolvedTagScore {

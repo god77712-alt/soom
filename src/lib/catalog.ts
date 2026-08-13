@@ -67,6 +67,12 @@ export interface Subject {
   /** 이 소재로 수집한 영상 수 */
   video_count: number;
   /** 표본이 100편 이상이라 배수를 숫자로 써도 되는가 */
+  /** 점수를 낸 실제 표본 수. `video_count`(검색 수집 수)와 모수가 다르다 */
+  score_sample: number;
+  /**
+   * 배수를 숫자로 써도 되는가.
+   * ⚠️ `tagscores.json` 의 셀을 그대로 받아온 값이다 — 여기서 다시 판정하지 말 것.
+   */
   can_show_multiplier: boolean;
   /** 화면에 담은 장소 (전량이 아니다 — total 과 다르다) */
   places: CatalogPlace[];

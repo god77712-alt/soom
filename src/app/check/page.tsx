@@ -11,6 +11,7 @@
  */
 
 import Link from "next/link";
+import { RealDataChecks } from "@/components/RealDataChecks";
 import { seasonBadge, tagScoreLabel, toneClass } from "@/lib/display";
 import { scarcity } from "@/lib/score";
 import { getAllPlaceLines, getTags, getTagScores, recommendPlaces } from "@/lib/repo";
@@ -239,6 +240,12 @@ export default async function CheckPage() {
           </tbody>
         </table>
       </section>
+
+      {/*
+        ⚠️ 위 표는 전부 **시연 데이터**를 검사한다. 실제로 배포되는 화면은
+           realcards·realdetail·realadmin 이므로 아래를 함께 본다.
+      */}
+      <RealDataChecks />
     </main>
   );
 }

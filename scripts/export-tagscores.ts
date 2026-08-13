@@ -38,20 +38,12 @@ const QUERY_TO_TAG: Record<string, string> = {
 };
 
 /**
- * 배수를 화면에 그려도 되는가 — **표본 수가 아니라 그 값의 신뢰구간으로 정한다.**
+ * 배수를 그릴 자격은 **`score.ts` `canShowMultiplier` 하나로만** 판정한다.
+ * 여기에 사본을 두지 말 것 — 예전에 그래서 화면끼리 말이 어긋났다 (그 주석 참조).
  *
- * ⚠️ 처음엔 `100편 이상` 으로 잡았는데 79칸 중 1칸만 통과했다. 기준이 틀렸다.
- *    100편은 **"소재 A가 B보다 1.5배 낫다"** 를 말할 때 필요한 수다.
- *    화면이 하는 말은 그게 아니라 **"이 소재의 전형값은 0.9배"** 다 — 다른 주장이고
- *    필요한 표본도 훨씬 적다.
- *
- * → 기하평균 자체의 95% 신뢰구간을 부트스트랩으로 내서, 위아래가 **4배 안**이면
- *   숫자를 쓴다. 그보다 넓으면 `1.2×` 와 `2.4×` 를 구분해서 말할 수 없으니 감춘다.
- *
- * 그리고 숫자를 쓸 때는 **반드시 범위를 함께** 낸다. 점 추정만 두면 확정된 사실로 읽힌다.
+ * 숫자를 쓸 때는 **반드시 범위를 함께** 낸다. 점 추정만 두면 확정된 사실로 읽힌다.
  */
-const MIN_N = 20;
-const MAX_CI_RATIO = 4;
+import { canShowMultiplier } from "../src/lib/score";
 
 /** 구독자 1,000 미만은 뺀다. 배수가 폭발해 통계를 망친다 (`score.ts`) */
 const MIN_SUBS = 1000;
@@ -185,11 +177,11 @@ function main(): void {
 
   const push = (tag: string, language: string, band: number | null, xs: number[]) => {
     const ci = geoCI(xs);
-    /**
-     * 표본이 최소치를 넘고, **기하평균의 신뢰구간이 4배 안**일 때만 숫자를 쓴다.
-     * 넓으면 그 숫자로는 아무 말도 못 한다 — 순위만 쓴다.
-     */
-    const ok = xs.length >= MIN_N && ci !== null && ci[1] / ci[0] <= MAX_CI_RATIO;
+    const ok = canShowMultiplier({
+      video_count: xs.length,
+      ci_low: ci ? ci[0] : null,
+      ci_high: ci ? ci[1] : null,
+    });
     out.push({
       tag,
       language,

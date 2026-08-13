@@ -88,23 +88,15 @@ export default async function Home({
    */
   const realSubject = evidence ? subjectForTagName(evidence.tag.name_ko) : null;
   const cardsAreReal = Boolean(realSubject);
-  const cards = !channel
-    ? []
-    : realSubject
-      ? realCards(realSubject, channel.language, channel.sub_band, 5)
-      : tagId
-        ? await recommendPlaces(
-            channel.id,
-            tagId,
-            5,
-            occupied.map((o) => o.place.id),
-          )
-        : [];
+
   /**
    * 소재 현황 블록도 실데이터가 우선이다.
    *
    * 여기가 시연으로 남으면 화면 맨 위 · 추천 목록 바로 앞에 가짜 영상 카드가
    * 걸린다. 아래 카드가 전부 실데이터여도 그것부터 눈에 들어온다.
+   *
+   * ⚠️ **추천 카드보다 먼저 계산한다.** 여기서 나온 "촬영 완료" 장소를
+   *    추천에서 빼야 같은 화면에 같은 장소가 두 번 안 나온다.
    */
   const realEvidence =
     channel && realSubject
@@ -115,6 +107,26 @@ export default async function Home({
           channel.subscriber_count,
         )
       : null;
+
+  const cards = !channel
+    ? []
+    : realSubject
+      ? realCards(
+          realSubject,
+          channel.language,
+          channel.sub_band,
+          5,
+          new Date(),
+          realEvidence?.occupied.map((o) => o.id) ?? [],
+        )
+      : tagId
+        ? await recommendPlaces(
+            channel.id,
+            tagId,
+            5,
+            occupied.map((o) => o.place.id),
+          )
+        : [];
 
   const expansion = tagId ? await getExpansionTags(tagId) : { siblings: [], explore: [] };
 
