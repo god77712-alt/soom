@@ -1,5 +1,96 @@
 [
   {
+    "id": "UCfpaSruWW3S4dibonKXENjA",
+    "handle": "@tzuyang6145",
+    "title": "tzuyang쯔양",
+    "subscriber_count": 13400000,
+    "sub_band": "o1m",
+    "language": "en",
+    "video_count": 1113,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 44,
+        "median_vsr": 0.115,
+        "p25_vsr": 0.087,
+        "p75_vsr": 0.138,
+        "median_views": 1538329,
+        "median_duration": 1168
+      },
+      "short": {
+        "sample": 5,
+        "median_vsr": 0.014,
+        "p25_vsr": 0.012,
+        "p75_vsr": 0.017,
+        "median_views": 193771,
+        "median_duration": 77
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 31,
+        "hits": 8
+      },
+      {
+        "name": "중식",
+        "count": 10,
+        "hits": 5
+      },
+      {
+        "name": "상설시장",
+        "count": 6,
+        "hits": 3
+      },
+      {
+        "name": "이색거리",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "문화관광축제",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "일반축제",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "LudJht8FC20",
+        "title": "반둥3탄) 전메뉴 1500원😱 길거리 포장마차에서 아이들과 3대1 대결..? 40년전통 라면 나시고렝 먹방",
+        "view_count": 10090764,
+        "published_at": "2026-05-20",
+        "vsr": 0.75,
+        "duration_sec": 1097,
+        "is_short": false
+      },
+      {
+        "video_id": "JsAkfDf4_Gk",
+        "title": "반둥2탄) 5단계 최고 매운맛에 도전했습니다🔥 역대급 매운 인도네시아 스블락 먹방",
+        "view_count": 3619917,
+        "published_at": "2026-05-18",
+        "vsr": 0.27,
+        "duration_sec": 1100,
+        "is_short": false
+      },
+      {
+        "video_id": "5dx66EjCG4I",
+        "title": "쓰리스타킬러 셰프님이 만든 피자.. 맛있을까?🤔",
+        "view_count": 3527874,
+        "published_at": "2026-07-25",
+        "vsr": 0.26,
+        "duration_sec": 1112,
+        "is_short": false
+      }
+    ]
+  },
+  {
     "id": "UCFCtZJTuJhE18k8IXwmXTYQ",
     "handle": "@ebsdocumentary",
     "title": "EBSDocumentary (EBS 다큐)",
@@ -157,6 +248,1427 @@
     ]
   },
   {
+    "id": "UCRmm8763aqO0CoeLCA2jNSA",
+    "handle": "@ootbstudio",
+    "title": "ootb STUDIO",
+    "subscriber_count": 1840000,
+    "sub_band": "o1m",
+    "language": "ko",
+    "video_count": 1531,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 10,
+        "median_vsr": 0.373,
+        "p25_vsr": 0.108,
+        "p75_vsr": 0.554,
+        "median_views": 686693,
+        "median_duration": 2027
+      },
+      "short": {
+        "sample": 40,
+        "median_vsr": 0.019,
+        "p25_vsr": 0.013,
+        "p75_vsr": 0.073,
+        "median_views": 35221,
+        "median_duration": 51
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "학교",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "수영",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "이색거리",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "일식",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "중식",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "_9A73ILsO7w",
+        "title": "절대 안 망하는 학과",
+        "view_count": 1936119,
+        "published_at": "2026-06-26",
+        "vsr": 1.05,
+        "duration_sec": 52,
+        "is_short": true
+      },
+      {
+        "video_id": "oieHuxYi_Oo",
+        "title": "현실판 상속자들✨ 소수저 닭수저 다 모인 억 소리 나는 학과 [연암대학교 스마트축산학과]ㅣ전과자 ep.127 [EN/IN]",
+        "view_count": 1147056,
+        "published_at": "2026-06-25",
+        "vsr": 0.62,
+        "duration_sec": 2050,
+        "is_short": false
+      },
+      {
+        "video_id": "e3XEhNSJjSA",
+        "title": "전과팅 시즌2 ep.1 | 모태 솔로지만 과팅은 하고 싶어 [모태 솔로 과팅] [EN/IN]",
+        "view_count": 1078497,
+        "published_at": "2026-07-23",
+        "vsr": 0.59,
+        "duration_sec": 3270,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UC4VoaWbC9pYxGCawDknpSXQ",
+    "handle": "@ryucamp",
+    "title": "RYUCAMP",
+    "subscriber_count": 1360000,
+    "sub_band": "o1m",
+    "language": "ko",
+    "video_count": 193,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 50,
+        "median_vsr": 0.73,
+        "p25_vsr": 0.474,
+        "p75_vsr": 0.923,
+        "median_views": 993466,
+        "median_duration": 2427
+      },
+      "short": {
+        "sample": 0,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 40,
+        "hits": 5
+      },
+      {
+        "name": "캠핑코스",
+        "count": 10,
+        "hits": 3
+      },
+      {
+        "name": "계곡",
+        "count": 2,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "SGRKm8FXcDw",
+        "title": "Camping in Heavy Snow with My Dog . 3-Room Inflatable Tent . Wood Stove ASMR",
+        "view_count": 6086577,
+        "published_at": "2025-12-23",
+        "vsr": 4.48,
+        "duration_sec": 2560,
+        "is_short": false
+      },
+      {
+        "video_id": "d3_9rAHho2Q",
+        "title": "24 Hours Camping in Heavy Rain with My Dog . 3-Room Inflatable Tent . Sound of Rain ASMR",
+        "view_count": 4558236,
+        "published_at": "2026-05-26",
+        "vsr": 3.35,
+        "duration_sec": 2670,
+        "is_short": false
+      },
+      {
+        "video_id": "VGoiSnQqnwY",
+        "title": "Best Winter Camping in Heavy Snow with My Dog . Binge Watching ASMR",
+        "view_count": 3325621,
+        "published_at": "2025-07-08",
+        "vsr": 2.45,
+        "duration_sec": 7489,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCYACixxri8vQLQ6BSriQehw",
+    "handle": "@코너korner",
+    "title": "코너Korner",
+    "subscriber_count": 1330000,
+    "sub_band": "o1m",
+    "language": "ko",
+    "video_count": 1343,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 23,
+        "median_vsr": 0.09,
+        "p25_vsr": 0.072,
+        "p75_vsr": 0.129,
+        "median_views": 120209,
+        "median_duration": 663
+      },
+      "short": {
+        "sample": 27,
+        "median_vsr": 0.145,
+        "p25_vsr": 0.091,
+        "p75_vsr": 0.25,
+        "median_views": 192940,
+        "median_duration": 40
+      }
+    },
+    "subjects": [
+      {
+        "name": "스키/스노보드",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "섬",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "관광호텔",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "바다낚시",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "요트",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "vY8V7adWcuo",
+        "title": "놀이공원 직원들은 MBTI가 E라는데, 진짜일까?",
+        "view_count": 2861626,
+        "published_at": "2026-03-28",
+        "vsr": 2.15,
+        "duration_sec": 51,
+        "is_short": true
+      },
+      {
+        "video_id": "1Ti0wImTjvc",
+        "title": "에버랜드에 돈을 대놓고 붙여두면 어떻게 될까?",
+        "view_count": 1392856,
+        "published_at": "2026-03-18",
+        "vsr": 1.05,
+        "duration_sec": 59,
+        "is_short": true
+      },
+      {
+        "video_id": "ScG7VbYrZrg",
+        "title": "줄자 길이 맞추기 가능?",
+        "view_count": 601228,
+        "published_at": "2026-08-08",
+        "vsr": 0.45,
+        "duration_sec": 40,
+        "is_short": true
+      }
+    ]
+  },
+  {
+    "id": "UCSZQK43hJ422otti5D3iNgA",
+    "handle": "@ssoberrycamping",
+    "title": "쏘베리 Ssoberry",
+    "subscriber_count": 1320000,
+    "sub_band": "o1m",
+    "language": "en",
+    "video_count": 211,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 39,
+        "median_vsr": 0.257,
+        "p25_vsr": 0.198,
+        "p75_vsr": 0.441,
+        "median_views": 339370,
+        "median_duration": 2110
+      },
+      "short": {
+        "sample": 11,
+        "median_vsr": 0.068,
+        "p25_vsr": 0.052,
+        "p75_vsr": 0.106,
+        "median_views": 89343,
+        "median_duration": 62
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 42,
+        "hits": 10
+      },
+      {
+        "name": "해수욕장",
+        "count": 6,
+        "hits": 1
+      },
+      {
+        "name": "계곡",
+        "count": 5,
+        "hits": 1
+      },
+      {
+        "name": "캠핑코스",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "카페/전통찻집",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "JYW3KuKlKGs",
+        "title": "폭우속 아늑한 차박",
+        "view_count": 5167549,
+        "published_at": "2026-04-20",
+        "vsr": 3.91,
+        "duration_sec": 60,
+        "is_short": true
+      },
+      {
+        "video_id": "TgaT4Hx9l0A",
+        "title": "☔️ 비바람 몰아치는 깊은 숲 아늑한 270도 회전 어닝텐트 속에서의 차박 🚙 | 비빔밥과 감자뇨끼 만들어먹기",
+        "view_count": 1410969,
+        "published_at": "2026-04-05",
+        "vsr": 1.07,
+        "duration_sec": 2396,
+        "is_short": false
+      },
+      {
+        "video_id": "AOmy3yKWM1U",
+        "title": "🚙 겨울 숲속 270도 회전 어닝텐트 치고 강아지와 함께 차박하기 | 수제 손칼국수 만들어먹기",
+        "view_count": 1389623,
+        "published_at": "2026-01-11",
+        "vsr": 1.05,
+        "duration_sec": 1772,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCa2oXLnaegXJC33vLiX545g",
+    "handle": "@kimkangwoo.official",
+    "title": "김강우 KIMKANGWOO",
+    "subscriber_count": 1170000,
+    "sub_band": "o1m",
+    "language": "ko",
+    "video_count": 346,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 10,
+        "median_vsr": 0.252,
+        "p25_vsr": 0.185,
+        "p75_vsr": 0.307,
+        "median_views": 294301,
+        "median_duration": 759
+      },
+      "short": {
+        "sample": 40,
+        "median_vsr": 0.13,
+        "p25_vsr": 0.071,
+        "p75_vsr": 0.769,
+        "median_views": 152401,
+        "median_duration": 40
+      }
+    },
+    "subjects": [
+      {
+        "name": "경기장",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "카페/전통찻집",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "맛코스",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "유적지/사적지",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "이색거리",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "한식",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "-qBPNeSulvE",
+        "title": "그때 왜 그랬어요 형부?",
+        "view_count": 3931288,
+        "published_at": "2026-06-25",
+        "vsr": 3.36,
+        "duration_sec": 34,
+        "is_short": true
+      },
+      {
+        "video_id": "AYjcrcpSQMU",
+        "title": "사춘기 아들 쉽지 않다",
+        "view_count": 3773097,
+        "published_at": "2026-07-16",
+        "vsr": 3.22,
+        "duration_sec": 61,
+        "is_short": true
+      },
+      {
+        "video_id": "1reY4ZkSn_A",
+        "title": "와이프 몰래 뭉친 동서지간 현실 대화",
+        "view_count": 2062885,
+        "published_at": "2026-05-28",
+        "vsr": 1.76,
+        "duration_sec": 46,
+        "is_short": true
+      }
+    ]
+  },
+  {
+    "id": "UCa56qkMvVvq1IMn4xbXaKEA",
+    "handle": "@samdaejang_official",
+    "title": "삼대장 Samdaejang",
+    "subscriber_count": 1040000,
+    "sub_band": "o1m",
+    "language": "ko",
+    "video_count": 2148,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 48,
+        "median_vsr": 0.145,
+        "p25_vsr": 0.129,
+        "p75_vsr": 0.187,
+        "median_views": 151043,
+        "median_duration": 1450
+      },
+      "short": {
+        "sample": 2,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 3,
+        "hits": 2
+      },
+      {
+        "name": "공원",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "섬",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "수영",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "계곡",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "4ryS5rYLx94",
+        "title": "레전드 리재영의 10,000kcal 미러전!! 6년 전 메뉴 그대로... 20대의 나 자신을 이길 수 있을까???",
+        "view_count": 309083,
+        "published_at": "2026-05-29",
+        "vsr": 0.3,
+        "duration_sec": 2506,
+        "is_short": false
+      },
+      {
+        "video_id": "xXIhA3AV_4Q",
+        "title": "요즘 성수동 느좋남 특",
+        "view_count": 244491,
+        "published_at": "2026-07-15",
+        "vsr": 0.24,
+        "duration_sec": 1410,
+        "is_short": false
+      },
+      {
+        "video_id": "vzih7DA66wQ",
+        "title": "리재영 혼자서 파뿌리 본진 개박살내고왔습니다.",
+        "view_count": 229615,
+        "published_at": "2026-05-24",
+        "vsr": 0.22,
+        "duration_sec": 1176,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCu4X3ZAoq6nToNJNNoQuICA",
+    "handle": "@hyejins",
+    "title": "혜진쓰 Hyejin's",
+    "subscriber_count": 977000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 825,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 16,
+        "median_vsr": 0.465,
+        "p25_vsr": 0.416,
+        "p75_vsr": 0.485,
+        "median_views": 453827,
+        "median_duration": 1310
+      },
+      "short": {
+        "sample": 34,
+        "median_vsr": 0.654,
+        "p25_vsr": 0.449,
+        "p75_vsr": 0.926,
+        "median_views": 639034,
+        "median_duration": 34
+      }
+    },
+    "subjects": [
+      {
+        "name": "농.산.어촌 체험",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "한식",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "공원",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "민속마을",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "산",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "상설시장",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "WsOaroLbD5s",
+        "title": "칸쵸에서 채유 & 승유 이름 찾아보기 🔎 막막차 탑승합니다.. 🚌",
+        "view_count": 1881044,
+        "published_at": "2026-05-31",
+        "vsr": 1.93,
+        "duration_sec": 85,
+        "is_short": true
+      },
+      {
+        "video_id": "QmLIeIQVBF0",
+        "title": "남편한테 내 사진들 보내달라고 해봤다 🤔",
+        "view_count": 1758565,
+        "published_at": "2026-05-30",
+        "vsr": 1.8,
+        "duration_sec": 19,
+        "is_short": true
+      },
+      {
+        "video_id": "ApSljuTF8tI",
+        "title": "전국의 워킹맘들 화이팅...💪🏻❤️‍🔥",
+        "view_count": 1724566,
+        "published_at": "2026-06-14",
+        "vsr": 1.77,
+        "duration_sec": 68,
+        "is_short": true
+      }
+    ]
+  },
+  {
+    "id": "UCxU8QX7IRRIW0VLuoWWoxbw",
+    "handle": "@jayworldtraveler",
+    "title": "여행가 제이 [Traveler JAY]",
+    "subscriber_count": 818000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 517,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 47,
+        "median_vsr": 0.394,
+        "p25_vsr": 0.317,
+        "p75_vsr": 0.531,
+        "median_views": 322450,
+        "median_duration": 1732
+      },
+      "short": {
+        "sample": 3,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "산",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "섬",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "한식",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "펜션",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "국립공원",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "jD2LOckLX7Y",
+        "title": "한국인은 떠나고 외국인이 점령한 대한민국 1위 도시",
+        "view_count": 871980,
+        "published_at": "2025-08-10",
+        "vsr": 1.07,
+        "duration_sec": 1732,
+        "is_short": false
+      },
+      {
+        "video_id": "aF1ynQ3OhIo",
+        "title": "대한민국 가장 심각한 인구소멸위기 1위 도시",
+        "view_count": 848650,
+        "published_at": "2025-08-03",
+        "vsr": 1.04,
+        "duration_sec": 1967,
+        "is_short": false
+      },
+      {
+        "video_id": "xQk_cisTvzI",
+        "title": "2,500평 인천 최대 규모 신상 찜질방 18시간 숙식 후기",
+        "view_count": 657646,
+        "published_at": "2025-11-09",
+        "vsr": 0.8,
+        "duration_sec": 1113,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCw5X6yzXwIcaSzJAQsL69Ug",
+    "handle": "@jojocamping",
+    "title": "조조캠핑 JOJOCAMPING",
+    "subscriber_count": 806000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 295,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 50,
+        "median_vsr": 0.18,
+        "p25_vsr": 0.138,
+        "p75_vsr": 0.21,
+        "median_views": 145151,
+        "median_duration": 1999
+      },
+      "short": {
+        "sample": 0,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 36,
+        "hits": 26
+      },
+      {
+        "name": "캠핑코스",
+        "count": 8,
+        "hits": 7
+      },
+      {
+        "name": "계곡",
+        "count": 6,
+        "hits": 5
+      },
+      {
+        "name": "자연휴양림",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "해수욕장",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "rNrG3ttf_CI",
+        "title": "60kg 투룸 에어텐트로 5인 가족 1박 2일 캠핑 할만 할까? | 그런데 1박 2일 짐 부피가 어마어마한... | 강화도 고려산힐링캠핑장",
+        "view_count": 357000,
+        "published_at": "2025-11-02",
+        "vsr": 0.44,
+        "duration_sec": 2009,
+        "is_short": false
+      },
+      {
+        "video_id": "VJ_FgaPWCak",
+        "title": "12kg 등짐 지고 해외 백패킹 로망 실현하기 | 일본 캠핑용품점, 다이소에서 살 수 있는 캠핑용품! | 후모톳바라 백패킹",
+        "view_count": 233436,
+        "published_at": "2025-06-01",
+        "vsr": 0.29,
+        "duration_sec": 3409,
+        "is_short": false
+      },
+      {
+        "video_id": "VsFw7_k-_Rg",
+        "title": "얼음 갈아 빙수 만들어 먹고 전기차로 에어컨 빵빵하게 틀고 자는 여름 힐링 차박 일상 | 여름 캠핑은 이게 정답이네요 | 원주 봉바위돌집캠핑장",
+        "view_count": 223807,
+        "published_at": "2025-08-03",
+        "vsr": 0.28,
+        "duration_sec": 2156,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCvAewWPqooIUgQUsjhTmUVw",
+    "handle": "@kimsooktv",
+    "title": "김숙티비kimsookTV",
+    "subscriber_count": 759000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 752,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 15,
+        "median_vsr": 0.462,
+        "p25_vsr": 0.345,
+        "p75_vsr": 0.892,
+        "median_views": 350834,
+        "median_duration": 990
+      },
+      "short": {
+        "sample": 35,
+        "median_vsr": 0.043,
+        "p25_vsr": 0.03,
+        "p75_vsr": 0.086,
+        "median_views": 32894,
+        "median_duration": 60
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "바다낚시",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "맛코스",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "서양식",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "전문매장/상가",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "eCFWLFp28hc",
+        "title": "제주 쑥하우스 최초공개🍊🏠 느좋 갬성으로 셀프 인테리어 해봐쑥!",
+        "view_count": 1422783,
+        "published_at": "2026-06-04",
+        "vsr": 1.87,
+        "duration_sec": 1252,
+        "is_short": false
+      },
+      {
+        "video_id": "J0JUBICc5U4",
+        "title": "🚨비상🚨제주집에 정체 모를 검은 그림자... 결국 119 불렀습니다‼️",
+        "view_count": 1034614,
+        "published_at": "2026-07-13",
+        "vsr": 1.36,
+        "duration_sec": 845,
+        "is_short": false
+      },
+      {
+        "video_id": "BnS7lW3Jizs",
+        "title": "이번엔 제주 다식원! 라미란, 윤유선 언니와 제주 찐맛집 투어🌴",
+        "view_count": 798125,
+        "published_at": "2026-06-29",
+        "vsr": 1.05,
+        "duration_sec": 773,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCT107q7vwRGAaActQ1oe7hA",
+    "handle": "@banbancamping",
+    "title": "반반한캠핑 Bancamp",
+    "subscriber_count": 671000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 157,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 44,
+        "median_vsr": 0.461,
+        "p25_vsr": 0.3,
+        "p75_vsr": 1.173,
+        "median_views": 309279,
+        "median_duration": 1844
+      },
+      "short": {
+        "sample": 6,
+        "median_vsr": 1.135,
+        "p25_vsr": 0.139,
+        "p75_vsr": 2.654,
+        "median_views": 761865,
+        "median_duration": 59
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 55,
+        "hits": 14
+      },
+      {
+        "name": "캠핑코스",
+        "count": 8,
+        "hits": 1
+      },
+      {
+        "name": "자연휴양림",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "섬",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "계곡",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "바다낚시",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "ahX24yvv3T8",
+        "title": "한 겨울에도 내 집 보다 따뜻한 집 두채짜리 초대형 장박지 짓기🏘️ 보일러 급 신상 화목난로 세팅🔥",
+        "view_count": 5886281,
+        "published_at": "2024-12-20",
+        "vsr": 8.77,
+        "duration_sec": 2078,
+        "is_short": false
+      },
+      {
+        "video_id": "0XzxHldB-lA",
+        "title": "비 오는 날 캠핑을 해도 행복한 이유☔️",
+        "view_count": 5245448,
+        "published_at": "2024-10-30",
+        "vsr": 7.82,
+        "duration_sec": 60,
+        "is_short": true
+      },
+      {
+        "video_id": "a-GIJZXNkcY",
+        "title": "시골 산 중턱에 5성급 호텔 부럽지 않은 방3개짜리 초호화 주말별장 짓기🏨 초대형 장박지 좌식세팅",
+        "view_count": 2655685,
+        "published_at": "2025-06-08",
+        "vsr": 3.96,
+        "duration_sec": 1932,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCAoyR-sL6B0S93AMR-HVTvg",
+    "handle": "@tteokbokqueen",
+    "title": "떡볶퀸 Tteokbokqueen",
+    "subscriber_count": 655000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 1084,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 22,
+        "median_vsr": 0.175,
+        "p25_vsr": 0.133,
+        "p75_vsr": 0.374,
+        "median_views": 114914,
+        "median_duration": 419
+      },
+      "short": {
+        "sample": 28,
+        "median_vsr": 0.073,
+        "p25_vsr": 0.043,
+        "p75_vsr": 0.151,
+        "median_views": 47979,
+        "median_duration": 50
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 33,
+        "hits": 19
+      },
+      {
+        "name": "상설시장",
+        "count": 14,
+        "hits": 8
+      },
+      {
+        "name": "맛코스",
+        "count": 5,
+        "hits": 2
+      },
+      {
+        "name": "일반축제",
+        "count": 4,
+        "hits": 2
+      },
+      {
+        "name": "대형마트",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "관광호텔",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "EXnlXEYuInU",
+        "title": "진짜 떡볶이를 먹고 싶다면 신당동 말고 여기로 가세요",
+        "view_count": 682908,
+        "published_at": "2026-06-11",
+        "vsr": 1.04,
+        "duration_sec": 413,
+        "is_short": false
+      },
+      {
+        "video_id": "lLuBhUwNaIg",
+        "title": "같은 가격 맞아? 역대급으로 판 키운 애슐리 신상 매장",
+        "view_count": 398914,
+        "published_at": "2026-08-07",
+        "vsr": 0.61,
+        "duration_sec": 670,
+        "is_short": false
+      },
+      {
+        "video_id": "2tMxEJAs7jo",
+        "title": "떡볶퀸 팝업 가봤더니..",
+        "view_count": 373330,
+        "published_at": "2026-08-03",
+        "vsr": 0.57,
+        "duration_sec": 57,
+        "is_short": true
+      }
+    ]
+  },
+  {
+    "id": "UCjZhSJP6ridQzH75e48wyIQ",
+    "handle": "@hongsi_v",
+    "title": "hongsi 홍시",
+    "subscriber_count": 618000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 523,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 43,
+        "median_vsr": 0.314,
+        "p25_vsr": 0.278,
+        "p75_vsr": 0.359,
+        "median_views": 193979,
+        "median_duration": 1075
+      },
+      "short": {
+        "sample": 7,
+        "median_vsr": 0.076,
+        "p25_vsr": 0.068,
+        "p75_vsr": 0.093,
+        "median_views": 47119,
+        "median_duration": 60
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "섬",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "카페/전통찻집",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "상설시장",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "al_ZZnyLc58",
+        "title": "아침부터 불닭에 통대창 조지는 내 인생이 레전드 / 인천 당일치기 / 마라크림우동, 밥솥닭백숙, 왕뚜껑라볶이, 백순대, 닭갈비",
+        "view_count": 350269,
+        "published_at": "2026-06-01",
+        "vsr": 0.57,
+        "duration_sec": 1048,
+        "is_short": false
+      },
+      {
+        "video_id": "5O4r9MuH0eg",
+        "title": "내가 파인다이닝 못 가는 이유 / 마지막 뿌링클 / 돈까스, 크림파스타, 밥버거, 김치돈까스전골",
+        "view_count": 281932,
+        "published_at": "2026-03-17",
+        "vsr": 0.46,
+        "duration_sec": 969,
+        "is_short": false
+      },
+      {
+        "video_id": "xRkN8C3MEs8",
+        "title": "세상은 넓고 먹을 건 많다 / 불닭냉면 + 뿌링클 / 강된장, 삼겹살, 마라탕, 두루치기",
+        "view_count": 257116,
+        "published_at": "2026-05-17",
+        "vsr": 0.42,
+        "duration_sec": 1101,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCrIxxmIq7logJFN6Bw_1KTA",
+    "handle": "@yeosuunnie",
+    "title": "여수언니 정혜영 [Yeosu Unnie]",
+    "subscriber_count": 611000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 711,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 7,
+        "median_vsr": 0.196,
+        "p25_vsr": 0.096,
+        "p75_vsr": 0.363,
+        "median_views": 119456,
+        "median_duration": 1727
+      },
+      "short": {
+        "sample": 43,
+        "median_vsr": 0.054,
+        "p25_vsr": 0.038,
+        "p75_vsr": 0.075,
+        "median_views": 33267,
+        "median_duration": 68
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 5,
+        "hits": 5
+      },
+      {
+        "name": "카페/전통찻집",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "경기장",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "맛코스",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "전문매장/상가",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "IBudcJmA5jM",
+        "title": "SUB)먹방 VLOG)맘스터치 핫치즈밤 치킨🍗당근빵+치밥🍚청학동 들깨옹심이+초코바게트+카이막+택배 떡 맛집3종🍡영양찰떡+완두시루떡+모시송편+옥수수기정떡+쑥몽실이❤️ MUKBANG",
+        "view_count": 271654,
+        "published_at": "2026-07-02",
+        "vsr": 0.44,
+        "duration_sec": 2879,
+        "is_short": false
+      },
+      {
+        "video_id": "ZOaI0EJpMrs",
+        "title": "SUB)먹방 한입혜영😋10화)김피탕🍕닭강정🍗홍진경 오이김밥🥒[봄날엔]두쫀떡 신상 3종+요거롤퐁+망고 [봄나리 베이커리]신상🎉왁뿌소 3종+과일산도 3종 인생과자 MUKBANG❤️",
+        "view_count": 235700,
+        "published_at": "2026-06-16",
+        "vsr": 0.39,
+        "duration_sec": 2770,
+        "is_short": false
+      },
+      {
+        "video_id": "ztfOci58bvI",
+        "title": "SUB)먹방VLOG)커링클+뿌링클🍗+치즈볼+대광어 지느러미 회+소갈비찜+박여사님표 김치 오이냉국👍🏻마카롱 10종+피칸파이+미쯔황치즈+우유 말먹 우베 아이스크림❤️ MUKBANG",
+        "view_count": 208147,
+        "published_at": "2026-07-28",
+        "vsr": 0.34,
+        "duration_sec": 3071,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCFpn_gNhm-ydKWGhRqCxLNw",
+    "handle": "@marilife",
+    "title": "마리라이프 Mari Life",
+    "subscriber_count": 578000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 372,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 48,
+        "median_vsr": 0.031,
+        "p25_vsr": 0.025,
+        "p75_vsr": 0.042,
+        "median_views": 17810,
+        "median_duration": 1582
+      },
+      "short": {
+        "sample": 2,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 6,
+        "hits": 6
+      },
+      {
+        "name": "산",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "자연휴양림",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "캠핑코스",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "해수욕장",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "00wjTZtgua4",
+        "title": "[296] 천둥 번개 우중 캠핑 | 잠 못 이룬 밤 |  반려견동반캠핑 | 애견캠핑 | 파도소리 | 힐링",
+        "view_count": 120381,
+        "published_at": "2025-07-25",
+        "vsr": 0.21,
+        "duration_sec": 1361,
+        "is_short": false
+      },
+      {
+        "video_id": "iAvqNzEE0Mw",
+        "title": "[292] 비오는 날, 20kg 골든 리트리버와 작은 텐트에서 | SAEKI P&C Co., Ltd | Ad | 난리법석 골든리트리버 | 반려견동반캠핑 | 빗소리 | 힐링",
+        "view_count": 56823,
+        "published_at": "2025-06-29",
+        "vsr": 0.1,
+        "duration_sec": 1811,
+        "is_short": false
+      },
+      {
+        "video_id": "ZpQiBz9o3xE",
+        "title": "[299] On a rainy day, romantic camping with my dog.",
+        "view_count": 50288,
+        "published_at": "2025-08-24",
+        "vsr": 0.09,
+        "duration_sec": 1564,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCqnYeCdELqXQulBZuK2y7sA",
+    "handle": "@bighandroh",
+    "title": "큰손 노희영",
+    "subscriber_count": 556000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 218,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 13,
+        "median_vsr": 0.358,
+        "p25_vsr": 0.27,
+        "p75_vsr": 0.391,
+        "median_views": 198902,
+        "median_duration": 1175
+      },
+      "short": {
+        "sample": 37,
+        "median_vsr": 0.07,
+        "p25_vsr": 0.049,
+        "p75_vsr": 0.135,
+        "median_views": 38989,
+        "median_duration": 67
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 4,
+        "hits": 1
+      },
+      {
+        "name": "강",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "관광호텔",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "상설시장",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "유적지/사적지",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "일식",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "9UUFFQlxigk",
+        "title": "일반인이 자수성가 하는 과정",
+        "view_count": 475956,
+        "published_at": "2026-06-30",
+        "vsr": 0.86,
+        "duration_sec": 129,
+        "is_short": true
+      },
+      {
+        "video_id": "TgmAlhh6K7g",
+        "title": "일 못하는 사람 특 #큰손노희영",
+        "view_count": 442309,
+        "published_at": "2026-08-02",
+        "vsr": 0.8,
+        "duration_sec": 72,
+        "is_short": true
+      },
+      {
+        "video_id": "5w1emjDDXcw",
+        "title": "노희영이 평생동안 모은 '샤넬 컬렉션' 최초공개 (가방만 수십개)",
+        "view_count": 385919,
+        "published_at": "2026-06-18",
+        "vsr": 0.69,
+        "duration_sec": 1622,
+        "is_short": false
+      }
+    ]
+  },
+  {
     "id": "UCeAnUT7zm00vcb1BS2-K8FQ",
     "handle": "@5g.explorer",
     "title": "오지는 오진다",
@@ -188,33 +1700,33 @@
     "subjects": [
       {
         "name": "고택",
-        "count": 19,
-        "hits": 19
+        "count": 32,
+        "hits": 21
       },
       {
         "name": "공원",
-        "count": 4,
-        "hits": 4
-      },
-      {
-        "name": "민박",
-        "count": 2,
-        "hits": 2
-      },
-      {
-        "name": "사찰",
-        "count": 2,
-        "hits": 2
+        "count": 5,
+        "hits": 5
       },
       {
         "name": "섬",
-        "count": 2,
-        "hits": 2
+        "count": 6,
+        "hits": 3
+      },
+      {
+        "name": "한옥",
+        "count": 5,
+        "hits": 3
       },
       {
         "name": "카페/전통찻집",
-        "count": 2,
-        "hits": 2
+        "count": 4,
+        "hits": 3
+      },
+      {
+        "name": "동굴",
+        "count": 3,
+        "hits": 3
       }
     ],
     "top": [
@@ -243,6 +1755,97 @@
         "published_at": "2026-06-03",
         "vsr": 0.88,
         "duration_sec": 1094,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCNbIuApep1oY2qybB0t1IJQ",
+    "handle": "@travelbrochure",
+    "title": "여행브로셔 - 출발 전에 꼭 봐야해!",
+    "subscriber_count": 535000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 611,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 17,
+        "median_vsr": 0.064,
+        "p25_vsr": 0.024,
+        "p75_vsr": 0.373,
+        "median_views": 34423,
+        "median_duration": 806
+      },
+      "short": {
+        "sample": 33,
+        "median_vsr": 0.034,
+        "p25_vsr": 0.019,
+        "p75_vsr": 0.068,
+        "median_views": 17929,
+        "median_duration": 14
+      }
+    },
+    "subjects": [
+      {
+        "name": "사찰",
+        "count": 7,
+        "hits": 7
+      },
+      {
+        "name": "산",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "종교성지",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "계곡",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "공원",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "기암괴석",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "QrY5jrmaKsM",
+        "title": "CNN에서 선정한 한국의 아름다운 사찰 6곳 / 전라남도 | 대한민국 좋은 여행지 | Korea Temples",
+        "view_count": 845785,
+        "published_at": "2024-09-08",
+        "vsr": 1.58,
+        "duration_sec": 1220,
+        "is_short": false
+      },
+      {
+        "video_id": "DHcvicDFno0",
+        "title": "벼랑 끝에 자리잡은 암자 !!",
+        "view_count": 801106,
+        "published_at": "2024-09-21",
+        "vsr": 1.5,
+        "duration_sec": 14,
+        "is_short": true
+      },
+      {
+        "video_id": "1NtP3Odns0s",
+        "title": "우리나라 5대 명찰 / 유홍준 교수가 나의 문화유산 답사기에서 선정 | 대한민국 좋은 여행지 | Korea Temples",
+        "view_count": 506258,
+        "published_at": "2025-05-13",
+        "vsr": 0.95,
+        "duration_sec": 914,
         "is_short": false
       }
     ]
@@ -279,32 +1882,32 @@
     "subjects": [
       {
         "name": "계곡",
-        "count": 34,
-        "hits": 34
-      },
-      {
-        "name": "야영장,오토캠핑장",
-        "count": 6,
-        "hits": 6
+        "count": 65,
+        "hits": 41
       },
       {
         "name": "온천/욕장/스파",
-        "count": 6,
-        "hits": 6
+        "count": 15,
+        "hits": 9
+      },
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 11,
+        "hits": 9
       },
       {
         "name": "폭포",
-        "count": 5,
-        "hits": 5
+        "count": 8,
+        "hits": 6
       },
       {
         "name": "스노쿨링/스킨스쿠버다이빙",
-        "count": 3,
-        "hits": 3
+        "count": 5,
+        "hits": 4
       },
       {
-        "name": "기타행사",
-        "count": 2,
+        "name": "수영",
+        "count": 5,
         "hits": 2
       }
     ],
@@ -335,6 +1938,365 @@
         "vsr": 0.45,
         "duration_sec": 20,
         "is_short": true
+      }
+    ]
+  },
+  {
+    "id": "UCa3XfT_AccZCELBLC913oEg",
+    "handle": "@유유타이거",
+    "title": "유유타이거",
+    "subscriber_count": 518000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 775,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 17,
+        "median_vsr": 0.594,
+        "p25_vsr": 0.494,
+        "p75_vsr": 0.723,
+        "median_views": 307849,
+        "median_duration": 848
+      },
+      "short": {
+        "sample": 33,
+        "median_vsr": 2.956,
+        "p25_vsr": 2.141,
+        "p75_vsr": 6.939,
+        "median_views": 1531351,
+        "median_duration": 35
+      }
+    },
+    "subjects": [
+      {
+        "name": "테마공원",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "펜션",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "고궁",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "관광호텔",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "기념탑/기념비/전망대",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "미술관/화랑",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "W5OiCNTcHE8",
+        "title": "랜덤 라면 끓이기🔥 [초딩딸들 VS 엄빠]",
+        "view_count": 14135435,
+        "published_at": "2026-04-14",
+        "vsr": 27.29,
+        "duration_sec": 44,
+        "is_short": true
+      },
+      {
+        "video_id": "O3YHRB56vkg",
+        "title": "과자 폭탄 먼저 먹는 사람이 소원 들어주기💣 [아빠VS딸]",
+        "view_count": 7793756,
+        "published_at": "2026-05-14",
+        "vsr": 15.05,
+        "duration_sec": 52,
+        "is_short": true
+      },
+      {
+        "video_id": "IJaeyrmftc4",
+        "title": "랜덤 가방으로 올리브영에서 사고싶은거 다 사기! (하자고 한거 후회한다..)",
+        "view_count": 5175766,
+        "published_at": "2026-04-30",
+        "vsr": 9.99,
+        "duration_sec": 35,
+        "is_short": true
+      }
+    ]
+  },
+  {
+    "id": "UCJ66AvaHJ2pHD_-AyUailuQ",
+    "handle": "@gaoni6979",
+    "title": "가오니의 메뉴판GAONI",
+    "subscriber_count": 483000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 411,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 48,
+        "median_vsr": 0.71,
+        "p25_vsr": 0.628,
+        "p75_vsr": 0.798,
+        "median_views": 342764,
+        "median_duration": 1852
+      },
+      "short": {
+        "sample": 2,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 5,
+        "hits": 3
+      },
+      {
+        "name": "카페/전통찻집",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "맛코스",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "일식",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "전문매장/상가",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "FO1BYwCZDOw",
+        "title": "먹방브이로그) 4시간동안.. 이정도면 만칼로리먹은 듯(로제엽떡+명랏핫도그/요아정/마라탕+꿔바로우/두바이초코/디저트먹방/복호두/딸기케이크 ",
+        "view_count": 562805,
+        "published_at": "2025-12-19",
+        "vsr": 1.17,
+        "duration_sec": 1316,
+        "is_short": false
+      },
+      {
+        "video_id": "xjt6SwU4ss4",
+        "title": "먹방브이로그) 단백질은 살 안찐다는 말은 괜히 들어서..! (엽기닭볶음탕/와플/두바이와플/하츠베이커리/마라샹궈+양갈비/망고산도/맘스터치 핫치즈싸이순살 치즈밤/육회비빔밥 ",
+        "view_count": 498201,
+        "published_at": "2026-06-11",
+        "vsr": 1.03,
+        "duration_sec": 2026,
+        "is_short": false
+      },
+      {
+        "video_id": "Eb2WDdkui0M",
+        "title": "먹방브이로그) 크리스마스🎄특집 기념 만칼로리 먹기ㅎㅎ(딸기케이크/뿌링클+치즈볼/두바이쫀득쿠키/두바이디저트/까르보불닭/디저트먹방/육회비빔밥+갈비탕/먹방",
+        "view_count": 483264,
+        "published_at": "2025-12-23",
+        "vsr": 1,
+        "duration_sec": 1798,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCNAdXHkMg3U4xmrU9eyg1Ww",
+    "handle": "@브루스리tv",
+    "title": "브루스리 TV",
+    "subscriber_count": 460000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 424,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 50,
+        "median_vsr": 0.411,
+        "p25_vsr": 0.337,
+        "p75_vsr": 0.503,
+        "median_views": 189146,
+        "median_duration": 1780
+      },
+      "short": {
+        "sample": 0,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "섬",
+        "count": 17,
+        "hits": 11
+      },
+      {
+        "name": "바다낚시",
+        "count": 11,
+        "hits": 7
+      },
+      {
+        "name": "한식",
+        "count": 6,
+        "hits": 4
+      },
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "항구/포구",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "고택",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "nyIn7anv6xs",
+        "title": "결혼하고 집대신 캠핑카를 선택한 30대 부부의 남다른 신혼생활 (몰아보기 4시간)",
+        "view_count": 671474,
+        "published_at": "2025-10-05",
+        "vsr": 1.46,
+        "duration_sec": 14744,
+        "is_short": false
+      },
+      {
+        "video_id": "gjz8v-E_-jY",
+        "title": "제주도에서 3박 4일간 매일 통발 놨더니 해산물 파티가 열린 날🎉",
+        "view_count": 539992,
+        "published_at": "2025-06-29",
+        "vsr": 1.17,
+        "duration_sec": 1766,
+        "is_short": false
+      },
+      {
+        "video_id": "F-f0D_tHt6k",
+        "title": "제주바다를 뒤덮은 외래종 푸른꽃게 잡아서 저녁만찬 해먹기 (너무 잡기쉬움)",
+        "view_count": 520566,
+        "published_at": "2025-11-02",
+        "vsr": 1.13,
+        "duration_sec": 1728,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCqWsstunfzMzQ7cJB0I4aXw",
+    "handle": "@익스트림한",
+    "title": "익스트림한",
+    "subscriber_count": 455000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 268,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 23,
+        "median_vsr": 0.82,
+        "p25_vsr": 0.5,
+        "p75_vsr": 1.098,
+        "median_views": 372934,
+        "median_duration": 1133
+      },
+      "short": {
+        "sample": 27,
+        "median_vsr": 0.056,
+        "p25_vsr": 0.032,
+        "p75_vsr": 0.095,
+        "median_views": 25633,
+        "median_duration": 51
+      }
+    },
+    "subjects": [
+      {
+        "name": "안보관광",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "동굴",
+        "count": 4,
+        "hits": 2
+      },
+      {
+        "name": "호수",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "강",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "유적지/사적지",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "계곡",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "BY_5crHEktM",
+        "title": "강원도에서 발견된 북한 땅굴 의심 장소 들어갑니다",
+        "view_count": 695516,
+        "published_at": "2026-08-07",
+        "vsr": 1.53,
+        "duration_sec": 1487,
+        "is_short": false
+      },
+      {
+        "video_id": "mbZFHKjQ578",
+        "title": "배달기사들도 무서워해서 못 간다는 장소",
+        "view_count": 639589,
+        "published_at": "2026-04-03",
+        "vsr": 1.41,
+        "duration_sec": 1331,
+        "is_short": false
+      },
+      {
+        "video_id": "Et91EL4igrc",
+        "title": "한국에서 무당들이 가장 많은 마을",
+        "view_count": 609108,
+        "published_at": "2026-04-24",
+        "vsr": 1.34,
+        "duration_sec": 1030,
+        "is_short": false
       }
     ]
   },
@@ -370,33 +2332,33 @@
     "subjects": [
       {
         "name": "한식",
-        "count": 47,
-        "hits": 47
+        "count": 90,
+        "hits": 71
       },
       {
         "name": "맛코스",
-        "count": 40,
-        "hits": 40
+        "count": 66,
+        "hits": 50
       },
       {
         "name": "상설시장",
-        "count": 9,
-        "hits": 9
+        "count": 13,
+        "hits": 10
       },
       {
         "name": "카페/전통찻집",
-        "count": 4,
-        "hits": 4
+        "count": 6,
+        "hits": 6
       },
       {
-        "name": "5일장",
-        "count": 2,
-        "hits": 2
+        "name": "이색거리",
+        "count": 6,
+        "hits": 5
       },
       {
-        "name": "관광호텔",
-        "count": 2,
-        "hits": 2
+        "name": "중식",
+        "count": 5,
+        "hits": 3
       }
     ],
     "top": [
@@ -425,6 +2387,1518 @@
         "published_at": "2026-03-08",
         "vsr": 0.43,
         "duration_sec": 2006,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UC26QQCGh66xFU_NjhYLwdQQ",
+    "handle": "@dietjo311",
+    "title": "살빼조DietJo",
+    "subscriber_count": 448000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 223,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 50,
+        "median_vsr": 0.836,
+        "p25_vsr": 0.549,
+        "p75_vsr": 1.113,
+        "median_views": 374739,
+        "median_duration": 1431
+      },
+      "short": {
+        "sample": 0,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 4,
+        "hits": 2
+      },
+      {
+        "name": "공원",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "민속마을",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "상설시장",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "카페/전통찻집",
+        "count": 3,
+        "hits": 0
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "K5peKQAQSn0",
+        "title": "[먹방브이로그#112]오랜만에 30분 꽉꽉 채워서 낋여왔어요🍜 로제마라샹궈,크림새우,에그드랍,신라면투움바,꼬북칩,연세우유,누룽지치즈밥,돈까스,와플,떡볶이,십원빵,고추마요+콘소메이징",
+        "view_count": 906479,
+        "published_at": "2025-03-03",
+        "vsr": 2.02,
+        "duration_sec": 1848,
+        "is_short": false
+      },
+      {
+        "video_id": "OpSL5W2hXaQ",
+        "title": "[먹방브이로그#116] 세상은 넓고 쩝쩝박사는 많다🤓 맛도리 조합의 은혜가 끝이 없네 🎊 슈프림골드치킨,마라샹궈+계란초밥+가지초밥,육회+칼빔면,맘스브레드 빵파티,핫도그+까르보불닭",
+        "view_count": 901554,
+        "published_at": "2025-05-22",
+        "vsr": 2.01,
+        "duration_sec": 1462,
+        "is_short": false
+      },
+      {
+        "video_id": "GEXSZIciDfk",
+        "title": "[먹방브이로그#110] 어쩌면 마지막 먹방..(?) 다이어트 시작 전에 먹고 싶은 음식들 도장깨기👊🏻❤️‍🔥 딸기케이크,뿌링클&핫뿌링클,과일타르트,엽떡,이수열 불고기&고구마피자",
+        "view_count": 824870,
+        "published_at": "2025-01-09",
+        "vsr": 1.84,
+        "duration_sec": 1206,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCHKycLUVDq07akK97DJ0Hlw",
+    "handle": "@coyoupu",
+    "title": "COYOUPU TV [코유뿌 TV]",
+    "subscriber_count": 448000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 443,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 16,
+        "median_vsr": 0.277,
+        "p25_vsr": 0.181,
+        "p75_vsr": 0.488,
+        "median_views": 123943,
+        "median_duration": 469
+      },
+      "short": {
+        "sample": 34,
+        "median_vsr": 0.112,
+        "p25_vsr": 0.065,
+        "p75_vsr": 0.194,
+        "median_views": 50363,
+        "median_duration": 48
+      }
+    },
+    "subjects": [
+      {
+        "name": "전시관",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "테마공원",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "공원",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "박물관",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "수목원",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "OWCMxQEFKlo",
+        "title": "요즘 다시 뜨는 미아사거리 노포맛집 10｜현지인만 아는 찐 코스 공개",
+        "view_count": 500012,
+        "published_at": "2025-11-11",
+        "vsr": 1.12,
+        "duration_sec": 947,
+        "is_short": false
+      },
+      {
+        "video_id": "aFjoYKpp6Us",
+        "title": "서울 근교 1시간, 아이와 반나절 교육여행｜시화호 에코스쿨 🐟시흥 해양생태과학관 🌳안산 바다향기수목원 🦖화성 공룡알화석산지",
+        "view_count": 330175,
+        "published_at": "2025-11-06",
+        "vsr": 0.74,
+        "duration_sec": 964,
+        "is_short": false
+      },
+      {
+        "video_id": "Aap-ZH57wHg",
+        "title": "서울역사박물관 어린이박물관 체험 후기｜한양탐험대 코스 총정리",
+        "view_count": 249946,
+        "published_at": "2026-04-09",
+        "vsr": 0.56,
+        "duration_sec": 349,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCbaU6-0RF7FCbNfJtkkbagw",
+    "handle": "@campingg",
+    "title": "캠핑쥐campingG",
+    "subscriber_count": 448000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 192,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 46,
+        "median_vsr": 0.193,
+        "p25_vsr": 0.146,
+        "p75_vsr": 0.288,
+        "median_views": 86414,
+        "median_duration": 1549
+      },
+      "short": {
+        "sample": 4,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 7,
+        "hits": 4
+      },
+      {
+        "name": "캠핑코스",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "계곡",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "고택",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "해수욕장",
+        "count": 2,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "Oo5Xo1OXnao",
+        "title": "움직이는 2평 , 나홀로 아늑한 자동차 캠핑 / 시원한 개울가 캠핑장/ 캠핑 브이로그 / 원터치 화로대에 소고기",
+        "view_count": 289378,
+        "published_at": "2024-08-11",
+        "vsr": 0.65,
+        "duration_sec": 1559,
+        "is_short": false
+      },
+      {
+        "video_id": "dyEVYWfy21M",
+        "title": "300만원주고 만든 자작캠핑카 최근 근황 /벌금 1000만원 이하/역대급 그늘 천국 계곡 캠핑장 / 가평 청정캠핑장 / 핫도그 사라다빵",
+        "view_count": 283357,
+        "published_at": "2024-07-07",
+        "vsr": 0.63,
+        "duration_sec": 2076,
+        "is_short": false
+      },
+      {
+        "video_id": "FHwKiU0xUlc",
+        "title": "중고 캠핑카를 찾아서, 차로 세계일주 준비 (1)",
+        "view_count": 283252,
+        "published_at": "2026-04-05",
+        "vsr": 0.63,
+        "duration_sec": 1086,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCj7uVJPy5m4SgvwL5p8fsfA",
+    "handle": "@chiwoocamp",
+    "title": "치우했치우Chiwoo Camp",
+    "subscriber_count": 442000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 148,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 47,
+        "median_vsr": 0.317,
+        "p25_vsr": 0.221,
+        "p75_vsr": 0.55,
+        "median_views": 140210,
+        "median_duration": 1918
+      },
+      "short": {
+        "sample": 3,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 35,
+        "hits": 6
+      },
+      {
+        "name": "캠핑코스",
+        "count": 6,
+        "hits": 1
+      },
+      {
+        "name": "계곡",
+        "count": 3,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "skK9XMfgpzQ",
+        "title": "비가 온다고? 오히려 좋아!☔️ 비오는 숲 속에서 강아지와 솔로캠핑 / 빗소리 들으며 우중혼술 적시기. 감바스와 잭다니엘 / 춘천 더숲캠핑장",
+        "view_count": 14427023,
+        "published_at": "2024-07-07",
+        "vsr": 32.64,
+        "duration_sec": 1929,
+        "is_short": false
+      },
+      {
+        "video_id": "XiKx7G9Q8y4",
+        "title": "[우중캠핑] 에어텐트 이거 맞아요?? 워터파크 개장하고 버섯집 만들기 / 오늘 셋팅 마음에 드네 / 맛있게 우중 혼술🍺하고 틈나는대로 빈둥거리고 / 양주 천보웰니스",
+        "view_count": 6018283,
+        "published_at": "2023-09-24",
+        "vsr": 13.62,
+        "duration_sec": 1797,
+        "is_short": false
+      },
+      {
+        "video_id": "3PX2cA5sTuo",
+        "title": "하루종일 비 내리는 숲 속, 폭우에도 아늑한 솔로캠핑 / 바람불고 번개쳐도 좋아☔️ / 김치전, 순대볶음에 맥주 한 잔 / 양양 갈천오토캠핑장",
+        "view_count": 3645800,
+        "published_at": "2025-09-21",
+        "vsr": 8.25,
+        "duration_sec": 1929,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCtfyAiqf095_0_ux8ruwGfA",
+    "handle": "@musinsatv",
+    "title": "MUSINSA TV",
+    "subscriber_count": 430000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 1940,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 6,
+        "median_vsr": 0.518,
+        "p25_vsr": 0.275,
+        "p75_vsr": 1.395,
+        "median_views": 222923,
+        "median_duration": 1217
+      },
+      "short": {
+        "sample": 44,
+        "median_vsr": 0.031,
+        "p25_vsr": 0.017,
+        "p75_vsr": 0.051,
+        "median_views": 13418,
+        "median_duration": 43
+      }
+    },
+    "subjects": [
+      {
+        "name": "전문매장/상가",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "경기장",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "스포츠경기",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "이색거리",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "이색찜질방",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "테마공원",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "aJdZHR-zAeQ",
+        "title": "아이돌 맞아? 🔥게임하다가 눈빛 돌아버린 피프티피프티🔥 [성수기 스핀오프 EP.4] 배틀그라운드 모바일 | FIFTYFIFTY",
+        "view_count": 630009,
+        "published_at": "2026-07-29",
+        "vsr": 1.47,
+        "duration_sec": 1264,
+        "is_short": false
+      },
+      {
+        "video_id": "hr3z2pE3ILQ",
+        "title": "🎁댓글 이벤트🎁 워터밤? 아니 워터전쟁! FIFTY FIFTY 물총 서바이벌 현장 [성수기 스핀오프 EP.5]",
+        "view_count": 599893,
+        "published_at": "2026-08-05",
+        "vsr": 1.4,
+        "duration_sec": 908,
+        "is_short": false
+      },
+      {
+        "video_id": "4Hu4Rz_zkqo",
+        "title": "더 업그레이드된 찌질미 10CM 권정열 | 그대 작은 나의 세상이 되어, 그라데이션, 그게 아니고, 일말의 가능성 [무싱사 EP.1]",
+        "view_count": 281354,
+        "published_at": "2026-07-23",
+        "vsr": 0.65,
+        "duration_sec": 1069,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UC0JzvO3F90Bur0_B2VfvUIQ",
+    "handle": "@dragonizi",
+    "title": "이자반",
+    "subscriber_count": 413000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 242,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 48,
+        "median_vsr": 1.04,
+        "p25_vsr": 0.848,
+        "p75_vsr": 1.377,
+        "median_views": 429369,
+        "median_duration": 1071
+      },
+      "short": {
+        "sample": 2,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 16,
+        "hits": 11
+      },
+      {
+        "name": "온천/욕장/스파",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "이색거리",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "중식",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "해수욕장",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "상설시장",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "O81am0-WwME",
+        "title": "아무도 모르는 일본 소도시에서 우동만 온종일 처@먹는 브이로그 - 일본(1)",
+        "view_count": 859841,
+        "published_at": "2025-09-21",
+        "vsr": 2.08,
+        "duration_sec": 1179,
+        "is_short": false
+      },
+      {
+        "video_id": "R48FYIofLJs",
+        "title": "월클 아이돌이자 쌍문동 동네친구와 함께 맛집 투어 브이로그",
+        "view_count": 838209,
+        "published_at": "2025-12-15",
+        "vsr": 2.03,
+        "duration_sec": 1221,
+        "is_short": false
+      },
+      {
+        "video_id": "MzQmvKtjqL4",
+        "title": "친구들이랑 밤 새고 일본가서 폭염 처@맞는 브이로그",
+        "view_count": 722424,
+        "published_at": "2026-08-02",
+        "vsr": 1.75,
+        "duration_sec": 1898,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCIP3hSJruPL4dIi95lsuCZA",
+    "handle": "@gaypig1111",
+    "title": "홍석천이원일",
+    "subscriber_count": 412000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 646,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 23,
+        "median_vsr": 0.435,
+        "p25_vsr": 0.345,
+        "p75_vsr": 0.614,
+        "median_views": 179206,
+        "median_duration": 1423
+      },
+      "short": {
+        "sample": 27,
+        "median_vsr": 0.078,
+        "p25_vsr": 0.058,
+        "p75_vsr": 0.131,
+        "median_views": 32030,
+        "median_duration": 56
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 40,
+        "hits": 28
+      },
+      {
+        "name": "상설시장",
+        "count": 14,
+        "hits": 11
+      },
+      {
+        "name": "이색거리",
+        "count": 8,
+        "hits": 6
+      },
+      {
+        "name": "카페/전통찻집",
+        "count": 4,
+        "hits": 2
+      },
+      {
+        "name": "전문매장/상가",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "맛코스",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "uCTBCwXY-bo",
+        "title": "시장하면 떠오르는 그 녀석",
+        "view_count": 2986104,
+        "published_at": "2026-06-12",
+        "vsr": 7.25,
+        "duration_sec": 56,
+        "is_short": true
+      },
+      {
+        "video_id": "UdSi3Z45eoM",
+        "title": "홍석천이 버텨야 했던 시간들",
+        "view_count": 1313891,
+        "published_at": "2026-06-02",
+        "vsr": 3.19,
+        "duration_sec": 86,
+        "is_short": true
+      },
+      {
+        "video_id": "wlzXK2BZY5g",
+        "title": "\"오리지널 간짜장은 이런 맛입니다\"😎3.1 운동을 도모했던 중식당 (+탕수육, 게살삼슬) [ENG]",
+        "view_count": 715212,
+        "published_at": "2026-05-22",
+        "vsr": 1.74,
+        "duration_sec": 1107,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCWlwaqMam9GueCmnwT1VYDA",
+    "handle": "@dotoritv",
+    "title": "도토리TV Dotori TV",
+    "subscriber_count": 369000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 983,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 33,
+        "median_vsr": 0.223,
+        "p25_vsr": 0.182,
+        "p75_vsr": 0.355,
+        "median_views": 82266,
+        "median_duration": 1648
+      },
+      "short": {
+        "sample": 17,
+        "median_vsr": 0.147,
+        "p25_vsr": 0.086,
+        "p75_vsr": 0.407,
+        "median_views": 54145,
+        "median_duration": 54
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 9,
+        "hits": 1
+      },
+      {
+        "name": "섬",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "한식",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "Ysw9cXvGSns",
+        "title": "텐트가 없어서 설동을 만들었습니다",
+        "view_count": 851997,
+        "published_at": "2026-02-10",
+        "vsr": 2.31,
+        "duration_sec": 40,
+        "is_short": true
+      },
+      {
+        "video_id": "7RLaQ-GjAms",
+        "title": "사설 캠핑장이 망할수밖에 없는 이유 #유튜브 #도토리TV",
+        "view_count": 310836,
+        "published_at": "2026-07-11",
+        "vsr": 0.84,
+        "duration_sec": 60,
+        "is_short": true
+      },
+      {
+        "video_id": "ZFhcmBodwzc",
+        "title": "전기차 PV5로 휴게소에서 차박을 해보자│PV5 차박 캠핑",
+        "view_count": 240034,
+        "published_at": "2026-03-29",
+        "vsr": 0.65,
+        "duration_sec": 1060,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCcGJn-y2HfUmt6fZFyC-oWw",
+    "handle": "@toricamping",
+    "title": "토리 캠핑 TORI CAMP",
+    "subscriber_count": 359000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 200,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 35,
+        "median_vsr": 0.433,
+        "p25_vsr": 0.354,
+        "p75_vsr": 0.522,
+        "median_views": 155511,
+        "median_duration": 1705
+      },
+      "short": {
+        "sample": 15,
+        "median_vsr": 0.254,
+        "p25_vsr": 0.2,
+        "p75_vsr": 0.485,
+        "median_views": 91218,
+        "median_duration": 47
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 29,
+        "hits": 6
+      },
+      {
+        "name": "계곡",
+        "count": 6,
+        "hits": 2
+      },
+      {
+        "name": "해수욕장",
+        "count": 5,
+        "hits": 1
+      },
+      {
+        "name": "온천/욕장/스파",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "섬",
+        "count": 4,
+        "hits": 0
+      },
+      {
+        "name": "산",
+        "count": 3,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "hGSqHXQgZc8",
+        "title": "캠핑장에서 이걸..? 모두가 말렸다..",
+        "view_count": 899629,
+        "published_at": "2025-12-03",
+        "vsr": 2.51,
+        "duration_sec": 43,
+        "is_short": true
+      },
+      {
+        "video_id": "GEfAXOGA1M0",
+        "title": "우중 캠핑, 오리구이에 복분자 한 잔",
+        "view_count": 522703,
+        "published_at": "2025-12-24",
+        "vsr": 1.46,
+        "duration_sec": 32,
+        "is_short": true
+      },
+      {
+        "video_id": "xjdyeGDxknY",
+        "title": "⛈️역대급 폭우에 물바다가 된 타스만 적재함에서 보낸 우중 캠핑｜삼겹살+불닭 양파쌈에 소주 ｜김치전",
+        "view_count": 509534,
+        "published_at": "2026-05-24",
+        "vsr": 1.42,
+        "duration_sec": 1973,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCaacVyLPR5gJRieZ0yKwnkQ",
+    "handle": "@cheilworldwide",
+    "title": "Cheil Korea 제일기획 채널일",
+    "subscriber_count": 358000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 522,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 3,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      },
+      "short": {
+        "sample": 47,
+        "median_vsr": 0.008,
+        "p25_vsr": 0.005,
+        "p75_vsr": 0.029,
+        "median_views": 2749,
+        "median_duration": 33
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 7,
+        "hits": 7
+      },
+      {
+        "name": "상설시장",
+        "count": 5,
+        "hits": 5
+      },
+      {
+        "name": "기념탑/기념비/전망대",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "이색거리",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "맛코스",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "사찰",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "APCeWw5XCIg",
+        "title": "이젠 AI가 내 사주팔자도 맞힌다고? 관상가 이도규 VS AI 아바타 최유정 VS 야매관상가 김민수의 대결! | 신선한대결 EP.07 사주, 관상 편",
+        "view_count": 598852,
+        "published_at": "2026-04-29",
+        "vsr": 1.67,
+        "duration_sec": 1869,
+        "is_short": false
+      },
+      {
+        "video_id": "Z_3A3nXQPmg",
+        "title": "AI 작곡으로 인간의 감성까지 딸깍하는 시대? 작곡가 이승주 VS AI 아바타 조매력, 쳐밀도 존박의 보컬까지! 막상막하 작곡 대결! | 신선한대결 EP.08 작곡 편",
+        "view_count": 549097,
+        "published_at": "2026-05-06",
+        "vsr": 1.53,
+        "duration_sec": 1578,
+        "is_short": false
+      },
+      {
+        "video_id": "fmaiXz-OWg4",
+        "title": "AI와 대결하느라 고생 많았던 인간들…주옥 같았던 미방분 대공개! | 신선한대결 미방분 모음.ZIP",
+        "view_count": 132576,
+        "published_at": "2026-05-27",
+        "vsr": 0.37,
+        "duration_sec": 878,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCuffPygXAe4oPvqFMjWmjfA",
+    "handle": "@thegazebeyond",
+    "title": "시선너머",
+    "subscriber_count": 332000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 122,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 50,
+        "median_vsr": 0.792,
+        "p25_vsr": 0.655,
+        "p75_vsr": 1.008,
+        "median_views": 263016,
+        "median_duration": 2470
+      },
+      "short": {
+        "sample": 0,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "산",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "이색체험",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "호수",
+        "count": 2,
+        "hits": 0
+      },
+      {
+        "name": "온천/욕장/스파",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "학교",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "58QjArvkIdQ",
+        "title": "\"귀신이 정말 없다고 생각해?\" 내가 귀신을 믿게 된 이유 (공포실화) | 괴담을 보다 EP.57",
+        "view_count": 621045,
+        "published_at": "2026-02-28",
+        "vsr": 1.87,
+        "duration_sec": 2070,
+        "is_short": false
+      },
+      {
+        "video_id": "qnm6RuV3lEE",
+        "title": "눈 감고 들으면 더 무서운 미스터리 괴담 실화 모음 (괴담 ASMR 몰아보기)",
+        "view_count": 603660,
+        "published_at": "2026-02-18",
+        "vsr": 1.82,
+        "duration_sec": 12557,
+        "is_short": false
+      },
+      {
+        "video_id": "7JePOz4Fc2Y",
+        "title": "무당이 본 가장 역대급 귀접썰 (귀신과의 불륜을 즐기다 나락간 여자 후일담...) | 괴담을 보다 EP.78",
+        "view_count": 445458,
+        "published_at": "2026-07-11",
+        "vsr": 1.34,
+        "duration_sec": 2091,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCgSGT3WawT1QwUnMbjk8S2A",
+    "handle": "@everyday_travel",
+    "title": "일상이여행 Everyday travel",
+    "subscriber_count": 311000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 1348,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 8,
+        "median_vsr": 0.039,
+        "p25_vsr": 0.03,
+        "p75_vsr": 0.185,
+        "median_views": 12150,
+        "median_duration": 669
+      },
+      "short": {
+        "sample": 42,
+        "median_vsr": 0.015,
+        "p25_vsr": 0.01,
+        "p75_vsr": 0.025,
+        "median_views": 4667,
+        "median_duration": 42
+      }
+    },
+    "subjects": [
+      {
+        "name": "기념탑/기념비/전망대",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "사찰",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "다리/대교",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "관광호텔",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "산",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "해수욕장",
+        "count": 2,
+        "hits": 2
+      }
+    ],
+    "top": [
+      {
+        "video_id": "2GFvuQjDw14",
+        "title": "단돈 0원으로 즐기세요! 서울사람도 잘 몰라서 못가는 서울의 이색 무료 명소 6곳",
+        "view_count": 421309,
+        "published_at": "2026-06-09",
+        "vsr": 1.35,
+        "duration_sec": 671,
+        "is_short": false
+      },
+      {
+        "video_id": "jURxyWPXuPg",
+        "title": "인생에 꼭 한번은 가봐야 하는 충청도 명소 13곳  2026 한국관광 100선, 시간을 걷는 충청도 여행지",
+        "view_count": 102474,
+        "published_at": "2026-06-21",
+        "vsr": 0.33,
+        "duration_sec": 927,
+        "is_short": false
+      },
+      {
+        "video_id": "4z8P7n2nnXI",
+        "title": "한국에 이런 곳이?! 절벽 위 회랑으로 둘러싸인 비밀 정원, 보령 죽도 상화원을 소개합니다! ​세계 최장 2km 목조 회랑 #보령여행 #죽도상화원 #서해안여행 #로드트립 #여름휴가",
+        "view_count": 59125,
+        "published_at": "2026-07-10",
+        "vsr": 0.19,
+        "duration_sec": 48,
+        "is_short": true
+      }
+    ]
+  },
+  {
+    "id": "UCAsHJbPbGENF_KJYhcdV0dw",
+    "handle": "@nanasserie",
+    "title": "나나 Nanasserie",
+    "subscriber_count": 307000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 463,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "short",
+      "long": {
+        "sample": 21,
+        "median_vsr": 0.056,
+        "p25_vsr": 0.037,
+        "p75_vsr": 0.111,
+        "median_views": 17315,
+        "median_duration": 1021
+      },
+      "short": {
+        "sample": 29,
+        "median_vsr": 0.077,
+        "p25_vsr": 0.055,
+        "p75_vsr": 0.132,
+        "median_views": 23790,
+        "median_duration": 38
+      }
+    },
+    "subjects": [
+      {
+        "name": "카페/전통찻집",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "한식",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "상설시장",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "이색거리",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "해수욕장",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "박물관",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "E5Rb_v6roFY",
+        "title": "찹쌀떡 먹으러 간 나 혼자 속초 여행✨",
+        "view_count": 234235,
+        "published_at": "2026-06-05",
+        "vsr": 0.76,
+        "duration_sec": 101,
+        "is_short": true
+      },
+      {
+        "video_id": "dOrwsJHEXBk",
+        "title": "속초 얏호! 속초에서 유명한 거는 다 먹은 나 혼자 속초 여행🍦 (육구방앗간 찹쌀떡, 강릉막걸리술빵, 북청닭강정, 흰다정, 속초옥수수소금빵, 타이그랜파, 속초맛집)",
+        "view_count": 102791,
+        "published_at": "2026-06-06",
+        "vsr": 0.33,
+        "duration_sec": 1534,
+        "is_short": false
+      },
+      {
+        "video_id": "xssGHE0fR1Q",
+        "title": "전주 찐맛집만 다닌 나 혼자 전주여행 1박2일🍓",
+        "view_count": 100136,
+        "published_at": "2026-03-27",
+        "vsr": 0.33,
+        "duration_sec": 99,
+        "is_short": true
+      }
+    ]
+  },
+  {
+    "id": "UC1uoQwHK5e5gw0CYdQeX5IA",
+    "handle": "@heyrime_",
+    "title": "장슨생 jangteacher",
+    "subscriber_count": 300000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 310,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 41,
+        "median_vsr": 0.302,
+        "p25_vsr": 0.22,
+        "p75_vsr": 0.53,
+        "median_views": 90636,
+        "median_duration": 1373
+      },
+      "short": {
+        "sample": 9,
+        "median_vsr": 0.111,
+        "p25_vsr": 0.052,
+        "p75_vsr": 0.122,
+        "median_views": 33231,
+        "median_duration": 64
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 3,
+        "hits": 3
+      },
+      {
+        "name": "섬",
+        "count": 3,
+        "hits": 2
+      },
+      {
+        "name": "해안절경",
+        "count": 2,
+        "hits": 2
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "스노쿨링/스킨스쿠버다이빙",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "해수욕장",
+        "count": 1,
+        "hits": 1
+      }
+    ],
+    "top": [
+      {
+        "video_id": "xI3YWkmWJUs",
+        "title": "통영 땅끝섬에서 자급자족하는 백패커들 (with 바다중독자)",
+        "view_count": 356352,
+        "published_at": "2025-05-20",
+        "vsr": 1.19,
+        "duration_sec": 1623,
+        "is_short": false
+      },
+      {
+        "video_id": "tAHyn5Tg7tg",
+        "title": "걸어서 못 가는 섬 반대편에서 해물 짜장 만들어보기(with 드가재희)",
+        "view_count": 341309,
+        "published_at": "2025-10-07",
+        "vsr": 1.14,
+        "duration_sec": 1305,
+        "is_short": false
+      },
+      {
+        "video_id": "nVDH9fIQImU",
+        "title": "내밥..🥹 (인종혐오 아님 통화 들어보니 중국인..)",
+        "view_count": 333983,
+        "published_at": "2025-12-21",
+        "vsr": 1.11,
+        "duration_sec": 78,
+        "is_short": true
+      }
+    ]
+  },
+  {
+    "id": "UCzODaTbNjiMKNy8AuAPY99g",
+    "handle": "@enerlym_s2",
+    "title": "연탱이의 자유일기 YEON-TAENG's free diary",
+    "subscriber_count": 299000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 441,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 41,
+        "median_vsr": 0.997,
+        "p25_vsr": 0.542,
+        "p75_vsr": 1.31,
+        "median_views": 297983,
+        "median_duration": 2099
+      },
+      "short": {
+        "sample": 9,
+        "median_vsr": 0.702,
+        "p25_vsr": 0.506,
+        "p75_vsr": 0.936,
+        "median_views": 209752,
+        "median_duration": 24
+      }
+    },
+    "subjects": [
+      {
+        "name": "바다낚시",
+        "count": 22,
+        "hits": 20
+      },
+      {
+        "name": "섬",
+        "count": 15,
+        "hits": 14
+      },
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 6,
+        "hits": 5
+      },
+      {
+        "name": "해수욕장",
+        "count": 4,
+        "hits": 4
+      },
+      {
+        "name": "산",
+        "count": 4,
+        "hits": 2
+      },
+      {
+        "name": "스노쿨링/스킨스쿠버다이빙",
+        "count": 2,
+        "hits": 2
+      }
+    ],
+    "top": [
+      {
+        "video_id": "0uQGkCS7sws",
+        "title": "입수해서 건져올린 대왕 문어 네마리..ㄷㄷ / 낯선 삼촌과 야밤 선상 낚시 / 포구노숙",
+        "view_count": 2110609,
+        "published_at": "2025-08-24",
+        "vsr": 7.06,
+        "duration_sec": 1819,
+        "is_short": false
+      },
+      {
+        "video_id": "JsIM-CZ4qFQ",
+        "title": "멱감고 트레킹 반복하는 야생인의 채비#연탱이의자유일기 #연탱몬 #화이탱 #노숙여행 #괌캠핑 #노숙일기 #야생일기",
+        "view_count": 2042097,
+        "published_at": "2025-06-19",
+        "vsr": 6.83,
+        "duration_sec": 22,
+        "is_short": true
+      },
+      {
+        "video_id": "J424V_Jbm5w",
+        "title": "혼자 최서남단 신안 끝섬 / 바다입수 / 뿔소라 잡아먹고 노숙하기 + 첫 혼낚시",
+        "view_count": 1970517,
+        "published_at": "2025-06-22",
+        "vsr": 6.59,
+        "duration_sec": 1574,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCvKncw7W98xGN9zZiAMzaWg",
+    "handle": "@indianajooyoung",
+    "title": "인디애나 주영 Indiana Jooyoung",
+    "subscriber_count": 284000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 487,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 50,
+        "median_vsr": 1.434,
+        "p25_vsr": 1.055,
+        "p75_vsr": 1.686,
+        "median_views": 407379,
+        "median_duration": 1068
+      },
+      "short": {
+        "sample": 0,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "한식",
+        "count": 8,
+        "hits": 4
+      },
+      {
+        "name": "대형마트",
+        "count": 4,
+        "hits": 1
+      },
+      {
+        "name": "상설시장",
+        "count": 3,
+        "hits": 1
+      },
+      {
+        "name": "테마공원",
+        "count": 2,
+        "hits": 1
+      },
+      {
+        "name": "기념관",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "농.산.어촌 체험",
+        "count": 2,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "bqJAAtGTvzw",
+        "title": "🇺🇸미국일상 | 외국인, 김밥을 처음 본 순간 반응 대폭발‼️| 50만원 한인마트 장보기🔥",
+        "view_count": 1117200,
+        "published_at": "2026-02-15",
+        "vsr": 3.93,
+        "duration_sec": 1237,
+        "is_short": false
+      },
+      {
+        "video_id": "y4a9iRp7Ygo",
+        "title": "🇺🇸미국일상 | 가정집에서 치킨 150조각 튀기면 생기는 일…😱 | 이웃들 반응 대폭발🔥",
+        "view_count": 760643,
+        "published_at": "2026-01-21",
+        "vsr": 2.68,
+        "duration_sec": 1824,
+        "is_short": false
+      },
+      {
+        "video_id": "92OipYr1gc0",
+        "title": "🇺🇸미국일상 | 첫 만두 도전🔥 반응이 이럴 줄이야… | 세배하는 가족🙇🏻‍♀️🙇🏼‍♂️🙇🏻‍♀️🙇🏼‍♂️",
+        "view_count": 671264,
+        "published_at": "2026-02-19",
+        "vsr": 2.36,
+        "duration_sec": 1186,
+        "is_short": false
+      }
+    ]
+  },
+  {
+    "id": "UCnn3HzU_Ip7AVWq8mlnPWZA",
+    "handle": "@조화영조아용joa",
+    "title": "조화영 조아용 JOA",
+    "subscriber_count": 284000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 382,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 46,
+        "median_vsr": 0.257,
+        "p25_vsr": 0.208,
+        "p75_vsr": 0.318,
+        "median_views": 73112,
+        "median_duration": 2076
+      },
+      "short": {
+        "sample": 4,
+        "median_vsr": null,
+        "p25_vsr": null,
+        "p75_vsr": null,
+        "median_views": null,
+        "median_duration": null
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 38,
+        "hits": 9
+      },
+      {
+        "name": "캠핑코스",
+        "count": 7,
+        "hits": 1
+      },
+      {
+        "name": "산",
+        "count": 1,
+        "hits": 1
+      },
+      {
+        "name": "계곡",
+        "count": 5,
+        "hits": 0
+      },
+      {
+        "name": "섬",
+        "count": 4,
+        "hits": 0
+      },
+      {
+        "name": "도보코스",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "LGp4LpyRwNI",
+        "title": "폭우 캠핑, 쉬지 않고 쏟아지는 비ㅣ숲속에 동굴같은 대형 쉘터치고 우중캠핑ㅣ오직 빗소리만 가득한 시간, 잠시 쉬어 갈게요ㅣ비 내리는 숲, 아늑한 쉘터에서 조용히 머물다ㅣ비 ASMR",
+        "view_count": 303551,
+        "published_at": "2025-10-18",
+        "vsr": 1.07,
+        "duration_sec": 1951,
+        "is_short": false
+      },
+      {
+        "video_id": "RykZyxPrjHs",
+        "title": "폭우 캠핑, 천둥번개⚡️잠 못 이룬 밤ㅣ나홀로 비 내리는 숲, 숲내음의 힐링ㅣ치킨 윙봉에 맥주, 쭈삼에 쏘맥ㅣ에어텐트로 즐긴 솔로 우중 캠핑☔️",
+        "view_count": 302405,
+        "published_at": "2025-08-30",
+        "vsr": 1.06,
+        "duration_sec": 2212,
+        "is_short": false
+      },
+      {
+        "video_id": "ufChiPhKTVg",
+        "title": "겨울 장박, 에어텐트 두 동 연결해서 넓고 쾌적하게ㅣ장박 세팅, 남편과 함께ㅣ화목난로 바꾸니 좋지만 쉽지 않네ㅣ춥고 배고프고 힘들었기에 감자탕&소맥 캠핑 역대급 꿀맛",
+        "view_count": 193039,
+        "published_at": "2025-11-08",
+        "vsr": 0.68,
+        "duration_sec": 2841,
         "is_short": false
       }
     ]
@@ -521,6 +3995,82 @@
     ]
   },
   {
+    "id": "UCGdtYFrFSFsaoVRXUEW75bQ",
+    "handle": "@peachrim",
+    "title": "피치림 Peach Rim",
+    "subscriber_count": 261000,
+    "sub_band": "100k_1m",
+    "language": "ko",
+    "video_count": 326,
+    "recent": {
+      "sample": 50,
+      "cut_sec": 180,
+      "primary": "long",
+      "long": {
+        "sample": 26,
+        "median_vsr": 0.185,
+        "p25_vsr": 0.128,
+        "p75_vsr": 0.48,
+        "median_views": 48246,
+        "median_duration": 1796
+      },
+      "short": {
+        "sample": 24,
+        "median_vsr": 0.035,
+        "p25_vsr": 0.019,
+        "p75_vsr": 0.048,
+        "median_views": 9026,
+        "median_duration": 77
+      }
+    },
+    "subjects": [
+      {
+        "name": "야영장,오토캠핑장",
+        "count": 4,
+        "hits": 1
+      },
+      {
+        "name": "유람선/잠수함관광",
+        "count": 1,
+        "hits": 0
+      },
+      {
+        "name": "해수욕장",
+        "count": 1,
+        "hits": 0
+      }
+    ],
+    "top": [
+      {
+        "video_id": "Dg0rrSlsZno",
+        "title": "☔️쉬지않고 내리는 폭우 속, 대형 에어텐트로 아늑한 우중캠핑 / 초간단 옥수수전, 냉삼에 된장찌개",
+        "view_count": 366530,
+        "published_at": "2025-10-12",
+        "vsr": 1.4,
+        "duration_sec": 1669,
+        "is_short": false
+      },
+      {
+        "video_id": "iQdmcnKqed4",
+        "title": "한국에서 출발하는 7박8일 초대형 크루즈 여행 / 코스타세레나호",
+        "view_count": 192733,
+        "published_at": "2025-09-21",
+        "vsr": 0.74,
+        "duration_sec": 1341,
+        "is_short": false
+      },
+      {
+        "video_id": "RpC5W49yJzk",
+        "title": "움직이는 2평짜리 캠핑카 타고 무계획 우중캠핑 떠나기 / 뜻밖의 벚꽃엔딩 / 빗소리 ASMR",
+        "view_count": 168047,
+        "published_at": "2026-04-19",
+        "vsr": 0.64,
+        "duration_sec": 1735,
+        "is_short": false
+      }
+    ]
+  },
+  {
     "id": "UCVPkwz7nxd5bbR536ugmiBw",
     "handle": "@uniis_meal",
     "title": "우니의끼니 UNIII",
@@ -552,33 +4102,33 @@
     "subjects": [
       {
         "name": "한식",
-        "count": 24,
-        "hits": 24
+        "count": 52,
+        "hits": 28
       },
       {
         "name": "산",
-        "count": 10,
-        "hits": 10
+        "count": 13,
+        "hits": 11
       },
       {
         "name": "상설시장",
-        "count": 4,
+        "count": 10,
         "hits": 4
+      },
+      {
+        "name": "카페/전통찻집",
+        "count": 6,
+        "hits": 2
+      },
+      {
+        "name": "해수욕장",
+        "count": 3,
+        "hits": 2
       },
       {
         "name": "관광호텔",
         "count": 2,
         "hits": 2
-      },
-      {
-        "name": "해수욕장",
-        "count": 2,
-        "hits": 2
-      },
-      {
-        "name": "고택",
-        "count": 1,
-        "hits": 1
       }
     ],
     "top": [

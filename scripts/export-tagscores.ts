@@ -90,7 +90,30 @@ const bandOf = (s: number): 1 | 2 | 3 | 4 =>
 function main(): void {
   const db = openDb();
 
-  const rows = db
+  /**
+   * ── 표본이 두 갈래다. 둘 다 쓴다 ─────────────────────────
+   *
+   * ① 검색 표본 (`found_by like 'search:%'`)
+   *    "오일장 여행 브이로그" 로 검색해서 나온 영상. 라벨은 검색어에서 온다.
+   *    ⚠️ **성과 편향이 있다.** 유튜브가 반응 좋은 영상을 위에 올려 주기 때문에,
+   *       이 표본만 쓰면 그 소재의 전형값이 아니라 **잘 된 것들의 값**이 나온다.
+   *
+   * ② 채널 표본 (`yt_video_subject`, LLM 분류)
+   *    채널을 훑어서 모은 영상에 소재를 붙인 것. **소재로 고른 표본이 아니라
+   *    채널로 고른 표본**이라 위의 편향이 없다. 화면이 말하는 "이 소재의
+   *    전형값" 에는 오히려 이쪽이 정직하다.
+   *
+   * 겹치지 않는다 — LLM 분류는 `found_by = 'channel'` 에만 돌렸다.
+   */
+  interface Row {
+    tag: string;
+    language: string;
+    view_count: number;
+    subs: number;
+    src: "search" | "channel";
+  }
+
+  const searchRows = db
     .prepare(
       `select v.found_by, v.language, v.view_count, c.subscriber_count subs
          from yt_video v
@@ -107,14 +130,33 @@ function main(): void {
     subs: number;
   }[];
 
+  const channelRows = db
+    .prepare(
+      `select vs.subject tag, v.language, v.view_count, c.subscriber_count subs
+         from yt_video_subject vs
+         join yt_video v on v.video_id = vs.video_id
+         join yt_channel c on c.channel_id = v.channel_id
+        where c.subscriber_count >= ?
+          and v.view_count > 0
+          and v.duration_sec > 180`,
+    )
+    .all(MIN_SUBS) as { tag: string; language: string; view_count: number; subs: number }[];
+
+  const rows: Row[] = [
+    ...searchRows.flatMap((r) => {
+      const tag = QUERY_TO_TAG[r.found_by.replace("search:", "")];
+      return tag ? [{ ...r, tag, src: "search" as const }] : [];
+    }),
+    ...channelRows.map((r) => ({ ...r, src: "channel" as const })),
+  ];
+
   /** tag|language|band → vsr 목록 */
   const cells = new Map<string, number[]>();
   /** tag|language → vsr 목록. 밴드 표본이 얇을 때 빌려 쓴다 */
   const langCells = new Map<string, number[]>();
 
   for (const r of rows) {
-    const tag = QUERY_TO_TAG[r.found_by.replace("search:", "")];
-    if (!tag) continue;
+    const tag = r.tag;
     const lang = r.language === "en" ? "en" : "ko";
     const vsr = r.view_count / r.subs;
     const k = `${tag}|${lang}|${bandOf(r.subs)}`;
@@ -175,8 +217,12 @@ function main(): void {
   mkdirSync("./src/data/real", { recursive: true });
   writeFileSync(OUT, JSON.stringify(out, null, 2) + "\n", "utf8");
 
+  const nSearch = rows.filter((r) => r.src === "search").length;
+  const nChannel = rows.length - nSearch;
+
   console.log(`\n6단계 · 태그 점수\n`);
-  console.log(`  롱폼 ${rows.length.toLocaleString()}편 → ${out.length}칸  ·  ${OUT}\n`);
+  console.log(`  롱폼 ${rows.length.toLocaleString()}편 → ${out.length}칸  ·  ${OUT}`);
+  console.log(`  검색 표본 ${nSearch.toLocaleString()} + 채널 표본 ${nChannel.toLocaleString()} (LLM 분류)\n`);
   console.log(`  ${"소재".padEnd(18)}${"언어".padStart(5)}${"편수".padStart(6)}${"기하평균".padStart(9)}${"기하평균 95%CI".padStart(14)}   배수`);
   console.log(`  ${"─".repeat(64)}`);
   for (const s of out

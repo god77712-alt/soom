@@ -100,6 +100,20 @@ async function main(): Promise<void> {
 
   const only = argOf("channel");
   const limit = Number(argOf("max") ?? 400);
+  const dry = argv.includes("--dry");
+
+  /**
+   * 한국 지명이 잡힌 영상만 겨냥한다 (`--region`).
+   *
+   * ── 왜 필요한가 ─────────────────────────────────────────
+   * 조회수 순으로 그냥 돌리면 상위가 지식인사이드·잠뜰TV·흔한남매다.
+   * 여행 채널이 아니라 대부분 빈 배열이 나오고 토큰만 쓴다.
+   *
+   * `video_region` 은 제목·설명에서 시군구를 실제로 뽑아낸 표다.
+   * 여기 걸린 영상은 최소한 **한국 어딘가를 다룬다**는 게 확인된 것이라
+   * 소재가 붙을 확률이 훨씬 높다.
+   */
+  const regionOnly = argv.includes("--region");
 
   const videos = db
     .prepare(
@@ -109,6 +123,7 @@ async function main(): Promise<void> {
           and v.duration_sec > ?
           and length(coalesce(v.description, '')) >= ?
           and not exists (select 1 from yt_video_subject_done d where d.video_id = v.video_id)
+          ${regionOnly ? "and exists (select 1 from video_region r where r.video_id = v.video_id)" : ""}
           ${only ? "and v.channel_id = ?" : ""}
         order by v.view_count desc
         limit ?`,
@@ -126,7 +141,25 @@ async function main(): Promise<void> {
   }
 
   console.log(`\n채널 영상 소재 분류\n`);
-  console.log(`  대상 ${videos.length}편 · ${BATCH}편씩 · ${MODEL}\n`);
+  console.log(
+    `  대상 ${videos.length}편 · ${BATCH}편씩 (요청 ${Math.ceil(videos.length / BATCH)}회) · ${MODEL}`,
+  );
+  console.log(`  ${regionOnly ? "지명 잡힌 영상만" : "전체"}${only ? ` · 채널 ${only}` : ""}\n`);
+
+  /**
+   * ⚠️ 돈을 쓰는 명령이다. 대상을 세지 않고 시작하지 말 것 (CLAUDE.md).
+   *    `--dry` 로 무엇이 몇 편 걸리는지 먼저 본다.
+   */
+  if (dry) {
+    const byCh = new Map<string, number>();
+    for (const v of videos) byCh.set(v.channel_title, (byCh.get(v.channel_title) ?? 0) + 1);
+    console.log(`  채널별 (상위 15)`);
+    for (const [t, n] of [...byCh].sort((a, b) => b[1] - a[1]).slice(0, 15)) {
+      console.log(`    ${(t ?? "").slice(0, 24).padEnd(26)} ${n}편`);
+    }
+    console.log(`\n  채널 ${byCh.size}개 · 실행하지 않았습니다 (--dry)\n`);
+    return;
+  }
 
   const insS = db.prepare(`INSERT OR IGNORE INTO yt_video_subject (video_id, subject) VALUES (?,?)`);
   const insD = db.prepare(`INSERT OR IGNORE INTO yt_video_subject_done (video_id) VALUES (?)`);
@@ -138,7 +171,32 @@ async function main(): Promise<void> {
   let cacheTok = 0;
   let outTok = 0;
 
+  /**
+   * 🚨 지출 상한. **어림짐작으로 "안 넘을 것 같다"고 두지 말 것** —
+   *    스크립트가 스스로 멈춰야 한다.
+   *
+   * 이 스크립트는 대화 토큰이 아니라 `.env` 의 API 키로 도는 **종량제 계정**을
+   * 쓴다. 카드에서 실제로 빠져나가는 돈이다.
+   *
+   * 단가는 `claude-opus-5` 기준 (2026-08 확인):
+   *   입력 $5/M · 출력 $25/M · 캐시 읽기 $0.5/M (입력의 0.1배)
+   *   ⚠️ 모델을 바꾸면 이 상수도 같이 고칠 것. 안 고치면 상한이 거짓말이 된다.
+   */
+  const PRICE_IN = 5 / 1_000_000;
+  const PRICE_OUT = 25 / 1_000_000;
+  const PRICE_CACHE = 0.5 / 1_000_000;
+  const budget = Number(argOf("budget") ?? 15);
+  const spent = () => inTok * PRICE_IN + cacheTok * PRICE_CACHE + outTok * PRICE_OUT;
+
+  console.log(`  지출 상한 $${budget.toFixed(2)} (--budget 으로 조정)\n`);
+
   for (let i = 0; i < videos.length; i += BATCH) {
+    // 상한을 넘으면 즉시 멈춘다. 여기까지 한 것은 DB 에 남아 다음 실행이 이어받는다
+    if (spent() >= budget) {
+      console.log(`\n\n  ⛔ 지출 상한 $${budget.toFixed(2)} 도달 — 중단합니다`);
+      console.log(`     ${i}/${videos.length}편까지 처리 · 나머지는 다음 실행이 이어받습니다`);
+      break;
+    }
     const batch = videos.slice(i, i + BATCH);
     const body = batch
       .map(
@@ -193,14 +251,18 @@ async function main(): Promise<void> {
     }
 
     if ((i / BATCH) % 5 === 0) {
-      process.stdout.write(`\r  ${Math.min(i + BATCH, videos.length)}/${videos.length}`);
+      // 진행률과 함께 **누적 지출**을 찍는다. 끝날 때만 보여주면 도중에 멈출 수 없다
+      process.stdout.write(
+        `\r  ${Math.min(i + BATCH, videos.length)}/${videos.length} · $${spent().toFixed(2)}   `,
+      );
     }
   }
 
   console.log(`\n\n  태그 ${tagged}건 · 소재 없음 ${empty}편 · 목록에 없는 답 ${unknown}건`);
   console.log(
-    `  토큰  입력 ${inTok.toLocaleString()} (캐시 ${cacheTok.toLocaleString()}) · 출력 ${outTok.toLocaleString()}\n`,
+    `  토큰  입력 ${inTok.toLocaleString()} (캐시 ${cacheTok.toLocaleString()}) · 출력 ${outTok.toLocaleString()}`,
   );
+  console.log(`  💸 이번 실행 지출 약 $${spent().toFixed(2)} (상한 $${budget.toFixed(2)})\n`);
 
   const byCh = db
     .prepare(
