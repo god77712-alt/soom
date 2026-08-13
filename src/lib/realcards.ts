@@ -179,50 +179,50 @@ export function realCards(
     .slice(0, 2);
 
   /**
-   * ── 🚨 인구감소지역을 정렬로 올리지 않는다 (2026-08-13 수정) ──────
+   * ── 🚨 정렬은 **숨 스코어 하나뿐이다** (소재 점수 × 희소성) ──────
    *
-   * 예전엔 `declining` 을 **1순위 정렬키**로 썼다. 그런데 `repo.ts` 는 같은 자리에
-   * "인구감소지역 여부로 순서를 가르면 SPEC 11장의 인위적 가산점 금지를 어긴다"
-   * 고 적고 실제로 안 하고 있었다 — 두 경로가 정반대였다.
+   * 여기서 두 번 실수했다 (둘 다 2026-08-13 에 되돌림):
    *
-   * 더 큰 문제는 논리다. 희소성 가중치를 정당화하는 말이
-   * **"우리가 편애한 게 아니라 데이터가 그렇게 말했다"** 인데, 감소지역을
-   * 강제로 위에 올리면 그 말이 성립하지 않는다. 효과도 컸다 —
-   * 상설시장은 담은 240곳 중 감소지역만 카드에 올라 나머지는 영원히 안 나왔다.
+   * ① `declining` 을 1순위 정렬키로 썼다. 그런데 `repo.ts` 는 같은 자리에
+   *    "인구감소지역 여부로 순서를 가르면 SPEC 11장 인위적 가산점 금지를 어긴다"
+   *    고 적고 안 하고 있었다 — 두 경로가 정반대였다. 그리고 희소성 가중치를
+   *    정당화하는 말이 **"우리가 편애한 게 아니라 데이터가 그렇게 말했다"** 인데,
+   *    강제로 올리면 그 말이 무너진다. 상설시장은 담은 240곳 중 감소지역만
+   *    카드에 올라 나머지가 영원히 안 나왔다.
    *
-   * → 뺐다. 대신 **근거가 있는 신호**로 순서를 정한다 (아래 `provenNearby`).
-   *   인구감소지역은 희소성 가중치를 통해 자연히 올라온다.
+   * ② 그 자리를 `근처 40km 의 검증된 소재 수 × log1p × 0.35` 로 메웠다.
+   *    40km 도 0.35 도 **근거가 없는 숫자**다. 순위를 그럴듯하게 만들려고
+   *    만들어낸 값은 점수를 지어내는 것과 다르지 않다.
+   *
+   * 같은 소재 안에서는 소재 점수가 모두 같으므로 사실상 희소성만 남는다.
+   * 그래도 그게 정직하다 — **장소끼리 성과를 가를 근거가 우리에겐 없다.**
+   *
+   * ⚠️ 순위를 가르려고 신호를 지어내지 말 것.
+   *    한때 `근처 40km 에 검증된 소재 수 × log1p × 0.35` 를 곱했는데,
+   *    40km 도 0.35 도 근거가 없는 숫자였다. 순위를 그럴듯하게 만들려고
+   *    만들어낸 값은 **점수를 지어내는 것과 같다.**
+   *
+   * 같은 소재 안에서는 소재 점수가 모두 같으므로 사실상 희소성만 남는다.
+   * 그래도 그게 정직하다 — 장소끼리 성과를 가를 근거가 우리에겐 없다.
+   *
+   * → **차이는 순위가 아니라 카드 내용으로 낸다.** 근처에 뭘 더 찍을 수 있는지,
+   *   촬영 이력이 있는지, 특산물이 뭔지는 `nearby`·펼침이 말한다.
+   *
+   * 동점일 때만 화면이 읽히는 순서로 가른다 (사진 → 좌표 정확도).
    */
   const scored = subject.places
     .filter((p) => !excluded.has(p.id))
     .map((p) => {
       const count = language === "en" ? p.videos_en : p.videos_ko;
-      const proven = provenNearby(p, language);
-      /**
-       * 숨 스코어 × **묶어 찍을 수 있는 검증된 소재 수**.
-       *
-       * 같은 소재 안에서는 소재 점수가 모두 같으므로, 그것만으로는 장소끼리
-       * 순서를 가릴 수 없다(사실상 희소성만 남는다). 장소마다 다르면서
-       * **근거가 있는** 값은 "근처에 성과가 확인된 소재가 몇 개 더 있는가" 다.
-       *
-       * 크리에이터는 3시간 운전해서 한 곳만 찍고 오지 않는다. 하루에 검증된
-       * 소재를 두세 개 묶을 수 있는 곳이 실제로 더 나은 후보다 —
-       * 그리고 이건 편집 방침이 아니라 **좌표와 점수로 계산되는 사실**이다.
-       *
-       * 로그를 씌워 완만하게 — 근처 소재가 많다고 희소성을 압도하면 안 된다.
-       */
-      return {
-        p,
-        count,
-        proven,
-        score: (geo ?? 0) * scarcity(count) * (1 + Math.log1p(proven) * 0.35),
-      };
+      return { p, count, score: (geo ?? 0) * scarcity(count) };
     })
     .sort(
       (a, b) =>
         b.score - a.score ||
-        // 같으면 사진 있는 쪽. 목록은 썸네일로 읽힌다
-        Number(Boolean(b.p.image)) - Number(Boolean(a.p.image)),
+        // 목록은 썸네일로 읽힌다. 글자만 남으면 안 훑는다
+        Number(Boolean(b.p.image)) - Number(Boolean(a.p.image)) ||
+        // 추정 좌표는 지도에서 km 단위로 어긋난다
+        Number(a.p.coord_estimated) - Number(b.p.coord_estimated),
     )
     .slice(0, limit);
 
@@ -359,52 +359,6 @@ export function realSubjectEvidence(
           }
         : null,
   };
-}
-
-/**
- * 근처(40km)에 있는 **성과가 확인된 소재** 수.
- *
- * "확인됐다" 의 기준은 화면과 같다 — `can_show_multiplier` 가 참인 셀.
- * 즉 **화면에 배수를 숫자로 그릴 수 있을 만큼 근거가 있는 소재**만 센다.
- * 표본이 얇아 숫자를 못 그리는 소재는 여기서도 안 센다. 같은 잣대다.
- *
- * ⚠️ 자기 자신의 소재는 빼고 센다. 안 그러면 모든 장소가 +1 을 받아
- *    아무것도 구분하지 못한다.
- */
-/**
- * 성과가 확인된 소재 목록. **언어당 한 번만 계산한다.**
- * 장소마다 전체 카탈로그를 훑으면 240×12×240 번 거리 계산이 돈다.
- */
-const provenCache = new Map<Language, Subject[]>();
-
-function provenSubjects(language: Language): Subject[] {
-  const hit = provenCache.get(language);
-  if (hit) return hit;
-  // 밴드는 풀고 본다 — 이 신호는 특정 채널 크기와 무관하다
-  const list = SUBJECTS.filter((s) =>
-    TAGSCORES.some(
-      (t) =>
-        t.tag === s.tag &&
-        t.language === language &&
-        t.sub_band === null &&
-        t.can_show_multiplier,
-    ),
-  );
-  provenCache.set(language, list);
-  return list;
-}
-
-function provenNearby(p: CatalogPlace, language: Language): number {
-  let n = 0;
-  for (const s of provenSubjects(language)) {
-    // 자기 소재는 세지 않는다. 안 그러면 전부 +1 이라 아무것도 구분 못 한다
-    if (s.places.some((q) => q.id === p.id)) continue;
-    const near = s.places.some(
-      (q) => distanceKm({ lat: p.lat, lng: p.lng }, { lat: q.lat, lng: q.lng }) <= 40,
-    );
-    if (near) n++;
-  }
-  return n;
 }
 
 /** 근처에 묶어 찍을 소재. 좌표로 실제 계산한다 — 지어낸 값이 아니다 */
