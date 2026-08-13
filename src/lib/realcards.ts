@@ -29,6 +29,7 @@ import { shootPlanFor, type ShootPlan } from "./shootday";
 import { pickShortsCut } from "./shorts";
 import { SUBJECTS, type CatalogPlace, type Subject } from "./catalog";
 import TAGSCORES_JSON from "@/data/real/tagscores.json";
+import type { RealEvidenceVideo } from "./realdetail";
 import type { Language, Place, PlaceLanguageStat, SubBand } from "./types";
 import type { NearbySpot, VideoBreakdown } from "./viewmodels";
 
@@ -248,6 +249,71 @@ function buildPerformance(
       (found.usedBand ? "" : " · 구독자 구간 합산"),
     isOwn: false,
     tone: "normal",
+  };
+}
+
+/**
+ * 홈 상단 "소재 현황" 블록의 재료 — **실데이터로.**
+ *
+ * 여기가 시연으로 남아 있으면 화면 맨 위, 추천 목록 바로 앞에 가짜 영상 카드가
+ * 걸린다. 아래 카드들이 실데이터여도 그것부터 눈에 들어온다.
+ */
+export interface RealSubjectEvidence {
+  score: RealTagScore | null;
+  usedBand: boolean;
+  /** 이 소재로 가장 잘 된 실제 영상 3편 */
+  topVideos: RealEvidenceVideo[];
+  /** 이미 찍힌 곳 — `경쟁 0편` 이 무슨 뜻인지 읽히게 하는 비교군 */
+  occupied: Array<{ name: string; count: number }>;
+  reach: { low: number; high: number } | null;
+}
+
+export function realSubjectEvidence(
+  subject: Subject,
+  language: Language,
+  band: SubBand,
+  subscriberCount: number,
+): RealSubjectEvidence {
+  const found = findTagScore(subject.tag, language, band);
+  const s = found?.score ?? null;
+
+  const videos: RealEvidenceVideo[] = [];
+  for (const p of subject.places) {
+    for (const v of p.videos) {
+      if (v.language !== language) continue;
+      // 구독자 1,000 미만은 배수가 폭발해 순위를 망친다
+      if (v.subscriber_count < 1000) continue;
+      videos.push({
+        video_id: v.video_id,
+        title: v.title,
+        channel_title: v.channel_title,
+        view_count: v.view_count,
+        subscriber_count: v.subscriber_count,
+        vsr: Number((v.view_count / v.subscriber_count).toFixed(2)),
+        duration_sec: v.duration_sec,
+        place_name: p.name,
+        excluded_from_score: false,
+      });
+    }
+  }
+
+  return {
+    score: s,
+    usedBand: found?.usedBand ?? false,
+    topVideos: videos.sort((a, b) => b.vsr - a.vsr).slice(0, 3),
+    occupied: [...subject.places]
+      .map((p) => ({ name: p.name, count: language === "en" ? p.videos_en : p.videos_ko }))
+      .filter((p) => p.count > 0)
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 3),
+    // 단일 숫자 금지 (CLAUDE.md 6항). 범위를 못 내면 아예 안 낸다
+    reach:
+      s && s.p25_vsr !== null && s.p75_vsr !== null
+        ? {
+            low: Math.round(subscriberCount * s.p25_vsr),
+            high: Math.round(subscriberCount * s.p75_vsr),
+          }
+        : null,
   };
 }
 

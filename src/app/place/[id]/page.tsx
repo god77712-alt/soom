@@ -22,7 +22,10 @@ import { reliabilityNote, toneClass } from "@/lib/display";
 import { formatMinutes } from "@/lib/geo";
 import { formatCount, getStrings } from "@/lib/i18n";
 import { reachText } from "@/lib/display";
-import { getPlaceDetail } from "@/lib/repo";
+import { RealPlaceDetailView } from "@/components/RealPlaceDetail";
+import { subjectForTagName } from "@/lib/realcards";
+import { realPlaceDetail } from "@/lib/realdetail";
+import { getChannel, getPlaceDetail, getTag } from "@/lib/repo";
 
 const S = getStrings("ko");
 
@@ -55,6 +58,24 @@ export default async function PlaceDetailPage({
 }) {
   const { id } = await params;
   const { channel: channelId = "", tag: tagId = "" } = await searchParams;
+
+  /**
+   * 실데이터가 먼저다.
+   *
+   * 12개 주력 소재의 장소는 카탈로그(`places.json`)에 있고, 거기엔 실제 영상까지
+   * 붙어 있다. 그 경우 시연 경로로 내려가면 **실재하는 장소에 지어낸 영상**을
+   * 붙이게 된다 — 가짜 장소에 붙이는 것보다 나쁘다.
+   *
+   * 홈은 아직 시연 태그 체계(`t_oil_market`)로 도니까 `realcards` 와 같은
+   * 다리를 쓴다: 태그 **이름**으로 실데이터 소재를 찾는다.
+   */
+  const realChannel = await getChannel(channelId);
+  if (realChannel) {
+    const hintTag = await getTag(tagId);
+    const hint = hintTag ? subjectForTagName(hintTag.name_ko) : null;
+    const real = realPlaceDetail(id, realChannel, hint);
+    if (real) return <RealPlaceDetailView detail={real} tagId={tagId} />;
+  }
 
   const detail = await getPlaceDetail(id, channelId, tagId);
   if (!detail) notFound();

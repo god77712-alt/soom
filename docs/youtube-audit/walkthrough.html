@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SOOM — YouTube API Services Walkthrough</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm; }
+  * { box-sizing: border-box; }
+  body {
+    font: 11pt/1.55 -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: #16181d; margin: 0; padding: 0;
+  }
+  h1 { font-size: 20pt; margin: 0 0 4px; letter-spacing: -.01em; }
+  h2 {
+    font-size: 13pt; margin: 0 0 10px; padding-bottom: 6px;
+    border-bottom: 2px solid #16181d;
+  }
+  h3 { font-size: 11pt; margin: 16px 0 6px; }
+  p { margin: 0 0 9px; }
+  .sub { color: #5b6270; font-size: 10pt; margin-bottom: 18px; }
+  .meta {
+    border: 1px solid #d3d7de; padding: 10px 14px; margin-bottom: 22px;
+    font-size: 9.5pt; background: #f7f8fa;
+  }
+  .meta dl { display: grid; grid-template-columns: 150px 1fr; gap: 3px 10px; margin: 0; }
+  .meta dt { color: #5b6270; }
+  .meta dd { margin: 0; }
+  section.step { page-break-inside: avoid; margin-bottom: 26px; }
+  .stepnum {
+    display: inline-block; background: #16181d; color: #fff;
+    font-size: 9pt; font-weight: 700; padding: 1px 8px; margin-right: 8px;
+    vertical-align: 2px;
+  }
+  figure { margin: 10px 0 0; page-break-inside: avoid; }
+  figure img { width: 100%; border: 1px solid #c9ced7; display: block; }
+  figcaption {
+    font-size: 8.5pt; color: #5b6270; margin-top: 5px;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace; word-break: break-all;
+  }
+  table { border-collapse: collapse; width: 100%; font-size: 9.5pt; margin: 8px 0 12px; }
+  th, td { border: 1px solid #d3d7de; padding: 5px 8px; text-align: left; vertical-align: top; }
+  th { background: #f0f2f5; font-weight: 600; }
+  code { font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 9.5pt; }
+  .callout {
+    border-left: 3px solid #16181d; background: #f7f8fa;
+    padding: 9px 13px; margin: 10px 0; font-size: 10pt;
+  }
+  ul { margin: 0 0 9px; padding-left: 20px; }
+  li { margin-bottom: 4px; }
+  .pagebreak { page-break-before: always; }
+  .apitag {
+    display: inline-block; font-family: ui-monospace, Consolas, monospace;
+    font-size: 8.5pt; background: #16181d; color: #fff; padding: 1px 6px; margin-right: 4px;
+  }
+  .apitag.none { background: #8b919c; }
+</style>
+</head>
+<body>
+
+<h1>SOOM — API Client Walkthrough</h1>
+<p class="sub">
+  Step-by-step visual reference of the use case, the end results, and the complete
+  functionality of the API client using YouTube API Services.
+</p>
+
+<div class="meta">
+  <dl>
+    <dt>API Client</dt><dd>SOOM (숨) — filming-location service for video creators</dd>
+    <dt>Live URL</dt><dd>https://gwanjetap.netlify.app</dd>
+    <dt>GCP project number</dt><dd>507307814114 (project <code>travel-505308</code>)</dd>
+    <dt>Requested quota</dt><dd>300,000 units/day (current default: 10,000)</dd>
+    <dt>Document date</dt><dd>13 August 2026</dd>
+    <dt>Interface language</dt><dd>Korean. Every screen below is translated in this document.</dd>
+  </dl>
+</div>
+
+<h2>1. What the client does, in one paragraph</h2>
+<p>
+  SOOM helps video creators in Korea find places to film in depopulating rural
+  regions. A creator enters their own YouTube channel. We look up that channel's
+  public statistics, work out which <em>subjects</em> the channel actually performs
+  well on (traditional five-day markets, closed schools, islands, valleys…), and
+  then list public-data locations across Korea where that same subject can be
+  filmed — ranked so that places with little existing video coverage surface first.
+</p>
+<p>
+  YouTube API Services supply exactly two things: <strong>public channel
+  statistics</strong> for the creator who is asking, and <strong>public video
+  statistics</strong> used to compute an aggregate performance score per subject.
+  Everything else on screen comes from Korean public open data (the national
+  tourism API, traditional-market registry, closed-school registry, sunrise/sunset
+  tables).
+</p>
+
+<div class="callout">
+  <strong>No end-user ever triggers a YouTube API call.</strong> All collection runs
+  server-side in scheduled batch scripts and lands in our own database. The web
+  front end reads a JSON snapshot baked at build time, so visitor traffic consumes
+  zero quota. This is verified in step 9.
+</div>
+
+<h2>2. Where each YouTube API call is used</h2>
+<table>
+  <tr><th>API call</th><th>Purpose in the product</th><th>Seen in step</th></tr>
+  <tr>
+    <td><code>channels.list</code></td>
+    <td>Subscriber count and uploads playlist id for the channel the creator entered.</td>
+    <td>Step 2</td>
+  </tr>
+  <tr>
+    <td><code>playlistItems.list</code></td>
+    <td>Recent uploads of that channel (used instead of <code>search.list</code> — 1 unit rather than 100).</td>
+    <td>Step 2</td>
+  </tr>
+  <tr>
+    <td><code>videos.list</code></td>
+    <td>View count, duration, description (for chapter timestamps), 50 ids per call.</td>
+    <td>Steps 2, 3, 5</td>
+  </tr>
+  <tr>
+    <td><code>search.list</code></td>
+    <td>Discover candidate videos per subject and per region name. <strong>This is the call the quota increase is for.</strong></td>
+    <td>Steps 3, 5</td>
+  </tr>
+  <tr>
+    <td><code>commentThreads.list</code></td>
+    <td>Identify the filming location named by viewers when the title does not name it.</td>
+    <td>Step 5 (attribution)</td>
+  </tr>
+</table>
+
+<div class="pagebreak"></div>
+<h2>3. Step-by-step walkthrough</h2>
+
+<section class="step">
+  <h3><span class="stepnum">STEP 1</span>Entry point — the creator enters a YouTube channel</h3>
+  <p>
+    <span class="apitag none">no API call yet</span>
+    The headline reads "Enter a channel and you get coordinates". The input accepts a
+    channel URL, handle, or name. The two buttons below are example channels.
+    The footer carries YouTube branding and links to the YouTube Terms of Service
+    and the Google Privacy Policy.
+  </p>
+  <figure>
+    <img src="01-home.png" alt="SOOM home page">
+    <figcaption>https://gwanjetap.netlify.app/</figcaption>
+  </figure>
+</section>
+
+<section class="step">
+  <h3><span class="stepnum">STEP 2</span>Channel analysis — the end result of <code>channels.list</code> + <code>playlistItems.list</code> + <code>videos.list</code></h3>
+  <p>
+    <span class="apitag">channels.list</span>
+    <span class="apitag">playlistItems.list</span>
+    <span class="apitag">videos.list</span>
+    The creator's channel is resolved and its public statistics are shown. Reading
+    the screen top to bottom:
+  </p>
+  <ul>
+    <li><strong>453,000</strong> — subscriber count (<code>channels.list</code>).</li>
+    <li><strong>Long-form 0.14× / 63,229</strong> — median views ÷ subscribers, and median view count, across the 43 long-form uploads in the sample of 50 (<code>videos.list</code>).</li>
+    <li><strong>Shorts 0.029× / 13,307</strong> — the same split for the 7 uploads under 180 seconds.</li>
+    <li>The line under the numbers states plainly: <em>"the figures above are measured from YouTube (view counts are medians)."</em></li>
+    <li>The chips are the subjects this channel actually films, derived by classifying its own video titles and descriptions: Korean food 47, food routes 40, permanent markets 9, cafés 4, five-day markets 2, hotels 2.</li>
+  </ul>
+  <div class="callout">
+    We normalise by subscriber count rather than raw views. A 6.2M-subscriber channel
+    in our sample scores 0.016× while a 2,080-subscriber channel scores 1.539× — the
+    ranking inverts once channel size is removed. This is the core reason we need
+    channel statistics at all.
+  </div>
+  <figure>
+    <img src="02-channel-analysis.png" alt="Channel analysis result">
+    <figcaption>https://gwanjetap.netlify.app/?q=하이갱스 higaengs</figcaption>
+  </figure>
+</section>
+
+<section class="step">
+  <h3><span class="stepnum">STEP 3</span>Subject evidence — aggregate score and the actual videos behind it</h3>
+  <p>
+    <span class="apitag">search.list</span>
+    <span class="apitag">videos.list</span>
+    The creator picked the subject "five-day market". This block is the end result
+    of the collection the quota increase pays for.
+  </p>
+  <ul>
+    <li><strong>122,763 ~ 847,563</strong> — projected reach for this channel on this
+      subject, always shown as a <em>range</em> with the caption "estimate based on past
+      data", never as a single number.</li>
+    <li>The three cards are <strong>real YouTube videos</strong> embedded through the
+      official <code>youtube-nocookie.com</code> iframe player, each with a
+      "View on YouTube ↗" link back to the original watch page. The figures under each
+      card are the measured ones: 16.3× (1,800 subscribers → 30,000 views),
+      6.6× (6,200 → 41,000), 6.1× (6,500 → 40,000).</li>
+    <li>The bar underneath reads "already filmed" and names the places that do have
+      coverage — Namhae 3, Goryeong 3, Mungyeong 3 — so that "0 competing videos"
+      on the cards below has a reference point.</li>
+    <li>The results header states the provenance: "from 458 public-data locations · real data".</li>
+  </ul>
+  <div class="callout">
+    The leftmost card shows YouTube's own "Video unavailable — the owner has disabled
+    playback on other websites" message. That is the official player enforcing the
+    uploader's embedding setting, and we deliberately do not work around it: the card
+    still credits the video and links to its watch page.
+  </div>
+  <figure>
+    <img src="03-subject-evidence.png" alt="Subject evidence with embedded YouTube players">
+    <figcaption>https://gwanjetap.netlify.app/?q=하이갱스 higaengs&amp;tag=t_oil_market#result</figcaption>
+  </figure>
+</section>
+
+<section class="step">
+  <h3><span class="stepnum">STEP 4</span>A recommended location, expanded</h3>
+  <p>
+    <span class="apitag none">public open data only</span>
+    Expanding a card shows what a creator needs in order to actually go: the next
+    market days with civil-twilight, sunrise and sunset times (from the Korean
+    tourism and astronomy public datasets), other subjects within driving distance,
+    and the number of competing videos for each. No YouTube data on this panel except
+    the competing-video counts.
+  </p>
+  <figure>
+    <img src="04-card-expanded.png" alt="Expanded recommendation card">
+    <figcaption>https://gwanjetap.netlify.app/?q=하이갱스 higaengs&amp;tag=t_oil_market#result</figcaption>
+  </figure>
+</section>
+
+<div class="pagebreak"></div>
+<section class="step">
+  <h3><span class="stepnum">STEP 5</span>Location detail, evidence ① and ② — six real embedded players</h3>
+  <p>
+    <span class="apitag">search.list</span>
+    <span class="apitag">videos.list</span>
+    <span class="apitag">commentThreads.list</span>
+    This is the deepest screen and the one where YouTube data is most visible.
+  </p>
+  <ul>
+    <li><strong>① "This subject works"</strong> — the aggregate: <em>five-day markets ·
+      84 collected videos · geometric mean 0.586× · 95% CI 0.401–0.847</em>. Below it,
+      three real videos of the same subject <em>filmed elsewhere</em>, each embedded and
+      linked back.</li>
+    <li><strong>② "But this place is empty"</strong> — every video we could attribute to
+      <em>this specific location</em>. Here there are three: 49.2× (133 subscribers →
+      6,500 views), 23.6× (61 → 1,400), 0.4× (7,300 → 3,100). The two small-channel
+      cards carry the note "under 1,000 subscribers — excluded from score calculation",
+      because a tiny denominator makes the ratio explode.</li>
+  </ul>
+  <p>
+    Attributing a video to a location is what <code>commentThreads.list</code> is for.
+    Korean travel videos frequently name the place only in the comments, and
+    English-language ones usually do not name it in the title at all.
+  </p>
+  <figure>
+    <img src="05-evidence-step1-2.png" alt="Evidence steps 1 and 2 with six embedded players">
+    <figcaption>https://gwanjetap.netlify.app/place/m2600?channel=UC86GzuZXRb7aZnhnnUA3IAg&amp;tag=t_oil_market</figcaption>
+  </figure>
+</section>
+
+<section class="step">
+  <h3><span class="stepnum">STEP 6</span>Evidence ③ and ④ — why the place is empty, and projected reach</h3>
+  <p>
+    <span class="apitag">videos.list</span>
+    ③ answers "is it empty because it is bad?" with public-data facts: it is
+    registered with the Korea Tourism Organization; there is no public-data photo;
+    the 13 locations of this subject that do have coverage average 1.5 videos while
+    this one has 3; nationally 244 of 458 five-day markets are in
+    officially designated depopulating districts.
+  </p>
+  <p>
+    ④ is the projected reach for this specific channel, again as a range
+    (<strong>122,763 ~ 847,563</strong>) with the disclaimer "estimate based on past
+    data". We never publish a single predicted view count.
+  </p>
+  <figure>
+    <img src="06-evidence-step3-4.png" alt="Evidence steps 3 and 4">
+    <figcaption>https://gwanjetap.netlify.app/place/m2600?channel=UC86GzuZXRb7aZnhnnUA3IAg&amp;tag=t_oil_market</figcaption>
+  </figure>
+</section>
+
+<section class="step">
+  <h3><span class="stepnum">STEP 7</span>Evidence ⑤ and ⑥ — when to shoot, what else is nearby</h3>
+  <p>
+    <span class="apitag none">public open data only</span>
+    The market opens on days ending in 4 and 9; the next three dates are listed with
+    civil twilight, sunrise and sunset for each, sourced from the Korea Astronomy and
+    Space Science Institute. Below, six other filmable subjects within a 40 km radius,
+    each with its competing-video count. The provenance line is printed under each
+    block.
+  </p>
+  <figure>
+    <img src="07-evidence-step5-6.png" alt="Evidence steps 5 and 6">
+    <figcaption>https://gwanjetap.netlify.app/place/m2600?channel=UC86GzuZXRb7aZnhnnUA3IAg&amp;tag=t_oil_market</figcaption>
+  </figure>
+</section>
+
+<div class="pagebreak"></div>
+<section class="step">
+  <h3><span class="stepnum">STEP 8</span>Attribution page — <code>/data-sources</code></h3>
+  <p>
+    Linked from the footer of every page. It lists every data source including
+    "YouTube Data API v3 — Google", explains the scoring method, and demonstrates the
+    official embedded player with a link to the watch page. The section headed
+    "What we do not do" states: we do not download or store video files or
+    thumbnails; the front end makes no direct external API calls; projected reach is
+    never a single number; there is no sign-up, login, advertising or behavioural
+    tracking. The page links to the YouTube Terms of Service and the Google Privacy
+    Policy.
+  </p>
+  <figure>
+    <img src="08-data-sources-player.png" alt="Data sources page with embedded player">
+    <figcaption>https://gwanjetap.netlify.app/data-sources</figcaption>
+  </figure>
+</section>
+
+<section class="step">
+  <h3><span class="stepnum">STEP 9</span>Privacy policy — YouTube API Services disclosure</h3>
+  <p>
+    Section 5 is the required disclosure. It states that SOOM uses YouTube API
+    Services to retrieve public video statistics (title, view count, duration,
+    description, publish date) and public channel information; that retrieval is
+    performed server-side in batches and never asks the user to log in or grants us
+    access to their YouTube account; that users are bound by the YouTube Terms of
+    Service; that Google's handling of information is covered by the Google Privacy
+    Policy; that because we request no user account access there is nothing to
+    revoke, with a link to Google security settings; and that we retain no video
+    files or thumbnails, refreshing collected statistics periodically rather than
+    keeping a permanent copy. Sections 1–4 confirm there is no sign-up, no cookies,
+    no tracking and no third-party sharing.
+  </p>
+  <figure>
+    <img src="09-privacy-youtube.png" alt="Privacy policy YouTube section">
+    <figcaption>https://gwanjetap.netlify.app/privacy</figcaption>
+  </figure>
+</section>
+
+<div class="pagebreak"></div>
+<h2>4. How collection actually runs (server-side only)</h2>
+<p>
+  Collection is a set of Node.js command-line scripts run on a schedule, never from
+  the browser. Each run writes its unit consumption to a <code>yt_quota</code> table
+  keyed by date, because a process that forgets consumption restarts the count from
+  zero on every re-run and overshoots the daily cap.
+</p>
+<table>
+  <tr><th>Command</th><th>Calls used</th><th>Cost</th></tr>
+  <tr><td><code>npm run yt:channel -- @handle</code></td><td>channels.list → playlistItems.list → videos.list</td><td>3 units per 50 videos</td></tr>
+  <tr><td><code>npm run yt:search</code></td><td>search.list → videos.list</td><td>100 units per page</td></tr>
+  <tr><td><code>npm run yt:comments</code></td><td>commentThreads.list</td><td>1 unit per video</td></tr>
+</table>
+<p>Current contents of our database, collected entirely within the default 10,000 units/day:</p>
+<table>
+  <tr><th>Table</th><th>Rows</th></tr>
+  <tr><td>Videos (public metadata only)</td><td>42,018</td></tr>
+  <tr><td>Channels (public statistics only)</td><td>2,542</td></tr>
+  <tr><td>Comments (used for location attribution)</td><td>21,867</td></tr>
+  <tr><td>Video → location attributions</td><td>2,978</td></tr>
+  <tr><td>Filming locations from Korean public open data</td><td>50,033</td></tr>
+</table>
+<div class="callout">
+  We deliberately avoid <code>search.list</code> wherever a cheaper call exists.
+  Fetching a channel's recent uploads via <code>search.list</code> costs 100 units;
+  going through <code>channels.list</code> → <code>playlistItems.list</code> costs 3.
+  Measured on our own data, that is 50 videos for 3 units. The quota increase is
+  needed only for the one job that genuinely requires search: discovering candidate
+  videos for subjects and regions we have never seen.
+</div>
+
+<h2>5. Why 300,000 units/day</h2>
+<p>
+  <code>search.list</code> costs 100 units per page. Under the default 10,000/day that
+  is 100 searches per day. The initial corpus needs roughly 700 distinct queries
+  (229 Korean municipalities × 3 phrasings, 66 subjects, ~30 English queries) at
+  3 pages each — about 210,000 units — which would take over a month of
+  uninterrupted collection with no margin for retries.
+</p>
+<p>
+  Scores must be computed separately per language. In our sample, traditional markets
+  score 4.1× for English-language videos and 0.6× for Korean-language ones; merging
+  the two collapses every subject toward the mean and makes the recommendation
+  meaningless. Both language corpora therefore have to be collected rather than
+  sampled. Our English-language corpus is currently the gap: enter an English-language
+  channel today and the screen honestly reports "rank only — insufficient sample".
+</p>
+<p>
+  At 300,000 units/day the initial collection completes in about two days, after which
+  ongoing use falls back to roughly 10,000 units/day for periodic re-scoring.
+</p>
+
+<h2>6. Compliance summary</h2>
+<ul>
+  <li>No YouTube content is downloaded, stored as media, or re-hosted. Only public metadata.</li>
+  <li>Every video is played through the official <code>youtube-nocookie.com</code> iframe player, and every card carries a link back to the watch page. Uploader embedding settings are respected, not circumvented.</li>
+  <li>Stored statistics are refreshed periodically rather than retained indefinitely as a static copy.</li>
+  <li>Aggregate figures are shown with sample size and a 95% confidence interval; multipliers are printed only when the sample reaches 100 videos, otherwise the screen says "rank only".</li>
+  <li>Projected reach is always a range with an explicit estimate disclaimer, never a guaranteed outcome.</li>
+  <li>No user authentication, no OAuth, no access to private user data, no advertising, no behavioural tracking, no cookies.</li>
+  <li>The API key is server-side only and is never exposed to the browser; the front end makes no direct calls to the YouTube API.</li>
+  <li>Screens that still contain illustrative rather than collected data are labelled as such on the page itself, in the interface and on <code>/data-sources</code>.</li>
+</ul>
+
+</body>
+</html>

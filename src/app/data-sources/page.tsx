@@ -69,7 +69,8 @@ export default function DataSourcesPage() {
             </>,
             <>
               같은 소재를 다룬 공개 영상의 <strong className="text-ink">조회수 ÷ 구독자수</strong>{" "}
-              중앙값으로 소재별 점수를 냅니다.
+              기하평균으로 소재별 점수를 냅니다. 배수는 표본 100편 이상일 때만 숫자로 쓰고, 그
+              미만이면 순위에만 반영합니다.
             </>,
             <>
               점수판은 <strong className="text-ink">언어별·구독자 규모별로 따로</strong> 만듭니다.
@@ -126,8 +127,10 @@ export default function DataSourcesPage() {
           </div>
         </div>
         <p className="text-[12px] text-ink3">
-          위 영상과 수치는 YouTube Data API 로 실제 조회한 값입니다. 추천 화면의 영상
-          카드는 아직 시연 데이터라 자리표시로 표시됩니다.
+          위 영상과 수치는 YouTube Data API 로 실제 조회한 값입니다. 12개 주력 소재의
+          추천·근거 화면에 나오는 영상 카드도 모두 같은 방식의 실제 영상이며, 각 카드에
+          원본 watch 페이지로 가는 링크를 함께 둡니다. 아직 시연인 소재는 화면에서
+          <strong className="text-ink"> 자리표시 박스</strong>로 구분됩니다.
         </p>
       </Section>
 

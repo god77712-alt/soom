@@ -15,7 +15,8 @@ import { ChannelStats } from "@/components/ChannelStats";
 import { EvidenceVideoCard } from "@/components/EvidenceVideoCard";
 import { MapHero } from "@/components/MapHero";
 import { PlaceRecommendCard } from "@/components/PlaceRecommendCard";
-import { realCards, subjectForTagName } from "@/lib/realcards";
+import { realCards, realSubjectEvidence, subjectForTagName } from "@/lib/realcards";
+import { RealEvidenceVideoCard } from "@/components/RealEvidenceVideoCard";
 import { Reveal } from "@/components/Reveal";
 import { ShareButton } from "@/components/ShareButton";
 import { TagChip } from "@/components/TagChip";
@@ -99,6 +100,22 @@ export default async function Home({
             occupied.map((o) => o.place.id),
           )
         : [];
+  /**
+   * 소재 현황 블록도 실데이터가 우선이다.
+   *
+   * 여기가 시연으로 남으면 화면 맨 위 · 추천 목록 바로 앞에 가짜 영상 카드가
+   * 걸린다. 아래 카드가 전부 실데이터여도 그것부터 눈에 들어온다.
+   */
+  const realEvidence =
+    channel && realSubject
+      ? realSubjectEvidence(
+          realSubject,
+          channel.language,
+          channel.sub_band,
+          channel.subscriber_count,
+        )
+      : null;
+
   const expansion = tagId ? await getExpansionTags(tagId) : { siblings: [], explore: [] };
 
   /** 소재를 바꿀 때 유지해야 하는 주소 앞부분 */
@@ -106,9 +123,10 @@ export default async function Home({
 
   // 예상 도달은 소재 단위로 한 번만 계산한다 (카드마다 넣으면 전부 같은 값이 된다)
   const reachRangeValue =
-    channel && evidence?.score.score
+    realEvidence?.reach ??
+    (channel && evidence?.score.score
       ? reachRange(channel.subscriber_count, evidence.score.score)
-      : null;
+      : null);
   const reach = reachRangeValue
     ? reachText(reachRangeValue.low, reachRangeValue.high)
     : null;
@@ -364,13 +382,25 @@ export default async function Home({
               <h2 className="font-serif text-3xl font-normal tracking-tight">
                 {evidence.tag.name_ko}
               </h2>
-              {evidence.score.score && (
-                <span className="font-mono text-xs text-ink3 tnum">
-                  {S.s3ProvenBasis(
-                    evidence.score.score.video_count,
-                    evidence.score.score.median_vsr,
-                  )}
-                </span>
+              {/* 실데이터 소재는 실제 수집 표본과 기하평균을 쓴다 */}
+              {realEvidence ? (
+                realEvidence.score && (
+                  <span className="font-mono text-xs text-ink3 tnum">
+                    표본 {realEvidence.score.video_count}편
+                    {realEvidence.score.can_show_multiplier && realEvidence.score.geo_vsr !== null
+                      ? ` · 기하평균 ${realEvidence.score.geo_vsr}×`
+                      : " · 배수를 쓰기엔 표본이 얇다"}
+                  </span>
+                )
+              ) : (
+                evidence.score.score && (
+                  <span className="font-mono text-xs text-ink3 tnum">
+                    {S.s3ProvenBasis(
+                      evidence.score.score.video_count,
+                      evidence.score.score.median_vsr,
+                    )}
+                  </span>
+                )
               )}
             </div>
 
@@ -390,7 +420,21 @@ export default async function Home({
             )}
           </Reveal>
 
-          {evidence.provenVideos.length > 0 && (
+          {/*
+            잘 된 영상 3편. 실데이터 소재는 **실제 YouTube 영상**이 임베드된다
+            (`RealEvidenceVideoCard` — watch 페이지 링크를 항상 함께 둔다).
+          */}
+          {realEvidence ? (
+            realEvidence.topVideos.length > 0 && (
+              <Reveal delay={80}>
+                <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                  {realEvidence.topVideos.map((v) => (
+                    <RealEvidenceVideoCard key={v.video_id} item={v} />
+                  ))}
+                </div>
+              </Reveal>
+            )
+          ) : evidence.provenVideos.length > 0 ? (
             <Reveal delay={80}>
               <div className="mt-6 grid gap-3 sm:grid-cols-3">
                 {evidence.provenVideos.map((v) => (
@@ -398,9 +442,25 @@ export default async function Home({
                 ))}
               </div>
             </Reveal>
+          ) : null}
+
+          {realEvidence && realEvidence.occupied.length > 0 && (
+            <Reveal delay={140}>
+              <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1.5 border border-hair bg-panel px-4 py-2.5">
+                <span className="font-mono text-[11px] tracking-wider text-ink3 uppercase">
+                  {S.s3OccupiedTitle}
+                </span>
+                {realEvidence.occupied.map((o) => (
+                  <span key={o.name} className="text-sm text-ink3">
+                    {o.name}
+                    <span className="ml-1.5 font-mono tnum">{S.videoCount(o.count)}</span>
+                  </span>
+                ))}
+              </div>
+            </Reveal>
           )}
 
-          {occupied.length > 0 && (
+          {!realEvidence && occupied.length > 0 && (
             <Reveal delay={140}>
               <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1.5 border border-hair bg-panel px-4 py-2.5">
                 <span className="font-mono text-[11px] tracking-wider text-ink3 uppercase">

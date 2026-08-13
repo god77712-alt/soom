@@ -298,9 +298,33 @@ p 값만 보면 "차이 없음"이지만 **구독자 구간을 갈라 보면 3�
 | `/start` `/subject` 목록 | ✅ 전부 실데이터 |
 | 홈 · 채널 지표 (롱폼/쇼츠) | ✅ 실측 |
 | 홈 · 채널 소재 태그 | ✅ 실측 (`tag:channel` LLM 분류) |
-| 홈 · 추천 카드 | ✅ 4개 소재(오일장·상설시장·폐교·섬) · 나머지는 시연 |
-| `/place/[id]` S4 6단 근거 | ❌ 시연 |
+| 홈 · 소재 현황 (성적·잘 된 영상·촬영 완료) | ✅ 12개 소재 실데이터 (`realSubjectEvidence`) |
+| 홈 · 추천 카드 | ✅ 12개 소재 실데이터 · 나머지는 시연 |
+| `/place/[id]` S4 6단 근거 | ✅ 12개 소재 실데이터 (`realdetail.ts`) |
 | `/admin` 기관용 | ❌ 시연 |
+
+### 실데이터 경로는 `repo.ts` **옆에** 있다 (2026-08-13)
+
+`repo.ts` 의 추천·상세 경로는 시연 데이터(`FAKE_*`)와 촘촘히 엮여 있다. 거기를 뜯으면
+`/check` 까지 같이 흔들린다. 그래서 실데이터 경로를 **따로 놓고 화면이 그쪽을 먼저 보게** 했다.
+
+```
+realcards.ts    홈 추천 카드 + 소재 현황 블록
+realdetail.ts   /place/[id] 6단 근거
+                → 카탈로그(places.json)에 있는 장소면 실데이터, 없으면 시연으로 폴백
+```
+
+다리는 **태그 이름**이다. 홈이 아직 시연 태그 체계(`t_oil_market`)로 돌기 때문에
+`subjectForTagName()` 으로 실데이터 소재를 찾는다. 짝이 없으면 시연 카드가 나간다.
+
+⚠️ **실재하는 장소에 지어낸 영상을 붙이면 안 된다.** 가짜 장소에 붙이는 것보다 나쁘다 —
+   크리에이터가 그걸 믿고 4시간을 운전한다. 그래서 6단 중 재료가 없는 칸
+   (컷 순서·제목 예시·숙소)은 **문장으로 메우지 않고 안 그린다.**
+
+⚠️ **"시연용" 배너를 실데이터 화면에 띄우지 말 것.** `/place/[id]` 는 같은 경로가 장소에
+   따라 갈리므로 경로로 못 가른다. 실데이터 화면이 `#real-data-page` 표식을 심고
+   `globals.css` 의 `:has()` 규칙이 배너를 지운다 — **CSS 라서 하이드레이션과 무관하다.**
+   진짜 데이터를 가짜라고 말하는 건 그 반대만큼 나쁘다.
 
 ## ▶ 다음 세션에서 이것부터
 
@@ -359,7 +383,7 @@ export:tagscores → export:places → export:channels
 
 | 대상 | 상태 |
 |---|---|
-| YouTube Data API 350,000/일 | ⏳ **2026-08-12 제출 완료** · 심사 수 주 |
+| YouTube Data API 300,000/일 | 🔁 **2026-08-13 반려 · 재제출 자료 준비 완료** (아래 참조) |
 | 국문·영문 관광정보 (운영계정) | ⏳ 2026-08-11 신청 |
 | 기상청 단기예보 · ASOS · 해수욕장 날씨 | ✅ 승인 (개발계정으로 충분) |
 | 한국천문연구원 출몰시각 | ✅ 승인 · 실호출 확인 |
@@ -367,6 +391,42 @@ export:tagscores → export:places → export:channels
 
 시군구 단위 서비스(연관관광지·기초지자체·수요·다양성)는 다 합쳐야 6,000회라
 **상향 신청이 필요 없다.**
+
+#### 🚨 YouTube 1차 반려 — 자료가 아니라 **형식**이 문제였다 (2026-08-13)
+
+> We reviewed your request and did not find sufficient information to conduct an API
+> compliance review... Kindly provide a detailed step-by-step visual reference or a
+> screen cast of the use case, along with the end results, and the complete
+> functionality of the API client.
+
+1차에 낸 건 **정적 스크린샷 7장 + 다이어그램 2장**이었다. 항목은 다 채웠는데
+**"이걸 쓰면 무슨 일이 벌어지는가"를 순서대로 보여주는 자료가 없었다.**
+게다가 화면이 전부 한국어라 심사자가 뭘 보고 있는지 알 방법이 없다.
+
+→ 재제출 자료는 `docs/youtube-audit/` 에 있다.
+
+```
+SOOM-API-Client-Walkthrough.pdf   12쪽 · 영문 · 한 세션을 처음부터 끝까지
+walkthrough.html                  PDF 원본. 고치면 아래 명령으로 다시 굽는다
+reply-email.md                    답장 문안 + 보내기 전 체크리스트
+01~09-*.png                       화면 캡처 (주소 표시줄 포함)
+```
+
+```
+chrome --headless=new --no-pdf-header-footer --virtual-time-budget=10000 \
+       --print-to-pdf=SOOM-API-Client-Walkthrough.pdf walkthrough.html
+```
+
+**화면마다 어느 API 호출이 어느 픽셀을 만들었는지** 영문으로 적었다. 이게 요구의 핵심이다.
+
+⚠️ 증빙 캡처는 `scripts/capture-chrome.ps1` 로 뜬다. **확장 프로그램 캡처는 안 된다** —
+   페이지 영역만 나와서 주소 표시줄이 빠진다. 이 스크립트는 크롬을 앞으로 끌어내고
+   인포바("디버깅을 시작함")를 닫은 뒤 화면 전체를 뜬다. 인포바는 **새로고침마다
+   다시 뜨므로 캡처 직전에 매번** 닫아야 한다.
+
+⚠️ **재제출 전에 시연 데이터를 걷어내야 했다.** 유튜브 영상이 나오는 화면이 시연이면
+   "전체 기능을 보여달라"는 요구를 만족할 수 없다. 홈 소재 현황과 S4 6단이 그래서
+   실데이터로 바뀌었다 (위 「실데이터 경로」 참조).
 
 #### YouTube 심사에 낸 것 (재신청·재감사 대비)
 
