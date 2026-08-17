@@ -195,10 +195,10 @@
       "primary": "long",
       "long": {
         "sample": 37,
-        "median_vsr": 0.742,
-        "p25_vsr": 0.533,
-        "p75_vsr": 1.61,
-        "median_views": 1965310,
+        "median_vsr": 0.761,
+        "p25_vsr": 0.539,
+        "p75_vsr": 1.635,
+        "median_views": 2015599,
         "median_duration": 1684
       },
       "short": {
@@ -221,7 +221,7 @@
       {
         "video_id": "ElD2OvPZH-0",
         "title": "☔CAMPING IN HEAVY RAIN WITH A NEW TENT TRAILER",
-        "view_count": 13432774,
+        "view_count": 13448382,
         "published_at": "2025-08-23",
         "vsr": 5.07,
         "duration_sec": 2056,
@@ -230,16 +230,16 @@
       {
         "video_id": "09tXZrV3Wb8",
         "title": "🚐 RAINY CAMPING IN A DREAM CARAVAN",
-        "view_count": 10486335,
+        "view_count": 10618563,
         "published_at": "2025-10-11",
-        "vsr": 3.96,
+        "vsr": 4.01,
         "duration_sec": 1807,
         "is_short": false
       },
       {
         "video_id": "twXiiDMGGJk",
         "title": "LUXURY RV CAMPING IN THE RAIN⚡",
-        "view_count": 10250989,
+        "view_count": 10260385,
         "published_at": "2025-08-30",
         "vsr": 3.87,
         "duration_sec": 1568,
@@ -352,10 +352,10 @@
       "primary": "long",
       "long": {
         "sample": 50,
-        "median_vsr": 0.73,
+        "median_vsr": 0.735,
         "p25_vsr": 0.474,
         "p75_vsr": 0.923,
-        "median_views": 993466,
+        "median_views": 999584,
         "median_duration": 2427
       },
       "short": {
@@ -388,27 +388,27 @@
       {
         "video_id": "SGRKm8FXcDw",
         "title": "Camping in Heavy Snow with My Dog . 3-Room Inflatable Tent . Wood Stove ASMR",
-        "view_count": 6086577,
+        "view_count": 6180453,
         "published_at": "2025-12-23",
-        "vsr": 4.48,
+        "vsr": 4.54,
         "duration_sec": 2560,
         "is_short": false
       },
       {
         "video_id": "d3_9rAHho2Q",
         "title": "24 Hours Camping in Heavy Rain with My Dog . 3-Room Inflatable Tent . Sound of Rain ASMR",
-        "view_count": 4558236,
+        "view_count": 4604103,
         "published_at": "2026-05-26",
-        "vsr": 3.35,
+        "vsr": 3.39,
         "duration_sec": 2670,
         "is_short": false
       },
       {
         "video_id": "VGoiSnQqnwY",
         "title": "Best Winter Camping in Heavy Snow with My Dog . Binge Watching ASMR",
-        "view_count": 3325621,
+        "view_count": 3341411,
         "published_at": "2025-07-08",
-        "vsr": 2.45,
+        "vsr": 2.46,
         "duration_sec": 7489,
         "is_short": false
       }
@@ -1207,9 +1207,9 @@
       {
         "video_id": "ahX24yvv3T8",
         "title": "한 겨울에도 내 집 보다 따뜻한 집 두채짜리 초대형 장박지 짓기🏘️ 보일러 급 신상 화목난로 세팅🔥",
-        "view_count": 5886281,
+        "view_count": 5894265,
         "published_at": "2024-12-20",
-        "vsr": 8.77,
+        "vsr": 8.78,
         "duration_sec": 2078,
         "is_short": false
       },
@@ -1225,9 +1225,9 @@
       {
         "video_id": "a-GIJZXNkcY",
         "title": "시골 산 중턱에 5성급 호텔 부럽지 않은 방3개짜리 초호화 주말별장 짓기🏨 초대형 장박지 좌식세팅",
-        "view_count": 2655685,
+        "view_count": 2663619,
         "published_at": "2025-06-08",
-        "vsr": 3.96,
+        "vsr": 3.97,
         "duration_sec": 1932,
         "is_short": false
       }
@@ -2723,7 +2723,7 @@
       {
         "video_id": "XiKx7G9Q8y4",
         "title": "[우중캠핑] 에어텐트 이거 맞아요?? 워터파크 개장하고 버섯집 만들기 / 오늘 셋팅 마음에 드네 / 맛있게 우중 혼술🍺하고 틈나는대로 빈둥거리고 / 양주 천보웰니스",
-        "view_count": 6018283,
+        "view_count": 6018552,
         "published_at": "2023-09-24",
         "vsr": 13.62,
         "duration_sec": 1797,
@@ -2732,9 +2732,9 @@
       {
         "video_id": "3PX2cA5sTuo",
         "title": "하루종일 비 내리는 숲 속, 폭우에도 아늑한 솔로캠핑 / 바람불고 번개쳐도 좋아☔️ / 김치전, 순대볶음에 맥주 한 잔 / 양양 갈천오토캠핑장",
-        "view_count": 3645800,
+        "view_count": 3654238,
         "published_at": "2025-09-21",
-        "vsr": 8.25,
+        "vsr": 8.27,
         "duration_sec": 1929,
         "is_short": false
       }

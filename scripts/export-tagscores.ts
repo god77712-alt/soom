@@ -21,21 +21,13 @@ import { openDb } from "./lib/db";
 
 const OUT = "./src/data/real/tagscores.json";
 
-/** 검색어 → 태그. `collect-youtube.ts` SUBJECT_PLAN 과 같은 표여야 한다 */
-const QUERY_TO_TAG: Record<string, string> = {
-  "차박 캠핑 브이로그": "야영장,오토캠핑장",
-  "유적지 여행 브이로그": "유적지/사적지",
-  "사찰 여행 브이로그": "사찰",
-  "오일장 여행 브이로그": "5일장",
-  "폐교 브이로그": "폐교",
-  "해수욕장 여행 브이로그": "해수욕장",
-  "전통시장 여행 브이로그": "상설시장",
-  "계곡 여행 브이로그": "계곡",
-  "항구 여행 브이로그": "항구/포구",
-  "고택 한옥 스테이 브이로그": "고택",
-  "섬 여행 브이로그": "섬",
-  "자연휴양림 브이로그": "자연휴양림",
-};
+/**
+ * 검색어 → 태그. **표는 `lib/subject-plan.ts` 하나뿐이다.**
+ *
+ * 예전엔 여기에 사본이 있었다. 수집기에 영어 12개를 넣었는데 이 사본에 안 넣어서
+ * 영상 3,450편을 받고도 영어 표본이 0 이었다 — 오류는 안 뜬다.
+ */
+import { QUERY_TO_TAG } from "./lib/subject-plan";
 
 /**
  * 배수를 그릴 자격은 **`score.ts` `canShowMultiplier` 하나로만** 판정한다.
@@ -136,7 +128,7 @@ function main(): void {
 
   const rows: Row[] = [
     ...searchRows.flatMap((r) => {
-      const tag = QUERY_TO_TAG[r.found_by.replace("search:", "")];
+      const tag = QUERY_TO_TAG.get(r.found_by.replace("search:", ""));
       return tag ? [{ ...r, tag, src: "search" as const }] : [];
     }),
     ...channelRows.map((r) => ({ ...r, src: "channel" as const })),

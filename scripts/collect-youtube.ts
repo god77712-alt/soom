@@ -17,6 +17,7 @@
  * 무엇보다 어디까지 받았는지 모르게 된다. 진행 상황은 yt_search_log 에 남는다.
  */
 import { openDb, nowIso, stripHtml } from "./lib/db";
+import { SUBJECT_PLAN, EN_SUBJECT_PLAN, QUERY_TO_TAG } from "./lib/subject-plan";
 import {
   COST,
   DAILY_QUOTA,
@@ -375,24 +376,8 @@ const SUBJECT_SKIP = new Set([
  * 나머지 태그는 점수를 안 낸다. 순위만 쓰고 배수를 안 그린다.
  * **표본 없이 배수를 그리는 것이 지금까지의 문제였다.**
  */
-const SUBJECT_PLAN: { tag: string; query: string; note: string }[] = [
-  // 인구감소지역 보유 수 순. 앞이 잘려도 주력이 남게 둔다
-  { tag: "야영장,오토캠핑장", query: "차박 캠핑 브이로그", note: "감소지역 849 — 가장 두껍다" },
-  { tag: "유적지/사적지", query: "유적지 여행 브이로그", note: "감소지역 640" },
-  { tag: "사찰", query: "사찰 여행 브이로그", note: "감소지역 327" },
-  { tag: "5일장", query: "오일장 여행 브이로그", note: "감소지역 244 · 장날 달력 보유" },
-  { tag: "폐교", query: "폐교 브이로그", note: "감소지역 194 · TourAPI 에 없는 소재" },
-  { tag: "해수욕장", query: "해수욕장 여행 브이로그", note: "감소지역 148" },
-  { tag: "상설시장", query: "전통시장 여행 브이로그", note: "감소지역 131" },
-  { tag: "계곡", query: "계곡 여행 브이로그", note: "감소지역 125" },
-  { tag: "항구/포구", query: "항구 여행 브이로그", note: "감소지역 106" },
-  { tag: "고택", query: "고택 한옥 스테이 브이로그", note: "감소지역 75" },
-  { tag: "섬", query: "섬 여행 브이로그", note: "감소지역 62" },
-  { tag: "자연휴양림", query: "자연휴양림 브이로그", note: "감소지역 60" },
-];
-
-/** 검색어 → 태그. 점수 계산이 이 표를 거꾸로 탄다 */
-export const QUERY_TO_TAG = new Map(SUBJECT_PLAN.map((s) => [s.query, s.tag]));
+// 표는 scripts/lib/subject-plan.ts 하나뿐이다 (사본을 두면 조용히 어긋난다)
+export { QUERY_TO_TAG };
 
 function buildQueries(limit: number): { query: string; language: string }[] {
   /**
@@ -410,7 +395,10 @@ function buildQueries(limit: number): { query: string; language: string }[] {
    * 소재당 표본은 또 안 쌓인다 (지금까지 그랬다).
    */
   if (argOf("plan") === "subject") {
-    return SUBJECT_PLAN.map((s) => ({ query: s.query, language: "ko" }));
+    // `--lang en` 이면 영어판. 섞지 않는다 — 언어별 점수판이 따로라 표본도 따로 쌓는다
+    const lang = argOf("lang") ?? "ko";
+    const plan = lang === "en" ? EN_SUBJECT_PLAN : SUBJECT_PLAN;
+    return plan.map((s) => ({ query: s.query, language: lang }));
   }
 
   const out: { query: string; language: string }[] = [];
