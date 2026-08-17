@@ -78,6 +78,7 @@
 |---|---|
 | [`CLAUDE.md`](CLAUDE.md) | **작업 규칙이랑 실측 기록.** 손대기 전에 이것부터 |
 | [`SPEC.md`](SPEC.md) | 전체 설계 (데이터 모델·계산식·화면) |
+| [`docs/WORKLOG.md`](docs/WORKLOG.md) | **날짜별 작업 로그.** 언제 뭘 왜 했는지 — `npm run worklog` 으로 다시 굽는다 |
 | `scripts/` | 수집·가공·검증·내보내기 |
 | `src/` | Next.js 화면 |
 
