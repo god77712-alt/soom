@@ -4,64 +4,65 @@
 <meta charset="utf-8">
 <title>숨(SOOM) — 한 장 요약</title>
 <style>
-  @page { size: A4; margin: 16mm 16mm 13mm; }
+  @page { size: A4; margin: 14mm 15mm 11mm; }
   * { box-sizing: border-box; }
   body {
-    margin: 0;
-    font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
-    color: #14161a; font-size: 9.6pt; line-height: 1.62;
+    margin: 0; font-family: "Malgun Gothic", "맑은 고딕", sans-serif;
+    color: #14161a; font-size: 9pt; line-height: 1.55;
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
-
-  /* ── 헤더 ───────────────────────────────── */
   header { display: flex; justify-content: space-between; align-items: baseline; }
-  h1 { font-size: 21pt; margin: 0; letter-spacing: -0.6px; font-weight: 800; }
-  h1 span { color: #9aa2ad; font-weight: 400; margin-left: 5px; font-size: 13pt; }
-  .meta { font-size: 8.2pt; color: #8b929c; text-align: right; line-height: 1.5; }
-  .tagline { color: #4b525c; margin-top: 3px; font-size: 10pt; }
-  .rule { height: 2px; background: #14161a; margin: 9px 0 0; }
+  h1 { font-size: 19pt; margin: 0; letter-spacing: -0.6px; font-weight: 800; }
+  h1 span { color: #9aa2ad; font-weight: 400; margin-left: 4px; font-size: 12pt; }
+  .tagline { color: #4b525c; margin-top: 2px; font-size: 9.4pt; }
+  .meta { font-size: 8pt; color: #8b929c; text-align: right; line-height: 1.5; }
+  .rule { height: 2px; background: #14161a; margin: 8px 0 0; }
 
-  /* ── 리드 ───────────────────────────────── */
-  .lead { margin: 18px 0 22px; }
-  .lead .q { font-size: 14pt; line-height: 1.45; font-weight: 700; letter-spacing: -0.3px; }
-  .lead .q em { font-style: normal; color: #0d6b45; }
-  .lead .was { color: #9aa2ad; font-size: 9pt; margin-top: 5px; }
-  .lead .was s { color: #b9bfc7; }
-
-  /* ── 섹션 ───────────────────────────────── */
-  section { margin-bottom: 21px; }
+  /* 번호 붙은 절 */
+  section { margin-top: 14px; }
   h2 {
-    font-size: 8.4pt; margin: 0 0 7px; color: #0d6b45;
-    letter-spacing: 1.6px; font-weight: 700;
+    font-size: 10pt; margin: 0 0 5px; font-weight: 800; letter-spacing: -0.2px;
+    display: flex; align-items: baseline; gap: 7px;
   }
-  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
-  p { margin: 0 0 6px; }
+  h2 i {
+    font-style: normal; font-size: 7.6pt; font-weight: 700; color: #fff;
+    background: #0d6b45; border-radius: 2px; padding: 1px 5px; letter-spacing: 0.5px;
+  }
+  h2 em { font-style: normal; font-weight: 400; font-size: 8.4pt; color: #8b929c; }
+  p { margin: 0 0 5px; }
   ul { margin: 0; padding-left: 15px; }
-  li { margin-bottom: 3px; }
+  li { margin-bottom: 2px; }
   b { font-weight: 700; }
+  .g { color: #0d6b45; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
 
-  /* ── 검정 결과 ──────────────────────────── */
-  .tests { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 22px; }
-  .tests .verdict { font-size: 9pt; font-weight: 700; margin-bottom: 3px; }
-  .ok { color: #0d6b45; }
+  /* 3단 논리 */
+  .steps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 6px; }
+  .steps > div { border-left: 2px solid #0d6b45; padding-left: 8px; }
+  .steps b { display: block; font-size: 9.2pt; margin-bottom: 1px; }
+  .steps span { color: #4b525c; font-size: 8.4pt; line-height: 1.45; display: block; }
+
+  /* 기능 명세 표 */
+  table { width: 100%; border-collapse: collapse; font-size: 8.4pt; margin-top: 4px; }
+  th { text-align: left; font-size: 7.6pt; color: #8b929c; font-weight: 700;
+       letter-spacing: 0.6px; border-bottom: 1.5px solid #14161a; padding: 0 6px 3px 0; }
+  td { padding: 4px 6px 4px 0; border-bottom: 1px solid #eceef1; vertical-align: top; line-height: 1.45; }
+  td.scr { font-weight: 700; white-space: nowrap; }
+  td.scr small { display: block; font-weight: 400; color: #9aa2ad; font-size: 7.4pt;
+                 font-family: Consolas, monospace; }
+  td.src { color: #6b7280; font-size: 7.8pt; }
+
+  /* 근거 3칸 */
+  .ev { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 5px; }
+  .ev .v { font-size: 14pt; font-weight: 800; letter-spacing: -0.5px; line-height: 1.15; }
+  .ev .v small { font-size: 8pt; font-weight: 400; color: #8b929c; }
+  .ev .t { font-size: 8.4pt; font-weight: 700; margin-bottom: 1px; }
+  .ev .d { font-size: 8pt; color: #4b525c; line-height: 1.4; margin-top: 2px; }
   .no { color: #a3261f; }
-  .stat { font-size: 19pt; font-weight: 800; letter-spacing: -0.8px; line-height: 1.1; }
-  .stat small { font-size: 9pt; font-weight: 400; color: #8b929c; letter-spacing: 0; }
-  .note { color: #4b525c; font-size: 8.8pt; line-height: 1.5; margin-top: 5px; }
 
-  /* ── 숫자 줄 ────────────────────────────── */
-  .kpi { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
-         border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; padding: 12px 0; }
-  .kpi .v { font-size: 14pt; font-weight: 800; letter-spacing: -0.5px; }
-  .kpi .k { font-size: 8pt; color: #8b929c; line-height: 1.35; margin-top: 1px; }
-
-  /* ── 원칙 ───────────────────────────────── */
-  ol.rules { margin: 0; padding-left: 16px; }
-  ol.rules li { margin-bottom: 4px; }
-
-  footer { margin-top: 18px; padding-top: 7px; border-top: 1px solid #e5e7eb;
-           font-size: 8.2pt; color: #8b929c; display: flex; justify-content: space-between; }
-  code { font-family: Consolas, monospace; font-size: 8.4pt; color: #4b525c; }
+  footer { margin-top: 13px; padding-top: 6px; border-top: 1px solid #e5e7eb;
+           font-size: 7.8pt; color: #8b929c; display: flex; justify-content: space-between; }
+  code { font-family: Consolas, monospace; font-size: 7.8pt; color: #4b525c; }
 </style>
 </head>
 <body>
@@ -69,109 +70,133 @@
 <header>
   <div>
     <h1>숨 <span>SOOM</span></h1>
-    <div class="tagline">인구감소지역 촬영지 데이터 서비스 · 2026 관광데이터 활용 공모전</div>
+    <div class="tagline">크리에이터를 위한 인구감소지역 촬영지 데이터 서비스</div>
   </div>
   <div class="meta">
-    한 장 요약 · 2026-08-17<br>
-    설계 <code>SPEC.md</code> · 규칙 <code>CLAUDE.md</code>
+    2026 관광데이터 활용 공모전 · 한 장 요약 · 2026-08-17<br>
+    설계 <code>SPEC.md</code> · 작업 규칙 <code>CLAUDE.md</code>
   </div>
 </header>
 <div class="rule"></div>
 
-<div class="lead">
-  <div class="q">
-    크리에이터는 <em>잘 된 영상을 보고 따라 찍는다.</em>
-    그래서 이미 찍힌 곳만 계속 찍히고, 안 알려진 곳은 참고할 영상이 없어
-    구조적으로 후보에서 빠진다.
-  </div>
-  <div class="was">
-    대표 문장 — <s>여기서 찍으면 잘 된다</s> → <b style="color:#14161a">이 소재가 반응이 좋고, 여기서도 찍을 수 있다</b>
-    &nbsp;(실측하고 바꿨다. 아래 가설 B)
-  </div>
-</div>
-
-<section class="two">
-  <div>
-    <h2>어떻게 푸는가</h2>
-    <p>장소가 아니라 <b>소재(subject)</b>를 성과의 단위로 삼는다.
-       유튜브에서 소재별 성과를 재고, 공공데이터에서 <b>같은 소재를 찍을 수 있는 곳을 전부 펼친다.</b></p>
-    <ul>
-      <li>성과 = <b>조회수 ÷ 구독자</b> — 채널 크기를 지워야 작은 채널의 대박이 보인다</li>
-      <li>소재 점수 × 희소성 <code>1/log(1+영상수)</code> = <b>숨 스코어</b></li>
-      <li>화면은 <b>“오일장 3.2× (정선·화개장터 기준)”</b> — 출처를 밝힌 소재 성적만 말한다</li>
-    </ul>
-  </div>
-  <div>
-    <h2>왜 지금 가능한가</h2>
-    <p>관광 공공데이터 6.4만 곳은 <b>소재로 검색할 수 없다.</b> 분류는 있어도 성과가 없다.
-       그 둘을 처음으로 붙였다.</p>
-    <ul>
-      <li>지역코드 확보율 <b>45.6% → 100%</b> — 인구감소지역별 소재 집계가 처음 가능해졌다</li>
-      <li><b>폐교 334곳</b>은 TourAPI 에 아예 없어서 직접 승격시켰다 (감소지역 194)</li>
-      <li>화면은 외부 API 를 안 부른다. 빌드 시점 JSON — <b>방문자가 늘어도 쿼터 0</b></li>
-    </ul>
-  </div>
+<section>
+  <h2><i>개요</i> 무엇을 만드는가</h2>
+  <p>크리에이터가 <b>다음 촬영지를 고를 때 보는 도구</b>다. 채널을 넣으면 그 채널이 잘 찍는
+     소재를 판별하고, <b>같은 소재를 찍을 수 있는 인구감소지역 촬영지</b>를 성과 데이터와 함께 펼친다.
+     한국관광공사 TourAPI 5만 곳과 유튜브 성과 8.3만 편을 <b>소재(subject)라는 하나의 축</b>으로 붙인 것이
+     이 서비스의 실체다.</p>
 </section>
 
 <section>
-  <h2>가설을 실제로 검정했다 — 이게 이 프로젝트의 논리 골격이다</h2>
-  <div class="tests">
+  <h2><i>과제</i> 일회성 관광의 한계 <em>— 왜 홍보를 해도 지역이 살아나지 않는가</em></h2>
+  <div class="two">
     <div>
-      <div class="verdict ok">가설 A · 소재가 성과를 가르는가 → 그렇다</div>
-      <div class="stat">p=0.0007</div>
-      <div class="note">영상 1,669편 · 최고 섬 1.692 ↔ 최저 사찰 0.493(3.43배).
-        단 <b>BH 보정 후 유의한 쌍은 0개</b> → 점수는 <b>순위로만</b> 쓴다.</div>
+      <p>인구감소지역 89곳의 관광 사업은 대부분 <b>축제·행사 중심</b>이다. 예산을 써서 사람을 한 번
+         모으고, 행사가 끝나면 방문 동기도 같이 사라진다. <b>남는 것이 없다.</b></p>
     </div>
     <div>
-      <div class="verdict no">가설 B · 비어 있는 곳이 기회인가 → 아니다</div>
-      <div class="stat">0.79<small>배</small></div>
-      <div class="note">곡성(감소·희소) 1.332 vs 국내여행 일반 1.681.
-        → 희소성은 <b>예측이 아니라 정책</b>. 화면은 <b>“경쟁 영상 0편”</b> 사실만 말한다.</div>
-    </div>
-    <div>
-      <div class="verdict">분산 분해 — 겸손의 근거</div>
-      <div class="stat">74.2<small>%</small></div>
-      <div class="note">성과를 설명하는 몫이 <b>채널 본인</b>이다. 소재가 다툴 수 있는 건 25.8%.
-        그래서 예측을 팔지 않고 <b>목록</b>을 판다.</div>
+      <ul>
+        <li>홍보물은 게시 기간이 끝나면 사라진다 — <b>검색되지 않는다</b></li>
+        <li>공공데이터 6.4만 곳은 <b>소재로 검색할 수 없다.</b> 분류는 있어도 성과가 없다</li>
+        <li>그래서 크리에이터의 촬영지 후보에 <b>애초에 오르지 못한다</b></li>
+      </ul>
     </div>
   </div>
 </section>
 
 <section>
-  <h2>지금까지 확보한 것</h2>
-  <div class="kpi">
-    <div><div class="v">50,033</div><div class="k">장소<br>감소지역 12,904</div></div>
-    <div><div class="v">82,818</div><div class="k">유튜브 영상<br>채널 4,448</div></div>
-    <div><div class="v">45종</div><div class="k">목록이 채워진<br>소재</div></div>
-    <div><div class="v">49/309</div><div class="k">배수를 그릴<br>자격을 갖춘 칸</div></div>
-    <div><div class="v">96.7%</div><div class="k">LLM 태깅 정확도<br>정답지 627건 대조</div></div>
+  <h2><i>해결</i> 크리에이터를 경유해 지속 유입으로 바꾼다</h2>
+  <p>촬영은 일회성이지만 <b>영상은 남는다.</b> 검색되고, 추천되고, 몇 년 뒤에도 사람을 데려온다.
+     그래서 방문객이 아니라 <b>크리에이터</b>를 움직인다.</p>
+  <div class="steps">
+    <div>
+      <b>① 후보지에 올린다</b>
+      <span>인구감소지역을 “처음 듣는 지명”이 아니라 <b>같은 소재를 찍을 수 있는 선택지</b>로
+        보여준다. 희소성 가중치가 없으면 서울·부산만 남는다.</span>
+    </div>
+    <div>
+      <b>② 예상 성과를 보여준다</b>
+      <span>“이 소재가 이 채널 규모에서 어떤 성과를 냈는가”를 배수와 <b>예상 도달 범위</b>로.
+        단일 숫자로 쓰지 않고 추정임을 함께 고지한다.</span>
+    </div>
+    <div>
+      <b>③ 의심을 걷어낸다</b>
+      <span>“별로라서 아무도 안 간 것 아닌가”에 답하지 못하면 움직이지 않는다.
+        상세 화면이 6단으로 이 순서를 밟는다.</span>
+    </div>
   </div>
 </section>
 
-<section class="two">
-  <div>
-    <h2>어떻게 설명할 것인가</h2>
-    <ul>
-      <li><b>재료가 아니라 질문부터.</b> “관광데이터를 썼다”가 아니라
-          “크리에이터가 다음 촬영지를 어떻게 정하는가”</li>
-      <li><b>기각된 가설을 먼저 보여준다.</b> 숨기면 “왜 빈 곳을 올리냐”에 답할 말이 없다</li>
-      <li><b>아는 곳으로 증명한다.</b> 정선 5일장은 추천이 아니라 <b>증거</b>다 —
-          정선이 맞아야 곡성을 믿는다. 단 같은 목록에 섞지 않는다</li>
-    </ul>
-  </div>
-  <div>
-    <h2>손대면 안 되는 것</h2>
-    <ol class="rules">
-      <li><b>언어별 점수판을 합치지 않는다</b> — 재래시장은 영어권 4.1배 / 한국어권 0.6배</li>
-      <li><b>배수 표시 자격은 한 함수에서만 판정한다</b> (<code>canShowMultiplier</code>)</li>
-      <li><b>못 재는 것을 숫자로 그리지 않는다</b> — 기관은 그 수치로 예산을 짠다</li>
-      <li><b>순위를 지어내지 않는다</b> — 근거 없는 계수는 점수를 지어내는 것과 같다</li>
-    </ol>
+<section>
+  <h2><i>기능</i> 화면 명세</h2>
+  <table>
+    <tr>
+      <th style="width:15%">화면</th>
+      <th style="width:29%">사용자가 하는 일</th>
+      <th style="width:33%">서비스가 주는 것</th>
+      <th style="width:23%">데이터 근거</th>
+    </tr>
+    <tr>
+      <td class="scr">채널 분석<small>/</small></td>
+      <td>유튜브 채널 URL 을 넣는다 (없으면 소재를 직접 고른다)</td>
+      <td>롱폼·쇼츠 성과, <b>잘 되는 소재 태그 3~5개</b>. 평균이 아니라 <b>상위 성과 영상</b>에서 뽑는다</td>
+      <td class="src">YouTube Data API · LLM 소재 분류</td>
+    </tr>
+    <tr>
+      <td class="scr">촬영지 추천<small>/</small></td>
+      <td>추천 5곳을 훑고 카드를 펼친다</td>
+      <td>장소 · <b>소재 성적(3.2×)과 그 출처</b> · <b>경쟁 영상 수</b> · 잘 된 영상의 구성 · 묶어 찍을 곳</td>
+      <td class="src">숨 스코어 = 소재 점수 × <code>1/log(1+영상수)</code></td>
+    </tr>
+    <tr>
+      <td class="scr">소재로 찾기<small>/subject</small></td>
+      <td>소재를 고르고 시도로 좁힌다</td>
+      <td>그 소재를 찍을 수 있는 곳 <b>전부</b> · 장날 달력 · 일출입 시각. 예측이 아니라 <b>목록</b>이다</td>
+      <td class="src">TourAPI + 전통시장·폐교·철도역 표준데이터</td>
+    </tr>
+    <tr>
+      <td class="scr">장소 상세<small>/place</small></td>
+      <td>가도 되는지 판단한다</td>
+      <td><b>6단 근거</b> — ① 소재가 먹힌다 ② 여긴 비어 있다 ③ <b>별로라서가 아니다</b>
+          ④ 당신이면 이 정도 ⑤ 이렇게 찍는다 ⑥ 이렇게 머문다</td>
+      <td class="src">유튜브 임베드 · 천문연 출몰시각 · 관광사진</td>
+    </tr>
+    <tr>
+      <td class="scr">기관용<small>/admin</small></td>
+      <td>지역별 현황을 본다</td>
+      <td>시군구별 소재 보유 현황 <b>(모수 병기)</b> · 팸투어 채널 매칭.
+          <b>못 재는 KPI 는 그리지 않는다</b></td>
+      <td class="src">지역코드 100% 복원 집계</td>
+    </tr>
+  </table>
+</section>
+
+<section>
+  <h2><i>근거</i> 서비스가 선 가정을 실제로 검정했다 <em>— <code>npm run eval:hypothesis</code></em></h2>
+  <div class="ev">
+    <div>
+      <div class="t g">A · 소재가 성과를 가르는가 → 그렇다</div>
+      <div class="v">p=0.0007</div>
+      <div class="d">영상 1,669편, 구독자 구성 보정 후. 단 개별 소재끼리 “A가 B보다 낫다”는
+        보정 후 0쌍 → 점수는 <b>순위로만</b> 쓴다.</div>
+    </div>
+    <div>
+      <div class="t no">B · 비어 있는 곳이 유리한가 → 아니다</div>
+      <div class="v">0.79<small>배</small></div>
+      <div class="d">곡성 1.332 vs 국내여행 일반 1.681. → 희소성은 예측이 아니라 <b>정책</b>.
+        화면은 <b>“경쟁 영상 0편”</b> 사실만 말한다.</div>
+    </div>
+    <div>
+      <div class="t">성과의 74%는 채널 본인이다</div>
+      <div class="v">74.2<small>%</small></div>
+      <div class="d">소재가 다툴 수 있는 몫은 25.8%. 그래서 <b>예언이 아니라 목록</b>을 판다 —
+        목록은 근거가 필요 없다.</div>
+    </div>
   </div>
 </section>
 
 <footer>
-  <div>이유는 전부 <code>CLAUDE.md</code> 「절대 하면 안 되는 것」과 커밋 메시지에 있다</div>
+  <div>확보 — 장소 <b>50,033</b>곳(감소지역 12,904) · 유튜브 <b>82,818</b>편 · 채널 4,448 · LLM 태깅 정확도 96.7%</div>
   <div>gwanjetap.netlify.app · github.com/god77712-alt/soom</div>
 </footer>
 
