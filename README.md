@@ -64,14 +64,23 @@ npm run dev
 ```
 
 **데이터는 저장소에 없다.** `data/*.db` 와 `.env` 는 커밋하지 않는다 —
-용량이 크고 수집 스크립트로 다시 만들 수 있다. 순서가 있다:
+143MB 라 이력이 금방 무거워지고, 수집 스크립트로 다시 만들 수 있다.
+
+화면만 볼 거면 그대로 `npm run dev` 하면 된다. 화면이 읽는 JSON(`src/data/real/*`)은
+저장소에 들어 있다. **가공·점수 스크립트를 돌리려면** DB 가 필요한데, 며칠치를 다시
+수집하는 대신 [Releases](../../releases) 의 스냅샷을 받는다:
+
+```bash
+unzip soom-data-2026-08-17.zip -d data/
+npm run report:stage1     # 수집 현황 확인
+```
+
+가공 명령은 **순서가 있다.** 지키지 않으면 오류 없이 조용히 빈 결과가 나온다:
 
 ```
 load:raw → dedup → build:places → build:tags
 export:tagscores → export:places → export:channels
 ```
-
-**순서를 지키지 않으면 오류 없이 조용히 빈 결과가 나온다.**
 
 ## 같이 일할 때 지켜야 하는 것
 
