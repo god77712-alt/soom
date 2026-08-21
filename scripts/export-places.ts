@@ -16,6 +16,7 @@
  */
 import { writeFileSync, mkdirSync, readFileSync } from "node:fs";
 import { openDb } from "./lib/db";
+import { extractIntro, hasAnyIntro, type IntroFields } from "./lib/intro-fields";
 
 const OUT = "./src/data/real/places.json";
 
@@ -104,7 +105,7 @@ function main(): void {
    *   ④ 시도·이름 — 같은 조건이면 지역이 뭉쳐 보이게
    */
   const places = db.prepare(
-    `select pl.id, pl.name_ko, pl.sido, pl.sigungu, pl.addr,
+    `select pl.id, pl.source, pl.source_id, pl.name_ko, pl.sido, pl.sigungu, pl.addr,
             pl.lat, pl.lng, pl.is_declining_area, pl.image_url,
             pl.data_reliability, pl.coord_source
        from place_tag pt
@@ -171,6 +172,97 @@ function main(): void {
       where t.name_ko = ?`,
   );
 
+  /**
+   * 이 장소의 추가 사진 (detailImage2).
+   *
+   * 목록 API 의 firstimage 는 한 장뿐이다. 카드가 사진으로 읽히는 서비스라
+   * 여러 장이 필요하고, firstimage 가 빈 곳은 이쪽에만 사진이 있다.
+   *
+   * ⚠️ **원본 URL 을 먼저 쓴다.** smallimageurl 은 썸네일이라 카드에서 뭉갠다.
+   */
+  const placePhotos = db.prepare(
+    `select origin_url, small_url from tour_image
+       where content_id = ? order by ord limit 6`,
+  );
+
+  /** 운영 정보 원문. 타입별 필드 매핑은 lib/intro-fields.ts 하나에만 있다 */
+  const placeIntro = db.prepare(
+    `select content_type_id, payload from tour_intro
+       where content_id = ? and lang = 'ko'`,
+  );
+
+  /**
+   * 이 장소에 붙은 **다른** 소재 태그. 카드의 대표 키워드가 된다.
+   * 지금 보고 있는 소재는 뺀다 — 카드마다 똑같은 칩이 반복되면 아무 정보도 아니다
+   * (추천 카드에서 이미 같은 결론을 냈다).
+   */
+  const placeTags = db.prepare(
+    `select t.name_ko n from place_tag pt join tag t on t.id = pt.tag_id
+      where pt.place_id = ? and t.axis = 'subject' and t.level = 2 and t.name_ko <> ?
+      limit 4`,
+  );
+
+  /**
+   * 카드 한 장이 말하는 **대표 키워드**.
+   *
+   * ⚠️ 전부 **받은 값에서만** 만든다. 형용사를 지어내지 않는다 —
+   *    "한적한"·"숨은 명소" 같은 말은 우리가 잰 적이 없는 것이다.
+   *    근거 없는 순위 신호를 만들지 않는 것과 같은 원칙이다.
+   */
+  function keywordsOf(
+    placeId: string,
+    tag: string,
+    info: IntroFields | null,
+    declining: boolean,
+  ): string[] {
+    const out: string[] = [];
+    if (!info) info = { fairday: null, saleitem: null, restdate: null, parking: null } as IntroFields;
+    // ① 장날 — 오일장에서 가장 값어치 있는 한 줄
+    if (info.fairday) out.push('장날 ' + info.fairday);
+    // ② 특산물 — 시장 카드가 서로 달라지는 유일한 재료
+    if (info.saleitem) {
+      const items = info.saleitem.split(/[/,·]/).map((x) => x.trim()).slice(0, 3);
+      for (const item of items) {
+        if (item && item !== '등' && item.length <= 8) out.push(item);
+      }
+    }
+    // ③ 겸사겸사 찍을 수 있는 다른 소재
+    for (const r of placeTags.all(placeId, tag) as unknown as { n: string }[]) out.push(r.n);
+    // ④ 사실만 — 판단은 크리에이터가 한다
+    if (info.restdate && /연중무휴|무휴/.test(info.restdate)) out.push('연중무휴');
+    if (info.parking && /가능|있|무료/.test(info.parking)) out.push('주차 가능');
+    if (declining) out.push('인구감소지역');
+    return [...new Set(out)].slice(0, 5);
+  }
+
+  /** 사진 목록. firstimage 를 맨 앞에 두고 detailImage2 분을 뒤에 잇는다 */
+  function photosOf(source: string, sourceId: string, first: string | null): string[] {
+    const out: string[] = [];
+    if (first) out.push(first);
+    // TourAPI 출신이 아니면 contentId 가 없다 — 폐교·간이역·승격시장이 여기다
+    if (source === 'tourapi' && sourceId) {
+      const rows = placePhotos.all(sourceId) as unknown as {
+        origin_url: string | null;
+        small_url: string | null;
+      }[];
+      for (const r of rows) {
+        const u = r.origin_url || r.small_url;
+        if (u) out.push(u);
+      }
+    }
+    return [...new Set(out)].slice(0, 6);
+  }
+
+  /** 운영 정보. 타입 코드는 tour_intro 에 같이 저장해 뒀다 */
+  function introOf(source: string, sourceId: string): IntroFields | null {
+    if (source !== 'tourapi' || !sourceId) return null;
+    const row = placeIntro.get(sourceId) as unknown as
+      | { content_type_id: number | null; payload: string | null }
+      | undefined;
+    if (!row) return null;
+    const f = extractIntro(row.payload, row.content_type_id);
+    return hasAnyIntro(f) ? f : null;
+  }
   const tagScores = loadTagScores();
 
   const out = SUBJECTS.map((s) => {
@@ -185,6 +277,8 @@ function main(): void {
     );
     const rows = places.all(s.tag, CAP) as {
       id: string;
+      source: string;
+      source_id: string;
       name_ko: string;
       sido: string;
       sigungu: string;
@@ -211,6 +305,15 @@ function main(): void {
       score_sample: cell?.video_count ?? 0,
       /** 배수를 숫자로 써도 되는가 — 카드가 읽는 셀과 **같은 값** */
       can_show_multiplier: cell?.can_show_multiplier ?? false,
+      /**
+       * 소재 카드의 표지 사진. **현관이 글자만 남으면 아무도 안 훑는다.**
+       * 담은 목록에서 사진이 있는 첫 장소를 쓴다 — 정렬이 이미 사진 있는 것을
+       * 앞으로 보내므로 대개 첫 장이다.
+       *
+       * ⚠️ 사진이 하나도 없는 소재(폐교)는 null 이다. 다른 소재 사진을 갖다
+       *    쓰지 않는다 — 실재하는 곳에 남의 사진을 붙이는 것과 같다.
+       */
+      cover: rows.find((r) => r.image_url)?.image_url ?? null,
       places: rows.map((r) => ({
         id: r.id,
         name: r.name_ko,
@@ -221,6 +324,12 @@ function main(): void {
         lng: Number(r.lng.toFixed(6)),
         declining: r.is_declining_area === 1,
         image: r.image_url || null,
+        /** 사진 여러 장. 카드가 한 장만 쓰더라도 상세는 갤러리로 그린다 */
+        photos: photosOf(r.source, r.source_id, r.image_url),
+        /** 운영시간·쉬는날·주차·장날·특산물. 없으면 null 이고 화면은 안 그린다 */
+        info: introOf(r.source, r.source_id),
+        /** 카드가 한눈에 보여줄 대표 키워드. 받은 값에서만 만든다 */
+        keywords: keywordsOf(r.id, s.tag, introOf(r.source, r.source_id), r.is_declining_area === 1),
         /** 폐교·간이역은 현장이 자주 바뀐다 — 화면에 "현장 확인" 을 띄운다 */
         low_reliability: r.data_reliability === "low",
         /** 원본이 아니면 화면이 정확도를 낮춰 말한다 */
