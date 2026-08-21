@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PlaceThumb } from "@/components/PlaceThumb";
+import { PlaceCard } from "@/components/PlaceCard";
 import {
   SUBJECTS,
   filterPlaces,
@@ -144,50 +144,15 @@ export default async function SubjectPage({
           {shown.map((p) => {
             const plan = shootPlanFor(p.name, p.sigungu, today);
             return (
-              <li key={p.id} className="flex gap-3.5">
-                <div className="aspect-[4/3] w-24 shrink-0 overflow-hidden">
-                  <PlaceThumb
-                    place={{ name_ko: p.name, lat: p.lat, lng: p.lng, image_url: p.image }}
-                    open={p.declining}
-                  />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-baseline gap-x-2">
-                    <span className="text-sm text-ink">{p.name}</span>
-                    {p.declining && (
-                      <span className="border border-open/40 px-1 font-mono text-[10px] text-open">
-                        인구감소
-                      </span>
-                    )}
-                  </div>
-                  <div className="mt-0.5 font-mono text-[11px] text-ink3">
-                    {shortSido(p.sido)} {p.sigungu}
-                  </div>
-
-                  {/* 장날은 목록에서도 보여준다 — 안 맞춰 가면 빈 공터다 */}
-                  {plan && (
-                    <div className="mt-1 font-mono text-[11px] text-open-d">
-                      다음 장날 {plan.days[0].label}
-                      {plan.days[0].sun?.sunrise && (
-                        <span className="text-ink3"> · 일출 {plan.days[0].sun.sunrise}</span>
-                      )}
-                    </div>
-                  )}
-
-                  {/*
-                    ⚠️ 추정 좌표와 저신뢰 데이터를 반드시 밝힌다.
-                       폐교는 좌표가 읍면 중심이라 실제 위치와 km 단위로 다를 수 있고,
-                       현장 상태도 자주 바뀐다. 밝히지 않으면 헛걸음의 책임이 우리에게 온다.
-                  */}
-                  {(p.coord_estimated || p.low_reliability) && (
-                    <div className="mt-1 font-mono text-[10px] text-ink3">
-                      {p.coord_estimated && "위치는 읍면 중심 추정"}
-                      {p.coord_estimated && p.low_reliability && " · "}
-                      {p.low_reliability && "공공데이터 기준 · 현장 확인"}
-                    </div>
-                  )}
-                </div>
-              </li>
+              <PlaceCard
+                key={p.id}
+                place={p}
+                shootLine={
+                  plan
+                    ? { label: plan.days[0].label, sunrise: plan.days[0].sun?.sunrise ?? null }
+                    : null
+                }
+              />
             );
           })}
         </ul>

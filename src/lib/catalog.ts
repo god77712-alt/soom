@@ -27,6 +27,21 @@ export interface CatalogPlace {
   lng: number;
   declining: boolean;
   image: string | null;
+  /**
+   * 사진 여러 장 (`image` 를 맨 앞에 두고 `detailImage2` 분을 이었다).
+   * 카드는 한 장만 쓰고 상세가 갤러리로 그린다.
+   */
+  photos: string[];
+  /**
+   * 운영시간·쉬는날·주차·장날·특산물.
+   * ⚠️ **null 이면 블록 자체를 안 그린다.** 빈 자리를 문장으로 채우지 않는다.
+   */
+  info: PlaceInfo | null;
+  /**
+   * 카드가 한눈에 보여줄 대표 키워드.
+   * 전부 받은 값에서만 만든다 — 장날·특산물·다른 소재 태그·연중무휴·주차.
+   */
+  keywords: string[];
   /** 폐교·간이역은 현장이 자주 바뀐다 (SPEC 9장) */
   low_reliability: boolean;
   /** 좌표가 읍면·시군구 중심 추정값이다. 실제 위치와 km 단위로 다를 수 있다 */
@@ -41,6 +56,27 @@ export interface CatalogPlace {
   videos_en: number;
   /** 그중 조회수 상위 3편. 카드 펼침의 근거 */
   videos: CatalogVideo[];
+}
+
+/**
+ * `detailIntro2` 에서 뽑은 운영 정보.
+ *
+ * ⚠️ 타입별 필드명 매핑은 `scripts/lib/intro-fields.ts` **하나에만** 있다.
+ *    같은 "운영시간" 이 관광지는 `usetime`, 음식점은 `opentimefood` 다.
+ *    그 표를 여기로 복사하면 타입 하나의 운영시간만 영영 빈 채로 남는다.
+ */
+export interface PlaceInfo {
+  usetime: string | null;
+  restdate: string | null;
+  parking: string | null;
+  fee: string | null;
+  tel: string | null;
+  saleitem: string | null;
+  /** 장날. 오일장에서 가장 값어치 있는 한 줄 */
+  fairday: string | null;
+  menu: string | null;
+  checkin: string | null;
+  checkout: string | null;
 }
 
 export interface CatalogVideo {
@@ -74,6 +110,12 @@ export interface Subject {
    * ⚠️ `tagscores.json` 의 셀을 그대로 받아온 값이다 — 여기서 다시 판정하지 말 것.
    */
   can_show_multiplier: boolean;
+  /**
+   * 소재 카드의 표지 사진. **현관이 글자만 남으면 아무도 안 훑는다.**
+   * ⚠️ 폐교는 null 이다 — 사진이 한 장도 없는데 다른 소재 사진을 갖다 쓰면
+   *    실재하는 곳에 남의 사진을 붙이는 것과 같다.
+   */
+  cover: string | null;
   /** 화면에 담은 장소 (전량이 아니다 — total 과 다르다) */
   places: CatalogPlace[];
 }

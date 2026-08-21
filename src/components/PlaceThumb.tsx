@@ -66,6 +66,19 @@ export function PlaceThumb({
       <img
         src={place.image_url}
         alt={place.name_ko}
+        /**
+         * 🚨 **lazy 를 빼면 목록 화면이 얼어붙는다** (2026-08-22 실측).
+         *
+         * `/subject/[slug]` 은 한 소재의 240곳을 한 번에 그린다. lazy 가 없으면
+         * 브라우저가 visitkorea CDN 이미지 240장(장당 ~137KB, 합 30MB 이상)을
+         * **동시에** 받으려 든다. 실제로 렌더러가 응답을 멈춰서 스크린샷조차
+         * 안 찍혔다.
+         *
+         * ⚠️ 화면은 멀쩡해 보이다가 스크롤에서 죽는다 — 개발 중에는 잘 안 보이고
+         *    느린 회선에서만 드러난다. 목록으로 파는 서비스라 이 화면이 곧 서비스다.
+         */
+        loading="lazy"
+        decoding="async"
         className={`h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04] ${className}`}
       />
     );

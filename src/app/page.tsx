@@ -19,6 +19,7 @@ import { realCards, realSubjectEvidence, subjectForTagName } from "@/lib/realcar
 import { RealEvidenceVideoCard } from "@/components/RealEvidenceVideoCard";
 import { Reveal } from "@/components/Reveal";
 import { ShareButton } from "@/components/ShareButton";
+import { SubjectEntry } from "@/components/SubjectEntry";
 import { TagChip } from "@/components/TagChip";
 import { reachText } from "@/lib/display";
 import { getStrings } from "@/lib/i18n";
@@ -167,6 +168,20 @@ export default async function Home({
     : evidence
       ? `경쟁이 적은 촬영지 ${cards.length}곳`
       : "";
+
+  /**
+   * 채널이 없으면 **현관은 소재 목록이다** (2026-08-22).
+   *
+   * 예전엔 여기서도 도트맵 히어로를 그리고 그 위에 입력창만 얹었다. 방문자가
+   * 자기 채널 주소를 가져오기 전까지는 아무것도 안 보이는 화면이었다.
+   * 근거가 약한 쪽(예측)을 현관에 두고, 근거가 필요 없는 쪽(목록)을 회색 링크로
+   * 숨기고 있었다. 자세한 이유는 `SubjectEntry` 주석 참조.
+   *
+   * ⚠️ 도트맵은 분석 결과 히어로에만 남긴다. 현관에서는 사진이 그 자리를 한다.
+   */
+  if (!channel) {
+    return <SubjectEntry notFound={notFound} demoChannels={demoChannels} />;
+  }
 
   return (
     <main>
