@@ -40,7 +40,9 @@
     "build:videoplace": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-video-place.ts",
     "export:tagscores": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/export-tagscores.ts",
     "tag:channel": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/tag-channel.ts",
-    "worklog": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-worklog.ts"
+    "worklog": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-worklog.ts",
+    "collect:image": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-image.ts",
+    "probe:quota": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/probe-quota.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",

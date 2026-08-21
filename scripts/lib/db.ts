@@ -141,6 +141,33 @@ function migrate(db: DatabaseSync): void {
       fetched_at           TEXT NOT NULL
     );
 
+    -- ── 장소별 추가 사진 (detailImage2) ────────────────────
+    -- 목록 API 가 주는 firstimage 는 장소당 한 장뿐이다. 상세 화면과 카드가
+    -- 사진으로 채워지는 서비스라 여러 장이 필요하고, TourAPI 목록에서 아예
+    -- firstimage 가 빈 8,000곳은 이 오퍼레이션으로만 메울 수 있다.
+    --
+    -- ⚠️ detailImage2 는 detailCommon2 와 **별도의 1,000/일 버킷**이다.
+    --    소개글이 막힌 날에도 사진은 받아진다. 그날을 통째로 버리지 말 것.
+    CREATE TABLE IF NOT EXISTS tour_image (
+      content_id TEXT NOT NULL,
+      ord        INTEGER NOT NULL,   -- 응답 순서. 1번이 대표에 가깝다
+      origin_url TEXT,
+      small_url  TEXT,
+      name       TEXT,
+      PRIMARY KEY (content_id, ord)
+    );
+
+    -- 이어받기용 상태. tour_overview 와 같은 원칙 —
+    -- 체크포인트 파일을 따로 두지 않고 "행이 있으면 받은 것" 으로 판정한다.
+    -- 사진이 0장인 것(empty)과 못 받은 것(fail)은 전혀 다르다.
+    CREATE TABLE IF NOT EXISTS tour_image_status (
+      content_id TEXT PRIMARY KEY,
+      status     TEXT,               -- ok | empty | fail
+      n_images   INTEGER DEFAULT 0,
+      fail_code  TEXT,
+      fetched_at TEXT NOT NULL
+    );
+
     -- ── 관광공모전 수상작 사진 (PhokoAwrdService) ─────────
     -- 상 받은 앵글 = 검증된 구도. 95건뿐이지만 keyword 에 계절·피사체가 붙어 있다.
     CREATE TABLE IF NOT EXISTS tour_award_photo (
