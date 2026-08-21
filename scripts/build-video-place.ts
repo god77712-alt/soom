@@ -24,6 +24,7 @@ import {
   findPlaces,
   findRegions,
   mentionsOwnRegion,
+  isChannelSelfMatch,
   type PlaceRow,
 } from "./lib/videoplace";
 
@@ -66,8 +67,8 @@ function main(): void {
   );
 
   const videos = db
-    .prepare(`select video_id, title, description, language from yt_video`)
-    .all() as { video_id: string; title: string; description: string; language: string }[];
+    .prepare(`select video_id, title, description, language, channel_title from yt_video`)
+    .all() as { video_id: string; title: string; description: string; language: string; channel_title: string }[];
 
   const insP = db.prepare(
     `INSERT OR IGNORE INTO video_place (video_id, place_id, evidence, matched) VALUES (?,?,?,?)`,
@@ -94,6 +95,8 @@ function main(): void {
       if (seen.has(h.place.id)) continue;
       // 자기 지역이 같이 언급되지 않으면 버린다 (일반 명사 상호명 오탐 차단)
       if (!mentionsOwnRegion(whole, h.place)) { dropped++; continue; }
+      // 채널 이름이 곧 그 장소 이름이면 버린다 (방송사·지역채널 오탐)
+      if (isChannelSelfMatch(v.channel_title, h.name)) { dropped++; continue; }
       seen.add(h.place.id);
       insP.run(v.video_id, h.place.id, h.where, h.name);
       links++;

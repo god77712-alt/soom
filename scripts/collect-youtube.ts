@@ -686,13 +686,30 @@ async function main(): Promise<void> {
           return;
         }
 
+        /**
+         * `--offset` — 앞에서 이미 훑은 만큼 건너뛴다.
+         *
+         * 정렬이 구독자 내림차순 고정이라, 어제 상위 250개를 훑고 오늘 또 돌리면
+         * **같은 채널을 다시 받는다.** 영상은 이미 있으니 얻는 게 거의 없는데
+         * 쿼터만 나간다 (250채널이면 약 1,250 units). 쿼터는 하루 한 번뿐이다.
+         *
+         * `--min-subs` — 구독자 하한. 0인 채널은 vsr 을 못 내서 점수에 안 쓰인다.
+         */
+        const offset = Number(argOf("offset") ?? 0);
+        const minSubs = Number(argOf("min-subs") ?? 0);
+
         const list = db
           .prepare(
             `select channel_id, title from yt_channel
-              where uploads_playlist <> '' order by subscriber_count desc limit ?`,
+              where uploads_playlist <> '' and subscriber_count >= ?
+              order by subscriber_count desc limit ? offset ?`,
           )
-          .all(cap) as { channel_id: string; title: string }[];
-        console.log(`  채널 ${list.length}개를 다시 훑습니다\n`);
+          .all(minSubs, cap, offset) as { channel_id: string; title: string }[];
+        console.log(
+          `  채널 ${list.length}개를 훑습니다` +
+            `${offset ? ` (상위 ${offset}개 건너뜀)` : ""}` +
+            `${minSubs ? ` · 구독자 ${minSubs.toLocaleString()} 이상` : ""}\n`,
+        );
         for (const ch of list) {
           if (!quota.canAfford("playlistItems")) {
             console.log("\n  쿼터 소진 — 여기까지.\n");
