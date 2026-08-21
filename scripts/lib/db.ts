@@ -168,6 +168,25 @@ function migrate(db: DatabaseSync): void {
       fetched_at TEXT NOT NULL
     );
 
+    -- ── 운영 정보 (detailIntro2) ───────────────────────────
+    -- 운영시간·휴무일·주차·이용요금. 카드 내용의 재료다.
+    --
+    -- 🚨 **payload 를 JSON 통째로 넣는다.** detailIntro2 는 콘텐츠 타입마다
+    --    응답 필드 이름이 전부 다르다 (usetime / usetimeculture / opentimefood …).
+    --    타입별 컬럼을 미리 못 박으면 8종을 다 매핑해야 하고, 하나라도 틀리면
+    --    **오류 없이 그 타입만 조용히 빈다.** 쿼터가 하루 1,000건뿐이라
+    --    다시 받는 비용이 크다 — 받을 때는 버리지 않는다.
+    CREATE TABLE IF NOT EXISTS tour_intro (
+      content_id      TEXT NOT NULL,
+      lang            TEXT NOT NULL,   -- ko | en
+      content_type_id INTEGER,
+      payload         TEXT,            -- 응답 원문 JSON
+      status          TEXT,            -- ok | empty | fail
+      fail_code       TEXT,
+      fetched_at      TEXT NOT NULL,
+      PRIMARY KEY (content_id, lang)
+    );
+
     -- ── 관광공모전 수상작 사진 (PhokoAwrdService) ─────────
     -- 상 받은 앵글 = 검증된 구도. 95건뿐이지만 keyword 에 계절·피사체가 붙어 있다.
     CREATE TABLE IF NOT EXISTS tour_award_photo (
