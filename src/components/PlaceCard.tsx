@@ -1,4 +1,4 @@
-import Link from "next/link";
+
 import { PlaceThumb } from "@/components/PlaceThumb";
 import { shortSido } from "@/lib/catalog";
 import type { CatalogPlace } from "@/lib/catalog";
@@ -77,12 +77,19 @@ export function PlaceCard({
 
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-baseline gap-x-2">
-          <Link
-            href={`/place/${p.id}`}
-            className="text-sm text-ink underline-offset-2 hover:text-open hover:underline"
-          >
-            {p.name}
-          </Link>
+          {/*
+            🚨 **여기를 `/place/[id]` 로 링크하지 말 것** (2026-08-22 실측).
+               걸었다가 프로덕션에서 404 를 냈다.
+
+               `/place/[id]` 는 **채널이 있어야만** 실데이터 상세를 그린다
+               (`realPlaceDetail(id, channel, hint)`). 채널 없이 들어오면
+               시연 경로로 내려가는데 거긴 카탈로그 id(`t132783`)를 모른다.
+
+               채널 없이도 열리게 하려면 예상 도달(④)을 안 그리는 손님용 상세가
+               필요하다 — 구독자 수가 없으면 범위를 못 내고, 단일 숫자로
+               때우는 건 금지다(CLAUDE.md 6항). 그건 별도 작업이다.
+          */}
+          <span className="text-sm text-ink">{p.name}</span>
           {p.declining && (
             <span className="border border-open/40 px-1 font-mono text-[10px] text-open">
               인구감소
