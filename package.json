@@ -43,7 +43,8 @@
     "worklog": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/build-worklog.ts",
     "collect:image": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-image.ts",
     "probe:quota": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/probe-quota.ts",
-    "collect:intro": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-intro.ts"
+    "collect:intro": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/collect-intro.ts",
+    "report:completeness": "node --env-file=.env node_modules/tsx/dist/cli.mjs scripts/report-completeness.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.116.0",

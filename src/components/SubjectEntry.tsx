@@ -143,7 +143,7 @@ export function SubjectEntry({
         없애지 않는다. 채널을 넣으면 이 목록에서 골라 주는 건 실제로 값어치가
         있고, 유튜브 심사에도 그 경로가 들어가 있다. 다만 **현관을 막지는 않는다.**
       */}
-      <div className="mt-14 border-t border-hair pt-8">
+      <div id="channel" className="mt-14 border-t border-hair pt-8">
         <h2 className="text-lg text-ink">내 채널에 맞춰 고르려면</h2>
         <p className="mt-1.5 font-mono text-[11px] text-ink3">
           채널의 최근 영상에서 잘 된 소재를 찾아, 이 목록에서 골라 준다

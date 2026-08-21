@@ -209,18 +209,32 @@ function main(): void {
    *    "한적한"·"숨은 명소" 같은 말은 우리가 잰 적이 없는 것이다.
    *    근거 없는 순위 신호를 만들지 않는 것과 같은 원칙이다.
    */
+  /**
+   * 카드 한 장이 말하는 **대표 키워드**. 카드끼리 달라지는 유일한 자리다.
+   *
+   * ⚠️ 전부 **받은 값에서만** 만든다. 형용사를 지어내지 않는다 —
+   *    "한적한"·"숨은 명소" 같은 말은 우리가 잰 적이 없는 것이다.
+   *
+   * ── 뺀 것 두 가지 (2026-08-22) ──────────────────────
+   * ① `인구감소지역` — 이름 옆에 이미 배지로 있다. **같은 말을 두 번 그리면**
+   *    칩이 정보가 아니라 장식이 된다. 실측에서 키워드 1개짜리 카드 1,217장 중
+   *    대부분이 이 칩 하나뿐이었다 — 있으나 마나였다.
+   * ② `점포별 상이함` 류 — 철자만 5가지로 100건 가까이 있는데 아무것도 안
+   *    알려준다. 여는 시간을 물었더니 "가게마다 다릅니다" 라고 답한 셈이다.
+   *
+   * `상시 개방` 은 반대로 **칩으로 올렸다.** 343곳에 붙어 변별력은 없지만,
+   * 촬영자에게는 "아무 때나 들어갈 수 있다" 는 실제 판단 재료다.
+   */
   function keywordsOf(
     placeId: string,
     tag: string,
     info: IntroFields | null,
-    declining: boolean,
   ): string[] {
     const out: string[] = [];
-    if (!info) info = { fairday: null, saleitem: null, restdate: null, parking: null } as IntroFields;
     // ① 장날 — 오일장에서 가장 값어치 있는 한 줄
-    if (info.fairday) out.push('장날 ' + info.fairday);
+    if (info?.fairday) out.push('장날 ' + info.fairday);
     // ② 특산물 — 시장 카드가 서로 달라지는 유일한 재료
-    if (info.saleitem) {
+    if (info?.saleitem) {
       const items = info.saleitem.split(/[/,·]/).map((x) => x.trim()).slice(0, 3);
       for (const item of items) {
         if (item && item !== '등' && item.length <= 8) out.push(item);
@@ -229,10 +243,10 @@ function main(): void {
     // ③ 겸사겸사 찍을 수 있는 다른 소재
     for (const r of placeTags.all(placeId, tag) as unknown as { n: string }[]) out.push(r.n);
     // ④ 사실만 — 판단은 크리에이터가 한다
-    if (info.restdate && /연중무휴|무휴/.test(info.restdate)) out.push('연중무휴');
-    if (info.parking && /가능|있|무료/.test(info.parking)) out.push('주차 가능');
-    if (declining) out.push('인구감소지역');
-    return [...new Set(out)].slice(0, 5);
+    if (info?.usetime && /상시\s*개방/.test(info.usetime)) out.push('상시 개방');
+    if (info?.restdate && /연중무휴|무휴/.test(info.restdate)) out.push('연중무휴');
+    if (info?.parking && /가능|있|무료/.test(info.parking)) out.push('주차 가능');
+    return [...new Set(out)].slice(0, 4);
   }
 
   /** 사진 목록. firstimage 를 맨 앞에 두고 detailImage2 분을 뒤에 잇는다 */
@@ -329,7 +343,7 @@ function main(): void {
         /** 운영시간·쉬는날·주차·장날·특산물. 없으면 null 이고 화면은 안 그린다 */
         info: introOf(r.source, r.source_id),
         /** 카드가 한눈에 보여줄 대표 키워드. 받은 값에서만 만든다 */
-        keywords: keywordsOf(r.id, s.tag, introOf(r.source, r.source_id), r.is_declining_area === 1),
+        keywords: keywordsOf(r.id, s.tag, introOf(r.source, r.source_id)),
         /** 폐교·간이역은 현장이 자주 바뀐다 — 화면에 "현장 확인" 을 띄운다 */
         low_reliability: r.data_reliability === "low",
         /** 원본이 아니면 화면이 정확도를 낮춰 말한다 */

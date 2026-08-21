@@ -26,7 +26,7 @@ import type { CatalogPlace } from "@/lib/catalog";
  */
 
 /** 한 칸이 그릴 키워드 수. 넘치면 줄바꿈이 카드 높이를 들쭉날쭉하게 만든다 */
-const MAX_KEYWORDS = 4;
+const MAX_KEYWORDS = 3;
 
 export function PlaceCard({
   place,
@@ -39,10 +39,32 @@ export function PlaceCard({
   const p = place;
 
   /**
-   * 운영 한 줄. 여는 시간이 최우선이고, 없으면 쉬는 날을 쓴다.
-   * 둘 다 없으면 안 그린다 — 주차만 있는 줄은 출발 판단에 쓸모가 없다.
+   * 운영 한 줄.
+   *
+   * ⚠️ **아무것도 안 알려주는 값은 안 그린다** (2026-08-22).
+   *    `점포별 상이함` 이 철자만 5가지로 100건 가까이 있다 — 여는 시간을
+   *    물었더니 "가게마다 다릅니다" 라고 답한 셈이라 카드에 둘 이유가 없다.
+   *    `상시 개방` 은 칩으로 올라가므로 여기서 또 그리지 않는다.
+   *
+   *    빈 자리를 문장으로 채우지 않는 것과 같은 원칙이다 —
+   *    **내용 없는 줄은 빈 줄보다 나쁘다.** 읽고 나서야 쓸모없는 걸 안다.
    */
-  const openLine = p.info?.usetime ?? p.info?.restdate ?? null;
+  const raw = p.info?.usetime ?? null;
+  const openLine = raw && !/점포|상이|상시\s*개방/.test(raw) ? raw : null;
+
+  /**
+   * ⚠️ **「다음 장날」 줄이 있으면 `장날 …` 칩을 뺀다** (2026-08-22).
+   *
+   * 둘은 같은 말이다. 게다가 원문이 `매월 4, 9, 14, 19, 24, 29일` 처럼 길어서
+   * 칩 하나가 두 줄을 먹고 나머지 키워드를 밀어냈다 — 특산물이 안 보였다.
+   *
+   * 아래 줄이 **더 낫다.** 원문은 규칙이고 아래 줄은 실제 날짜다
+   * (`8월 22일 (토)`). 크리에이터가 필요한 건 후자다.
+   */
+  const chips = (shootLine ? p.keywords.filter((k) => !k.startsWith("장날")) : p.keywords).slice(
+    0,
+    MAX_KEYWORDS,
+  );
 
   return (
     <li className="flex gap-3.5">
@@ -68,13 +90,13 @@ export function PlaceCard({
           )}
         </div>
 
+        {/*
+          ⚠️ 사진 장수를 뺐다 (2026-08-22). 크리에이터가 고를 때 쓰는 정보가 아니다 —
+             카드에 줄을 하나 더 늘려서 정작 장날·특산물이 밀려났다.
+             한 칸에 네 가지까지만 둔다는 원칙에 이게 먼저 밀린다.
+        */}
         <div className="mt-0.5 font-mono text-[11px] text-ink2">
           {shortSido(p.sido)} {p.sigungu}
-          {/*
-            사진 장수는 **여러 장일 때만** 말한다. "1장" 은 정보가 아니고,
-            "0장" 은 없는 걸 굳이 알리는 문장이다 (7항과 같은 원칙).
-          */}
-          {p.photos.length > 1 && <span className="text-ink3"> · 사진 {p.photos.length}장</span>}
         </div>
 
         {/*
@@ -82,9 +104,9 @@ export function PlaceCard({
           순위로 장소를 가를 근거가 없으니(CLAUDE.md 3항) 차이는 여기서 낸다.
           전부 받은 값이다: 장날·특산물·다른 소재 태그·연중무휴·주차.
         */}
-        {p.keywords.length > 0 && (
+        {chips.length > 0 && (
           <div className="mt-1.5 flex flex-wrap gap-1">
-            {p.keywords.slice(0, MAX_KEYWORDS).map((k) => (
+            {chips.map((k) => (
               <span
                 key={k}
                 className="border border-hair px-1.5 py-px font-mono text-[10px] text-ink2"

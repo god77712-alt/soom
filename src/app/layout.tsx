@@ -23,18 +23,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </span>
             {S.appName}
           </Link>
-          {/* 서비스 내비게이션. 개발용 화면(/check)은 여기 넣지 않는다 */}
+          {/*
+            서비스 내비게이션. 개발용 화면(/check)은 여기 넣지 않는다.
+
+            ⚠️ **「소재로 찾기」를 뺐다** (2026-08-22). 현관이 소재 목록이 되면서
+               로고를 눌러도 그 링크를 눌러도 같은 화면이 나왔다. 같은 곳으로 가는
+               길이 둘이면 쓰는 사람은 둘이 어떻게 다른지부터 알아내야 한다.
+
+            ⚠️ 「채널 분석」도 강조를 뺐다. 테두리 버튼이라 화면에서 가장 센 요소였는데,
+               그건 근거가 제일 약한 경로다(채널이 성과의 74%). 현관이 목록인 이상
+               내비가 그 반대를 가리키면 안 된다.
+          */}
           <nav className="ml-auto flex items-center gap-5 text-xs text-ink3">
-            <Link href="/start" className="transition-colors hover:text-ink2">
-              소재로 찾기
-            </Link>
             <Link href="/admin" className="transition-colors hover:text-ink2">
               기관용
             </Link>
-            <Link
-              href="/#top"
-              className="border border-open px-3 py-1.5 font-medium text-open transition-colors hover:bg-open hover:text-ground"
-            >
+            <Link href="/#channel" className="transition-colors hover:text-ink2">
               채널 분석
             </Link>
           </nav>

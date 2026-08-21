@@ -83,28 +83,28 @@ export default async function SubjectPage({
       </h1>
 
       {/*
-        전국 총계를 먼저 말한다. 이 화면의 주장이 그것 하나다.
-        담은 것(places.length)과 전국 총계(total)가 다르므로 아래에서 그 사실도 밝힌다.
+        ⚠️ 머리말을 두 줄에서 한 줄로 줄였다 (2026-08-22).
+
+        예전엔 총계·감소지역·시군구 수가 한 줄, 영상 표본·판정이 또 한 줄,
+        그 아래 지역 칩 한 줄, 범위 칩 한 줄이었다. **목록을 보러 온 사람이
+        네 줄을 읽고 나서야 목록에 닿는다.**
+
+        이 화면의 주장은 "이만큼 있다" 하나다. 나머지는 조작 도구거나 각주다.
+        영상 표본은 목록 위 각주로 내렸다 — 배수를 안 쓰는 이유라 지워선 안 되지만,
+        고르기 전에 읽어야 하는 것도 아니다.
       */}
       <p className="mt-2.5 font-mono text-sm text-ink2 tnum">
         전국 {subject.total.toLocaleString()}곳
         <span className="text-ink3"> · </span>
         <span className="text-open">인구감소지역 {subject.declining.toLocaleString()}곳</span>
-        <span className="text-ink3"> · {subject.sigungu_count}개 시군구</span>
       </p>
 
       {/*
-        영상 표본을 밝힌다. 배수를 안 쓰는 이유이기도 하다 —
-        100편 미만이면 `1.2×` 와 `2.4×` 를 구분해서 말할 수 없다 (score.ts).
+        ── 지역 좁히기 ────────────────────────────────────
+        범위(전체 / 인구감소지역만)를 지역 칩과 **같은 줄에** 뒀다.
+        둘 다 "좁히기" 라 성격이 같은데 줄을 나누면 다른 조작처럼 보인다.
       */}
-      <p className="mt-1 font-mono text-[11px] text-ink3">
-        YouTube 영상 {subject.video_count}편 수집
-        {subject.can_show_multiplier ? " · 성과 비교 가능" : " · 표본이 얇아 순위만"}
-      </p>
-
-      {/* ── 지역 좁히기 ──────────────────────────────────── */}
-      <div className="mt-7 flex flex-wrap items-center gap-2">
-        <span className="mr-1 font-mono text-[11px] text-ink3">지역</span>
+      <div className="mt-6 flex flex-wrap items-center gap-2">
         <Chip href={href({ sido: null })} active={!sido} label="전국" count={subject.places.length} />
         {chips.map((c) => (
           <Chip
@@ -115,16 +115,26 @@ export default async function SubjectPage({
             count={c.count}
           />
         ))}
-      </div>
-
-      <div className="mt-2.5 flex flex-wrap items-center gap-2">
-        <span className="mr-1 font-mono text-[11px] text-ink3">범위</span>
-        <Chip href={href({ only: false })} active={!decliningOnly} label="전체" />
-        <Chip href={href({ only: true })} active={decliningOnly} label="인구감소지역만" />
+        <span className="mx-1 text-hair2">|</span>
+        <Chip
+          href={href({ only: !decliningOnly })}
+          active={decliningOnly}
+          label="인구감소지역만"
+        />
       </div>
 
       {/* ── 목록 ─────────────────────────────────────────── */}
-      <div className="mt-8 flex items-baseline justify-between border-b border-hair pb-2">
+      {/*
+        영상 표본은 여기 각주로 둔다. 배수를 안 쓰는 이유라 지우면 안 되지만
+        (100편 미만이면 `1.2×` 와 `2.4×` 를 구분해 말할 수 없다 — score.ts),
+        고르기 전에 읽어야 하는 것은 아니다.
+      */}
+      <p className="mt-8 font-mono text-[11px] text-ink3">
+        YouTube 영상 {subject.video_count}편 수집
+        {subject.can_show_multiplier ? " · 성과 비교 가능" : " · 표본이 얇아 순위만"}
+      </p>
+
+      <div className="mt-2 flex items-baseline justify-between border-b border-hair pb-2">
         <h2 className="font-mono text-[11px] tracking-wider text-ink3 uppercase">목록</h2>
         <span className="font-mono text-[11px] text-ink3 tnum">
           {shown.length}곳
