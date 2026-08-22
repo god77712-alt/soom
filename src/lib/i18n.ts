@@ -30,7 +30,7 @@ const ko = {
    *    (YouTube API 감사에서 "라이브 제품이 설명과 다름"이 대표 탈락 사유다)
    *    → 무엇이 임시인지 밝히고, 실제로 무엇을 쓰는지 볼 곳을 함께 준다.
    */
-  demoBanner: "수치는 시연용입니다 · 실데이터 수집 진행 중",
+  demoBanner: "수치는 시연용이에요 · 실데이터는 모으는 중이고요",
   demoBannerLink: "무슨 데이터를 쓰나",
 
   // SPEC 9장 — 표시 원칙
@@ -50,8 +50,8 @@ const ko = {
   rankOnlyHelp: (n: number) => `영상 ${n}편 · 배수를 쓰기엔 표본이 얇다`,
   fallbackNote: "상위 소재 기준",
   fallbackHelp: (parentName: string) => `상위 소재 ${parentName} 기준`,
-  lowReliabilityNote: "공공데이터 기준 · 현장 확인",
-  reachDisclaimer: "과거 데이터 기반 추정",
+  lowReliabilityNote: "공공데이터 기준이라 가서 확인해 주세요",
+  reachDisclaimer: "지난 데이터로 어림잡은 값이에요",
 
   // 단위
   videoCount: (n: number) => `${n}편`,
@@ -66,7 +66,7 @@ const ko = {
   seasonFrom: (month: number) => `${month}월~`,
 
   // 입력
-  s1Title: "채널을 넣으면 좌표가 나옵니다",
+  s1Title: "채널 주소만 넣어 주세요",
   s1UrlLabel: "채널 주소",
   s1UrlPlaceholder: "youtube.com/@channel",
   s1Submit: "계산",
@@ -112,12 +112,12 @@ const ko = {
   nearbyDistance: (km: number, min: number) => `${km}km · 차 ${min}분`,
 
   // S4 — 6단 구조. 순서와 제목을 바꾸지 말 것 (SPEC S4)
-  s4Step1: "이 소재는 먹힌다",
-  s4Step2: "그런데 여긴 비어 있다",
-  s4Step3: "별로라서가 아니다",
-  s4Step4: "당신이면 이 정도",
-  s4Step5: "이렇게 찍으면 된다",
-  s4Step6: "이렇게 머물면 된다",
+  s4Step1: "이 소재는 반응이 좋아요",
+  s4Step2: "그런데 여긴 아직 조용해요",
+  s4Step3: "별로라서 그런 건 아니에요",
+  s4Step4: "이 채널이면 이 정도예요",
+  s4Step5: "이렇게 찍으면 돼요",
+  s4Step6: "이렇게 머물면 돼요",
   s4Step1Basis: (tagName: string, n: number, m: number) =>
     `${tagName} · n=${n} · 중앙값 ${m.toFixed(1)}×`,
   s4Step2Basis: (placeName: string) => `${placeName} 촬영 이력`,
@@ -126,7 +126,7 @@ const ko = {
 
   // 어드민
   s5Title: "어드민",
-  s5RankTitle: "시군구별 미개척 소재",
+  s5RankTitle: "시군구별 영상 0편 소재",
   s5MatchTitle: "채널 ↔ 지역 매칭",
   s5ImpactTitle: "추천 → 체류 → 생활인구",
   s5KpiTitle: "인구감소지역 신규 영상",

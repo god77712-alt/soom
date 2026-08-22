@@ -49,8 +49,8 @@ function ShortsCutBlock({ cut }: { cut: NonNullable<VideoBreakdown["shorts_cut"]
 
       <div className="mt-1.5 font-mono text-[10px] text-ink3">
         {byComment
-          ? "댓글 타임스탬프가 몰린 구간 · 앞뒤를 붙여 쇼츠 길이로 맞췄다"
-          : "쇼츠 길이(180초) 안에 들어가는 구간 · 반응 데이터는 아직 없다"}
+          ? "댓글 타임스탬프가 몰린 구간이에요 · 앞뒤를 붙여 쇼츠 길이로 맞췄어요"
+          : "쇼츠 길이(180초)에 맞는 구간이에요 · 반응 데이터는 아직 없고요"}
       </div>
     </div>
   );

@@ -131,7 +131,7 @@ export default async function SubjectPage({
       */}
       <p className="mt-8 font-mono text-[11px] text-ink3">
         YouTube 영상 {subject.video_count}편 수집
-        {subject.can_show_multiplier ? " · 성과 비교 가능" : " · 표본이 얇아 순위만"}
+        {subject.can_show_multiplier ? " · 성과 비교 가능" : " · 표본이 얇아서 순위만 써요"}
       </p>
 
       <div className="mt-2 flex items-baseline justify-between border-b border-hair pb-2">

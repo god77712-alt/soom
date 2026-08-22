@@ -257,7 +257,7 @@ export function RealPlaceDetailView({
                 </p>
               </>
             ) : (
-              <p className="text-sm text-ink3">40km 안에 목록에 있는 다른 소재가 없습니다</p>
+              <p className="text-sm text-ink3">40km 안에는 목록에 있는 다른 소재가 없어요</p>
             )}
           </Step>
         </div>

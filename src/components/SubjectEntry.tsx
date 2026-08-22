@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MapHero, type MapPoint } from "@/components/MapHero";
 import { SUBJECTS, regionChips, shortSido } from "@/lib/catalog";
 
 /**
@@ -27,6 +28,32 @@ import { SUBJECTS, regionChips, shortSido } from "@/lib/catalog";
  *    "몇 곳 있다" 까지다. 성과는 채널을 넣어야 나온다.
  */
 
+/**
+ * 히어로 지도 위에 찍히는 점.
+ *
+ * ⚠️ **좌표를 지어내지 않는다.** 소재마다 인구감소지역에 실제로 있는 장소를 하나씩
+ *    골라 쓴다 — 전국에 고루 흩어지고, 전부 카탈로그에 있는 진짜 좌표다.
+ *    노선은 가장 가까운 공항에 붙는다 (MapHero).
+ */
+function heroPoints(): MapPoint[] {
+  const seen = new Set<string>();
+  const pts: MapPoint[] = [];
+  for (const s of SUBJECTS) {
+    const p =
+      s.places.find((x) => x.declining && x.lat && x.lng && !seen.has(x.sigungu)) ??
+      s.places.find((x) => x.lat && x.lng && !seen.has(x.sigungu));
+    if (!p) continue;
+    seen.add(p.sigungu);
+    pts.push({ name: p.name, lat: p.lat, lng: p.lng });
+  }
+  return pts;
+}
+
+/** 히어로 글자가 앉는 왼쪽을 어둡게 깔아 지도 위에서도 읽히게 한다 */
+const VEIL =
+  "radial-gradient(120% 90% at 12% 50%, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.72) 38%, transparent 74%)";
+const VEIL_BOTTOM = "linear-gradient(to bottom, transparent 58%, #000 100%)";
+
 /** 표지 사진이 없는 소재(폐교)를 위한 자리. 남의 사진을 갖다 쓰지 않는다 */
 function CoverFallback({ label }: { label: string }) {
   return (
@@ -38,7 +65,7 @@ function CoverFallback({ label }: { label: string }) {
            직접 승격시킨 소재라 관광 사진이 애초에 존재하지 않는다.
            관광사진 갤러리도 실측 매칭 0곳이었다.
       */}
-      <span className="font-mono text-[10px] text-ink3">공공데이터 기준 · 현장 확인</span>
+      <span className="font-mono text-[10px] text-ink3">공공데이터 기준이라 확인이 필요해요</span>
     </div>
   );
 }
@@ -53,8 +80,10 @@ export function SubjectEntry({
   const totalPlaces = SUBJECTS.reduce((s, x) => s + x.total, 0);
   const totalDeclining = SUBJECTS.reduce((s, x) => s + x.declining, 0);
 
+  const points = heroPoints();
+
   return (
-    <main className="mx-auto max-w-5xl px-5 py-14 sm:px-8">
+    <main>
       {/*
         ⚠️ **이 화면은 전부 실데이터다** — TourAPI 장소, 표준데이터 장날,
            천문연 일출. 지어낸 값이 한 줄도 없다.
@@ -68,20 +97,87 @@ export function SubjectEntry({
       */}
       <div id="real-data-page" hidden />
 
-      <h1 className="font-serif text-[2.5rem] leading-[1.15] font-normal tracking-tight text-balance sm:text-[3.25rem]">
-        찍을 곳을 소재로 찾습니다
-      </h1>
+      {/*
+        ══ 히어로 — 도트 지도 + 흐르는 노선 ══════════════════
+        배경은 우리 좌표를 점으로 찍은 것이고, 노선은 인구감소지역 12곳을 가장
+        가까운 공항에 이은 것이다. 장식이 아니라 **이 서비스가 다루는 범위**다.
+
+        ⚠️ 지도 위에 성과를 얹지 않는다. 이 화면이 말할 수 있는 건 "몇 곳 있다"
+           까지고, 성과는 채널을 넣어야 나온다.
+      */}
+      <section className="relative flex min-h-[30rem] items-center overflow-hidden lg:min-h-[36rem]">
+        <div className="absolute inset-0">
+          <MapHero open={points} held={[]} />
+        </div>
+        <div className="pointer-events-none absolute inset-0" style={{ background: VEIL }} />
+        <div className="pointer-events-none absolute inset-0" style={{ background: VEIL_BOTTOM }} />
+
+        <div className="relative mx-auto w-full max-w-5xl px-5 py-16 sm:px-8">
+          <h1 className="font-serif text-[2.5rem] leading-[1.15] font-normal tracking-tight text-balance sm:text-[3.25rem]">
+            찍을 곳을 소재로 찾아요
+          </h1>
 
       {/*
         설득 문장 금지. 이 화면의 주장은 "이만큼 있다" 하나뿐이라 숫자로만 말한다.
       */}
-      <p className="mt-3 font-mono text-sm text-ink2 tnum">
-        {SUBJECTS.length}개 소재 · {totalPlaces.toLocaleString()}곳
-        <span className="text-ink3"> · </span>
-        <span className="text-open">인구감소지역 {totalDeclining.toLocaleString()}곳</span>
-      </p>
+          <p className="mt-3 font-mono text-sm text-ink2 tnum">
+            {SUBJECTS.length}개 소재 · {totalPlaces.toLocaleString()}곳
+            <span className="text-ink3"> · </span>
+            <span className="text-open">인구감소지역 {totalDeclining.toLocaleString()}곳</span>
+          </p>
 
-      <ul className="mt-8 grid gap-x-5 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
+          {/*
+            ── 채널 입력이 현관으로 올라왔다 ────────────────
+            없애지 않는다. 채널을 넣으면 이 목록에서 골라 주는 건 실제로 값어치가
+            있고, 유튜브 심사에도 그 경로가 들어가 있다. 다만 **현관을 막지는
+            않는다** — 넣지 않아도 아래 소재 목록이 그대로 열려 있다.
+          */}
+          <div id="channel" className="mt-8">
+            <form action="/" method="get" className="max-w-lg">
+              <div className="flex gap-2">
+                <input
+                  name="q"
+                  type="text"
+                  placeholder="youtube.com/@channel"
+                  aria-label="YouTube 채널 주소"
+                  className="min-w-0 flex-1 border border-hair2 bg-panel/80 px-4 py-3 text-sm outline-none placeholder:text-ink3 focus:border-open"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 bg-open px-6 py-3 text-sm font-semibold text-ground transition-opacity hover:opacity-90"
+                >
+                  분석
+                </button>
+              </div>
+              <p className="mt-2 font-mono text-[11px] text-ink3">
+                채널을 넣으면 잘 됐던 소재를 찾아서 아래 목록에서 골라 드려요
+              </p>
+              {notFound && (
+                <p className="mt-2 font-mono text-xs text-open-d">
+                  채널을 못 찾았어요. 아래 예시로 한번 볼까요?
+                </p>
+              )}
+            </form>
+
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span className="font-mono text-[11px] text-ink3">예시</span>
+              {demoChannels.map((c) => (
+                <Link
+                  key={c.id}
+                  href={`/?q=${encodeURIComponent(c.title)}`}
+                  className="border border-hair2 px-3 py-1.5 text-xs text-ink2 transition-colors hover:border-open hover:text-open"
+                >
+                  {c.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══ 소재 목록 ══════════════════════════════════════ */}
+      <div className="mx-auto max-w-5xl px-5 pb-14 sm:px-8">
+      <ul className="grid gap-x-5 gap-y-7 sm:grid-cols-2 lg:grid-cols-3">
         {SUBJECTS.map((s) => {
           const chips = regionChips(s);
           return (
@@ -138,58 +234,11 @@ export function SubjectEntry({
         })}
       </ul>
 
-      {/*
-        ── 채널 분석은 보조로 내려온다 ──────────────────────
-        없애지 않는다. 채널을 넣으면 이 목록에서 골라 주는 건 실제로 값어치가
-        있고, 유튜브 심사에도 그 경로가 들어가 있다. 다만 **현관을 막지는 않는다.**
-      */}
-      <div id="channel" className="mt-14 border-t border-hair pt-8">
-        <h2 className="text-lg text-ink">내 채널에 맞춰 고르려면</h2>
-        <p className="mt-1.5 font-mono text-[11px] text-ink3">
-          채널의 최근 영상에서 잘 된 소재를 찾아, 이 목록에서 골라 준다
-        </p>
-
-        <form action="/" method="get" className="mt-4 max-w-lg">
-          <div className="flex gap-2">
-            <input
-              name="q"
-              type="text"
-              placeholder="youtube.com/@channel"
-              aria-label="YouTube 채널 주소"
-              className="min-w-0 flex-1 border border-hair2 bg-panel/80 px-4 py-3 text-sm outline-none placeholder:text-ink3 focus:border-open"
-            />
-            <button
-              type="submit"
-              className="shrink-0 bg-open px-6 py-3 text-sm font-semibold text-ground transition-opacity hover:opacity-90"
-            >
-              분석
-            </button>
-          </div>
-          {notFound && (
-            <p className="mt-2 font-mono text-xs text-open-d">
-              채널을 찾지 못했습니다. 아래 예시로 확인해보세요.
-            </p>
-          )}
-        </form>
-
-        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2">
-          <span className="font-mono text-[11px] text-ink3">예시</span>
-          {demoChannels.map((c) => (
-            <Link
-              key={c.id}
-              href={`/?q=${encodeURIComponent(c.title)}`}
-              className="border border-hair2 px-3 py-1.5 text-xs text-ink2 transition-colors hover:border-open hover:text-open"
-            >
-              {c.title}
-            </Link>
-          ))}
-        </div>
-      </div>
-
       <p className="mt-10 font-mono text-[10px] leading-relaxed text-ink3">
         한국관광공사 TourAPI · 전국전통시장 표준데이터 · 전국폐교재산 기본정보 ·
         한국천문연구원 출몰시각
       </p>
+      </div>
     </main>
   );
 }

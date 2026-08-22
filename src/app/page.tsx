@@ -416,7 +416,7 @@ export default async function Home({
                     표본 {realEvidence.score.video_count}편
                     {realEvidence.score.can_show_multiplier && realEvidence.score.geo_vsr !== null
                       ? ` · 기하평균 ${realEvidence.score.geo_vsr}×`
-                      : " · 배수를 쓰기엔 표본이 얇다"}
+                      : " · 배수를 쓰기엔 표본이 얇아요"}
                   </span>
                 )
               ) : (
@@ -602,7 +602,7 @@ export default async function Home({
               YouTube
             </text>
           </svg>
-          <span>영상 통계는 YouTube API Services 로 조회합니다</span>
+          <span>영상 통계는 YouTube API Services 로 가져와요</span>
           <a
             href="https://www.youtube.com/t/terms"
             target="_blank"

@@ -43,7 +43,7 @@ export function PlaceCard({
    *
    * ⚠️ **아무것도 안 알려주는 값은 안 그린다** (2026-08-22).
    *    `점포별 상이함` 이 철자만 5가지로 100건 가까이 있다 — 여는 시간을
-   *    물었더니 "가게마다 다릅니다" 라고 답한 셈이라 카드에 둘 이유가 없다.
+   *    물었더니 "가게마다 달라요" 라고 답한 셈이라 카드에 둘 이유가 없다.
    *    `상시 개방` 은 칩으로 올라가므로 여기서 또 그리지 않는다.
    *
    *    빈 자리를 문장으로 채우지 않는 것과 같은 원칙이다 —
@@ -145,9 +145,9 @@ export function PlaceCard({
         */}
         {(p.coord_estimated || p.low_reliability) && (
           <div className="mt-1 font-mono text-[10px] text-ink3">
-            {p.coord_estimated && "위치는 읍면 중심 추정"}
+            {p.coord_estimated && "위치는 읍면 중심으로 어림잡았어요"}
             {p.coord_estimated && p.low_reliability && " · "}
-            {p.low_reliability && "공공데이터 기준 · 현장 확인"}
+            {p.low_reliability && "공공데이터 기준이라 확인이 필요해요"}
           </div>
         )}
       </div>
