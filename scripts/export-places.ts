@@ -249,10 +249,25 @@ function main(): void {
     return [...new Set(out)].slice(0, 4);
   }
 
+  /**
+   * 🚨 사진 주소를 https 로 올린다.
+   *
+   * TourAPI 가 주는 사진 주소는 전부 `http://tong.visitkorea.or.kr` 이다.
+   * 배포 사이트는 https 라 브라우저가 **혼합 콘텐츠로 차단**한다 — 사진이 한 장도
+   * 안 뜬다. 로컬은 `http://localhost` 라 멀쩡히 보여서 안 드러난다.
+   *
+   * **오류가 안 뜬다.** 콘솔에만 경고가 찍히고 화면은 그냥 빈 칸이 된다.
+   * 목록으로 어필하는 서비스에서 사진이 안 보이면 카드가 아무것도 아니게 된다.
+   *
+   * 같은 호스트가 https 로도 200 을 준다(실측). 그대로 바꿔 쓴다.
+   */
+  const https = (u: string | null): string | null =>
+    u ? u.replace(/^http:/i, 'https:') : u;
+
   /** 사진 목록. firstimage 를 맨 앞에 두고 detailImage2 분을 뒤에 잇는다 */
   function photosOf(source: string, sourceId: string, first: string | null): string[] {
     const out: string[] = [];
-    if (first) out.push(first);
+    if (first) out.push(https(first)!);
     // TourAPI 출신이 아니면 contentId 가 없다 — 폐교·간이역·승격시장이 여기다
     if (source === 'tourapi' && sourceId) {
       const rows = placePhotos.all(sourceId) as unknown as {
@@ -261,7 +276,7 @@ function main(): void {
       }[];
       for (const r of rows) {
         const u = r.origin_url || r.small_url;
-        if (u) out.push(u);
+        if (u) out.push(https(u)!);
       }
     }
     return [...new Set(out)].slice(0, 6);
@@ -327,7 +342,7 @@ function main(): void {
        * ⚠️ 사진이 하나도 없는 소재(폐교)는 null 이다. 다른 소재 사진을 갖다
        *    쓰지 않는다 — 실재하는 곳에 남의 사진을 붙이는 것과 같다.
        */
-      cover: rows.find((r) => r.image_url)?.image_url ?? null,
+      cover: https(rows.find((r) => r.image_url)?.image_url ?? null),
       places: rows.map((r) => ({
         id: r.id,
         name: r.name_ko,
@@ -337,7 +352,7 @@ function main(): void {
         lat: Number(r.lat.toFixed(6)),
         lng: Number(r.lng.toFixed(6)),
         declining: r.is_declining_area === 1,
-        image: r.image_url || null,
+        image: https(r.image_url || null),
         /** 사진 여러 장. 카드가 한 장만 쓰더라도 상세는 갤러리로 그린다 */
         photos: photosOf(r.source, r.source_id, r.image_url),
         /** 운영시간·쉬는날·주차·장날·특산물. 없으면 null 이고 화면은 안 그린다 */
