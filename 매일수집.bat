@@ -32,6 +32,17 @@ echo [KO] >> "%LOG%"
 echo [EN] >> "%LOG%"
 %NODE% --env-file=.env "%TSX%" scripts\collect-overview.ts --en >> "%LOG%" 2>&1
 
+REM Each operation has its OWN 1,000/day cap, so these do not compete
+REM with the overview calls above. A day we skip is a day lost.
+echo [IMAGE] >> "%LOG%"
+%NODE% --env-file=.env "%TSX%" scripts\collect-image.ts >> "%LOG%" 2>&1
+
+echo [INTRO KO] >> "%LOG%"
+%NODE% --env-file=.env "%TSX%" scripts\collect-intro.ts >> "%LOG%" 2>&1
+
+echo [INTRO EN] >> "%LOG%"
+%NODE% --env-file=.env "%TSX%" scripts\collect-intro.ts --en >> "%LOG%" 2>&1
+
 REM Leave a status snapshot so the tail of the log answers "how far along".
 echo [STATUS] >> "%LOG%"
 %NODE% --env-file=.env "%TSX%" scripts\report-stage1.ts >> "%LOG%" 2>&1
